@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20140901161831) do
     t.string   "city_name"
     t.string   "city_name_short"
     t.string   "venue_address"
+    t.integer  "country_id"
     t.integer  "default_registration_country_id"
     t.boolean  "cc_orga",                         default: false
     t.boolean  "registration_open",               default: false

@@ -9,6 +9,7 @@ class CreateCompetitions < ActiveRecord::Migration
       t.string :city_name_short
       t.string :venue_address
 
+      t.references :country
       t.integer :default_registration_country_id
 
       t.boolean :cc_orga, default: false
