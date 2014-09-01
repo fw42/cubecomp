@@ -14,16 +14,44 @@
 ActiveRecord::Schema.define(version: 20140901161831) do
 
   create_table "competitions", force: true do |t|
+    t.string   "name"
+    t.string   "handle"
+    t.string   "staff_email"
+    t.string   "staff_name"
+    t.string   "city_name"
+    t.string   "city_name_short"
+    t.string   "venue_address"
+    t.integer  "default_registration_country_id"
+    t.boolean  "cc_orga",                         default: false
+    t.boolean  "registration_open",               default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "competitors", force: true do |t|
+    t.integer  "competition_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "wca"
+    t.string   "email"
+    t.date     "birthday"
+    t.integer  "country_id"
+    t.boolean  "local"
+    t.boolean  "staff"
+    t.text     "user_comment"
+    t.text     "admin_comment"
+    t.boolean  "free_entrance"
+    t.string   "free_entrance_reason"
+    t.string   "state"
+    t.boolean  "confirmation_email_sent"
+    t.boolean  "paid"
+    t.string   "paid_comment"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "countries", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -44,11 +72,28 @@ ActiveRecord::Schema.define(version: 20140901161831) do
   end
 
   create_table "events", force: true do |t|
+    t.integer  "competition_id"
+    t.integer  "day_id"
+    t.string   "name_short"
+    t.string   "name_long"
+    t.string   "handle"
+    t.string   "state"
+    t.integer  "max_number_of_registrations"
+    t.time     "start_time"
+    t.integer  "length_in_minutes"
+    t.string   "timelimit"
+    t.string   "format"
+    t.string   "round"
+    t.string   "proceed"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "news", force: true do |t|
+    t.integer  "competition_id"
+    t.datetime "time"
+    t.string   "locale"
+    t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -61,12 +106,8 @@ ActiveRecord::Schema.define(version: 20140901161831) do
     t.datetime "updated_at"
   end
 
-  create_table "registrations", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "users", force: true do |t|
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
