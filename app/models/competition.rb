@@ -10,7 +10,4 @@ class Competition < ActiveRecord::Base
 
   belongs_to :country
   validates :country, presence: true
-
-  belongs_to :default_registration_country, class_name: 'Country'
-  validates :default_registration_country, presence: true
 end

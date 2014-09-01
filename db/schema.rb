@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140901222509) do
+ActiveRecord::Schema.define(version: 20140901224544) do
 
   create_table "competitions", force: true do |t|
     t.string   "name"
@@ -22,9 +22,8 @@ ActiveRecord::Schema.define(version: 20140901222509) do
     t.string   "city_name_short"
     t.string   "venue_address"
     t.integer  "country_id"
-    t.integer  "default_registration_country_id"
-    t.boolean  "cc_orga",                         default: false
-    t.boolean  "registration_open",               default: false
+    t.boolean  "cc_orga",           default: false
+    t.boolean  "registration_open", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
