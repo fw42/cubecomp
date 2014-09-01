@@ -3,8 +3,10 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
 
-  # Add more helper methods to be used by all tests here...
+  def assert_not_valid(object, attribute)
+    refute object.valid?, "record shouldn't be valid"
+    assert_not_equal [], object.errors[attribute], "record should have errors"
+  end
 end
