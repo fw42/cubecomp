@@ -4,3 +4,10 @@ aachen_open:
   staff_email: cube@hackvalue.de
   city_name: Aachen
   country: germany
+
+german_open:
+  name: German Open 2014
+  handle: go14
+  staff_email: german_open@something.com
+  city_name: Gütersloh
+  country: germany
