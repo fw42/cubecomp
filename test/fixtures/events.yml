@@ -1,0 +1,9 @@
+rubiks_cube:
+  competition: aachen_open
+  day: one
+  name_short: 3x3x3
+  name_long: Rubik's Cube
+  handle: 333
+  start_time: 09:00
+  max_number_of_registrations: 42
+  state: open_for_registration

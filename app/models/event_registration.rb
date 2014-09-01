@@ -6,5 +6,6 @@ class EventRegistration < ActiveRecord::Base
   validates :event, presence: true
 
   belongs_to :competitor
-  validates :competitor, presence: true, uniqueness: { scope: :event }
+  validates :competitor, presence: true
+  validates :competitor, uniqueness: { scope: :event }, allow_nil: true
 end

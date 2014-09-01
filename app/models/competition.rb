@@ -1,6 +1,10 @@
 class Competition < ActiveRecord::Base
-  validates :name, presence: true, uniqueness: true
-  validates :handle, presence: true, uniqueness: true
+  validates :name, presence: true
+  validates :name, uniqueness: true, allow_nil: true, allow_blank: true
+
+  validates :handle, presence: true
+  validates :handle, uniqueness: true, allow_nil: true, allow_blank: true
+
   validates :staff_email, presence: true
   validates :city_name, presence: true
 

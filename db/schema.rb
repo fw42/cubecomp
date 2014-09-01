@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140901161831) do
+ActiveRecord::Schema.define(version: 20140901222509) do
 
   create_table "competitions", force: true do |t|
     t.string   "name"
@@ -102,7 +102,6 @@ ActiveRecord::Schema.define(version: 20140901161831) do
   create_table "permissions", force: true do |t|
     t.integer  "competition_id"
     t.integer  "user_id"
-    t.boolean  "admin",          default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -111,6 +110,7 @@ ActiveRecord::Schema.define(version: 20140901161831) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "super_admin"
   end
 
 end

@@ -3,5 +3,6 @@ class Permission < ActiveRecord::Base
   validates :competition, presence: true
 
   belongs_to :user
-  validates :user, presence: true, uniqueness: { scope: :competition }
+  validates :user, presence: true
+  validates :user, uniqueness: { scope: :competition }, allow_nil: true
 end
