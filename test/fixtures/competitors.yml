@@ -7,6 +7,15 @@ flo_aachen_open:
   birthday: 1985-12-18
   country: germany
 
+basti_aachen_open:
+  competition: aachen_open
+  wca: 2008AURO01
+  first_name: Sébastien
+  last_name: Auroux
+  email: basti@basti.com
+  birthday: 1980-01-01
+  country: germany
+
 basti_german_open:
   competition: german_open
   wca: 2008AURO01
