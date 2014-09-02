@@ -1,6 +1,5 @@
 class Permission < ActiveRecord::Base
-  belongs_to :competition
-  validates :competition, presence: true
+  include BelongsToCompetition
 
   belongs_to :user
   validates :user, presence: true

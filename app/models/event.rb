@@ -1,13 +1,12 @@
 class Event < ActiveRecord::Base
+  include BelongsToCompetition
+
   STATES = [
     'open_for_registration',
     'open_with_waiting_list',
     'registration_closed',
     'not_for_registration'
   ]
-
-  belongs_to :competition
-  validates :competition, presence: true
 
   belongs_to :day
   validates :day, presence: true

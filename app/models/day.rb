@@ -1,6 +1,5 @@
 class Day < ActiveRecord::Base
-  belongs_to :competition
-  validates :competition, presence: true
+  include BelongsToCompetition
 
   validates :date, presence: true
   validates :date, uniqueness: { scope: :competition }, allow_nil: true

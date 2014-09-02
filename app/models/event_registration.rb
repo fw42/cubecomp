@@ -1,6 +1,5 @@
 class EventRegistration < ActiveRecord::Base
-  belongs_to :competition
-  validates :competition, presence: true
+  include BelongsToCompetition
 
   belongs_to :event
   validates :event, presence: true
