@@ -25,4 +25,11 @@ class DayTest < ActiveSupport::TestCase
     another_day.competition = competitions(:german_open)
     assert_valid another_day
   end
+
+  test "destroying day destroys all the events of that day" do
+    count = @day.events.count
+    assert_difference "Event.count", -1 * count do
+      @day.destroy
+    end
+  end
 end

@@ -36,4 +36,11 @@ class UserTest < ActiveSupport::TestCase
     refute @user.authenticate('wrong')
     assert @user.authenticate('foobar')
   end
+
+  test "destroying user destroys permissions" do
+    count = @user.permissions.count
+    assert_difference "Permission.count", -1 * count do
+      @user.destroy
+    end
+  end
 end

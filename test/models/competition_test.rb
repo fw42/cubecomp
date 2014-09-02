@@ -61,4 +61,46 @@ class CompetitionTest < ActiveSupport::TestCase
     @competition.country_id = 12345
     assert_not_valid(@competition, :country)
   end
+
+  test "destroys competitors" do
+    count = @competition.competitors.count
+    assert_difference "Competitor.count", -1 * count do
+      @competition.destroy
+    end
+  end
+
+  test "destroys days" do
+    count = @competition.days.count
+    assert_difference "Day.count", -1 * count do
+      @competition.destroy
+    end
+  end
+
+  test "destroys events" do
+    count = @competition.events.count
+    assert_difference "Event.count", -1 * count do
+      @competition.destroy
+    end
+  end
+
+  test "destroys event_registrations" do
+    count = @competition.event_registrations.count
+    assert_difference "EventRegistration.count", -1 * count do
+      @competition.destroy
+    end
+  end
+
+  test "destroys news" do
+    count = @competition.news.count
+    assert_difference "News.count", -1 * count do
+      @competition.destroy
+    end
+  end
+
+  test "destroys permissions" do
+    count = @competition.permissions.count
+    assert_difference "Permission.count", -1 * count do
+      @competition.destroy
+    end
+  end
 end

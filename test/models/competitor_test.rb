@@ -83,4 +83,13 @@ class CompetitorTest < ActiveSupport::TestCase
     @competitor.country_id = 1234
     assert_not_valid(@competitor, :country)
   end
+
+  test "destroying competitor destroys event_registrations but not events" do
+    count = @competitor.event_registrations.count
+    assert_difference "EventRegistration.count", -1 * count do
+      assert_no_difference "Event.count" do
+        @competitor.destroy
+      end
+    end
+  end
 end
