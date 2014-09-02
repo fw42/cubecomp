@@ -7,3 +7,4 @@ rubiks_cube:
   start_time: 09:00
   max_number_of_registrations: 42
   state: open_for_registration
+  day: aachen_open_day_one
