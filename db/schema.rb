@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140901230347) do
+ActiveRecord::Schema.define(version: 20140902015933) do
 
   create_table "competitions", force: true do |t|
     t.string   "name"
@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 20140901230347) do
     t.datetime "updated_at"
   end
 
+  add_index "competitors", ["competition_id"], name: "index_competitors_on_competition_id"
+
   create_table "countries", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -63,6 +65,8 @@ ActiveRecord::Schema.define(version: 20140901230347) do
     t.datetime "updated_at"
   end
 
+  add_index "days", ["competition_id"], name: "index_days_on_competition_id"
+
   create_table "event_registrations", force: true do |t|
     t.integer  "competition_id"
     t.integer  "event_id"
@@ -70,6 +74,8 @@ ActiveRecord::Schema.define(version: 20140901230347) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "event_registrations", ["competition_id"], name: "index_event_registrations_on_competition_id"
 
   create_table "events", force: true do |t|
     t.integer  "competition_id"
@@ -89,6 +95,8 @@ ActiveRecord::Schema.define(version: 20140901230347) do
     t.datetime "updated_at"
   end
 
+  add_index "events", ["competition_id"], name: "index_events_on_competition_id"
+
   create_table "news", force: true do |t|
     t.integer  "competition_id"
     t.datetime "time"
@@ -98,12 +106,16 @@ ActiveRecord::Schema.define(version: 20140901230347) do
     t.datetime "updated_at"
   end
 
+  add_index "news", ["competition_id"], name: "index_news_on_competition_id"
+
   create_table "permissions", force: true do |t|
     t.integer  "competition_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "permissions", ["competition_id", "user_id"], name: "index_permissions_on_competition_id_and_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email"
