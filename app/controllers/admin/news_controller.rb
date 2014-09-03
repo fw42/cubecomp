@@ -1,2 +1,2 @@
-class Admin::NewsController < ApplicationController
+class Admin::NewsController < AdminController
 end

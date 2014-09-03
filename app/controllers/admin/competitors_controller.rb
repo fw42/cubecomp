@@ -1,2 +1,2 @@
-class Admin::CompetitorsController < ApplicationController
+class Admin::CompetitorsController < AdminController
 end
