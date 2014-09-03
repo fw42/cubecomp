@@ -1,16 +1,95 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Cubecomp</title>
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<h1>Admin</h1>
+    <title>Cubecomp</title>
 
-<%= yield %>
+    <%= stylesheet_link_tag 'admin', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'admin', 'data-turbolinks-track' => true %>
 
-</body>
+    <%= csrf_meta_tags %>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div id="wrapper">
+      <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="<%= admin_root_path %>">Cubecomp</a>
+        </div>
+
+        <ul class="nav navbar-top-links navbar-right">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li>
+                <a href="#">
+                  <i class="fa fa-user fa-fw"></i> User Profile
+                </a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href="<%= admin_logout_path %>">
+                  <i class="fa fa-sign-out fa-fw"></i> Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="navbar-default sidebar" role="navigation">
+          <div class="sidebar-nav navbar-collapse">
+            <ul class="nav" id="side-menu">
+              <li class="sidebar-search">
+                <div class="input-group custom-search-form">
+                  <select type="text" class="form-control" placeholder="Search...">
+                    <option>foo</option>
+                  </select>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </span>
+                </div>
+              </li>
+
+              <li><a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
+              <li><a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a></li>
+              <li><a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a></li>
+
+              <li class="active">
+                <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                  <li><a class="active" href="blank.html">Blank Page</a></li>
+                  <li><a href="login.html">Login Page</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div id="page-wrapper">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="page-header">Blank</h1>
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
