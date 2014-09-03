@@ -9,7 +9,8 @@ Rails.application.routes.draw do
 
     resources :users
 
-    scope ':competition_handle' do
+    scope ':competition_id' do
+      resources :dashboard, only: [:index]
       resources :competitors
       resources :events
       resources :news

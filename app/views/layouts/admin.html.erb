@@ -36,7 +36,7 @@
             </a>
             <ul class="dropdown-menu dropdown-user">
               <li>
-                <a href="#">
+                <a href="<%= admin_user_path(current_user) %>">
                   <i class="fa fa-user fa-fw"></i> User Profile
                 </a>
               </li>
@@ -55,28 +55,24 @@
             <ul class="nav" id="side-menu">
               <li class="sidebar-search">
                 <div class="input-group custom-search-form">
-                  <select type="text" class="form-control" placeholder="Search...">
-                    <option>foo</option>
+                  <select class="form-control">
+                    <% current_user.competitions.each do |competition| %>
+                      <option value="<%= competition.handle %>">
+                        <%= competition.name %>
+                      </option>
+                    <% end %>
                   </select>
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">
-                      <i class="fa fa-search"></i>
-                    </button>
-                  </span>
                 </div>
               </li>
 
-              <li><a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
-              <li><a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a></li>
-              <li><a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a></li>
-
-              <li class="active">
-                <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                  <li><a class="active" href="blank.html">Blank Page</a></li>
-                  <li><a href="login.html">Login Page</a></li>
-                </ul>
-              </li>
+              <% navigation_menu.each do |menu_item| %>
+                <li>
+                  <a <% if menu_item.active? %>class="active"<% end %> href="<%= menu_item.url %>">
+                    <i class="fa <%= menu_item.css %> fa-fw"></i>
+                    <%= menu_item.label %>
+                  </a>
+                </li>
+              <% end %>
             </ul>
           </div>
         </div>
@@ -85,7 +81,7 @@
       <div id="page-wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h1 class="page-header">Blank</h1>
+            <h1 class="page-header"><%= yield(:page_title) %></h1>
             <%= yield %>
           </div>
         </div>
