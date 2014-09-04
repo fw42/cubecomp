@@ -7,3 +7,11 @@
  * require_tree .
  *= require_tree ../../../vendor/assets/stylesheets/sb-admin-2
  */
+
+@import "../../../vendor/assets/stylesheets/sb-admin-2/bootstrap.scss";
+
+table {
+  @extend .table;
+  @extend .table-striped;
+  @extend .table-hover;
+}
