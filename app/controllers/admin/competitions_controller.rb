@@ -41,7 +41,8 @@ class Admin::CompetitionsController < AdminController
   private
 
   def set_competition
-    @competition = session[:competition_id] = Competition.find(params[:id])
+    @competition = Competition.find(params[:id])
+    session[:competition_id] = @competition.id
   end
 
   def competition_params

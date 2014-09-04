@@ -1,0 +1,29 @@
+<% page_title 'News' %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th>Locale</th>
+      <th>Text</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @news.each do |news| %>
+      <tr>
+        <td><%= news.time %></td>
+        <td><%= news.locale %></td>
+        <td><%= news.text %></td>
+        <td><%= link_to 'Show', admin_news_path(news) %></td>
+        <td><%= link_to 'Edit', edit_admin_news_path(news) %></td>
+        <td><%= link_to 'Destroy', admin_news_path(news), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New News item', new_admin_competition_news_path %>

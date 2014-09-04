@@ -30,25 +30,25 @@ class AdminController < ApplicationController
       {
         label: 'Dashboard',
         controller: Admin::DashboardController,
-        url: admin_dashboard_index_path(current_competition),
+        url: admin_competition_dashboard_index_path(current_competition),
         css: 'fa-dashboard'
       },
       {
         label: 'Competitors',
         controller: Admin::CompetitorsController,
-        url: admin_competitors_path(current_competition),
+        url: admin_competition_competitors_path(current_competition),
         css: 'fa-list-alt'
       },
       {
         label: 'Events',
         controller: Admin::EventsController,
-        url: admin_events_path(current_competition),
+        url: admin_competition_events_path(current_competition),
         css: 'fa-table'
       },
       {
         label: 'News',
         controller: Admin::NewsController,
-        url: admin_news_index_path(current_competition),
+        url: admin_competition_news_index_path(current_competition),
         css: 'fa-files-o'
       }
     ]
