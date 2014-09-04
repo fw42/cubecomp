@@ -12,4 +12,15 @@ class Competition < ActiveRecord::Base
 
   belongs_to :country
   validates :country, presence: true
+
+  belongs_to :delegate, class_name: 'User', foreign_key: 'delegate_user_id'
+
+  has_many :news, dependent: :destroy
+  has_many :competitors, dependent: :destroy
+  has_many :days, dependent: :destroy
+  has_many :events, dependent: :destroy
+  has_many :event_registrations, dependent: :destroy
+
+  has_many :permissions, dependent: :destroy
+  has_many :users, through: :permissions
 end

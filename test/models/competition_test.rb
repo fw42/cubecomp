@@ -97,10 +97,12 @@ class CompetitionTest < ActiveSupport::TestCase
     end
   end
 
-  test "destroys permissions" do
+  test "destroys permissions but not the users" do
     count = @competition.permissions.count
     assert_difference "Permission.count", -1 * count do
-      @competition.destroy
+      assert_no_difference "User.count" do
+        @competition.destroy
+      end
     end
   end
 end
