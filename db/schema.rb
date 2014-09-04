@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140904005814) do
+ActiveRecord::Schema.define(version: 20140904225246) do
 
   create_table "competitions", force: true do |t|
     t.string   "name"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20140904005814) do
     t.boolean  "registration_open", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "delegate_user_id"
   end
 
   add_index "competitions", ["handle"], name: "index_competitions_on_handle"
