@@ -1,3 +1,5 @@
 flo:
   email: flo@hackvalue.de
+  first_name: Florian
+  last_name: Weingarten
   super_admin: true
