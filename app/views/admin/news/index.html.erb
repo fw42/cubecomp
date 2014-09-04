@@ -6,7 +6,7 @@
       <th>Time</th>
       <th>Locale</th>
       <th>Text</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -16,7 +16,6 @@
         <td><%= news.time %></td>
         <td><%= news.locale %></td>
         <td><%= news.text %></td>
-        <td><%= link_to 'Show', admin_news_path(news) %></td>
         <td><%= link_to 'Edit', edit_admin_news_path(news) %></td>
         <td><%= link_to 'Destroy', admin_news_path(news), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

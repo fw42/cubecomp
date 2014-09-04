@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       resources :dashboard, only: [:index]
       resources :competitors, shallow: true
       resources :events, shallow: true
-      resources :news, shallow: true
+      resources :news, except: [:show], shallow: true
     end
   end
 end

@@ -5,9 +5,6 @@ class Admin::NewsController < AdminController
     @news = current_competition.news.all
   end
 
-  def show
-  end
-
   def new
     @competition = current_competition
     @news = current_competition.news.new

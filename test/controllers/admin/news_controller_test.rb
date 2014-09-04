@@ -29,11 +29,6 @@ class Admin::NewsControllerTest < ActionController::TestCase
     assert_redirected_to admin_news_path(assigns(:news))
   end
 
-  test "#show" do
-    get :show, id: @news
-    assert_response :success
-  end
-
   test "#edit" do
     get :edit, id: @news
     assert_response :success
