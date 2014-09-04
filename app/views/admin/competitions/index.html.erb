@@ -7,6 +7,7 @@
       <th>Name</th>
       <th>Country</th>
       <th>Registration</th>
+      <th>Competitors</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= competition.name %></td>
         <td><%= competition.country.name %></td>
         <td><%= competition.registration_open ? 'open' : 'closed' %></td>
+        <td><%= competition.competitors.count %></td>
         <td><%= link_to 'Show', [:admin, competition] %></td>
         <td><%= link_to 'Edit', edit_admin_competition_path(competition) %></td>
         <td><%= link_to 'Destroy', [:admin, competition], method: :delete, data: { confirm: 'Are you sure?' } %></td>
