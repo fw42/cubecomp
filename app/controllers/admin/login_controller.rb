@@ -1,5 +1,6 @@
 class Admin::LoginController < ApplicationController
   def login
+    reset_session
   end
 
   def logout
