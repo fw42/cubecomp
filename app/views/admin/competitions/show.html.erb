@@ -1,0 +1,56 @@
+<% page_title @competition.name %>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @competition.name %>
+</p>
+
+<p>
+  <strong>Handle:</strong>
+  <%= @competition.handle %>
+</p>
+
+<p>
+  <strong>Staff email:</strong>
+  <%= @competition.staff_email %>
+</p>
+
+<p>
+  <strong>Staff name:</strong>
+  <%= @competition.staff_name %>
+</p>
+
+<p>
+  <strong>City name:</strong>
+  <%= @competition.city_name %>
+</p>
+
+<p>
+  <strong>City name short:</strong>
+  <%= @competition.city_name_short %>
+</p>
+
+<p>
+  <strong>Venue address:</strong>
+  <%= @competition.venue_address %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @competition.country.name %>
+</p>
+
+<p>
+  <strong>Cc orga:</strong>
+  <%= @competition.cc_orga %>
+</p>
+
+<p>
+  <strong>Registration open:</strong>
+  <%= @competition.registration_open %>
+</p>
+
+<%= link_to 'Edit', edit_admin_competition_path(@competition) %> |
+<%= link_to 'Back', admin_competitions_path %>
