@@ -17,23 +17,20 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
   end
 
   test "#create" do
+    params = {
+      city_name: 'Gütersloh',
+      country_id: countries(:germany).id,
+      handle: 'go15',
+      name: 'German Open 2015',
+      staff_email: 'german-open@cubecomp.de'
+    }
+
     assert_difference('Competition.count') do
-      post :create, competition: {
-        city_name: 'Gütersloh',
-        country_id: countries(:germany).id,
-        handle: 'go15',
-        name: 'German Open 2015',
-        staff_email: 'german-open@cubecomp.de'
-      }
+      post :create, competition: params
     end
 
     assert_redirected_to admin_competition_path(assigns(:competition))
-    competition = Competition.find_by(handle: 'go15')
-    assert_equal 'Gütersloh', competition.city_name
-    assert_equal countries(:germany).id, competition.country.id
-    assert_equal 'go15', competition.handle
-    assert_equal 'German Open 2015', competition.name
-    assert_equal 'german-open@cubecomp.de', competition.staff_email
+    assert_attributes(params, Competition.find_by(handle: 'go15'))
   end
 
   test "#show" do
@@ -47,7 +44,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
   end
 
   test "#update" do
-    patch :update, id: @competition, competition: {
+    params = {
       cc_orga: true,
       city_name: "Aix la chapelle",
       city_name_short: "AAC",
@@ -60,18 +57,10 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
       venue_address: 'rwth'
     }
 
+    patch :update, id: @competition, competition: params
+
     assert_redirected_to admin_competition_path(assigns(:competition))
-    @competition.reload
-    assert_equal true, @competition.cc_orga
-    assert_equal 'Aix la chapelle', @competition.city_name
-    assert_equal 'AAC', @competition.city_name_short
-    assert_equal countries(:germany).id, @competition.country.id
-    assert_equal 'aac14', @competition.handle
-    assert_equal 'Aachen Winter Open 2014', @competition.name
-    assert_equal true, @competition.registration_open
-    assert_equal 'ao-winter@cubecomp.de', @competition.staff_email
-    assert_equal 'aachen team', @competition.staff_name
-    assert_equal 'rwth', @competition.venue_address
+    assert_attributes(params, @competition.reload)
   end
 
   test "#destroy" do

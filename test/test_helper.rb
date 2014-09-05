@@ -13,4 +13,9 @@ class ActiveSupport::TestCase
   def assert_valid(object)
     assert object.valid?, "record should be valid"
   end
+
+  def assert_attributes(expected_attributes, object)
+    actual_attributes = object.attributes.symbolize_keys.slice(*expected_attributes.keys)
+    assert_equal expected_attributes, actual_attributes
+  end
 end

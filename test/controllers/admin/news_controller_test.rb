@@ -18,15 +18,20 @@ class Admin::NewsControllerTest < ActionController::TestCase
   end
 
   test "#create" do
-    assert_difference('News.count') do
-      post :create, competition_id: @competition, news: {
-        locale: @news.locale,
-        text: @news.text,
-        time: @news.time
-      }
+    params = {
+      locale: 'de',
+      text: 'hello',
+      time: '2014-09-04'
+    }
+
+    assert_difference('@competition.news.count') do
+      post :create, competition_id: @competition, news: params
     end
 
     assert_redirected_to admin_news_path(assigns(:news))
+    news = @competition.news.last
+    assert_attributes(params.except(:time), news)
+    assert_equal Time.parse(params[:time]), news.time
   end
 
   test "#edit" do
@@ -35,17 +40,22 @@ class Admin::NewsControllerTest < ActionController::TestCase
   end
 
   test "#update" do
-    patch :update, id: @news, news: {
-      locale: @news.locale,
-      text: @news.text,
-      time: @news.time
+    params = {
+      locale: 'de',
+      text: 'hello',
+      time: '2014-09-04'
     }
 
+    patch :update, id: @news, news: params
+
     assert_redirected_to admin_news_path(assigns(:news))
+    news = @competition.news.last
+    assert_attributes(params.except(:time), news)
+    assert_equal Time.parse(params[:time]), news.time
   end
 
   test "#destroy" do
-    assert_difference('News.count', -1) do
+    assert_difference('@competition.news.count', -1) do
       delete :destroy, id: @news
     end
 

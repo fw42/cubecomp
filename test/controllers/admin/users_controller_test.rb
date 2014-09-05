@@ -17,20 +17,21 @@ class Admin::UsersControllerTest < ActionController::TestCase
   end
 
   test "#create" do
+    params = {
+      email: 'bob@cubecomp.de',
+      first_name: 'Bob',
+      last_name: 'Bobsen',
+      password: 'foobar'
+    }
+
     assert_difference('User.count') do
-      post :create, user: {
-        email: 'bob@cubecomp.de',
-        first_name: 'Bob',
-        last_name: 'Bobsen',
-        password: 'foobar'
-      }
+      post :create, user: params
     end
 
     assert_redirected_to admin_user_path(assigns(:user))
     user = User.find_by(email: 'bob@cubecomp.de')
-    assert_equal 'Bob', user.first_name
-    assert_equal 'Bobsen', user.last_name
-    assert user.authenticate('foobar')
+    assert_attributes(params.except(:password), user)
+    assert user.authenticate(params[:password])
   end
 
   test "#show" do
@@ -44,18 +45,19 @@ class Admin::UsersControllerTest < ActionController::TestCase
   end
 
   test "#update" do
-    patch :update, id: @user, user: {
+    params = {
       email: 'bob@cubecomp.de',
       first_name: 'Bob',
       last_name: 'Bobsen',
       password: 'foobar'
     }
 
+    patch :update, id: @user, user: params
+
     assert_redirected_to admin_user_path(assigns(:user))
     user = User.find_by(email: 'bob@cubecomp.de')
-    assert_equal 'Bob', user.first_name
-    assert_equal 'Bobsen', user.last_name
-    assert user.authenticate('foobar')
+    assert_attributes(params.except(:password), user)
+    assert user.authenticate(params[:password])
   end
 
   test "#destroy" do

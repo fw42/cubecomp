@@ -15,4 +15,8 @@ class Competitor < ActiveRecord::Base
 
   has_many :event_registrations, dependent: :destroy
   has_many :events, through: :event_registrations
+
+  def name
+    [first_name, last_name].join(" ")
+  end
 end
