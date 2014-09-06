@@ -10,16 +10,16 @@ class AdminController < ApplicationController
 
   def current_competition
     @current_competition ||= begin
-      if competition_id = params[:competition_id] || session[:competition_id]
+      competition = if competition_id = params[:competition_id] || session[:competition_id]
         current_user.competitions.find(competition_id)
-      else
-        current_user.competitions.first
       end
+
+      competition || current_user.competitions.first
     end
   end
   helper_method :current_competition
 
-  def navigation_menu
+  def super_admin_menu
     items = [
       {
         label: 'Competitions',
@@ -27,6 +27,20 @@ class AdminController < ApplicationController
         url: admin_competitions_path,
         css: 'fa-wrench'
       },
+      {
+        label: 'Users',
+        controller: Admin::UsersController,
+        url: admin_users_path,
+        css: 'fa-user'
+      }
+    ]
+
+    MenuItem.parse(self, items)
+  end
+  helper_method :super_admin_menu
+
+  def navigation_menu
+    items = [
       {
         label: 'Dashboard',
         controller: Admin::DashboardController,
@@ -49,20 +63,24 @@ class AdminController < ApplicationController
         label: 'News',
         controller: Admin::NewsController,
         url: admin_competition_news_index_path(current_competition),
-        css: 'fa-files-o'
+        css: 'fa-star'
       },
       {
         label: 'Theme',
         controller: Admin::ThemeFilesController,
         url: admin_competition_theme_files_path(current_competition),
-        css: ''
+        css: 'fa-files-o'
+      },
+      {
+        label: 'Settings',
+        controller: Admin::CompetitionsController,
+        actions: ['edit'],
+        url: edit_admin_competition_path(current_competition),
+        css: 'fa-wrench'
       }
     ]
 
-    items.map do |options|
-      options = options.merge(current_controller_instance: self)
-      MenuItem.new(**options)
-    end
+    MenuItem.parse(self, items)
   end
   helper_method :navigation_menu
 end

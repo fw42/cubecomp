@@ -1,6 +1,11 @@
-<% page_title @competition.name %>
+<p id="notice"><%= notice %></p>
+
+<% if current_competition == @competition %>
+  <% page_title 'Settings' %>
+<% else %>
+  <% page_title @competition.name %>
+<% end %>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', [:admin, @competition] %> |
 <%= link_to 'Back', admin_competitions_path %>

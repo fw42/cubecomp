@@ -66,11 +66,21 @@
               </li>
 
               <% navigation_menu.each do |menu_item| %>
-                <li>
-                  <a <% if menu_item.active? %>class="active"<% end %> href="<%= menu_item.url %>">
-                    <i class="fa <%= menu_item.css %> fa-fw"></i>
-                    <%= menu_item.label %>
+                <%= render 'navigation_item', item: menu_item %>
+              <% end %>
+
+              <% if current_user.super_admin? %>
+                <li><br/><br/></li>
+
+                <li <% if super_admin_menu.any?(&:active?) %>class="active"<% end %>>
+                  <a href="#">
+                    <i class="fa fa-cog fa-fw"></i> Admin<span class="fa arrow"></span>
                   </a>
+                  <ul class="nav nav-second-level">
+                    <% super_admin_menu.each do |menu_item| %>
+                      <%= render 'navigation_item', item: menu_item %>
+                    <% end %>
+                  </ul>
                 </li>
               <% end %>
             </ul>

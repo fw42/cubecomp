@@ -1,0 +1,6 @@
+<li>
+  <a <% if item.active? %>class="active"<% end %> href="<%= item.url %>">
+    <i class="fa <%= item.css %> fa-fw"></i>
+    <%= item.label %>
+  </a>
+</li>

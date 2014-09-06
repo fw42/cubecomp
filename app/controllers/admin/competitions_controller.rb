@@ -1,11 +1,8 @@
 class Admin::CompetitionsController < AdminController
-  before_action :set_competition, only: [:show, :edit, :update, :destroy]
+  before_action :set_competition, only: [:edit, :update, :destroy]
 
   def index
     @competitions = Competition.all
-  end
-
-  def show
   end
 
   def new
@@ -19,7 +16,7 @@ class Admin::CompetitionsController < AdminController
     @competition = Competition.new(competition_params)
 
     if @competition.save
-      redirect_to [:admin, @competition], notice: 'Competition was successfully created.'
+      redirect_to admin_competitions_path, notice: 'Competition was successfully created.'
     else
       render :new
     end
@@ -27,7 +24,7 @@ class Admin::CompetitionsController < AdminController
 
   def update
     if @competition.update(competition_params)
-      redirect_to [:admin, @competition], notice: 'Competition was successfully updated.'
+      redirect_to edit_admin_competition_path(@competition), notice: 'Competition was successfully updated.'
     else
       render :edit
     end
@@ -42,7 +39,6 @@ class Admin::CompetitionsController < AdminController
 
   def set_competition
     @competition = Competition.find(params[:id])
-    session[:competition_id] = @competition.id
   end
 
   def competition_params

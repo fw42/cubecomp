@@ -29,13 +29,8 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
       post :create, competition: params
     end
 
-    assert_redirected_to admin_competition_path(assigns(:competition))
+    assert_redirected_to admin_competitions_path
     assert_attributes(params, Competition.find_by(handle: 'go15'))
-  end
-
-  test "#show" do
-    get :show, id: @competition
-    assert_response :success
   end
 
   test "#edit" do
@@ -59,7 +54,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
 
     patch :update, id: @competition, competition: params
 
-    assert_redirected_to admin_competition_path(assigns(:competition))
+    assert_redirected_to edit_admin_competition_path(assigns(:competition))
     assert_attributes(params, @competition.reload)
   end
 
