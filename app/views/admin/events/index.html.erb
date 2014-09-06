@@ -1,0 +1,39 @@
+<h1>Listing events</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>Handle</th>
+      <th>Name short</th>
+      <th>Name long</th>
+      <th>Start time</th>
+      <th>Length in minutes</th>
+      <th>Max number of registrations</th>
+      <th>State</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @events.each do |event| %>
+      <tr>
+        <td><%= event.day.date %></td>
+        <td><%= event.handle %></td>
+        <td><%= event.name_short %></td>
+        <td><%= event.name %></td>
+        <td><%= event.start_time %></td>
+        <td><%= event.length_in_minutes %></td>
+        <td><%= event.max_number_of_registrations %></td>
+        <td><%= event.state %></td>
+        <td><%= link_to 'Show', admin_event_path(event) %></td>
+        <td><%= link_to 'Edit', edit_admin_event_path(event) %></td>
+        <td><%= link_to 'Destroy', admin_event_path(event), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Event', new_admin_competition_event_path %>

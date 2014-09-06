@@ -29,12 +29,12 @@ class EventTest < ActiveSupport::TestCase
     assert_not_valid(@event, :name_short)
   end
 
-  test "validates presence of name_long" do
-    @event.name_long = nil
-    assert_not_valid(@event, :name_long)
+  test "validates presence of name" do
+    @event.name = nil
+    assert_not_valid(@event, :name)
 
-    @event.name_long = ''
-    assert_not_valid(@event, :name_long)
+    @event.name = ''
+    assert_not_valid(@event, :name)
   end
 
   test "validates presence of handle unless not_for_registration" do

@@ -1,0 +1,49 @@
+<%= form_for([:admin, @competition, @event]) do |f| %>
+  <% if @event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+      <% @event.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :day_id %><br>
+    <%= f.text_field :day_id %>
+  </div>
+  <div class="field">
+    <%= f.label :handle %><br>
+    <%= f.text_field :handle %>
+  </div>
+  <div class="field">
+    <%= f.label :name_short %><br>
+    <%= f.text_field :name_short %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :start_time %><br>
+    <%= f.text_field :start_time %>
+  </div>
+  <div class="field">
+    <%= f.label :length_in_minutes %><br>
+    <%= f.text_field :length_in_minutes %>
+  </div>
+  <div class="field">
+    <%= f.label :max_number_of_registrations %><br>
+    <%= f.text_field :max_number_of_registrations %>
+  </div>
+  <div class="field">
+    <%= f.label :state %><br>
+    <%= f.text_field :state %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

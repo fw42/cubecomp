@@ -1,3 +1,7 @@
 aachen_open_day_one:
   date: 2014-01-01
   competition: aachen_open
+
+aachen_open_day_two:
+  date: 2014-01-02
+  competition: aachen_open
