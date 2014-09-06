@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resources :competitors, shallow: true
       resources :events, shallow: true
       resources :news, except: [:show], shallow: true
+      resources :theme_files, except: [:show], shallow: true
     end
   end
 end

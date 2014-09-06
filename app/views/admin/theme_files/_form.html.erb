@@ -1,0 +1,25 @@
+<%= form_for([:admin, @competition, @theme_file]) do |f| %>
+  <% if @theme_file.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@theme_file.errors.count, "error") %> prohibited this theme file from being saved:</h2>
+
+      <ul>
+      <% @theme_file.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :filename %><br>
+    <%= f.text_field :filename %>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br>
+    <%= f.text_field :content %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

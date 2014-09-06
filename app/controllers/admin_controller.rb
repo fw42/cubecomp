@@ -50,6 +50,12 @@ class AdminController < ApplicationController
         controller: Admin::NewsController,
         url: admin_competition_news_index_path(current_competition),
         css: 'fa-files-o'
+      },
+      {
+        label: 'Theme',
+        controller: Admin::ThemeFilesController,
+        url: admin_competition_theme_files_path(current_competition),
+        css: ''
       }
     ]
 

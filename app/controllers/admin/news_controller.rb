@@ -1,5 +1,5 @@
 class Admin::NewsController < AdminController
-  before_action :set_news, only: [:show, :edit, :update, :destroy]
+  before_action :set_news, only: [:edit, :update, :destroy]
 
   def index
     @news = current_competition.news.all
