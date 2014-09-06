@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140906184425) do
+ActiveRecord::Schema.define(version: 20140906202007) do
 
   create_table "competitions", force: true do |t|
     t.string   "name"
@@ -100,6 +100,16 @@ ActiveRecord::Schema.define(version: 20140906184425) do
 
   add_index "events", ["competition_id"], name: "index_events_on_competition_id"
 
+  create_table "locales", force: true do |t|
+    t.string   "handle"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "competition_id"
+  end
+
+  add_index "locales", ["competition_id"], name: "index_locales_on_competition_id"
+
   create_table "news", force: true do |t|
     t.integer  "competition_id"
     t.datetime "time"
@@ -111,7 +121,7 @@ ActiveRecord::Schema.define(version: 20140906184425) do
 
   add_index "news", ["competition_id"], name: "index_news_on_competition_id"
 
-  create_table "page_template_bodies", force: true do |t|
+  create_table "page_bodies", force: true do |t|
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -120,9 +130,10 @@ ActiveRecord::Schema.define(version: 20140906184425) do
   create_table "pages", force: true do |t|
     t.integer  "competition_id"
     t.string   "handle"
-    t.integer  "page_template_body_id"
+    t.integer  "page_body_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "locale"
   end
 
   add_index "pages", ["handle"], name: "index_pages_on_handle"

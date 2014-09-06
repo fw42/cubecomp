@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class PageTemplateBodyTest < ActiveSupport::TestCase
+class PageBodyTest < ActiveSupport::TestCase
   setup do
-    @body = page_template_bodies(:aachen_open_index)
+    @body = page_bodies(:aachen_open_index)
   end
 
   test "validates presence of content" do

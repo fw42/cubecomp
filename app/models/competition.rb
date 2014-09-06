@@ -20,6 +20,8 @@ class Competition < ActiveRecord::Base
   has_many :days, dependent: :destroy
   has_many :events, dependent: :destroy
   has_many :event_registrations, dependent: :destroy
+  has_many :locales, dependent: :destroy
+  has_many :pages, dependent: :destroy
 
   has_many :permissions, dependent: :destroy
   has_many :users, through: :permissions

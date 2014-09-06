@@ -1,9 +1,5 @@
-default_index:
-  competition:
-  handle: schedule
-  template_body: default_schedule
-
 aachen_open_index:
+  locale: de
   competition: aachen_open
-  handle: index
-  template_body: aachen_open_index
+  handle: index.html
+  body: aachen_open_index

@@ -105,4 +105,20 @@ class CompetitionTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "destroys locales" do
+    count = @competition.locales.count
+    assert_difference "Locale.count", -1 * count do
+      @competition.destroy
+    end
+  end
+
+  test "destroys pages, but not page_bodies" do
+    count = @competition.pages.count
+    assert_difference "Page.count", -1 * count do
+      assert_no_difference "PageBody.count" do
+        @competition.destroy
+      end
+    end
+  end
 end

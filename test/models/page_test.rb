@@ -22,33 +22,18 @@ class PageTest < ActiveSupport::TestCase
   end
 
   test "validates presence and integrity of template_body" do
-    @page.template_body = nil
-    assert_not_valid(@page, :template_body)
+    @page.body = nil
+    assert_not_valid(@page, :body)
 
-    @page.page_template_body_id = 17
-    assert_not_valid(@page, :template_body)
+    @page.page_body_id = 17
+    assert_not_valid(@page, :body)
   end
 
-  test "does not validate presence of competition, but validates integrity" do
+  test "does validate presence and integrity of competition" do
     @page.competition = nil
-    assert_valid(@page)
+    assert_not_valid(@page, :competition)
 
     @page.competition_id = 17
     assert_not_valid(@page, :competition)
-  end
-
-  test "validates uniqueness of handle for nil competitions" do
-    @page.competition = nil
-    @page.handle = "foobar"
-    other_page = @page.dup
-    @page.save!
-    assert_not_valid(other_page, :handle)
-    other_page.handle = "blabla"
-    assert_valid(other_page)
-  end
-
-  test "default_templates scope" do
-    from_scope = Page.default_templates.pluck(:id).sort
-    assert_equal Page.where(competition_id: nil).pluck(:id).sort, from_scope
   end
 end
