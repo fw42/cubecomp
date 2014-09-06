@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140906202007) do
+ActiveRecord::Schema.define(version: 20140906204411) do
 
   create_table "competitions", force: true do |t|
     t.string   "name"
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 20140906202007) do
     t.integer  "page_body_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "locale"
+    t.integer  "locale_id"
   end
 
   add_index "pages", ["handle"], name: "index_pages_on_handle"
