@@ -113,10 +113,10 @@ class CompetitionTest < ActiveSupport::TestCase
     end
   end
 
-  test "destroys pages, but not page_bodies" do
-    count = @competition.pages.count
-    assert_difference "Page.count", -1 * count do
-      assert_no_difference "PageBody.count" do
+  test "destroys theme_files, but not themes" do
+    count = @competition.theme_files.count
+    assert_difference "ThemeFile.count", -1 * count do
+      assert_no_difference 'Theme.count' do
         @competition.destroy
       end
     end

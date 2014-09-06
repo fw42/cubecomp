@@ -1,0 +1,4 @@
+default_index:
+  theme: default
+  filename: index.html
+  content: Hello!

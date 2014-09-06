@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140906210226) do
+ActiveRecord::Schema.define(version: 20140906213833) do
 
   create_table "competitions", force: true do |t|
     t.string   "name"
@@ -121,23 +121,6 @@ ActiveRecord::Schema.define(version: 20140906210226) do
 
   add_index "news", ["competition_id"], name: "index_news_on_competition_id"
 
-  create_table "page_bodies", force: true do |t|
-    t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "pages", force: true do |t|
-    t.integer  "competition_id"
-    t.string   "handle"
-    t.integer  "page_body_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "locale_id"
-  end
-
-  add_index "pages", ["handle"], name: "index_pages_on_handle"
-
   create_table "permissions", force: true do |t|
     t.integer  "competition_id"
     t.integer  "user_id"
@@ -146,6 +129,24 @@ ActiveRecord::Schema.define(version: 20140906210226) do
   end
 
   add_index "permissions", ["competition_id", "user_id"], name: "index_permissions_on_competition_id_and_user_id"
+
+  create_table "theme_file_templates", force: true do |t|
+    t.string   "filename"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "theme_id"
+  end
+
+  add_index "theme_file_templates", ["theme_id"], name: "index_theme_file_templates_on_theme_id"
+
+  create_table "theme_files", force: true do |t|
+    t.integer  "competition_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "content"
+    t.string   "filename"
+  end
 
   create_table "themes", force: true do |t|
     t.string   "name"

@@ -1,2 +1,5 @@
 default:
   name: Default Theme
+
+fancy:
+  name: Fancy
