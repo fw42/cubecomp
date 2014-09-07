@@ -21,7 +21,10 @@
         </tr>
         <tr>
           <td><%= f.label :staff_name, 'Name of staff team:' %></td>
-          <td><%= f.text_field :staff_name %></td>
+          <td>
+            <%= f.text_field :staff_name %>
+            <%= render 'tooltip', body: image_tag('help.png'), title: 'This name will appear as the sender address of emails sent to competitors' %>
+          </td>
         </tr>
       </table>
     </div>
@@ -45,7 +48,10 @@
       <table class="form-table">
         <tr>
           <td><%= f.label :city_name, 'Name of the local city:' %></td>
-          <td><%= f.text_field :city_name %></td>
+          <td>
+            <%= f.text_field :city_name %>
+            <%= render 'tooltip', body: image_tag('help.png'), title: 'This will appear on the registration page, such that competitors can let you know that they live in the same city' %>
+          </td>
         </tr>
         <tr>
           <td><%= f.label :city_name_short, 'Name of the local city (short):' %></td>
@@ -57,7 +63,10 @@
         </tr>
         <tr>
           <td><%= f.label :country, 'Country of the competition venue:' %></td>
-          <td><%= f.select :country_id, options_for_select(Country.all.map{ |country| [ country.name, country.id ] }) %></td>
+          <td>
+            <%= f.select :country_id, options_for_select(Country.all.map{ |country| [ country.name, country.id ] }) %>
+            <%= render 'tooltip', body: image_tag('help.png'), title: 'The country of the venue will also be used as the default registration country' %>
+          </td>
         </tr>
       </table>
     </div>

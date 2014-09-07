@@ -18,7 +18,8 @@ table.default-table {
 
 input:not([type='radio']):not([type='checkbox']),
 textarea,
-select {
+select
+{
   @extend .form-control;
 }
 
@@ -48,6 +49,9 @@ table.form-table td {
 }
 
 table.form-table input:not([type='radio']):not([type='checkbox']):not([type='submit']),
-table.form-table textarea {
+table.form-table textarea,
+table.form-table select,
+{
+  display: inline;
   width: 300px;
 }
