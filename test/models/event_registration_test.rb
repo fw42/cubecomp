@@ -38,6 +38,8 @@ class EventRegistrationTest < ActiveSupport::TestCase
   end
 
   test "validates that competitor is registered for the day of the event" do
-    # TODO
+    @registration.competitor.day_registrations.each(&:destroy)
+    assert_not_valid(@registration.reload, :base)
+    assert_equal ["competitor is not registered for the day of the event"], @registration.errors[:base]
   end
 end
