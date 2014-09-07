@@ -1,0 +1,2 @@
+module Admin::ThemeFileTemplatesHelper
+end

@@ -32,6 +32,12 @@ class AdminController < ApplicationController
         controller: Admin::UsersController,
         url: admin_users_path,
         css: 'fa-user'
+      },
+      {
+        label: 'Themes',
+        controller: Admin::ThemesController,
+        url: admin_themes_path,
+        css: 'fa-files-o'
       }
     ]
 

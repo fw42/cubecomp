@@ -20,4 +20,11 @@ class ThemeTest < ActiveSupport::TestCase
     new_theme.name = 'foobar'
     assert_valid(new_theme)
   end
+
+  test "destroys theme file templates" do
+    count = @theme.file_templates.count
+    assert_difference "ThemeFileTemplate.count", -1 * count do
+      @theme.destroy
+    end
+  end
 end

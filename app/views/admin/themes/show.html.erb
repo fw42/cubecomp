@@ -1,0 +1,14 @@
+<% page_title @theme.name %>
+
+<ul>
+  <% @theme.file_templates.each do |template| %>
+    <li>
+      <%= link_to template.filename, edit_admin_theme_file_template_path(template) %>
+      (<%= link_to 'Destroy', admin_theme_file_template_path(template), method: :delete, data: { confirm: 'Are you sure?' } %>)
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to 'New template', new_admin_theme_theme_file_template_path(@theme) %>
+
+<%= link_to 'Back', admin_themes_path %>

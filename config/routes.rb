@@ -7,6 +7,10 @@ Rails.application.routes.draw do
 
     resources :users
 
+    resources :themes, only: [:index, :show] do
+      resources :theme_file_templates, except: [:index, :show], shallow: true
+    end
+
     resources :competitions, except: [:show] do
       resources :dashboard, only: [:index]
       resources :competitors, shallow: true

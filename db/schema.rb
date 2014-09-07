@@ -165,5 +165,4 @@ ActiveRecord::Schema.define(version: 20140906213833) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email"
-
 end

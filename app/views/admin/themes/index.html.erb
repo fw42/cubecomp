@@ -1,0 +1,7 @@
+<% page_title 'Themes' %>
+
+<ul>
+  <% @themes.each do |theme| %>
+    <li><%= link_to theme.name, [:admin, theme] %></li>
+  <% end %>
+</ul>
