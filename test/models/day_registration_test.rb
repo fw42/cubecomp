@@ -2,24 +2,39 @@ require 'test_helper'
 
 class DayRegistrationTest < ActiveSupport::TestCase
   setup do
-    # TODO
-    # @registration = ...
+    @registration = day_registrations(:flo_aachen_open_day_one)
   end
 
   test "validates presence and integrity of competition" do
-    # TODO
+    @registration.competition = nil
+    assert_not_valid(@registration, :competition)
+
+    @registration.competition_id = 17
+    assert_not_valid(@registration, :competition)
   end
 
   test "validates presence and integrity of day" do
-    # TODO
+    @registration.day = nil
+    assert_not_valid(@registration, :day)
+
+    @registration.day_id = 17
+    assert_not_valid(@registration, :day)
   end
 
   test "validates presence and integrity of competitor" do
-    # TODO
+    @registration.competitor = nil
+    assert_not_valid(@registration, :competitor)
+
+    @registration.competitor_id = 17
+    assert_not_valid(@registration, :competitor)
   end
 
   test "validates uniqueness of competitor scoped by day" do
-    # TODO
+    new_registration = @registration.dup
+    assert_not_valid(new_registration, :competitor)
+
+    new_registration.day = days(:aachen_open_day_two)
+    assert_valid(new_registration)
   end
 
   test "destroying a competitor's registration for a day destroys all registrations for events on that day for him" do
