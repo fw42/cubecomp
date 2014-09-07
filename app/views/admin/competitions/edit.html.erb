@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<%= render 'notice' %>
 
 <% if current_competition == @competition %>
   <% page_title 'Settings' %>
@@ -7,5 +7,3 @@
 <% end %>
 
 <%= render 'form' %>
-
-<%= link_to 'Back', admin_competitions_path %>

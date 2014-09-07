@@ -10,8 +10,44 @@
 
 @import "../../../vendor/assets/stylesheets/sb-admin-2/bootstrap.scss";
 
-table {
+table.default-table {
   @extend .table;
   @extend .table-striped;
   @extend .table-hover;
+}
+
+input:not([type='radio']):not([type='checkbox']),
+textarea,
+select {
+  @extend .form-control;
+}
+
+.field_with_errors {
+  @extend .has-error;
+}
+
+form label {
+  @extend .control-label;
+}
+
+p#notice {
+  @extend .alert;
+  @extend .alert-success;
+}
+
+button {
+  color: white !important;
+  @extend .btn;
+  @extend .btn-primary;
+}
+
+table.form-table td {
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+table.form-table input:not([type='radio']):not([type='checkbox']):not([type='submit']),
+table.form-table textarea {
+  width: 300px;
 }

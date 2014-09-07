@@ -1,57 +1,91 @@
 <%= form_for([:admin, @competition]) do |f| %>
-  <% if @competition.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@competition.errors.count, "error") %> prohibited this admin_competition from being saved:</h2>
+  <%= render 'form_errors', object: @competition, label: 'competition' %>
 
-      <ul>
-      <% @competition.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      General settings
     </div>
-  <% end %>
+    <div class="panel-body">
+      <table class="form-table">
+        <tr>
+          <td><%= f.label :name, 'Name of competition:' %></td>
+          <td><%= f.text_field :name %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :handle, 'URL handle:' %></td>
+          <td><%= f.text_field :handle %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :staff_email, 'Email address of staff team:' %></td>
+          <td><%= f.text_field :staff_email %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :staff_name, 'Name of staff team:' %></td>
+          <td><%= f.text_field :staff_name %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Date and financial settings
+    </div>
+    <div class="panel-body">
+      <table class="form-table">
+      </table>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :handle %><br>
-    <%= f.text_field :handle %>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Location settings
+    </div>
+    <div class="panel-body">
+      <table class="form-table">
+        <tr>
+          <td><%= f.label :city_name, 'Name of the local city:' %></td>
+          <td><%= f.text_field :city_name %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :city_name_short, 'Name of the local city (short):' %></td>
+          <td><%= f.text_field :city_name_short %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :venue_address, 'Address of the competition venue:' %></td>
+          <td><%= f.text_area :venue_address, rows: '4' %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :country, 'Country of the competition venue:' %></td>
+          <td><%= f.select :country_id, options_for_select(Country.all.map{ |country| [ country.name, country.id ] }) %></td>
+        </tr>
+      </table>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :staff_email %><br>
-    <%= f.text_field :staff_email %>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Registration settings
+    </div>
+    <div class="panel-body">
+      <table class="form-table">
+        <tr>
+          <td><%= f.label :registration_open, 'Registration status:' %></td>
+          <td>
+            <%= f.radio_button :registration_open, true %> open<br/>
+            <%= f.radio_button :registration_open, false %> closed
+          </td>
+        </tr>
+        <tr>
+          <td><%= f.label :cc_orga, 'CC staff team on all emails:' %></td>
+          <td>
+            <%= f.radio_button :cc_orga, true %> yes<br/>
+            <%= f.radio_button :cc_orga, false %> no
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :staff_name %><br>
-    <%= f.text_field :staff_name %>
-  </div>
-  <div class="field">
-    <%= f.label :city_name %><br>
-    <%= f.text_field :city_name %>
-  </div>
-  <div class="field">
-    <%= f.label :city_name_short %><br>
-    <%= f.text_field :city_name_short %>
-  </div>
-  <div class="field">
-    <%= f.label :venue_address %><br>
-    <%= f.text_field :venue_address %>
-  </div>
-  <div class="field">
-    <%= f.label :country %><br>
-    <%= f.text_field :country %>
-  </div>
-  <div class="field">
-    <%= f.label :cc_orga %><br>
-    <%= f.text_field :cc_orga %>
-  </div>
-  <div class="field">
-    <%= f.label :registration_open %><br>
-    <%= f.text_field :registration_open %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+  <%= f.button 'Save', type: 'submit' %>
 <% end %>
