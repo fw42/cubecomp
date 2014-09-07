@@ -8,3 +8,14 @@ aachen_open_rubiks_cube:
   max_number_of_registrations: 42
   state: open_for_registration
   day: aachen_open_day_one
+
+aachen_open_rubiks_professor:
+  competition: aachen_open
+  day: one
+  name_short: 5x5x5
+  name: Rubik's Professor
+  handle: 555
+  start_time: 10:00
+  max_number_of_registrations: 17
+  state: open_for_registration
+  day: aachen_open_day_one

@@ -32,13 +32,10 @@ class EventRegistrationTest < ActiveSupport::TestCase
   test "validates uniqueness of competitor, scoped to event" do
     new_registration = @registration.dup
     assert_not_valid(new_registration, :competitor)
-
-    # TODO, change new_registration to a different event
-    # assert_valid new_registration
   end
 
   test "validates that competitor is registered for the day of the event" do
-    @registration.competitor.day_registrations.each(&:destroy)
+    @registration.competitor.day_registrations.delete_all
     assert_not_valid(@registration.reload, :base)
     assert_equal ["competitor is not registered for the day of the event"], @registration.errors[:base]
   end

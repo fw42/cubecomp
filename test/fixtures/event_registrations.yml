@@ -2,3 +2,8 @@ aachen_open_flo_rubiks_cube:
   competition: aachen_open
   competitor: flo_aachen_open
   event: aachen_open_rubiks_cube
+
+aachen_open_flo_rubiks_professor:
+  competition: aachen_open
+  competitor: flo_aachen_open
+  event: aachen_open_rubiks_professor
