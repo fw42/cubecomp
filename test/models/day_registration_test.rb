@@ -38,6 +38,14 @@ class DayRegistrationTest < ActiveSupport::TestCase
   end
 
   test "destroying a competitor's registration for a day destroys all registrations for events on that day for him" do
-    # TODO
+    count = @registration.competitor.event_registrations.on_day(@registration.day).count
+    assert_difference 'EventRegistration.count', -1 * count do
+      assert_no_difference 'Day.count' do
+        assert_no_difference 'Event.count' do
+          @registration.destroy
+        end
+      end
+    end
+    assert_equal [], @registration.competitor.events.select{ |event| event.day == @registration.day }
   end
 end
