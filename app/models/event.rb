@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
-  include BelongsToCompetition
+  belongs_to :competition
+  validates :competition, presence: true
 
   STATES = [
     'open_for_registration',
@@ -11,8 +12,8 @@ class Event < ActiveRecord::Base
   belongs_to :day
   validates :day, presence: true
 
-  has_many :event_registrations, dependent: :destroy
-  has_many :competitors, through: :event_registrations
+  has_many :registrations, class_name: 'EventRegistration', dependent: :destroy
+  has_many :competitors, through: :registrations
 
   validates :name_short, presence: true
   validates :name, presence: true

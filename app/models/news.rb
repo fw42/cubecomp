@@ -1,5 +1,6 @@
 class News < ActiveRecord::Base
-  include BelongsToCompetition
+  belongs_to :competition
+  validates :competition, presence: true
 
   validates :time, presence: true
 # validates :locale, inclusion: ...

@@ -12,7 +12,7 @@ class ActiveSupport::TestCase
   end
 
   def assert_valid(object)
-    assert object.valid?, "record should be valid"
+    assert object.valid?, "#{object.class.name} has errors: #{object.errors.full_messages}"
   end
 
   def assert_attributes(expected_attributes, object)

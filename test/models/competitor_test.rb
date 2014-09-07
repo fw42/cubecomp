@@ -92,4 +92,28 @@ class CompetitorTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "destroying competitor destroys day_registrations but not days" do
+    count = @competitor.day_registrations.count
+    assert_difference "DayRegistration.count", -1 * count do
+      assert_no_difference "Day.count" do
+        @competitor.destroy
+      end
+    end
+  end
+
+  test "registered_on?" do
+    # TODO
+    # * works with day and day_id
+  end
+
+  test "competing_on?" do
+    # TODO
+    # * works with day and day_id
+  end
+
+  test "guest_on?" do
+    # TODO
+    # * works with day and day_id
+  end
 end

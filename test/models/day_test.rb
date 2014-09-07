@@ -32,4 +32,13 @@ class DayTest < ActiveSupport::TestCase
       @day.destroy
     end
   end
+
+  test "destroying day destroys registrations but not competitors" do
+    count = @day.registrations.count
+    assert_difference "DayRegistration.count", -1 * count do
+      assert_no_difference "Competitor.count" do
+        @day.destroy
+      end
+    end
+  end
 end

@@ -105,8 +105,8 @@ class EventTest < ActiveSupport::TestCase
     assert_valid @event
   end
 
-  test "destroying event destroys event_registrations but not competitors" do
-    count = @event.event_registrations.count
+  test "destroying event destroys registrations but not competitors" do
+    count = @event.registrations.count
     assert_difference "EventRegistration.count", -1 * count do
       assert_no_difference "Competitor.count" do
         @event.destroy

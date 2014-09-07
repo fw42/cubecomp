@@ -1,55 +1,51 @@
 <% page_title 'Competitors' %>
 
+<p>
+<%= link_to 'New Competitor', new_admin_competition_competitor_path %>
+</p>
+
 <table class='default-table'>
   <thead>
     <tr>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Wca</th>
-      <th>Email</th>
-      <th>Birthday</th>
+      <th>Name</th>
+      <% current_competition.days.each do |day| %>
+        <th><%= day.date.strftime("%a") %></th>
+      <% end %>
+      <th>Info</th>
+      <th>WCA</th>
       <th>Country</th>
-      <th>Local</th>
-      <th>Staff</th>
-      <th>User comment</th>
-      <th>Admin comment</th>
-      <th>Free entrance</th>
-      <th>Free entrance reason</th>
-      <th>State</th>
-      <th>Confirmation email sent</th>
-      <th>Paid</th>
-      <th>Paid comment</th>
-      <th colspan="3"></th>
+      <th>Email</th>
+      <th>Birthday (Age)</th>
+      <th>Events</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
   <tbody>
     <% @competitors.each do |competitor| %>
       <tr>
-        <td><%= competitor.first_name %></td>
-        <td><%= competitor.last_name %></td>
+        <td><%= competitor.name %></td>
+        <% current_competition.days.each do |day| %>
+          <td>
+            <% if competitor.competing_on?(day) %>
+              c
+            <% elsif competitor.guest_on?(day) %>
+              g
+            <% end %>
+          </td>
+        <% end %>
+        <td></td>
         <td><%= competitor.wca %></td>
+        <td><%= competitor.country.name %></td>
         <td><%= competitor.email %></td>
         <td><%= competitor.birthday %></td>
-        <td><%= competitor.country_id %></td>
-        <td><%= competitor.local %></td>
-        <td><%= competitor.staff %></td>
-        <td><%= competitor.user_comment %></td>
-        <td><%= competitor.admin_comment %></td>
-        <td><%= competitor.free_entrance %></td>
-        <td><%= competitor.free_entrance_reason %></td>
-        <td><%= competitor.state %></td>
-        <td><%= competitor.confirmation_email_sent %></td>
-        <td><%= competitor.paid %></td>
-        <td><%= competitor.paid_comment %></td>
-        <td><%= link_to 'Show', admin_competitor_path(competitor) %></td>
-        <td><%= link_to 'Edit', edit_admin_competitor_path(competitor) %></td>
-        <td><%= link_to 'Destroy', admin_competitor_path(competitor), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td></td>
+        <td>
+          <%= link_to 'Show', admin_competitor_path(competitor) %>
+          <%= link_to 'Edit', edit_admin_competitor_path(competitor) %>
+          <%= link_to 'Destroy', admin_competitor_path(competitor), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Competitor', new_admin_competition_competitor_path %>
