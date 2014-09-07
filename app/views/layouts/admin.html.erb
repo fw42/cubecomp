@@ -65,13 +65,18 @@
                 </div>
               </li>
 
-              <% navigation_menu.each do |menu_item| %>
-                <%= render 'navigation_item', item: menu_item %>
-              <% end %>
+              <li <% if navigation_menu.any?(&:active?) %>class="active"<% end %>>
+                <a href="#">
+                  <i class="fa fa-cog fa-fw"></i> Competition<span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                  <% navigation_menu.each do |menu_item| %>
+                    <%= render 'navigation_item', item: menu_item %>
+                  <% end %>
+                </ul>
+              </li>
 
               <% if current_user.super_admin? %>
-                <li><br/><br/></li>
-
                 <li <% if super_admin_menu.any?(&:active?) %>class="active"<% end %>>
                   <a href="#">
                     <i class="fa fa-cog fa-fw"></i> Admin<span class="fa arrow"></span>
