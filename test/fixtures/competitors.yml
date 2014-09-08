@@ -7,6 +7,14 @@ flo_aachen_open:
   birthday: 1985-12-18
   country: germany
 
+aachen_open_with_no_registrations:
+  competition: aachen_open
+  first_name: Bob
+  last_name: Bobsen
+  email: bob@bobsenc.om
+  birthday: 2000-01-01
+  country: germany
+
 basti_aachen_open:
   competition: aachen_open
   wca: 2008AURO01
