@@ -27,5 +27,23 @@
   <%= @user.super_admin %>
 </p>
 
+<p>
+  <strong>Delegate:</strong>
+  <%= @user.delegate %>
+</p>
+
+<h3>Competitions</h3>
+
+<ul>
+  <% @user.competitions.each do |competition| %>
+    <li>
+      <%= link_to competition.name, admin_competition_dashboard_index_path(competition) %>
+      <% if competition.delegate_user_id == @user.id %>
+        (Delegate)
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
 <%= link_to 'Edit', edit_admin_user_path(@user) %> |
 <%= link_to 'Back', admin_users_path %>

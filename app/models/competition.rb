@@ -14,6 +14,7 @@ class Competition < ActiveRecord::Base
   validates :country, presence: true
 
   belongs_to :delegate, class_name: 'User', foreign_key: 'delegate_user_id'
+  validate :delegate_user_is_a_delegate?
 
   has_many :news, dependent: :destroy
   has_many :competitors, dependent: :destroy
@@ -27,4 +28,12 @@ class Competition < ActiveRecord::Base
   has_many :users, through: :permissions
 
   accepts_nested_attributes_for :locales, allow_destroy: true
+
+  private
+
+  def delegate_user_is_a_delegate?
+    if delegate && !delegate.delegate?
+      errors.add(:delegate, "does not have permissions to be delegate of this competition")
+    end
+  end
 end

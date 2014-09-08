@@ -43,4 +43,26 @@ class UserTest < ActiveSupport::TestCase
       @user.destroy
     end
   end
+
+  test "destroying a delegate nullifies the column on competition" do
+    competition = competitions(:aachen_open)
+    competition.delegate = users(:delegate)
+    competition.save!
+
+    assert_no_difference "Competition.count" do
+      competition.delegate.destroy!
+      assert_nil competition.reload.delegate_user_id
+    end
+  end
+
+  test "removing delegate attribute from user nullifies the column on competition" do
+    competition = competitions(:aachen_open)
+    competition.delegate = user = users(:delegate)
+    competition.save!
+
+    user.delegate = false
+    user.save!
+
+    assert_equal nil, competition.reload.delegate_user_id
+  end
 end

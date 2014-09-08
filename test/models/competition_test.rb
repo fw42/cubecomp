@@ -121,4 +121,12 @@ class CompetitionTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "validates that delegate is allowed to be delegate" do
+    @competition.delegate = users(:flo)
+    assert_not_valid(@competition, :delegate)
+
+    @competition.delegate = users(:delegate)
+    assert_valid(@competition)
+  end
 end

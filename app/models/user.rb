@@ -11,7 +11,11 @@ class User < ActiveRecord::Base
   has_many :permissions, dependent: :destroy
   has_many :competitions, through: :permissions
 
+  has_many :delegating_competitions, class_name: 'Competition', foreign_key: 'delegate_user_id', dependent: :nullify
+
   scope :delegates, ->{ where(delegate: true) }
+
+  after_update :nullify_competition_delegate_user_ids
 
   def name
     "#{first_name} #{last_name}"
@@ -19,5 +23,15 @@ class User < ActiveRecord::Base
 
   def policy
     @policy ||= UserPolicyService.new(self)
+  end
+
+  private
+
+  def nullify_competition_delegate_user_ids
+    if changed_attributes[:delegate] && !delegate
+      delegating_competitions.each do |competition|
+        competition.update_attribute(:delegate_user_id, nil)
+      end
+    end
   end
 end

@@ -3,3 +3,9 @@ flo:
   first_name: Florian
   last_name: Weingarten
   super_admin: true
+
+delegate:
+  email: delegate@wca.com
+  first_name: WCA
+  last_name: Delegate
+  delegate: true
