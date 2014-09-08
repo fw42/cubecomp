@@ -20,7 +20,7 @@ class Competitor < ActiveRecord::Base
   has_many :day_registrations, dependent: :destroy
   has_many :days, through: :day_registrations
 
-  # TODO: validate that user is registered for at least one day
+  validate :registered_for_at_least_one_day?
 
   def name
     [first_name, last_name].join(" ")
@@ -36,5 +36,14 @@ class Competitor < ActiveRecord::Base
 
   def guest_on?(day)
     registered_on?(day) && !competing_on?(day)
+  end
+
+  private
+
+  def registered_for_at_least_one_day?
+    ### TODO: add test, make nested_attributes work for days, etc.
+    # if day_registrations.count == 0
+    #   errors.add(:base, 'must register for at least one competition day')
+    # end
   end
 end
