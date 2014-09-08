@@ -30,14 +30,25 @@
         </div>
 
         <ul class="nav navbar-top-links navbar-right">
+          <li>
+            <select>
+              <% current_user.competitions.each do |competition| %>
+                <option value="<%= competition.handle %>">
+                  <%= competition.name %>
+                </option>
+              <% end %>
+            </select>
+          </li>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-              <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+              <i class="fa fa-user fa-fw"></i>
+              <%= current_user.name %>
+              <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
               <li>
                 <a href="<%= admin_user_path(current_user) %>">
-                  <i class="fa fa-user fa-fw"></i> User Profile
+                  <i class="fa fa-user fa-fw"></i> Profile
                 </a>
               </li>
               <li class="divider"></li>
@@ -53,18 +64,6 @@
         <div class="navbar-default sidebar" role="navigation">
           <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
-              <li class="sidebar-search">
-                <div class="input-group custom-search-form">
-                  <select class="form-control">
-                    <% current_user.competitions.each do |competition| %>
-                      <option value="<%= competition.handle %>">
-                        <%= competition.name %>
-                      </option>
-                    <% end %>
-                  </select>
-                </div>
-              </li>
-
               <li <% if navigation_menu.any?(&:active?) %>class="active"<% end %>>
                 <a href="#">
                   <i class="fa fa-cog fa-fw"></i> Competition<span class="fa arrow"></span>

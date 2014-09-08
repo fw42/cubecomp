@@ -3,7 +3,7 @@ class AdminController < ApplicationController
 
   def current_user
     @current_user ||= begin
-      User.last
+      Permission.first.user
     end
   end
   helper_method :current_user

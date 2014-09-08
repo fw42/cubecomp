@@ -20,6 +20,8 @@ class Competitor < ActiveRecord::Base
   has_many :day_registrations, dependent: :destroy
   has_many :days, through: :day_registrations
 
+  # TODO: validate that user is registered for at least one day
+
   def name
     [first_name, last_name].join(" ")
   end

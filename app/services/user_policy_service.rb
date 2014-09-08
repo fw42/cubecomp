@@ -12,4 +12,8 @@ class UserPolicyService
   def see_users?
     @user.super_admin?
   end
+
+  def edit_users?
+    @user.super_admin?
+  end
 end
