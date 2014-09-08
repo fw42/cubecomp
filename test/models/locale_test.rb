@@ -29,19 +29,11 @@ class LocaleTest < ActiveSupport::TestCase
     assert_valid(new_locale)
   end
 
-  test "validates presence of name" do
-    @locale.name = nil
-    assert_not_valid(@locale, :name)
+  test "validates inclusion of handle in list" do
+    @locale.handle = 'blabla'
+    assert_not_valid(@locale, :handle)
 
-    @locale.name = ''
-    assert_not_valid(@locale, :name)
-  end
-
-  test "validates uniqueness of name scoped to competition" do
-    new_locale = @locale.dup
-    assert_not_valid(new_locale, :name)
-
-    new_locale.competition = competitions(:german_open)
-    assert_valid(new_locale)
+    @locale.handle = Locale::ALL.keys.first
+    assert_valid(@locale)
   end
 end

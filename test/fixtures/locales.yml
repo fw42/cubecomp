@@ -1,9 +1,7 @@
 aachen_open_german:
   competition: aachen_open
   handle: de
-  name: German
 
 aachen_open_english:
   competition: aachen_open
   handle: en
-  name: English

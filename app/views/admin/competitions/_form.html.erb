@@ -15,10 +15,16 @@
           <td><%= f.label :handle, 'URL handle:' %></td>
           <td><%= f.text_field :handle %></td>
         </tr>
-        <tr>
-          <td><%= f.label :staff_email, 'Email address of staff team:' %></td>
-          <td><%= f.text_field :staff_email %></td>
-        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Staff settings
+    </div>
+    <div class="panel-body">
+      <table class="form-table">
         <tr>
           <td><%= f.label :staff_name, 'Name of staff team:' %></td>
           <td>
@@ -26,7 +32,49 @@
             <%= help_tooltip 'This name will appear as the sender address of emails sent to competitors' %>
           </td>
         </tr>
+        <tr>
+          <td><%= f.label :staff_email, 'Email address of staff team:' %></td>
+          <td><%= f.text_field :staff_email %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :cc_orga, 'Send copy of all emails to team:' %></td>
+          <td>
+            <%= f.radio_button :cc_orga, true %> yes &nbsp;
+            <%= f.radio_button :cc_orga, false %> no
+          </td>
+        </tr>
+        <tr>
+          <td><%= f.label :delegate, 'Main WCA delegate:' %></td>
+          <td>
+            <%= f.select :delegate, options_for_select(User.delegates.map{ |user| [ user.name, user.id ] }) %>
+            <%= help_tooltip 'The delegate will have admin permissions for this competition' %>
+          </td>
+        </tr>
+        <tr>
+          <td><label>Staff users:</label></td>
+          <td>
+            <% @competition.users.each do |user| %>
+              <% if current_user.policy.see_users? %>
+                <%= link_to user.name, admin_user_path(user) %>
+              <% else %>
+                <%= user.name %>
+              <% end %>
+              (<%= user.email %>)<br/>
+            <% end %>
+          </td>
+        </tr>
       </table>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Language settings
+    </div>
+    <div class="panel-body">
+      <%= f.fields_for :locales do |ff| %>
+        <%= ff.text_field :handle %>
+      <% end %>
     </div>
   </div>
 
@@ -83,13 +131,6 @@
           <td>
             <%= f.radio_button :registration_open, true %> open<br/>
             <%= f.radio_button :registration_open, false %> closed
-          </td>
-        </tr>
-        <tr>
-          <td><%= f.label :cc_orga, 'CC staff team on all emails:' %></td>
-          <td>
-            <%= f.radio_button :cc_orga, true %> yes<br/>
-            <%= f.radio_button :cc_orga, false %> no
           </td>
         </tr>
       </table>

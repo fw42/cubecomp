@@ -11,7 +11,13 @@ class User < ActiveRecord::Base
   has_many :permissions, dependent: :destroy
   has_many :competitions, through: :permissions
 
+  scope :delegates, ->{ where(delegate: true) }
+
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def policy
+    @policy ||= UserPolicyService.new(self)
   end
 end
