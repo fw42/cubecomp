@@ -2,10 +2,24 @@ flo:
   email: flo@hackvalue.de
   first_name: Florian
   last_name: Weingarten
+  password_digest: "$2a$10$mr3btGrOKm/4fN66mxO53.VCFqbo2cXJG.fHX0tJPGYSrWEViI1SS"
+
+admin:
+  email: admin@user.com
+  first_name: Admin
+  last_name: User
   super_admin: true
+  password_digest: "$2a$10$mr3btGrOKm/4fN66mxO53.VCFqbo2cXJG.fHX0tJPGYSrWEViI1SS"
+
+regular_user:
+  email: regular@user.com
+  first_name: Regular
+  last_name: User
+  password_digest: "$2a$10$mr3btGrOKm/4fN66mxO53.VCFqbo2cXJG.fHX0tJPGYSrWEViI1SS"
 
 delegate:
   email: delegate@wca.com
   first_name: WCA
   last_name: Delegate
   delegate: true
+  password_digest: "$2a$10$mr3btGrOKm/4fN66mxO53.VCFqbo2cXJG.fHX0tJPGYSrWEViI1SS"

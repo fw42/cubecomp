@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_secure_password validations: false
+  has_secure_password
 
   validates :email, presence: true
   validates :email, email: true, allow_nil: true, allow_blank: true

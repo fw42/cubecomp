@@ -24,17 +24,18 @@ class UserTest < ActiveSupport::TestCase
     assert_not_valid(new_user, :email)
   end
 
-  test "does not validate presence of password_digest" do
-    @user.password_digest = nil
-    assert_valid @user
-  end
-
   test "password authentication" do
     @user.password = 'foobar'
     assert_valid @user
 
     refute @user.authenticate('wrong')
     assert @user.authenticate('foobar')
+  end
+
+  test "checks if passwords match if both given" do
+    @user.password = 'foobar'
+    @user.password_confirmation = 'bblabla'
+    assert_not_valid(@user, :password_confirmation)
   end
 
   test "destroying user destroys permissions" do

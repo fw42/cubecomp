@@ -20,3 +20,9 @@ class ActiveSupport::TestCase
     assert_equal expected_attributes, actual_attributes
   end
 end
+
+class ActionController::TestCase
+  def login_as(user)
+    session[:user_id] = user.id
+  end
+end

@@ -8,7 +8,7 @@
       <th>Country</th>
       <th>Status</th>
       <th>Competitors</th>
-      <th colspan="2"></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -16,17 +16,16 @@
     <% @competitions.each do |competition| %>
       <tr>
         <td><%= competition.handle %></td>
-        <td><%= competition.name %></td>
+        <td><%= link_to competition.name, edit_admin_competition_path(competition) %></td>
         <td><%= competition.country.name %></td>
         <td><%= competition.registration_open ? 'open' : 'closed' %></td>
         <td><%= competition.competitors.count %></td>
-        <td><%= link_to 'Edit', edit_admin_competition_path(competition) %></td>
         <td><%= link_to 'Destroy', [:admin, competition], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Competition', new_admin_competition_path %>
+<p>
+  <%= link_to 'New competition', new_admin_competition_path %>
+</p>

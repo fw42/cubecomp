@@ -1,37 +1,55 @@
 <%= form_for([:admin, @user]) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this admin_user from being saved:</h2>
+  <%= render 'form_errors', object: @user, label: 'user' %>
 
-      <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Personal
+    </div>
+    <div class="panel-body">
+      <table class="form-table">
+        <tr>
+          <td><%= f.label :email, 'Email:' %></td>
+          <td><%= f.text_field :email %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :first_name, 'First name:' %></td>
+          <td><%= f.text_field :first_name %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :last_name, 'Last name:' %></td>
+          <td><%= f.text_field :last_name %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :password, 'Password:' %></td>
+          <td><%= f.password_field :password, placeholder: 'Enter new password' %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :password_confirmation, 'Password confirmation:' %></td>
+          <td><%= f.password_field :password_confirmation, placeholder: 'Enter new password again' %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <% if current_user.policy.edit_users? %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        User permissions
+      </div>
+      <div class="panel-body">
+        <%= f.check_box :super_admin %> Admin<br/>
+        <%= f.check_box :delegate %> Delegate
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Competition permissions
+      </div>
+      <div class="panel-body">
+      </div>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :first_name %><br>
-    <%= f.text_field :first_name %>
-  </div>
-  <div class="field">
-    <%= f.label :last_name %><br>
-    <%= f.text_field :last_name %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br>
-    <%= f.text_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :super_admin %><br>
-    <%= f.text_field :super_admin %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.button 'Save', type: 'submit' %>
 <% end %>

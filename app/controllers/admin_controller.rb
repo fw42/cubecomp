@@ -3,7 +3,13 @@ class AdminController < ApplicationController
 
   def current_user
     @current_user ||= begin
-      Permission.first.user
+      if session[:user_id]
+        User.find(session[:user_id])
+      else
+        user = Permission.first.user
+        session[:user_id] = user.id
+        user
+      end
     end
   end
   helper_method :current_user
