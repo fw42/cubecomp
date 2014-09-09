@@ -29,15 +29,18 @@ class Admin::UsersControllerTest < ActionController::TestCase
       post :create, user: params
     end
 
-    assert_redirected_to admin_user_path(assigns(:user))
+    assert_redirected_to edit_admin_user_path(assigns(:user))
     user = User.find_by(email: 'bob@cubecomp.de')
     assert_attributes(params.except(:password, :password_confirmation), user)
     assert user.authenticate(params[:password])
   end
 
-  test "#show" do
-    get :show, id: @user
-    assert_response :success
+  test "#edit on another user is not possible if not logged in as super admin" do
+    # TODO
+  end
+
+  test "#edit on another user is possible if logged in as super admin" do
+    # TODO
   end
 
   test "#edit" do
@@ -56,7 +59,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
 
     patch :update, id: @user, user: params
 
-    assert_redirected_to admin_user_path(assigns(:user))
+    assert_redirected_to edit_admin_user_path(assigns(:user))
     user = User.find_by(email: 'bob@cubecomp.de')
     assert_attributes(params.except(:password, :password_confirmation), user)
     assert user.authenticate(params[:password])
@@ -100,6 +103,10 @@ class Admin::UsersControllerTest < ActionController::TestCase
     patch :update, id: @user, user: { password: "", password_confirmation: "" }
     @user.reload
     assert @user.authenticate('test')
+  end
+
+  test "#update on another user is not possible if not logged in as super admin" do
+    # TODO
   end
 
   test "#destroy" do

@@ -21,7 +21,7 @@ class Admin::UsersController < AdminController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to [:admin, @user], notice: 'User was successfully created.'
+      redirect_to edit_admin_user_path(@user), notice: 'User was successfully created.'
     else
       render :new
     end
@@ -29,7 +29,7 @@ class Admin::UsersController < AdminController
 
   def update
     if @user.update(user_params)
-      redirect_to [:admin, @user], notice: 'User was successfully updated.'
+      redirect_to edit_admin_user_path(@user), notice: 'User was successfully updated.'
     else
       render :edit
     end
@@ -52,21 +52,17 @@ class Admin::UsersController < AdminController
       :first_name,
       :last_name,
       :password,
-      :password_confirmation
+      :password_confirmation,
     ]
 
     if current_user.policy.edit_users?
-      permitted += [ :super_admin, :delegate ]
+      permitted += [
+        :super_admin,
+        :delegate,
+        permissions_attributes: [:id, :_destroy, :competition_id]
+      ]
     end
 
-    user_params = params.require(:user).permit(permitted)
-
-    # if user_params[:password].blank? && user_params[:password_confirmation].blank?
-    #   user_params.delete(:password)
-    #   user_params.delete(:password_confirmation)
-    # end
-
-    Rails.logger.info(user_params)
-    user_params
+    params.require(:user).permit(permitted)
   end
 end

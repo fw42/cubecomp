@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
   has_many :permissions, dependent: :destroy
   has_many :competitions, through: :permissions
 
+  accepts_nested_attributes_for :permissions, allow_destroy: true
+
   has_many :delegating_competitions, class_name: 'Competition', foreign_key: 'delegate_user_id', dependent: :nullify
 
   scope :delegates, ->{ where(delegate: true) }

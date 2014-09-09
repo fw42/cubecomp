@@ -74,7 +74,7 @@
     <div class="panel-body">
       <%= f.fields_for :locales, @competition.locales.to_a.sort_by(&:handle) do |ff| %>
         <%= ff.hidden_field :handle %>
-        <%= ff.check_box :_destroy, {:checked => ff.object.persisted?}, '0', '1' %>
+        <%= ff.check_box :_destroy, { checked: ff.object.persisted? }, '0', '1' %>
         <%= Locale::ALL[ff.object.handle] %><br/>
       <% end %>
     </div>

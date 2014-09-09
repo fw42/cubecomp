@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     get 'login', to: 'login#login'
     get 'logout', to: 'login#logout'
 
-    resources :users
+    resources :users, except: [:show]
 
     resources :themes, only: [:index, :show] do
       resources :theme_file_templates, except: [:index, :show], shallow: true

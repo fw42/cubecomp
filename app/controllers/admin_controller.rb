@@ -17,10 +17,19 @@ class AdminController < ApplicationController
   def current_competition
     @current_competition ||= begin
       competition = if competition_id = params[:competition_id] || session[:competition_id]
-        current_user.competitions.find(competition_id)
+        current_user.competitions.find_by(id: competition_id)
       end
 
-      competition || current_user.competitions.first
+      if competition.nil?
+        competition = Competition.all.select{ |c| current_user.policy.login?(c) }.first
+      end
+
+      if competition.nil?
+        # TODO: render error
+      end
+
+      session[:competition_id] = competition.id
+      competition
     end
   end
   helper_method :current_competition

@@ -1,4 +1,4 @@
-<%= form_for([:admin, @user]) do |f| %>
+<%= form_for([:admin, user_for_form(@user)]) do |f| %>
   <%= render 'form_errors', object: @user, label: 'user' %>
 
   <div class="panel panel-default">
@@ -47,6 +47,11 @@
         Competition permissions
       </div>
       <div class="panel-body">
+        <%= f.fields_for :permissions, @user.permissions.sort_by{ |p| p.competition.name } do |ff| %>
+          <%= ff.hidden_field :competition_id %>
+          <%= ff.check_box :_destroy, { checked: ff.object.persisted? }, '0', '1' %>
+          <%= ff.object.competition.name %><br/>
+        <% end %>
       </div>
     </div>
   <% end %>
