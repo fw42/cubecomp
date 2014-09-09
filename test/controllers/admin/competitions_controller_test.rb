@@ -58,6 +58,50 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     assert_attributes(params, @competition.reload)
   end
 
+  test "#update nested attributes for adding a locale" do
+    @competition.locales.each(&:destroy)
+    @competition.reload
+
+    params = {
+      locales_attributes: {
+        "0" => {
+          handle: "de",
+          _destroy: "0"
+        }
+      }
+    }
+
+    assert_difference "Locale.count", +1 do
+      assert_difference "@competition.reload.locales.count", +1 do
+        patch :update, id: @competition, competition: params
+      end
+    end
+
+    assert_equal "de", @competition.locales.last.handle
+  end
+
+  test "#update nested attributes for removing a locale" do
+    locale = @competition.locales.first
+
+    params = {
+      locales_attributes: {
+        "0" => {
+          id: locale.id,
+          handle: locale.handle,
+          _destroy: "1"
+        }
+      }
+    }
+
+    assert_difference "Locale.count", -1 do
+      assert_difference "@competition.reload.locales.count", -1 do
+        patch :update, id: @competition, competition: params
+      end
+    end
+
+    refute Locale.where(id: locale.id).exists?
+  end
+
   test "#destroy" do
     assert_difference('Competition.count', -1) do
       delete :destroy, id: @competition

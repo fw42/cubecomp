@@ -9,5 +9,5 @@ class Locale < ActiveRecord::Base
 
   validates :handle, presence: true
   validates :handle, uniqueness: { scope: :competition }, allow_nil: true, allow_blank: true
-  validates :handle, inclusion: { in: ALL }
+  validates :handle, inclusion: { in: ALL }, allow_nil: true, allow_blank: true
 end

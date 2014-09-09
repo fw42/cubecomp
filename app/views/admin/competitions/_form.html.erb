@@ -1,4 +1,4 @@
-<%= form_for([:admin, @competition]) do |f| %>
+<%= form_for([:admin, competition_for_form(@competition)]) do |f| %>
   <%= render 'form_errors', object: @competition, label: 'competition' %>
 
   <div class="panel panel-default">
@@ -72,8 +72,10 @@
       Language settings
     </div>
     <div class="panel-body">
-      <%= f.fields_for :locales do |ff| %>
-        <%= ff.text_field :handle %>
+      <%= f.fields_for :locales, @competition.locales.to_a.sort_by(&:handle) do |ff| %>
+        <%= ff.hidden_field :handle %>
+        <%= ff.check_box :_destroy, {:checked => ff.object.persisted?}, '0', '1' %>
+        <%= Locale::ALL[ff.object.handle] %><br/>
       <% end %>
     </div>
   </div>

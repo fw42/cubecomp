@@ -42,6 +42,18 @@ class Admin::CompetitionsController < AdminController
   end
 
   def competition_params
-    params.require(:competition).permit(:name, :handle, :staff_email, :staff_name, :city_name, :city_name_short, :venue_address, :country_id, :cc_orga, :registration_open)
+    params.require(:competition).permit(
+      :name,
+      :handle,
+      :staff_email,
+      :staff_name,
+      :city_name,
+      :city_name_short,
+      :venue_address,
+      :country_id,
+      :cc_orga,
+      :registration_open,
+      locales_attributes: [:id, :handle, :_destroy]
+    )
   end
 end
