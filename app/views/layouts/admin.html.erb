@@ -30,15 +30,17 @@
         </div>
 
         <ul class="nav navbar-top-links navbar-right">
-          <li>
-            <select>
-              <% current_user.competitions.each do |competition| %>
-                <option value="<%= competition.handle %>">
-                  <%= competition.name %>
-                </option>
-              <% end %>
-            </select>
-          </li>
+          <% if current_user.competitions.count > 1 %>
+            <li>
+              <select>
+                <% current_user.competitions.each do |competition| %>
+                  <option value="<%= competition.handle %>">
+                    <%= competition.name %>
+                  </option>
+                <% end %>
+              </select>
+            </li>
+          <% end %>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
               <i class="fa fa-user fa-fw"></i>
@@ -75,13 +77,13 @@
                 </ul>
               </li>
 
-              <% if current_user.super_admin? %>
-                <li <% if super_admin_menu.any?(&:active?) %>class="active"<% end %>>
+              <% if current_user.policy.see_admin_user_menu? %>
+                <li <% if admin_user_menu.any?(&:active?) %>class="active"<% end %>>
                   <a href="#">
                     <i class="fa fa-cog fa-fw"></i> Admin<span class="fa arrow"></span>
                   </a>
                   <ul class="nav nav-second-level">
-                    <% super_admin_menu.each do |menu_item| %>
+                    <% admin_user_menu.each do |menu_item| %>
                       <%= render 'navigation_item', item: menu_item %>
                     <% end %>
                   </ul>

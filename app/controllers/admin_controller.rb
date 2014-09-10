@@ -34,7 +34,7 @@ class AdminController < ApplicationController
   end
   helper_method :current_competition
 
-  def super_admin_menu
+  def admin_user_menu
     items = [
       {
         label: 'Competitions',
@@ -58,7 +58,7 @@ class AdminController < ApplicationController
 
     MenuItem.parse(self, items)
   end
-  helper_method :super_admin_menu
+  helper_method :admin_user_menu
 
   def navigation_menu
     items = [

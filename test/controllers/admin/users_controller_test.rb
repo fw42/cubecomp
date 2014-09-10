@@ -22,7 +22,8 @@ class Admin::UsersControllerTest < ActionController::TestCase
       first_name: 'Bob',
       last_name: 'Bobsen',
       password: 'foobar',
-      password_confirmation: 'foobar'
+      password_confirmation: 'foobar',
+      permission_level: User::PERMISSION_LEVELS.values.min
     }
 
     assert_difference('User.count') do
@@ -72,41 +73,10 @@ class Admin::UsersControllerTest < ActionController::TestCase
     refute @user.reload.authenticate(:foo)
   end
 
-  test "#update super admin flag is possible if logged in as super admin" do
-    login_as(users(:admin))
-    regular_user = users(:regular_user)
-    patch :update, id: regular_user, user: { super_admin: true }
-    assert_equal true, regular_user.reload.super_admin
-  end
-
-  test "#update super admin flag is not possible if not logged in as super admin" do
-    login_as(users(:regular_user))
-    patch :update, id: @user, user: { super_admin: false }
-    refute @user.reload.super_admin
-  end
-
-  test "#update delegate flag is possible if logged in as super admin" do
-    login_as(users(:admin))
-    regular_user = users(:regular_user)
-    patch :update, id: regular_user, user: { delegate: true }
-    assert_equal true, regular_user.reload.delegate
-  end
-
-  test "#update delegate flag is not possible if not logged in as super admin" do
-    login_as(users(:regular_user))
-    delegate = users(:delegate)
-    patch :update, id: delegate, user: { delegate: false }
-    assert_equal true, delegate.reload.delegate
-  end
-
   test "#update with blank password fields doesnt change password" do
     patch :update, id: @user, user: { password: "", password_confirmation: "" }
     @user.reload
     assert @user.authenticate('test')
-  end
-
-  test "#update on another user is not possible if not logged in as super admin" do
-    # TODO
   end
 
   test "#destroy" do

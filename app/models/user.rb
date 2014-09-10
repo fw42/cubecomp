@@ -1,4 +1,10 @@
 class User < ActiveRecord::Base
+  PERMISSION_LEVELS = {
+    :regular => 0,
+    :admin => 1,
+    :superadmin => 2
+  }
+
   has_secure_password
 
   validates :email, presence: true
@@ -7,6 +13,9 @@ class User < ActiveRecord::Base
 
   validates :first_name, presence: true
   validates :last_name, presence: true
+
+  validates :permission_level, presence: true
+  validates :permission_level, inclusion: { in: PERMISSION_LEVELS.values }, allow_nil: true, allow_blank: true
 
   has_many :permissions, dependent: :destroy
   has_many :competitions, through: :permissions
@@ -25,6 +34,14 @@ class User < ActiveRecord::Base
 
   def policy
     @policy ||= UserPolicyService.new(self)
+  end
+
+  def delegate_for?(competition)
+    id == competition.delegate_user_id
+  end
+
+  def has_permission?(competition)
+    permissions.where(competition: competition).exists?
   end
 
   private

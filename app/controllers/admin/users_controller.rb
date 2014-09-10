@@ -1,13 +1,10 @@
 class Admin::UsersController < AdminController
   layout 'admin'
 
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:edit, :update, :destroy]
 
   def index
     @users = User.all
-  end
-
-  def show
   end
 
   def new
@@ -53,16 +50,10 @@ class Admin::UsersController < AdminController
       :last_name,
       :password,
       :password_confirmation,
+      :permission_level,
+      :delegate,
+      permissions_attributes: [:id, :_destroy, :competition_id]
     ]
-
-    if current_user.policy.edit_users?
-      permitted += [
-        :super_admin,
-        :delegate,
-        permissions_attributes: [:id, :_destroy, :competition_id]
-      ]
-    end
-
     params.require(:user).permit(permitted)
   end
 end

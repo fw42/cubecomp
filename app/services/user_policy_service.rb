@@ -4,16 +4,54 @@ class UserPolicyService
   end
 
   def login?(competition)
-    @user.super_admin? ||
-      @user.id == competition.delegate_user_id ||
-      Permission.where(user: @user, competition: competition).exists?
+    admin? || @user.delegate_for?(competition) || @user.has_permission?(competition)
   end
 
-  def see_users?
-    @user.super_admin?
+  def see_admin_user_menu?
+    admin?
   end
 
-  def edit_users?
-    @user.super_admin?
+  def create_competition?
+    admin?
+  end
+
+  def change_competition_permissions?
+    admin?
+  end
+
+  def change_permission_level_to?(other_user, level)
+    superadmin? ||
+      (@user.permission_level > level) ||
+      (@user == other_user && @user.permission_level == level)
+  end
+
+  def change_delegate_flag?(other_user)
+    admin?
+  end
+
+  def create_user?(other_user)
+    higher_permission_level_than?(other_user)
+  end
+
+  def edit_user?(other_user)
+    (other_user == @user) || higher_permission_level_than?(other_user)
+  end
+
+  def destroy_user?(other_user)
+    (other_user != @user) && higher_permission_level_than?(other_user)
+  end
+
+  private
+
+  def admin?
+    @user.permission_level >= User::PERMISSION_LEVELS[:admin]
+  end
+
+  def superadmin?
+    @user.permission_level >= User::PERMISSION_LEVELS[:superadmin]
+  end
+
+  def higher_permission_level_than?(other_user)
+    @user.permission_level > (other_user.permission_level || 0)
   end
 end

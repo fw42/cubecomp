@@ -31,17 +31,31 @@
     </div>
   </div>
 
-  <% if current_user.policy.edit_users? %>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        User permissions
-      </div>
-      <div class="panel-body">
-        <%= f.check_box :super_admin %> Admin<br/>
-        <%= f.check_box :delegate %> Delegate
-      </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      User permissions
     </div>
+    <div class="panel-body">
+      <table class="form-table">
+        <tr>
+          <td><%= f.label :permission_level, 'Permission level:'%></td>
+          <td>
+            <%= f.select :permission_level, options_for_permission_levels(@user) %>
+          </td>
+        </tr>
+        <tr>
+          <td><%= f.label :delegate, 'WCA delegate:' %></td>
+          <td>
+            <% delegate_radio_disabled = !current_user.policy.change_delegate_flag?(@user) %>
+            <%= f.radio_button :delegate, true, disabled: delegate_radio_disabled %> yes &nbsp;
+            <%= f.radio_button :delegate, false, disabled: delegate_radio_disabled %> no
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
+  <% if current_user.policy.change_competition_permissions? %>
     <div class="panel panel-default">
       <div class="panel-heading">
         Competition permissions
