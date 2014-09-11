@@ -50,7 +50,7 @@ class AdminController < ApplicationController
       },
       {
         label: 'Themes',
-        controller: Admin::ThemesController,
+        controller: [ Admin::ThemesController, Admin::ThemeFileTemplatesController ],
         url: admin_themes_path,
         css: 'fa-files-o'
       }

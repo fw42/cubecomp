@@ -12,13 +12,16 @@ class MenuItem
     @label = label
     @css = css
     @url = url
-    @controller = controller
+    @controller = Array(controller)
     @actions = actions
     @current_controller_instance = current_controller_instance
   end
 
   def active?
-    return false unless @current_controller_instance.is_a?(@controller)
+    return false unless @controller.any? do |controller|
+      @current_controller_instance.is_a?(controller)
+    end
+
     if @actions
       @actions.any? { |action| action == @current_controller_instance.action_name }
     else
