@@ -28,6 +28,7 @@ class Competition < ActiveRecord::Base
   has_many :users, through: :permissions
 
   accepts_nested_attributes_for :locales, allow_destroy: true
+  accepts_nested_attributes_for :days, allow_destroy: true
 
   private
 

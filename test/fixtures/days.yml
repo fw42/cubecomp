@@ -1,7 +1,11 @@
 aachen_open_day_one:
   date: 2014-01-01
   competition: aachen_open
+  entrance_fee_competitors: 5
+  entrance_fee_guests: 7.50
 
 aachen_open_day_two:
   date: 2014-01-02
   competition: aachen_open
+  entrance_fee_competitors: 23.42
+  entrance_fee_guests: 13.37

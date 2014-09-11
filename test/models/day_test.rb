@@ -26,6 +26,24 @@ class DayTest < ActiveSupport::TestCase
     assert_valid another_day
   end
 
+  [ :entrance_fee_competitors, :entrance_fee_guests ].each do |fee|
+    test "validates presence of #{fee}" do
+      @day.send("#{fee}=", nil)
+      assert_not_valid(@day, fee)
+    end
+
+    test "validates numericality of #{fee}" do
+      @day.send("#{fee}=", 'foobar')
+      assert_not_valid(@day, fee)
+
+      @day.send("#{fee}=", 17)
+      assert_valid(@day)
+
+      @day.send("#{fee}=", 42.17)
+      assert_valid(@day)
+    end
+  end
+
   test "destroying day destroys all the events of that day" do
     count = @day.events.count
     assert_difference "Event.count", -1 * count do

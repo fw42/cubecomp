@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140910001211) do
+ActiveRecord::Schema.define(version: 20140911000315) do
 
   create_table "competitions", force: true do |t|
     t.string   "name"
@@ -74,6 +74,8 @@ ActiveRecord::Schema.define(version: 20140910001211) do
     t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "entrance_fee_competitors", precision: 10, scale: 2
+    t.decimal  "entrance_fee_guests",      precision: 10, scale: 2
   end
 
   add_index "days", ["competition_id"], name: "index_days_on_competition_id"

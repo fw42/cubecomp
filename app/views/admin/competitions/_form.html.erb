@@ -47,7 +47,7 @@
           <td><%= f.label :delegate, 'Main WCA delegate:' %></td>
           <td>
             <%= f.select :delegate, options_for_select(User.delegates.map{ |user| [ user.name, user.id ] }) %>
-            <%= help_tooltip 'The delegate will have admin permissions for this competition' %>
+            <%= help_tooltip 'The delegate will have permissions to log into this competition' %>
           </td>
         </tr>
         <tr>
@@ -85,8 +85,47 @@
       Date and financial settings
     </div>
     <div class="panel-body">
-      <table class="form-table">
+      <table class='default-table'>
+        <tr>
+          <th>Date</th>
+          <th>Entrance fee for competitors</th>
+          <th>Entrance fee for guests</th>
+          <th>Events</th>
+          <th></th>
+        </tr>
+        <tbody id='date-table'>
+          <%= f.fields_for :days do |ff| %>
+            <tr>
+              <td>
+                <%=
+                  ff.date_select("date", {
+                    start_year: Date.today.year - 5,
+                    end_year: Date.today.year + 5,
+                    order: [:month, :day, :year]
+                  }, {
+                    class: 'date_select'
+                  })
+                %>
+              </td>
+              <td><%= ff.text_field :entrance_fee_competitors %></td>
+              <td><%= ff.text_field :entrance_fee_guests %></td>
+              <td><%= ff.object.events.count %></td>
+              <td><%= link_to image_tag('delete.png'), {}, { class: 'destroy' } %></th>
+            </tr>
+          <% end %>
+        </tbody>
       </table>
+
+      <a href="#" id="add_new_day">Add new day</a>
+
+      <script>
+        $("#date-table").nestedAttributes({
+          bindAddTo: $("#add_new_day"),
+          beforeDestroy: function() {
+            return confirm("Are you sure?");
+          }
+        });
+      </script>
     </div>
   </div>
 

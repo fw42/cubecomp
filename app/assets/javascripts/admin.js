@@ -5,3 +5,4 @@
 // require sb-admin-2/plugins/morris/morris.min
 // require sb-admin-2/plugins/morris/morris-data
 //= require sb-admin-2/sb-admin-2
+//= require jquery.nested_attributes
