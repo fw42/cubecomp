@@ -36,4 +36,13 @@ class LocaleTest < ActiveSupport::TestCase
     @locale.handle = Locale::ALL.keys.first
     assert_valid(@locale)
   end
+
+  test "destroying locale destroys news items for that locale" do
+    count = @locale.news.count
+    assert_difference '@locale.news.count', -1 * count do
+      assert_difference 'News.count', -1 * count do
+        @locale.destroy
+      end
+    end
+  end
 end

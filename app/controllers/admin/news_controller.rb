@@ -18,7 +18,7 @@ class Admin::NewsController < AdminController
     @news = current_competition.news.new(news_params)
 
     if @news.save
-      redirect_to admin_news_path(@news), notice: 'News item was successfully created.'
+      redirect_to admin_competition_news_index_path(current_competition), notice: 'News item was successfully created.'
     else
       render :new
     end
@@ -26,7 +26,7 @@ class Admin::NewsController < AdminController
 
   def update
     if @news.update(news_params)
-      redirect_to admin_news_path(@news), notice: 'News item was successfully updated.'
+      redirect_to admin_competition_news_index_path(current_competition), notice: 'News item was successfully updated.'
     else
       render :edit
     end
@@ -44,6 +44,14 @@ class Admin::NewsController < AdminController
   end
 
   def news_params
-    params.require(:news).permit(:time, :locale, :text)
+    params.require(:news).permit(
+      :locale_id,
+      :text,
+      :"time(1i)",
+      :"time(2i)",
+      :"time(3i)",
+      :"time(4i)",
+      :"time(5i)"
+    )
   end
 end

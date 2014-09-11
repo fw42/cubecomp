@@ -75,7 +75,7 @@
       <%= f.fields_for :locales, @competition.locales.to_a.sort_by(&:handle) do |ff| %>
         <%= ff.hidden_field :handle %>
         <%= ff.check_box :_destroy, { checked: ff.object.persisted? }, '0', '1' %>
-        <%= Locale::ALL[ff.object.handle] %><br/>
+        <%= ff.object.name %><br/>
       <% end %>
     </div>
   </div>
@@ -103,12 +103,12 @@
                     end_year: Date.today.year + 5,
                     order: [:month, :day, :year]
                   }, {
-                    class: 'date_select'
+                    class: 'date-select'
                   })
                 %>
               </td>
-              <td><%= ff.text_field :entrance_fee_competitors %></td>
-              <td><%= ff.text_field :entrance_fee_guests %></td>
+              <td><%= ff.text_field :entrance_fee_competitors, { class: 'small' } %></td>
+              <td><%= ff.text_field :entrance_fee_guests, { class: 'small'} %></td>
               <td><%= ff.object.events.count %></td>
               <td><%= link_to image_tag('delete.png'), {}, { class: 'destroy' } %></th>
             </tr>

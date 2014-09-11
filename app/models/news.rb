@@ -3,6 +3,8 @@ class News < ActiveRecord::Base
   validates :competition, presence: true
 
   validates :time, presence: true
-# validates :locale, inclusion: ...
   validates :text, presence: true
+
+  belongs_to :locale
+  validates :locale, presence: true
 end

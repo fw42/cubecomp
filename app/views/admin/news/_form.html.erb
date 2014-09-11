@@ -1,29 +1,33 @@
 <%= form_for([:admin, @competition, @news]) do |f| %>
-  <% if @news.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@news.errors.count, "error") %> prohibited this admin_news from being saved:</h2>
+  <%= render 'form_errors', object: @news, label: 'news' %>
 
-      <ul>
-      <% @news.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Settings
     </div>
-  <% end %>
+    <div class="panel-body">
+      <table class="form-table">
+        <tr>
+          <td><%= f.label :time, 'Time:' %></td>
+          <td><%= f.datetime_select :time, { minute_step: 5 }, { class: 'time-select' } %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :locale_id, 'Language:' %></td>
+          <td><%= f.select :locale_id, options_for_select(current_competition.locales.map{ |locale| [ locale.name, locale.id ] }) %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= f.label :time %><br>
-    <%= f.text_field :time %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Text
+    </div>
+    <div class="panel-body">
+      <%= f.text_area :text %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :locale %><br>
-    <%= f.text_field :locale %>
-  </div>
-  <div class="field">
-    <%= f.label :text %><br>
-    <%= f.text_field :text %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+  <%= f.button 'Save', type: 'submit' %>
+  <%= link_to 'Cancel', admin_competition_news_index_path(current_competition), { class: 'button' } %>
 <% end %>

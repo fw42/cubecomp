@@ -13,6 +13,14 @@ class NewsTest < ActiveSupport::TestCase
     assert_not_valid(@news, :competition)
   end
 
+  test "validates presence and integrity of locale" do
+    @news.locale = nil
+    assert_not_valid(@news, :locale)
+
+    @news.locale_id = 123
+    assert_not_valid(@news, :locale)
+  end
+
   test "validates presence of time" do
     @news.time = nil
     assert_not_valid(@news, :time)

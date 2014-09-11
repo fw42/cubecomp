@@ -19,19 +19,24 @@ class Admin::NewsControllerTest < ActionController::TestCase
 
   test "#create" do
     params = {
-      locale: 'de',
+      locale_id: @competition.locales.first.id,
       text: 'hello',
-      time: '2014-09-04'
+      "time(1i)"=>"2014",
+      "time(2i)"=>"9",
+      "time(3i)"=>"11",
+      "time(4i)"=>"11",
+      "time(5i)"=>"30"
     }
 
     assert_difference('@competition.news.count') do
       post :create, competition_id: @competition, news: params
     end
 
-    assert_redirected_to admin_news_path(assigns(:news))
+    assert_redirected_to admin_competition_news_index_path(@competition)
     news = @competition.news.last
-    assert_attributes(params.except(:time), news)
-    assert_equal Time.parse(params[:time]), news.time
+    news = @competition.news.last
+    assert_equal @competition.locales.first, news.locale
+    assert_equal Time.parse('2014-09-11 11:30'), news.time
   end
 
   test "#edit" do
@@ -41,17 +46,21 @@ class Admin::NewsControllerTest < ActionController::TestCase
 
   test "#update" do
     params = {
-      locale: 'de',
+      locale_id: @competition.locales.first.id,
       text: 'hello',
-      time: '2014-09-04'
+      "time(1i)"=>"2014",
+      "time(2i)"=>"9",
+      "time(3i)"=>"11",
+      "time(4i)"=>"11",
+      "time(5i)"=>"30"
     }
 
     patch :update, id: @news, news: params
 
-    assert_redirected_to admin_news_path(assigns(:news))
+    assert_redirected_to admin_competition_news_index_path(@competition)
     news = @competition.news.last
-    assert_attributes(params.except(:time), news)
-    assert_equal Time.parse(params[:time]), news.time
+    assert_equal @competition.locales.first, news.locale
+    assert_equal Time.parse('2014-09-11 11:30'), news.time
   end
 
   test "#destroy" do

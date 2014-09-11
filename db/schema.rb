@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140911000315) do
+ActiveRecord::Schema.define(version: 20140911221329) do
 
   create_table "competitions", force: true do |t|
     t.string   "name"
@@ -122,10 +122,10 @@ ActiveRecord::Schema.define(version: 20140911000315) do
   create_table "news", force: true do |t|
     t.integer  "competition_id"
     t.datetime "time"
-    t.string   "locale"
     t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "locale_id"
   end
 
   add_index "news", ["competition_id"], name: "index_news_on_competition_id"
