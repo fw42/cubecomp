@@ -20,6 +20,8 @@ class UserPolicyService
   end
 
   def change_permission_level_to?(other_user, level)
+    return false if other_user == @user
+
     superadmin? ||
       (@user.permission_level > level) ||
       (@user == other_user && @user.permission_level == level)
