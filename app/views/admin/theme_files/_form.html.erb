@@ -1,25 +1,29 @@
 <%= form_for([:admin, @competition, @theme_file]) do |f| %>
-  <% if @theme_file.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@theme_file.errors.count, "error") %> prohibited this theme file from being saved:</h2>
+  <%= render 'form_errors', object: @theme_file, label: 'theme file' %>
 
-      <ul>
-      <% @theme_file.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Settings
     </div>
-  <% end %>
+    <div class="panel-body">
+      <table class="form-table">
+        <tr>
+          <td><%= f.label :filename %></td>
+          <td><%= f.text_field :filename %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= f.label :filename %><br>
-    <%= f.text_field :filename %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Text
+    </div>
+    <div class="panel-body">
+      <%= f.text_area :content  %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :content %><br>
-    <%= f.text_field :content %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+  <%= f.button 'Save', type: 'submit' %>
+  <%= link_to 'Cancel', admin_competition_news_index_path(current_competition), { class: 'button' } %>
 <% end %>
