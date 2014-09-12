@@ -16,4 +16,5 @@ group :development, :test do
   gem 'sqlite3'
   gem 'spring'
   gem 'byebug'
+  gem 'brakeman'
 end
