@@ -58,9 +58,10 @@
   <% if current_user.policy.change_competition_permissions? %>
     <div class="panel panel-default">
       <div class="panel-heading">
-        Competition permissions
+        Competition staff permissions
       </div>
       <div class="panel-body">
+        <%# TODO: Show competitions for which this person is delegate %>
         <%= f.fields_for :permissions, @user.permissions.sort_by{ |p| p.competition.name } do |ff| %>
           <%= ff.hidden_field :competition_id %>
           <%= ff.check_box :_destroy, { checked: ff.object.persisted? }, '0', '1' %>
