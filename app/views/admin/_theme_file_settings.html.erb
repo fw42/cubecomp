@@ -1,0 +1,12 @@
+<%= form_section 'Settings' do %>
+  <table class="form-table">
+    <tr>
+      <td><%= f.label :filename %></td>
+      <td><%= f.text_field :filename %></td>
+    </tr>
+  </table>
+<% end %>
+
+<%= form_section 'Text' do %>
+  <%= text_editor(f, :content) %>
+<% end %>

@@ -15,7 +15,7 @@
   <% end %>
 
   <%= form_section 'Text' do %>
-    <%= f.text_area :text %>
+    <%= text_editor(f, :text) %>
   <% end %>
 
   <%= submit_button(f) %>

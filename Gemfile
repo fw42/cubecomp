@@ -12,6 +12,8 @@ gem 'turbolinks'
 
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'codemirror-rails'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'spring'

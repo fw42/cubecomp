@@ -11,6 +11,10 @@ module AdminHelper
     render layout: 'form_section', locals: { title: title }, &block
   end
 
+  def text_editor(form, field)
+    render 'text_editor', form: form, field: field, id: "#{form.object_name}_#{field}"
+  end
+
   def help_tooltip(text)
     render 'tooltip', body: image_tag('help.png'), title: text
   end

@@ -6,6 +6,7 @@
  *= require_self
  * require_tree .
  *= require_tree ../../../vendor/assets/stylesheets/sb-admin-2
+ *= require codemirror
  */
 
 @import "../../../vendor/assets/stylesheets/sb-admin-2/bootstrap.scss";
@@ -15,6 +16,10 @@ table.default-table {
   @extend .table-striped;
   @extend .table-hover;
   @extend .table-bordered;
+}
+
+div.panel-body div.text-editor {
+  margin: -15px;
 }
 
 input:not([type='radio']):not([type='checkbox']),
