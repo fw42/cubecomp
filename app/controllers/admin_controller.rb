@@ -28,8 +28,10 @@ class AdminController < ApplicationController
         # TODO: render error
       end
 
-      session[:competition_id] = competition.id
-      competition
+      if competition
+        session[:competition_id] = competition.id
+        competition
+      end
     end
   end
   helper_method :current_competition
@@ -61,6 +63,8 @@ class AdminController < ApplicationController
   helper_method :admin_user_menu
 
   def navigation_menu
+    return [] unless current_competition
+
     items = [
       {
         label: 'Dashboard',
