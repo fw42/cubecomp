@@ -1,28 +1,18 @@
 <%= form_for([:admin, @competition, @theme_file]) do |f| %>
   <%= render 'form_errors', object: @theme_file, label: 'theme file' %>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Settings
-    </div>
-    <div class="panel-body">
-      <table class="form-table">
-        <tr>
-          <td><%= f.label :filename %></td>
-          <td><%= f.text_field :filename %></td>
-        </tr>
-      </table>
-    </div>
-  </div>
+  <%= form_section 'Settings' do %>
+    <table class="form-table">
+      <tr>
+        <td><%= f.label :filename %></td>
+        <td><%= f.text_field :filename %></td>
+      </tr>
+    </table>
+  <% end %>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Text
-    </div>
-    <div class="panel-body">
-      <%= f.text_area :content  %>
-    </div>
-  </div>
+  <%= form_section 'Text' do %>
+    <%= f.text_area :content  %>
+  <% end %>
 
   <%= f.button 'Save', type: 'submit' %>
   <%= link_to 'Cancel', admin_competition_theme_files_path(current_competition), { class: 'button' } %>

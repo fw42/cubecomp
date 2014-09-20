@@ -1,84 +1,64 @@
 <%= form_for([:admin, @competition, @event]) do |f| %>
   <%= render 'form_errors', object: @event, label: 'event' %>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Standard WCA Events
-    </div>
-    <div class="panel-body">
-    </div>
-  </div>
+  <%= form_section 'Standard WCA Events' do %>
+  <% end %>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Name
-    </div>
-    <div class="panel-body">
-      <table class="form-table">
-        <tr>
-          <td><%= f.label :name_short, 'Short:' %></td>
-          <td><%= f.text_field :name_short %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :name, 'Long:' %></td>
-          <td><%= f.text_field :name %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :handle, 'Handle:' %></td>
-          <td><%= f.text_field :handle %></td>
-        </tr>
-      </table>
-    </div>
-  </div>
+  <%= form_section 'Name' do %>
+    <table class="form-table">
+      <tr>
+        <td><%= f.label :name_short, 'Short:' %></td>
+        <td><%= f.text_field :name_short %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :name, 'Long:' %></td>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :handle, 'Handle:' %></td>
+        <td><%= f.text_field :handle %></td>
+      </tr>
+    </table>
+  <% end %>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Time
-    </div>
-    <div class="panel-body">
-      <table class="form-table">
-        <tr>
-          <td><%= f.label :day_id, 'Day:' %></td>
-          <td><%= f.select :day_id, options_for_select(current_competition.days.order(:date).map{ |day| [ day.date.to_s(:long), day.id ] }) %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :start_time, "Start:" %></td>
-          <td><%= f.time_select :start_time, { minute_step: 5 }, { class: 'time-select' } %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :length_in_minutes, "Length:" %></td>
-          <td><%= f.select :length_in_minutes, options_for_select([*1..24].map{ |i|
-            minutes = 5 * i
-            str = "#{minutes} minutes"
-            if minutes % 30 == 0
-              hours = minutes / 60.0
-              str << " (%.1f %s)" % [ hours, "hour".pluralize(hours) ]
-            end
+  <%= form_section 'Time' do %>
+    <table class="form-table">
+      <tr>
+        <td><%= f.label :day_id, 'Day:' %></td>
+        <td><%= f.select :day_id, options_for_select(current_competition.days.order(:date).map{ |day| [ day.date.to_s(:long), day.id ] }) %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :start_time, "Start:" %></td>
+        <td><%= f.time_select :start_time, { minute_step: 5 }, { class: 'time-select' } %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :length_in_minutes, "Length:" %></td>
+        <td><%= f.select :length_in_minutes, options_for_select([*1..24].map{ |i|
+          minutes = 5 * i
+          str = "#{minutes} minutes"
+          if minutes % 30 == 0
+            hours = minutes / 60.0
+            str << " (%.1f %s)" % [ hours, "hour".pluralize(hours) ]
+          end
 
-            [ str, minutes ]
-          }) %></td>
-        </tr>
-      </table>
-    </div>
-  </div>
+          [ str, minutes ]
+        }) %></td>
+      </tr>
+    </table>
+  <% end %>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Options
-    </div>
-    <div class="panel-body">
-      <table class="form-table">
-        <tr>
-          <td><%= f.label :max_number_of_registrations, 'Max. registrations:' %></td>
-          <td><%= f.text_field :max_number_of_registrations %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :state, 'State:' %></td>
-          <td><%= f.text_field :state %></td>
-        </tr>
-      </table>
-    </div>
-  </div>
+  <%= form_section 'Options' do %>
+    <table class="form-table">
+      <tr>
+        <td><%= f.label :max_number_of_registrations, 'Max. registrations:' %></td>
+        <td><%= f.text_field :max_number_of_registrations %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :state, 'State:' %></td>
+        <td><%= f.text_field :state %></td>
+      </tr>
+    </table>
+  <% end %>
 
   <%= f.button 'Save', type: 'submit' %>
   <%= link_to 'Cancel', admin_competition_events_path(current_competition), { class: 'button' } %>

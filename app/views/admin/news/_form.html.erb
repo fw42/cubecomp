@@ -1,32 +1,22 @@
 <%= form_for([:admin, @competition, @news]) do |f| %>
   <%= render 'form_errors', object: @news, label: 'news' %>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Settings
-    </div>
-    <div class="panel-body">
-      <table class="form-table">
-        <tr>
-          <td><%= f.label :time, 'Time:' %></td>
-          <td><%= f.datetime_select :time, { minute_step: 5 }, { class: 'time-select' } %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :locale_id, 'Language:' %></td>
-          <td><%= f.select :locale_id, options_for_select(current_competition.locales.map{ |locale| [ locale.name, locale.id ] }) %></td>
-        </tr>
-      </table>
-    </div>
-  </div>
+  <%= form_section 'Settings' do %>
+    <table class="form-table">
+      <tr>
+        <td><%= f.label :time, 'Time:' %></td>
+        <td><%= f.datetime_select :time, { minute_step: 5 }, { class: 'time-select' } %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :locale_id, 'Language:' %></td>
+        <td><%= f.select :locale_id, options_for_select(current_competition.locales.map{ |locale| [ locale.name, locale.id ] }) %></td>
+      </tr>
+    </table>
+  <% end %>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Text
-    </div>
-    <div class="panel-body">
-      <%= f.text_area :text %>
-    </div>
-  </div>
+  <%= form_section 'Text' do %>
+    <%= f.text_area :text %>
+  <% end %>
 
   <%= f.button 'Save', type: 'submit' %>
   <%= link_to 'Cancel', admin_competition_news_index_path(current_competition), { class: 'button' } %>

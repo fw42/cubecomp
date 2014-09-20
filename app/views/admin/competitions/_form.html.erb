@@ -1,182 +1,152 @@
 <%= form_for([:admin, competition_for_form(@competition)]) do |f| %>
   <%= render 'form_errors', object: @competition, label: 'competition' %>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      General settings
-    </div>
-    <div class="panel-body">
-      <table class="form-table">
-        <tr>
-          <td><%= f.label :name, 'Name of competition:' %></td>
-          <td><%= f.text_field :name %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :handle, 'URL handle:' %></td>
-          <td><%= f.text_field :handle %></td>
-        </tr>
-      </table>
-    </div>
-  </div>
+  <%= form_section 'General settings' do %>
+    <table class="form-table">
+      <tr>
+        <td><%= f.label :name, 'Name of competition:' %></td>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :handle, 'URL handle:' %></td>
+        <td><%= f.text_field :handle %></td>
+      </tr>
+    </table>
+  <% end %>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Staff settings
-    </div>
-    <div class="panel-body">
-      <table class="form-table">
-        <tr>
-          <td><%= f.label :staff_name, 'Name of staff team:' %></td>
-          <td>
-            <%= f.text_field :staff_name %>
-            <%= help_tooltip 'This name will appear as the sender address of emails sent to competitors' %>
-          </td>
-        </tr>
-        <tr>
-          <td><%= f.label :staff_email, 'Email address of staff team:' %></td>
-          <td><%= f.text_field :staff_email %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :cc_orga, 'Send copy of all emails to team:' %></td>
-          <td>
-            <%= f.radio_button :cc_orga, true %> yes &nbsp;
-            <%= f.radio_button :cc_orga, false %> no
-          </td>
-        </tr>
-        <tr>
-          <td><%= f.label :delegate, 'Main WCA delegate:' %></td>
-          <td>
-            <%= f.select :delegate, options_for_select(User.delegates.map{ |user| [ user.name, user.id ] }) %>
-            <%= help_tooltip 'The delegate will have permissions to log into this competition' %>
-          </td>
-        </tr>
-        <tr>
-          <td><label>Staff users:</label></td>
-          <td>
-            <% @competition.users.each do |user| %>
-              <% if current_user.policy.edit_user?(user) %>
-                <%= link_to user.name, admin_user_path(user) %>
-              <% else %>
-                <%= user.name %>
-              <% end %>
-              (<%= user.email %>)<br/>
+  <%= form_section 'Staff settings' do %>
+    <table class="form-table">
+      <tr>
+        <td><%= f.label :staff_name, 'Name of staff team:' %></td>
+        <td>
+          <%= f.text_field :staff_name %>
+          <%= help_tooltip 'This name will appear as the sender address of emails sent to competitors' %>
+        </td>
+      </tr>
+      <tr>
+        <td><%= f.label :staff_email, 'Email address of staff team:' %></td>
+        <td><%= f.text_field :staff_email %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :cc_orga, 'Send copy of all emails to team:' %></td>
+        <td>
+          <%= f.radio_button :cc_orga, true %> yes &nbsp;
+          <%= f.radio_button :cc_orga, false %> no
+        </td>
+      </tr>
+      <tr>
+        <td><%= f.label :delegate, 'Main WCA delegate:' %></td>
+        <td>
+          <%= f.select :delegate, options_for_select(User.delegates.map{ |user| [ user.name, user.id ] }) %>
+          <%= help_tooltip 'The delegate will have permissions to log into this competition' %>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Staff users:</label></td>
+        <td>
+          <% @competition.users.each do |user| %>
+            <% if current_user.policy.edit_user?(user) %>
+              <%= link_to user.name, admin_user_path(user) %>
+            <% else %>
+              <%= user.name %>
             <% end %>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Language settings
-    </div>
-    <div class="panel-body">
-      <%= f.fields_for :locales, @competition.locales.to_a.sort_by(&:handle) do |ff| %>
-        <%= ff.hidden_field :handle %>
-        <%= ff.check_box :_destroy, { checked: ff.object.persisted? }, '0', '1' %>
-        <%= ff.object.name %><br/>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Date and financial settings
-    </div>
-    <div class="panel-body">
-      <table class='default-table'>
-        <tr>
-          <th>Date</th>
-          <th>Entrance fee for competitors</th>
-          <th>Entrance fee for guests</th>
-          <th>Events</th>
-          <th></th>
-        </tr>
-        <tbody id='date-table'>
-          <%= f.fields_for :days do |ff| %>
-            <tr>
-              <td>
-                <%=
-                  ff.date_select("date", {
-                    start_year: Date.today.year - 5,
-                    end_year: Date.today.year + 5,
-                    order: [:month, :day, :year]
-                  }, {
-                    class: 'date-select'
-                  })
-                %>
-              </td>
-              <td><%= ff.text_field :entrance_fee_competitors, { class: 'small' } %></td>
-              <td><%= ff.text_field :entrance_fee_guests, { class: 'small'} %></td>
-              <td><%= ff.object.events.count %></td>
-              <td><%= link_to image_tag('delete.png'), {}, { class: 'destroy' } %></th>
-            </tr>
+            (<%= user.email %>)<br/>
           <% end %>
-        </tbody>
-      </table>
+        </td>
+      </tr>
+    </table>
+  <% end %>
 
-      <a href="#" id="add_new_day">Add new day</a>
+  <%= form_section 'Language settings' do %>
+    <%= f.fields_for :locales, @competition.locales.to_a.sort_by(&:handle) do |ff| %>
+      <%= ff.hidden_field :handle %>
+      <%= ff.check_box :_destroy, { checked: ff.object.persisted? }, '0', '1' %>
+      <%= ff.object.name %><br/>
+    <% end %>
+  <% end %>
 
-      <script>
-        $("#date-table").nestedAttributes({
-          bindAddTo: $("#add_new_day"),
-          beforeDestroy: function() {
-            return confirm("Are you sure?");
-          }
-        });
-      </script>
-    </div>
-  </div>
+  <%= form_section 'Date and financial settings' do %>
+    <table class='default-table'>
+      <tr>
+        <th>Date</th>
+        <th>Entrance fee for competitors</th>
+        <th>Entrance fee for guests</th>
+        <th>Events</th>
+        <th></th>
+      </tr>
+      <tbody id='date-table'>
+        <%= f.fields_for :days do |ff| %>
+          <tr>
+            <td>
+              <%=
+                ff.date_select("date", {
+                  start_year: Date.today.year - 5,
+                  end_year: Date.today.year + 5,
+                  order: [:month, :day, :year]
+                }, {
+                  class: 'date-select'
+                })
+              %>
+            </td>
+            <td><%= ff.text_field :entrance_fee_competitors, { class: 'small' } %></td>
+            <td><%= ff.text_field :entrance_fee_guests, { class: 'small'} %></td>
+            <td><%= ff.object.events.count %></td>
+            <td><%= link_to image_tag('delete.png'), {}, { class: 'destroy' } %></th>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Location settings
-    </div>
-    <div class="panel-body">
-      <table class="form-table">
-        <tr>
-          <td><%= f.label :city_name, 'Name of the local city:' %></td>
-          <td>
-            <%= f.text_field :city_name %>
-            <%= help_tooltip 'This will appear on the registration page, such that competitors can let you know that they live in the same city' %>
-          </td>
-        </tr>
-        <tr>
-          <td><%= f.label :city_name_short, 'Name of the local city (short):' %></td>
-          <td><%= f.text_field :city_name_short %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :venue_address, 'Address of the competition venue:' %></td>
-          <td><%= f.text_area :venue_address, rows: '4' %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :country, 'Country of the competition venue:' %></td>
-          <td>
-            <%= f.select :country_id, options_for_select(Country.all.map{ |country| [ country.name, country.id ] }) %>
-            <%= help_tooltip 'The country of the venue will also be used as the default registration country' %>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
+    <a href="#" id="add_new_day">Add new day</a>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Registration settings
-    </div>
-    <div class="panel-body">
-      <table class="form-table">
-        <tr>
-          <td><%= f.label :registration_open, 'Registration status:' %></td>
-          <td>
-            <%= f.radio_button :registration_open, true %> open<br/>
-            <%= f.radio_button :registration_open, false %> closed
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
+    <script>
+      $("#date-table").nestedAttributes({
+        bindAddTo: $("#add_new_day"),
+        beforeDestroy: function() {
+          return confirm("Are you sure?");
+        }
+      });
+    </script>
+  <% end %>
+
+  <%= form_section 'Location settings' do %>
+    <table class="form-table">
+      <tr>
+        <td><%= f.label :city_name, 'Name of the local city:' %></td>
+        <td>
+          <%= f.text_field :city_name %>
+          <%= help_tooltip 'This will appear on the registration page, such that competitors can let you know that they live in the same city' %>
+        </td>
+      </tr>
+      <tr>
+        <td><%= f.label :city_name_short, 'Name of the local city (short):' %></td>
+        <td><%= f.text_field :city_name_short %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :venue_address, 'Address of the competition venue:' %></td>
+        <td><%= f.text_area :venue_address, rows: '4' %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :country, 'Country of the competition venue:' %></td>
+        <td>
+          <%= f.select :country_id, options_for_select(Country.all.map{ |country| [ country.name, country.id ] }) %>
+          <%= help_tooltip 'The country of the venue will also be used as the default registration country' %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+
+  <%= form_section 'Registration settings' do %>
+    <table class="form-table">
+      <tr>
+        <td><%= f.label :registration_open, 'Registration status:' %></td>
+        <td>
+          <%= f.radio_button :registration_open, true %> open<br/>
+          <%= f.radio_button :registration_open, false %> closed
+        </td>
+      </tr>
+    </table>
+  <% end %>
 
   <%= f.button 'Save', type: 'submit' %>
 <% end %>
