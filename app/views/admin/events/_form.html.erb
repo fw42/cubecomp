@@ -40,7 +40,7 @@
       </tr>
       <tr>
         <td><%= f.label :length_in_minutes, "Length:" %></td>
-        <td><%= f.select :length_in_minutes, options_for_minutes %></td>
+        <td><%= f.select :length_in_minutes, [["", nil]] + options_for_minutes %></td>
       </tr>
     </table>
   <% end %>
@@ -66,7 +66,7 @@
       <tr>
         <td><%= f.label :max_number_of_registrations, 'Max. registrations:' %></td>
         <td>
-          <%= f.text_field :max_number_of_registrations %>
+          <%= f.select :max_number_of_registrations, [["Unlimited", nil]] + (5..500).step(5).to_a %>
           <%= help_tooltip %q{
             This field does not influence the registration status of events.
             If the maximum number is reached, people will still be able to register.

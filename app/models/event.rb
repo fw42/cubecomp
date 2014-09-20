@@ -25,12 +25,12 @@ class Event < ActiveRecord::Base
   validates :length_in_minutes, numericality: {
     only_integer: true,
     greater_than: 0
-  }, allow_nil: true
+  }, allow_nil: true, allow_blank: true
 
   validates :max_number_of_registrations, numericality: {
     only_integer: true,
     greater_than: 0
-  }, allow_nil: true
+  }, allow_nil: true, allow_blank: true
 
   validates :state, presence: true
   validates :state, inclusion: { in: Event::STATES.keys }, allow_nil: true, allow_blank: true
