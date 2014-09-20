@@ -18,6 +18,6 @@
     <%= f.text_area :text %>
   <% end %>
 
-  <%= f.button 'Save', type: 'submit' %>
-  <%= link_to 'Cancel', admin_competition_news_index_path(current_competition), { class: 'button' } %>
+  <%= submit_button(f) %>
+  <%= cancel_button(admin_competition_news_index_path(current_competition)) %>
 <% end %>

@@ -1,4 +1,12 @@
 module AdminHelper
+  def submit_button(form)
+    form.button 'Save', type: 'submit'
+  end
+
+  def cancel_button(link_target)
+    link_to 'Cancel', link_target, { class: 'button' }
+  end
+
   def form_section(title, &block)
     render layout: 'form_section', locals: { title: title }, &block
   end
