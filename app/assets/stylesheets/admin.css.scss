@@ -14,6 +14,7 @@ table.default-table {
   @extend .table;
   @extend .table-striped;
   @extend .table-hover;
+  @extend .table-bordered;
 }
 
 input:not([type='radio']):not([type='checkbox']),
