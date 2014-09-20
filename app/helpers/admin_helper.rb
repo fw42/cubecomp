@@ -18,4 +18,18 @@ module AdminHelper
   def delete_button(text, *link_args)
     render 'tooltip', body: link_to(image_tag('delete.png'), *link_args), title: text
   end
+
+  def options_for_minutes
+    [*1..24].map{ |i|
+      minutes = 5 * i
+      str = "#{minutes} minutes"
+
+      if minutes % 30 == 0
+        hours = minutes / 60.0
+        str << " (%.1f %s)" % [ hours, "hour".pluralize(hours) ]
+      end
+
+      [ str, minutes ]
+    }
+  end
 end

@@ -2,6 +2,7 @@
   <%= render 'form_errors', object: @event, label: 'event' %>
 
   <%= form_section 'Standard WCA Events' do %>
+    TODO
   <% end %>
 
   <%= form_section 'Name' do %>
@@ -16,7 +17,13 @@
       </tr>
       <tr>
         <td><%= f.label :handle, 'Handle:' %></td>
-        <td><%= f.text_field :handle %></td>
+        <td>
+          <%= f.text_field :handle %>
+          <%= help_tooltip %q{
+            If this is an official WCA event, you should not change this value but use
+            the suggested default value (from the "Load" button above).
+          } %>
+        </td>
       </tr>
     </table>
   <% end %>
@@ -25,7 +32,7 @@
     <table class="form-table">
       <tr>
         <td><%= f.label :day_id, 'Day:' %></td>
-        <td><%= f.select :day_id, options_for_select(current_competition.days.order(:date).map{ |day| [ day.date.to_s(:long), day.id ] }) %></td>
+        <td><%= f.select :day_id, current_competition.days.order(:date).map{ |day| [ day.date.to_s(:long), day.id ] } %></td>
       </tr>
       <tr>
         <td><%= f.label :start_time, "Start:" %></td>
@@ -33,16 +40,7 @@
       </tr>
       <tr>
         <td><%= f.label :length_in_minutes, "Length:" %></td>
-        <td><%= f.select :length_in_minutes, options_for_select([*1..24].map{ |i|
-          minutes = 5 * i
-          str = "#{minutes} minutes"
-          if minutes % 30 == 0
-            hours = minutes / 60.0
-            str << " (%.1f %s)" % [ hours, "hour".pluralize(hours) ]
-          end
-
-          [ str, minutes ]
-        }) %></td>
+        <td><%= f.select :length_in_minutes, options_for_minutes %></td>
       </tr>
     </table>
   <% end %>
@@ -50,12 +48,41 @@
   <%= form_section 'Options' do %>
     <table class="form-table">
       <tr>
+        <td><%= f.label :round, 'Round:' %></td>
+        <td><%= f.text_field :round %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :timelimit, 'Time limit:' %></td>
+        <td><%= f.text_field :timelimit %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :format, 'Format:' %></td>
+        <td><%= f.text_field :format %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :proceed, 'Proceed:' %></td>
+        <td><%= f.text_field :proceed %></td>
+      </tr>
+      <tr>
         <td><%= f.label :max_number_of_registrations, 'Max. registrations:' %></td>
-        <td><%= f.text_field :max_number_of_registrations %></td>
+        <td>
+          <%= f.text_field :max_number_of_registrations %>
+          <%= help_tooltip %q{
+            This field does not influence the registration status of events.
+            If the maximum number is reached, people will still be able to register.
+            This is purely informative: This number will appear in the schedule and
+            in overviews/statistics.
+          } %>
+        </td>
       </tr>
       <tr>
         <td><%= f.label :state, 'State:' %></td>
-        <td><%= f.text_field :state %></td>
+        <td>
+          <%= f.select :state, Event::STATES.to_a.map(&:reverse) %>
+          <%= help_tooltip %q{
+            TODO
+          } %>
+        </td>
       </tr>
     </table>
   <% end %>

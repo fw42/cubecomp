@@ -2,12 +2,12 @@ class Event < ActiveRecord::Base
   belongs_to :competition
   validates :competition, presence: true
 
-  STATES = [
-    'open_for_registration',
-    'open_with_waiting_list',
-    'registration_closed',
-    'not_for_registration'
-  ]
+  STATES = {
+    'open_for_registration' => 'Open for registration',
+    'open_with_waiting_list' => 'Waiting list',
+    'registration_closed' => 'Closed (not open anymore)',
+    'not_for_registration' => 'Not for registration'
+  }
 
   belongs_to :day
   validates :day, presence: true
@@ -33,5 +33,5 @@ class Event < ActiveRecord::Base
   }, allow_nil: true
 
   validates :state, presence: true
-  validates :state, inclusion: { in: Event::STATES }
+  validates :state, inclusion: { in: Event::STATES.keys }, allow_nil: true, allow_blank: true
 end

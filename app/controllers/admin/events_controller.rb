@@ -48,12 +48,18 @@ class Admin::EventsController < AdminController
 
   def event_params
     params.require(:event).permit(
-      :day_id,
-      :handle,
       :name_short,
       :name,
+      :handle,
+
+      :day_id,
       :start_time,
       :length_in_minutes,
+
+      :round,
+      :timelimit,
+      :format,
+      :proceed,
       :max_number_of_registrations,
       :state
     )

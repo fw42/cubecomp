@@ -45,6 +45,7 @@ class Admin::CompetitionsController < AdminController
     params.require(:competition).permit(
       :name,
       :handle,
+      :delegate_user_id,
       :staff_email,
       :staff_name,
       :city_name,

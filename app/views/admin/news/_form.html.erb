@@ -9,7 +9,7 @@
       </tr>
       <tr>
         <td><%= f.label :locale_id, 'Language:' %></td>
-        <td><%= f.select :locale_id, options_for_select(current_competition.locales.map{ |locale| [ locale.name, locale.id ] }) %></td>
+        <td><%= f.select :locale_id, current_competition.locales.map{ |locale| [ locale.name, locale.id ] } %></td>
       </tr>
     </table>
   <% end %>

@@ -88,7 +88,7 @@ class EventTest < ActiveSupport::TestCase
     @event.state = 'foo'
     assert_not_valid(@event, :state)
 
-    @event.state = Event::STATES.first
+    @event.state = Event::STATES.keys.first
     assert_valid @event
   end
 
