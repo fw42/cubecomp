@@ -34,4 +34,8 @@ class Event < ActiveRecord::Base
 
   validates :state, presence: true
   validates :state, inclusion: { in: Event::STATES.keys }, allow_nil: true, allow_blank: true
+
+  def end_time
+    start_time + (length_in_minutes || 0).minutes
+  end
 end

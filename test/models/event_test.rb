@@ -113,4 +113,14 @@ class EventTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "end_time is sum of start_time and length_in_minutes" do
+    @event.length_in_minutes = 17
+    assert_equal @event.start_time + 17.minutes, @event.end_time
+  end
+
+  test "end_time if length_in_minutes is nil" do
+    @event.length_in_minutes = nil
+    assert_equal @event.start_time, @event.end_time
+  end
 end

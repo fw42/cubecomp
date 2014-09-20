@@ -20,4 +20,6 @@ class Day < ActiveRecord::Base
   has_many :events, dependent: :destroy
   has_many :registrations, class_name: 'DayRegistration', dependent: :destroy
   has_many :competitors, through: :registrations
+
+  scope :with_events, ->{ joins(:events) }
 end
