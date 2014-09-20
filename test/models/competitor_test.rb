@@ -102,6 +102,17 @@ class CompetitorTest < ActiveSupport::TestCase
     end
   end
 
+  test "validates that male boolean is specified and not nil" do
+    @competitor.male = nil
+    assert_not_valid(@competitor, :male)
+
+    @competitor.male = true
+    assert_valid(@competitor)
+
+    @competitor.male = 'true'
+    assert_valid(@competitor)
+  end
+
   test "registered_on?, competing_on?, and guest_on?" do
     @competitor.day_registrations.each(&:destroy)
     @competitor.event_registrations.each(&:destroy)

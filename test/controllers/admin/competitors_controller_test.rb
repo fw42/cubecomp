@@ -32,7 +32,8 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       paid_comment: 'moneys!',
       staff: true,
       user_comment: 'hello',
-      wca: '2000BOB'
+      wca: '2000BOB',
+      male: true
     }
 
     assert_difference('@competition.competitors.count') do

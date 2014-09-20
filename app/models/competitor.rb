@@ -21,6 +21,7 @@ class Competitor < ActiveRecord::Base
   has_many :days, through: :day_registrations
 
   validate :registered_for_at_least_one_day?
+  validate :male_not_nil?
 
   def name
     [first_name, last_name].join(" ")
@@ -45,5 +46,11 @@ class Competitor < ActiveRecord::Base
     # if day_registrations.count == 0
     #   errors.add(:base, 'must register for at least one competition day')
     # end
+  end
+
+  def male_not_nil?
+    if male.nil?
+      errors.add(:male, 'must be either true or false')
+    end
   end
 end

@@ -61,7 +61,8 @@ class Admin::CompetitorsController < AdminController
       :free_entrance,
       :free_entrance_reason,
       :paid,
-      :paid_comment
+      :paid_comment,
+      :male
     )
   end
 end
