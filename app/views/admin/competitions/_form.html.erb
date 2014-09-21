@@ -35,7 +35,7 @@
         </td>
       </tr>
       <tr>
-        <td><%= f.label :delegate_user_id, 'Main WCA delegate:' %></td>
+        <td><%= f.label :delegate, 'Main WCA delegate:' %></td>
         <td>
           <%= f.select :delegate_user_id, [["", nil]] + User.delegates.map{ |user| [ user.name, user.id ] } %>
           <%= help_tooltip 'The delegate will have permissions to log into this competition' %>
