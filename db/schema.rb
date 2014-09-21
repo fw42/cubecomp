@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140921011920) do
+ActiveRecord::Schema.define(version: 20140921015238) do
 
   create_table "competitions", force: true do |t|
     t.string   "name",                              null: false
@@ -29,8 +29,10 @@ ActiveRecord::Schema.define(version: 20140921011920) do
     t.integer  "delegate_user_id"
   end
 
-  add_index "competitions", ["handle"], name: "index_competitions_on_handle", unique: true
-  add_index "competitions", ["name"], name: "index_competitions_on_name", unique: true
+  add_index "competitions", ["country_id"], name: "competitions_country_id_fk", using: :btree
+  add_index "competitions", ["delegate_user_id"], name: "competitions_delegate_user_id_fk", using: :btree
+  add_index "competitions", ["handle"], name: "index_competitions_on_handle", unique: true, using: :btree
+  add_index "competitions", ["name"], name: "index_competitions_on_name", unique: true, using: :btree
 
   create_table "competitors", force: true do |t|
     t.integer  "competition_id",                          null: false
@@ -55,8 +57,9 @@ ActiveRecord::Schema.define(version: 20140921011920) do
     t.boolean  "male"
   end
 
-  add_index "competitors", ["competition_id"], name: "index_competitors_on_competition_id"
-  add_index "competitors", ["wca", "competition_id"], name: "index_competitors_on_wca_and_competition_id", unique: true
+  add_index "competitors", ["competition_id"], name: "index_competitors_on_competition_id", using: :btree
+  add_index "competitors", ["country_id"], name: "competitors_country_id_fk", using: :btree
+  add_index "competitors", ["wca", "competition_id"], name: "index_competitors_on_wca_and_competition_id", unique: true, using: :btree
 
   create_table "countries", force: true do |t|
     t.string   "name",       null: false
@@ -64,7 +67,7 @@ ActiveRecord::Schema.define(version: 20140921011920) do
     t.datetime "updated_at"
   end
 
-  add_index "countries", ["name"], name: "index_countries_on_name", unique: true
+  add_index "countries", ["name"], name: "index_countries_on_name", unique: true, using: :btree
 
   create_table "day_registrations", force: true do |t|
     t.integer  "competition_id", null: false
@@ -74,7 +77,9 @@ ActiveRecord::Schema.define(version: 20140921011920) do
     t.datetime "updated_at"
   end
 
-  add_index "day_registrations", ["competitor_id", "day_id"], name: "index_day_registrations_on_competitor_id_and_day_id", unique: true
+  add_index "day_registrations", ["competition_id"], name: "day_registrations_competition_id_fk", using: :btree
+  add_index "day_registrations", ["competitor_id", "day_id"], name: "index_day_registrations_on_competitor_id_and_day_id", unique: true, using: :btree
+  add_index "day_registrations", ["day_id"], name: "day_registrations_day_id_fk", using: :btree
 
   create_table "days", force: true do |t|
     t.integer  "competition_id",                                    null: false
@@ -85,8 +90,8 @@ ActiveRecord::Schema.define(version: 20140921011920) do
     t.decimal  "entrance_fee_guests",      precision: 10, scale: 2, null: false
   end
 
-  add_index "days", ["competition_id"], name: "index_days_on_competition_id"
-  add_index "days", ["date", "competition_id"], name: "index_days_on_date_and_competition_id", unique: true
+  add_index "days", ["competition_id"], name: "index_days_on_competition_id", using: :btree
+  add_index "days", ["date", "competition_id"], name: "index_days_on_date_and_competition_id", unique: true, using: :btree
 
   create_table "event_registrations", force: true do |t|
     t.integer  "competition_id", null: false
@@ -96,8 +101,9 @@ ActiveRecord::Schema.define(version: 20140921011920) do
     t.datetime "updated_at"
   end
 
-  add_index "event_registrations", ["competition_id"], name: "index_event_registrations_on_competition_id"
-  add_index "event_registrations", ["competitor_id", "event_id"], name: "index_event_registrations_on_competitor_id_and_event_id", unique: true
+  add_index "event_registrations", ["competition_id"], name: "index_event_registrations_on_competition_id", using: :btree
+  add_index "event_registrations", ["competitor_id", "event_id"], name: "index_event_registrations_on_competitor_id_and_event_id", unique: true, using: :btree
+  add_index "event_registrations", ["event_id"], name: "event_registrations_event_id_fk", using: :btree
 
   create_table "events", force: true do |t|
     t.integer  "competition_id",              null: false
@@ -117,8 +123,9 @@ ActiveRecord::Schema.define(version: 20140921011920) do
     t.datetime "updated_at"
   end
 
-  add_index "events", ["competition_id"], name: "index_events_on_competition_id"
-  add_index "events", ["handle", "competition_id"], name: "index_events_on_handle_and_competition_id", unique: true
+  add_index "events", ["competition_id"], name: "index_events_on_competition_id", using: :btree
+  add_index "events", ["day_id"], name: "events_day_id_fk", using: :btree
+  add_index "events", ["handle", "competition_id"], name: "index_events_on_handle_and_competition_id", unique: true, using: :btree
 
   create_table "locales", force: true do |t|
     t.string   "handle",         null: false
@@ -127,8 +134,8 @@ ActiveRecord::Schema.define(version: 20140921011920) do
     t.integer  "competition_id", null: false
   end
 
-  add_index "locales", ["competition_id"], name: "index_locales_on_competition_id"
-  add_index "locales", ["handle", "competition_id"], name: "index_locales_on_handle_and_competition_id", unique: true
+  add_index "locales", ["competition_id"], name: "index_locales_on_competition_id", using: :btree
+  add_index "locales", ["handle", "competition_id"], name: "index_locales_on_handle_and_competition_id", unique: true, using: :btree
 
   create_table "news", force: true do |t|
     t.integer  "competition_id", null: false
@@ -139,7 +146,8 @@ ActiveRecord::Schema.define(version: 20140921011920) do
     t.integer  "locale_id",      null: false
   end
 
-  add_index "news", ["competition_id"], name: "index_news_on_competition_id"
+  add_index "news", ["competition_id"], name: "index_news_on_competition_id", using: :btree
+  add_index "news", ["locale_id"], name: "news_locale_id_fk", using: :btree
 
   create_table "permissions", force: true do |t|
     t.integer  "competition_id", null: false
@@ -148,8 +156,8 @@ ActiveRecord::Schema.define(version: 20140921011920) do
     t.datetime "updated_at"
   end
 
-  add_index "permissions", ["competition_id", "user_id"], name: "index_permissions_on_competition_id_and_user_id"
-  add_index "permissions", ["user_id", "competition_id"], name: "index_permissions_on_user_id_and_competition_id", unique: true
+  add_index "permissions", ["competition_id", "user_id"], name: "index_permissions_on_competition_id_and_user_id", using: :btree
+  add_index "permissions", ["user_id", "competition_id"], name: "index_permissions_on_user_id_and_competition_id", unique: true, using: :btree
 
   create_table "theme_file_templates", force: true do |t|
     t.string   "filename",   null: false
@@ -159,8 +167,8 @@ ActiveRecord::Schema.define(version: 20140921011920) do
     t.integer  "theme_id",   null: false
   end
 
-  add_index "theme_file_templates", ["filename", "theme_id"], name: "index_theme_file_templates_on_filename_and_theme_id", unique: true
-  add_index "theme_file_templates", ["theme_id"], name: "index_theme_file_templates_on_theme_id"
+  add_index "theme_file_templates", ["filename", "theme_id"], name: "index_theme_file_templates_on_filename_and_theme_id", unique: true, using: :btree
+  add_index "theme_file_templates", ["theme_id"], name: "index_theme_file_templates_on_theme_id", using: :btree
 
   create_table "theme_files", force: true do |t|
     t.integer  "competition_id", null: false
@@ -170,7 +178,8 @@ ActiveRecord::Schema.define(version: 20140921011920) do
     t.string   "filename",       null: false
   end
 
-  add_index "theme_files", ["filename", "competition_id"], name: "index_theme_files_on_filename_and_competition_id", unique: true
+  add_index "theme_files", ["competition_id"], name: "theme_files_competition_id_fk", using: :btree
+  add_index "theme_files", ["filename", "competition_id"], name: "index_theme_files_on_filename_and_competition_id", unique: true, using: :btree
 
   create_table "themes", force: true do |t|
     t.string   "name",       null: false
@@ -178,7 +187,7 @@ ActiveRecord::Schema.define(version: 20140921011920) do
     t.datetime "updated_at"
   end
 
-  add_index "themes", ["name"], name: "index_themes_on_name", unique: true
+  add_index "themes", ["name"], name: "index_themes_on_name", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                            null: false
@@ -191,6 +200,37 @@ ActiveRecord::Schema.define(version: 20140921011920) do
     t.integer  "permission_level",                 null: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+
+  add_foreign_key "competitions", "countries", name: "competitions_country_id_fk"
+  add_foreign_key "competitions", "users", name: "competitions_delegate_user_id_fk", column: "delegate_user_id"
+
+  add_foreign_key "competitors", "competitions", name: "competitors_competition_id_fk"
+  add_foreign_key "competitors", "countries", name: "competitors_country_id_fk"
+
+  add_foreign_key "day_registrations", "competitions", name: "day_registrations_competition_id_fk"
+  add_foreign_key "day_registrations", "competitors", name: "day_registrations_competitor_id_fk"
+  add_foreign_key "day_registrations", "days", name: "day_registrations_day_id_fk"
+
+  add_foreign_key "days", "competitions", name: "days_competition_id_fk"
+
+  add_foreign_key "event_registrations", "competitions", name: "event_registrations_competition_id_fk"
+  add_foreign_key "event_registrations", "competitors", name: "event_registrations_competitor_id_fk"
+  add_foreign_key "event_registrations", "events", name: "event_registrations_event_id_fk"
+
+  add_foreign_key "events", "competitions", name: "events_competition_id_fk"
+  add_foreign_key "events", "days", name: "events_day_id_fk"
+
+  add_foreign_key "locales", "competitions", name: "locales_competition_id_fk"
+
+  add_foreign_key "news", "competitions", name: "news_competition_id_fk"
+  add_foreign_key "news", "locales", name: "news_locale_id_fk"
+
+  add_foreign_key "permissions", "competitions", name: "permissions_competition_id_fk"
+  add_foreign_key "permissions", "users", name: "permissions_user_id_fk"
+
+  add_foreign_key "theme_file_templates", "themes", name: "theme_file_templates_theme_id_fk"
+
+  add_foreign_key "theme_files", "competitions", name: "theme_files_competition_id_fk"
 
 end
