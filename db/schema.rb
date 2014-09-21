@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140921005434) do
+ActiveRecord::Schema.define(version: 20140921010512) do
 
   create_table "competitions", force: true do |t|
     t.string   "name",                              null: false
@@ -32,22 +32,22 @@ ActiveRecord::Schema.define(version: 20140921005434) do
   add_index "competitions", ["handle"], name: "index_competitions_on_handle"
 
   create_table "competitors", force: true do |t|
-    t.integer  "competition_id",          null: false
-    t.string   "first_name",              null: false
-    t.string   "last_name",               null: false
+    t.integer  "competition_id",                          null: false
+    t.string   "first_name",                              null: false
+    t.string   "last_name",                               null: false
     t.string   "wca"
-    t.string   "email",                   null: false
+    t.string   "email",                                   null: false
     t.date     "birthday"
-    t.integer  "country_id",              null: false
-    t.boolean  "local"
-    t.boolean  "staff"
+    t.integer  "country_id",                              null: false
+    t.boolean  "local",                   default: false
+    t.boolean  "staff",                   default: false
     t.text     "user_comment"
     t.text     "admin_comment"
-    t.boolean  "free_entrance"
+    t.boolean  "free_entrance",           default: false
     t.string   "free_entrance_reason"
     t.string   "state"
-    t.boolean  "confirmation_email_sent"
-    t.boolean  "paid"
+    t.boolean  "confirmation_email_sent", default: false
+    t.boolean  "paid",                    default: false
     t.string   "paid_comment"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -165,14 +165,14 @@ ActiveRecord::Schema.define(version: 20140921005434) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",            null: false
+    t.string   "email",                            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password_digest"
-    t.string   "first_name",       null: false
-    t.string   "last_name",        null: false
-    t.boolean  "delegate"
-    t.integer  "permission_level", null: false
+    t.string   "first_name",                       null: false
+    t.string   "last_name",                        null: false
+    t.boolean  "delegate",         default: false
+    t.integer  "permission_level",                 null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email"
