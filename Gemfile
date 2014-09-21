@@ -6,7 +6,10 @@ gem 'sass-rails'
 
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails'
-gem 'jquery-rails'
+
+# Make sure that sb-admin-2 and jquery-nested-attributes still
+# work before version-bumping jQuery
+gem 'jquery-rails', '= 3.1.2'
 
 gem 'turbolinks'
 
