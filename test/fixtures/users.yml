@@ -5,6 +5,13 @@ flo:
   password_digest: "$2a$10$mr3btGrOKm/4fN66mxO53.VCFqbo2cXJG.fHX0tJPGYSrWEViI1SS"
   permission_level: <%= User::PERMISSION_LEVELS[:regular] %>
 
+regular_user_with_two_competitions:
+  email: regular@bob.com
+  first_name: Regular
+  last_name: Bob
+  password_digest: "$2a$10$mr3btGrOKm/4fN66mxO53.VCFqbo2cXJG.fHX0tJPGYSrWEViI1SS"
+  permission_level: <%= User::PERMISSION_LEVELS[:regular] %>
+
 regular_user:
   email: regular@user.com
   first_name: Regular

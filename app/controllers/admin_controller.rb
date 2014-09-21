@@ -1,6 +1,14 @@
 class AdminController < ApplicationController
   layout 'admin'
 
+  def index
+    if current_competition
+      redirect_to admin_competition_dashboard_index_path(current_competition)
+    else
+      redirect_to edit_admin_user_path(current_user)
+    end
+  end
+
   def current_user
     @current_user ||= begin
       if session[:user_id]
@@ -16,16 +24,14 @@ class AdminController < ApplicationController
 
   def current_competition
     @current_competition ||= begin
-      competition = if competition_id = params[:competition_id] || session[:competition_id]
+      competition_id = params[:competition_id] || session[:competition_id]
+
+      competition = if competition_id
         current_user.competitions.find_by(id: competition_id)
       end
 
       if competition.nil?
-        competition = Competition.all.select{ |c| current_user.policy.login?(c) }.first
-      end
-
-      if competition.nil?
-        # TODO: render error
+        competition = Competition.all.select{ |c| current_user.policy.login?(c) }.last
       end
 
       if competition
@@ -63,8 +69,6 @@ class AdminController < ApplicationController
   helper_method :admin_user_menu
 
   def navigation_menu
-    return [] unless current_competition
-
     items = [
       {
         label: 'Dashboard',

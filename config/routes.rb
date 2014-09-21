@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :admin do
-    root to: 'dashboard#index'
+    root action: 'index'
 
     get 'login', to: 'login#login'
     get 'logout', to: 'login#logout'
