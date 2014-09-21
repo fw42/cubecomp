@@ -11,11 +11,15 @@ class UserPolicyService
     admin?
   end
 
-  def create_competition?
+  def create_competitions?
     admin?
   end
 
-  def change_competition_permissions?
+  def destroy_competition?(competition)
+    admin?
+  end
+
+  def change_competition_permissions? # TODO: take competition as parameter
     admin?
   end
 

@@ -4,21 +4,8 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
   setup do
     login_as(users(:admin))
     @competition = competitions(:aachen_open)
-  end
 
-  test "#index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:competitions)
-  end
-
-  test "#new" do
-    get :new
-    assert_response :success
-  end
-
-  test "#create" do
-    params = {
+    @new_competition_params = {
       city_name: 'Gütersloh',
       country_id: countries(:germany).id,
       handle: 'go15',
@@ -26,21 +13,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
       staff_email: 'german-open@cubecomp.de'
     }
 
-    assert_difference('Competition.count') do
-      post :create, competition: params
-    end
-
-    assert_redirected_to admin_competitions_path
-    assert_attributes(params, Competition.find_by(handle: 'go15'))
-  end
-
-  test "#edit" do
-    get :edit, id: @competition
-    assert_response :success
-  end
-
-  test "#update" do
-    params = {
+    @update_params = {
       cc_orga: true,
       city_name: "Aix la chapelle",
       city_name_short: "AAC",
@@ -52,11 +25,71 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
       staff_name: 'aachen team',
       venue_address: 'rwth'
     }
+  end
 
-    patch :update, id: @competition, competition: params
+  test "#index" do
+    get :index
+    assert_response :success
+    assert_not_nil assigns(:competitions)
+  end
 
+  test "#index as regular user renders 401" do
+    login_as(users(:regular_user_with_one_competition))
+    get :index
+    assert_response :unauthorized
+  end
+
+  test "#new" do
+    get :new
+    assert_response :success
+  end
+
+  test "#new as regular user renders 401" do
+    login_as(users(:regular_user_with_one_competition))
+    get :new
+    assert_response :unauthorized
+  end
+
+  test "#create" do
+    assert_difference 'Competition.count' do
+      post :create, competition: @new_competition_params
+    end
+
+    assert_redirected_to admin_competitions_path
+    assert_attributes(@new_competition_params, Competition.find_by(handle: @new_competition_params[:handle]))
+  end
+
+  test "#create as regular user renders 401" do
+    login_as(users(:regular_user_with_one_competition))
+
+    assert_no_difference 'Competition.count' do
+      post :create, competition: @new_competition_params
+    end
+
+    assert_response :unauthorized
+  end
+
+  test "#edit" do
+    get :edit, id: @competition.id
+    assert_response :success
+  end
+
+  test "#edit as regular user without permission renders 401" do
+    login_as(users(:regular_user_with_no_competitions))
+    get :edit, id: @competition.id
+    assert_response :unauthorized
+  end
+
+  test "#update" do
+    patch :update, id: @competition, competition: @update_params
     assert_redirected_to edit_admin_competition_path(assigns(:competition))
-    assert_attributes(params, @competition.reload)
+    assert_attributes(@update_params, @competition.reload)
+  end
+
+  test "#update as regular user without permission renders 401" do
+    login_as(users(:regular_user_with_no_competitions))
+    patch :update, id: @competition, competition: @update_params
+    assert_response :unauthorized
   end
 
   test "#update nested attributes for adding a locale" do
@@ -179,10 +212,18 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
   end
 
   test "#destroy" do
-    assert_difference('Competition.count', -1) do
+    assert_difference 'Competition.count', -1 do
       delete :destroy, id: @competition
     end
 
     assert_redirected_to admin_competitions_path
+  end
+
+  test "#destroy as regular user renders 401" do
+    login_as(users(:regular_user_with_one_competition))
+    assert_no_difference 'Competition.count' do
+      delete :destroy, id: @competition
+    end
+    assert_response :unauthorized
   end
 end
