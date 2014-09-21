@@ -8,7 +8,7 @@ class Locale < ActiveRecord::Base
   validates :competition, presence: true
 
   validates :handle, presence: true
-  validates :handle, uniqueness: { scope: :competition }, allow_nil: true, allow_blank: true
+  validates :handle, uniqueness: { scope: :competition_id }, allow_nil: true, allow_blank: true
   validates :handle, inclusion: { in: ALL }, allow_nil: true, allow_blank: true
 
   has_many :news, dependent: :destroy

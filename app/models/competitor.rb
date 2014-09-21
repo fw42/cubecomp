@@ -2,7 +2,7 @@ class Competitor < ActiveRecord::Base
   belongs_to :competition
   validates :competition, presence: true
 
-  validates :wca, uniqueness: { scope: :competition }, allow_nil: true, allow_blank: true
+  validates :wca, uniqueness: { scope: :competition_id }, allow_nil: true, allow_blank: true
   validates :first_name, presence: true
   validates :last_name, presence: true
 

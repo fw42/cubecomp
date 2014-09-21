@@ -15,6 +15,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'codemirror-rails'
 
 group :development, :test do
+  gem 'consistency_fail'
   gem 'sqlite3'
   gem 'spring'
   gem 'byebug'

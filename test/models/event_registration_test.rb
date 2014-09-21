@@ -31,7 +31,7 @@ class EventRegistrationTest < ActiveSupport::TestCase
 
   test "validates uniqueness of competitor, scoped to event" do
     new_registration = @registration.dup
-    assert_not_valid(new_registration, :competitor)
+    assert_not_valid(new_registration, :competitor_id)
   end
 
   test "validates that competitor is registered for the day of the event" do

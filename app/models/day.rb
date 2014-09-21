@@ -3,7 +3,7 @@ class Day < ActiveRecord::Base
   validates :competition, presence: true
 
   validates :date, presence: true
-  validates :date, uniqueness: { scope: :competition }, allow_nil: true
+  validates :date, uniqueness: { scope: :competition_id }, allow_nil: true
 
   validates :entrance_fee_competitors, presence: true
   validates :entrance_fee_competitors, numericality: {

@@ -19,7 +19,7 @@ class Event < ActiveRecord::Base
   validates :name, presence: true
 
   validates :handle, presence: true, unless: ->(event) { event.state == 'not_for_registration' }
-  validates :handle, uniqueness: { scope: :competition }, allow_nil: true, allow_blank: true
+  validates :handle, uniqueness: { scope: :competition_id }, allow_nil: true, allow_blank: true
 
   validates :start_time, presence: true
   validates :length_in_minutes, numericality: {

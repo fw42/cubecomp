@@ -31,7 +31,7 @@ class DayRegistrationTest < ActiveSupport::TestCase
 
   test "validates uniqueness of competitor scoped by day" do
     new_registration = @registration.dup
-    assert_not_valid(new_registration, :competitor)
+    assert_not_valid(new_registration, :competitor_id)
 
     new_registration.day = days(:aachen_open_day_two)
     assert_valid(new_registration)

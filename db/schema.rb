@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140921011319) do
+ActiveRecord::Schema.define(version: 20140921011920) do
 
   create_table "competitions", force: true do |t|
     t.string   "name",                              null: false
@@ -29,7 +29,8 @@ ActiveRecord::Schema.define(version: 20140921011319) do
     t.integer  "delegate_user_id"
   end
 
-  add_index "competitions", ["handle"], name: "index_competitions_on_handle"
+  add_index "competitions", ["handle"], name: "index_competitions_on_handle", unique: true
+  add_index "competitions", ["name"], name: "index_competitions_on_name", unique: true
 
   create_table "competitors", force: true do |t|
     t.integer  "competition_id",                          null: false
@@ -55,12 +56,15 @@ ActiveRecord::Schema.define(version: 20140921011319) do
   end
 
   add_index "competitors", ["competition_id"], name: "index_competitors_on_competition_id"
+  add_index "competitors", ["wca", "competition_id"], name: "index_competitors_on_wca_and_competition_id", unique: true
 
   create_table "countries", force: true do |t|
     t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "countries", ["name"], name: "index_countries_on_name", unique: true
 
   create_table "day_registrations", force: true do |t|
     t.integer  "competition_id", null: false
@@ -69,6 +73,8 @@ ActiveRecord::Schema.define(version: 20140921011319) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "day_registrations", ["competitor_id", "day_id"], name: "index_day_registrations_on_competitor_id_and_day_id", unique: true
 
   create_table "days", force: true do |t|
     t.integer  "competition_id",                                    null: false
@@ -80,6 +86,7 @@ ActiveRecord::Schema.define(version: 20140921011319) do
   end
 
   add_index "days", ["competition_id"], name: "index_days_on_competition_id"
+  add_index "days", ["date", "competition_id"], name: "index_days_on_date_and_competition_id", unique: true
 
   create_table "event_registrations", force: true do |t|
     t.integer  "competition_id", null: false
@@ -90,6 +97,7 @@ ActiveRecord::Schema.define(version: 20140921011319) do
   end
 
   add_index "event_registrations", ["competition_id"], name: "index_event_registrations_on_competition_id"
+  add_index "event_registrations", ["competitor_id", "event_id"], name: "index_event_registrations_on_competitor_id_and_event_id", unique: true
 
   create_table "events", force: true do |t|
     t.integer  "competition_id",              null: false
@@ -110,6 +118,7 @@ ActiveRecord::Schema.define(version: 20140921011319) do
   end
 
   add_index "events", ["competition_id"], name: "index_events_on_competition_id"
+  add_index "events", ["handle", "competition_id"], name: "index_events_on_handle_and_competition_id", unique: true
 
   create_table "locales", force: true do |t|
     t.string   "handle",         null: false
@@ -119,6 +128,7 @@ ActiveRecord::Schema.define(version: 20140921011319) do
   end
 
   add_index "locales", ["competition_id"], name: "index_locales_on_competition_id"
+  add_index "locales", ["handle", "competition_id"], name: "index_locales_on_handle_and_competition_id", unique: true
 
   create_table "news", force: true do |t|
     t.integer  "competition_id", null: false
@@ -139,6 +149,7 @@ ActiveRecord::Schema.define(version: 20140921011319) do
   end
 
   add_index "permissions", ["competition_id", "user_id"], name: "index_permissions_on_competition_id_and_user_id"
+  add_index "permissions", ["user_id", "competition_id"], name: "index_permissions_on_user_id_and_competition_id", unique: true
 
   create_table "theme_file_templates", force: true do |t|
     t.string   "filename",   null: false
@@ -148,6 +159,7 @@ ActiveRecord::Schema.define(version: 20140921011319) do
     t.integer  "theme_id",   null: false
   end
 
+  add_index "theme_file_templates", ["filename", "theme_id"], name: "index_theme_file_templates_on_filename_and_theme_id", unique: true
   add_index "theme_file_templates", ["theme_id"], name: "index_theme_file_templates_on_theme_id"
 
   create_table "theme_files", force: true do |t|
@@ -158,11 +170,15 @@ ActiveRecord::Schema.define(version: 20140921011319) do
     t.string   "filename",       null: false
   end
 
+  add_index "theme_files", ["filename", "competition_id"], name: "index_theme_files_on_filename_and_competition_id", unique: true
+
   create_table "themes", force: true do |t|
     t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "themes", ["name"], name: "index_themes_on_name", unique: true
 
   create_table "users", force: true do |t|
     t.string   "email",                            null: false
@@ -175,6 +191,6 @@ ActiveRecord::Schema.define(version: 20140921011319) do
     t.integer  "permission_level",                 null: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
 
 end

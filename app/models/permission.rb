@@ -4,5 +4,5 @@ class Permission < ActiveRecord::Base
 
   belongs_to :user
   validates :user, presence: true
-  validates :user, uniqueness: { scope: :competition }, allow_nil: true
+  validates :user_id, uniqueness: { scope: :competition_id }, allow_nil: true
 end

@@ -23,7 +23,7 @@ class PermissionTest < ActiveSupport::TestCase
 
   test "validates uniqueness of user, scoped to competition" do
     new_permission = @permission.dup
-    assert_not_valid(new_permission, :user)
+    assert_not_valid(new_permission, :user_id)
 
     new_permission.competition = competitions(:german_open)
     assert_valid new_permission

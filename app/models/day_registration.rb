@@ -7,7 +7,7 @@ class DayRegistration < ActiveRecord::Base
 
   belongs_to :competitor
   validates :competitor, presence: true
-  validates :competitor, uniqueness: { scope: :day }, allow_nil: true, allow_blank: true
+  validates :competitor_id, uniqueness: { scope: :day_id }, allow_nil: true, allow_blank: true
 
   after_destroy :destroy_event_registrations
 
