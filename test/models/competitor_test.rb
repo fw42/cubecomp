@@ -102,6 +102,11 @@ class CompetitorTest < ActiveSupport::TestCase
     end
   end
 
+  test "male is unspecified by default on new instances" do
+    competitor = Competitor.new
+    assert_nil competitor.male
+  end
+
   test "validates that male boolean is specified and not nil" do
     @competitor.male = nil
     assert_not_valid(@competitor, :male)
