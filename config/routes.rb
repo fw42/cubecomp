@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   namespace :admin do
     root action: 'index'
 
-    get 'login', to: 'login#login'
+    get 'login', to: 'login#index'
+    post 'login', to: 'login#login'
     get 'logout', to: 'login#logout'
 
     resources :users, except: [:show]

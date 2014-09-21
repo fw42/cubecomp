@@ -2,6 +2,7 @@ require 'test_helper'
 
 class Admin::CompetitionsControllerTest < ActionController::TestCase
   setup do
+    login_as(users(:admin))
     @competition = competitions(:aachen_open)
   end
 

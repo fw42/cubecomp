@@ -4,6 +4,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
   setup do
     @competitor = competitors(:flo_aachen_open)
     @competition = @competitor.competition
+    login_as(@competition.users.first)
   end
 
   test "#index" do

@@ -4,6 +4,7 @@ class Admin::ThemeFilesControllerTest < ActionController::TestCase
   setup do
     @theme_file = theme_files(:aachen_open_index)
     @competition = @theme_file.competition
+    login_as(@competition.users.first)
   end
 
   test "#index" do

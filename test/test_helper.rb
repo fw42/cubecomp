@@ -23,6 +23,11 @@ end
 
 class ActionController::TestCase
   def login_as(user)
+    raise 'Invalid user' unless user
     session[:user_id] = user.id
+  end
+
+  def logout
+    session.delete(:user_id)
   end
 end

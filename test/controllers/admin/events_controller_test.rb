@@ -4,6 +4,7 @@ class Admin::EventsControllerTest < ActionController::TestCase
   setup do
     @event = events(:aachen_open_rubiks_cube)
     @competition = @event.competition
+    login_as(@competition.users.first)
   end
 
   test "#index" do

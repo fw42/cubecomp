@@ -62,9 +62,19 @@ p#notice {
   @extend .alert-success;
 }
 
+p#error {
+  @extend .alert;
+  @extend .alert-danger;
+}
+
 .button {
   @extend .btn;
   @extend .btn-default;
+}
+
+.login-button {
+  @extend .button;
+  @extend .btn-block;
 }
 
 button[type='submit'] {

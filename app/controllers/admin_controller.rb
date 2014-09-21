@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
   layout 'admin'
+  before_action :ensure_authenticated
 
   def index
     if current_competition
@@ -9,13 +10,19 @@ class AdminController < ApplicationController
     end
   end
 
+  private
+
+  def ensure_authenticated
+    if current_user.nil?
+      redirect_to admin_login_path
+    end
+  end
+
   def current_user
     @current_user ||= begin
       if session[:user_id]
-        User.find(session[:user_id])
-      else
-        user = Permission.first.user
-        session[:user_id] = user.id
+        user = User.find_by(id: session[:user_id])
+        reset_session if user.nil?
         user
       end
     end

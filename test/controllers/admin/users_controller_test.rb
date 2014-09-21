@@ -2,6 +2,7 @@ require 'test_helper'
 
 class Admin::UsersControllerTest < ActionController::TestCase
   setup do
+    login_as(users(:admin))
     @user = users(:flo)
   end
 
@@ -60,13 +61,14 @@ class Admin::UsersControllerTest < ActionController::TestCase
 
     patch :update, id: @user, user: params
 
+    assert assigns(:user)
     assert_redirected_to edit_admin_user_path(assigns(:user))
     user = User.find_by(email: 'bob@cubecomp.de')
     assert_attributes(params.except(:password, :password_confirmation), user)
     assert user.authenticate(params[:password])
   end
 
-  test "#update when passwords dont match fails" do
+  test "#update when passwords don't match fails" do
     patch :update, id: @user, user: { password: 'foo', password_confirmation: 'bar' }
     assert_response 200
     assert_equal ["doesn't match Password"], assigns(:user).errors[:password_confirmation]

@@ -2,6 +2,7 @@ require 'test_helper'
 
 class Admin::ThemesControllerTest < ActionController::TestCase
   setup do
+    login_as(users(:admin))
     @theme = themes(:default)
   end
 

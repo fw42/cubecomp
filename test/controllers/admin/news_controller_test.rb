@@ -4,6 +4,7 @@ class Admin::NewsControllerTest < ActionController::TestCase
   setup do
     @news = news(:aachen_open_registration_open)
     @competition = @news.competition
+    login_as(@competition.users.first)
   end
 
   test "#index" do

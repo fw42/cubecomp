@@ -4,6 +4,7 @@ class Admin::ThemeFileTemplatesControllerTest < ActionController::TestCase
   setup do
     @template = theme_file_templates(:default_index)
     @theme = @template.theme
+    login_as(users(:admin))
   end
 
   test "#new" do
