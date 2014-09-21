@@ -21,11 +21,11 @@
         </div>
 
         <ul class="nav navbar-top-links navbar-right">
-          <% if current_user.competitions.count > 1 %>
+          <% if (competitions_for_dropdown = current_user.policy.competitions).count > 1 %>
             <li>
-              <select>
-                <% current_user.competitions.each do |competition| %>
-                  <option value="<%= competition.handle %>">
+              <select onchange="location = this.options[this.selectedIndex].value;">
+                <% competitions_for_dropdown.each do |competition| %>
+                  <option value="<%= url_for admin_competition_dashboard_index_path(competition.id) %>" <% if competition == current_competition %>selected="selected"<% end %>>
                     <%= competition.name %>
                   </option>
                 <% end %>

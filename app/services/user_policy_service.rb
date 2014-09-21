@@ -3,6 +3,10 @@ class UserPolicyService
     @user = user
   end
 
+  def competitions
+    Competition.all.select{ |c| login?(c) }
+  end
+
   def login?(competition)
     admin? || @user.delegate_for?(competition) || @user.has_permission?(competition)
   end

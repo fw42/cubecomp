@@ -65,7 +65,7 @@ class AdminController < ApplicationController
     end
 
     competition ||= current_competition_from_session(session[:competition_id]) if session[:competition_id]
-    competition ||= Competition.all.select{ |c| current_user.policy.login?(c) }.last
+    competition ||= current_user.policy.competitions.last
 
     session[:competition_id] = competition.try(:id)
     @current_competition = competition
