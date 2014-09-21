@@ -68,7 +68,7 @@
                 </li>
               <% end %>
 
-              <% if current_user.policy.see_admin_user_menu? %>
+              <% if current_user.policy.admin_user_menu? %>
                 <li <% if admin_user_menu.any?(&:active?) %>class="active"<% end %>>
                   <a href="#">
                     <i class="fa fa-cog fa-fw"></i> Admin<span class="fa arrow"></span>

@@ -6,7 +6,6 @@ class Admin::NewsController < AdminController
   end
 
   def new
-    @competition = current_competition
     @news = current_competition.news.new
   end
 
@@ -14,7 +13,6 @@ class Admin::NewsController < AdminController
   end
 
   def create
-    @competition = current_competition
     @news = current_competition.news.new(news_params)
 
     if @news.save

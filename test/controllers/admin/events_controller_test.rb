@@ -34,18 +34,18 @@ class Admin::EventsControllerTest < ActionController::TestCase
       post :create, competition_id: @competition.id, event: params
     end
 
-    assert_redirected_to admin_event_path(assigns(:event))
+    assert_redirected_to admin_competition_event_path(@competition.id, assigns(:event))
     event = @competition.events.last
     assert_attributes(params.except(:start_time), event)
   end
 
   test "#show" do
-    get :show, id: @event
+    get :show, competition_id: @competition.id, id: @event.id
     assert_response :success
   end
 
   test "#get" do
-    get :edit, id: @event
+    get :edit, competition_id: @competition.id, id: @event.id
     assert_response :success
   end
 
@@ -61,9 +61,9 @@ class Admin::EventsControllerTest < ActionController::TestCase
       state: 'open_for_registration'
     }
 
-    patch :update, id: @event, event: params
+    patch :update, competition_id: @competition.id, id: @event.id, event: params
 
-    assert_redirected_to admin_event_path(assigns(:event))
+    assert_redirected_to admin_competition_event_path(@competition.id, assigns(:event))
     @event.reload
     assert_attributes(params.except(:start_time), @event)
     assert_equal Time.parse(params[:start_time]).utc.strftime("%H:%M"), @event.start_time.strftime("%H:%M")
@@ -71,7 +71,7 @@ class Admin::EventsControllerTest < ActionController::TestCase
 
   test "#destroy" do
     assert_difference('@competition.events.count', -1) do
-      delete :destroy, id: @event
+      delete :destroy, competition_id: @competition.id, id: @event.id
     end
 
     assert_redirected_to admin_competition_events_path(@competition)

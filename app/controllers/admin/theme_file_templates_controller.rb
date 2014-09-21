@@ -1,5 +1,6 @@
 class Admin::ThemeFileTemplatesController < AdminController
-  before_action :set_template, only: [:edit, :update, :destroy]
+  before_action :set_theme_and_template, only: [:edit, :update, :destroy]
+  skip_before_action :ensure_current_competition
 
   def new
     @theme = Theme.find(params[:theme_id])
@@ -14,7 +15,7 @@ class Admin::ThemeFileTemplatesController < AdminController
     @template = @theme.file_templates.new(template_params)
 
     if @template.save
-      redirect_to edit_admin_theme_file_template_path(@template), notice: 'Template was successfully created.'
+      redirect_to edit_admin_theme_theme_file_template_path(@theme, @template), notice: 'Template was successfully created.'
     else
       render :new
     end
@@ -22,7 +23,7 @@ class Admin::ThemeFileTemplatesController < AdminController
 
   def update
     if @template.update(template_params)
-      redirect_to edit_admin_theme_file_template_path(@template), notice: 'Theme file template was successfully updated.'
+      redirect_to edit_admin_theme_theme_file_template_path(@theme, @template), notice: 'Theme file template was successfully updated.'
     else
       render :edit
     end
@@ -30,13 +31,14 @@ class Admin::ThemeFileTemplatesController < AdminController
 
   def destroy
     @template.destroy
-    redirect_to admin_theme_path(@template.theme), notice: 'Theme file template was successfully destroyed.'
+    redirect_to admin_theme_path(@theme), notice: 'Theme file template was successfully destroyed.'
   end
 
   private
 
-  def set_template
-    @template = ThemeFileTemplate.find(params[:id])
+  def set_theme_and_template
+    @theme = Theme.find(params[:theme_id])
+    @template = @theme.file_templates.find(params[:id])
   end
 
   def template_params

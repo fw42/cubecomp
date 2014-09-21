@@ -30,9 +30,9 @@
         <td><%= event.timelimit %></td>
         <td><%= event.format %></td>
         <td>todo</td>
-        <td><%= link_to 'Show', admin_event_path(event) %></td>
-        <td><%= link_to 'Edit', edit_admin_event_path(event) %></td>
-        <td><%= link_to 'Destroy', admin_event_path(event), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', admin_competition_event_path(current_competition, event) %></td>
+        <td><%= link_to 'Edit', edit_admin_competition_event_path(current_competition, event) %></td>
+        <td><%= link_to 'Destroy', admin_competition_event_path(current_competition, event), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

@@ -7,7 +7,7 @@ class UserPolicyService
     admin? || @user.delegate_for?(competition) || @user.has_permission?(competition)
   end
 
-  def see_admin_user_menu?
+  def admin_user_menu?
     admin?
   end
 

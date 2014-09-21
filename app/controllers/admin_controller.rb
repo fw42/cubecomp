@@ -1,21 +1,29 @@
 class AdminController < ApplicationController
   layout 'admin'
   before_action :ensure_authenticated
+  before_action :set_current_competition
+  before_action :ensure_current_competition
 
   def index
-    if current_competition
-      redirect_to admin_competition_dashboard_index_path(current_competition)
-    else
-      redirect_to edit_admin_user_path(current_user)
-    end
+    redirect_to admin_competition_dashboard_index_path(current_competition)
   end
 
   private
+
+  def ensure_current_competition
+    if current_competition.nil?
+      redirect_to edit_admin_user_path(current_user)
+    end
+  end
 
   def ensure_authenticated
     if current_user.nil?
       redirect_to admin_login_path
     end
+  end
+
+  def render_unauthorized
+    render text: 'unauthorized', status: :unauthorized
   end
 
   def current_user
@@ -30,24 +38,38 @@ class AdminController < ApplicationController
   helper_method :current_user
 
   def current_competition
-    @current_competition ||= begin
-      competition_id = params[:competition_id] || session[:competition_id]
-
-      competition = if competition_id
-        current_user.competitions.find_by(id: competition_id)
-      end
-
-      if competition.nil?
-        competition = Competition.all.select{ |c| current_user.policy.login?(c) }.last
-      end
-
-      if competition
-        session[:competition_id] = competition.id
-        competition
-      end
-    end
+    set_current_competition unless @current_competition
+    @current_competition
   end
   helper_method :current_competition
+
+  def set_current_competition
+    competition_id = nil
+
+    if self.class == Admin::CompetitionsController
+      competition_id ||= params[:id]
+    else
+      competition_id ||= params[:competition_id]
+    end
+
+    competition_id ||= session[:competition_id]
+
+    competition = if competition_id
+      Competition.find_by(id: competition_id)
+    end
+
+    if competition && !current_user.policy.login?(competition)
+      render_unauthorized
+      return
+    end
+
+    if competition.nil?
+      competition = Competition.all.select{ |c| current_user.policy.login?(c) }.last
+    end
+
+    session[:competition_id] = competition.try(:id)
+    @current_competition = competition
+  end
 
   def admin_user_menu
     items = [

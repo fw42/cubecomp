@@ -18,8 +18,8 @@
         <td><%= news.time.to_s(:short) %></td>
         <td><%= news.locale.name %></td>
         <td><%= truncate(news.text, length: 50, separator: ' ') %></td>
-        <td><%= link_to 'Edit', edit_admin_news_path(news) %></td>
-        <td><%= link_to 'Destroy', admin_news_path(news), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_admin_competition_news_path(current_competition, news) %></td>
+        <td><%= link_to 'Destroy', admin_competition_news_path(current_competition, news), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

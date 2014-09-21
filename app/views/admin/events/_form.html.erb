@@ -1,4 +1,4 @@
-<%= form_for([:admin, @competition, @event]) do |f| %>
+<%= form_for([:admin, current_competition, @event]) do |f| %>
   <%= render 'form_errors', object: @event, label: 'event' %>
 
   <%= form_section 'Standard WCA Events' do %>

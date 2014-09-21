@@ -9,7 +9,6 @@ class Admin::EventsController < AdminController
   end
 
   def new
-    @competition = current_competition
     @event = current_competition.events.new
   end
 
@@ -17,11 +16,10 @@ class Admin::EventsController < AdminController
   end
 
   def create
-    @competition = current_competition
     @event = current_competition.events.new(event_params)
 
     if @event.save
-      redirect_to admin_event_path(@event), notice: 'Event was successfully created.'
+      redirect_to admin_competition_event_path(current_competition, @event), notice: 'Event was successfully created.'
     else
       render :new
     end
@@ -29,7 +27,7 @@ class Admin::EventsController < AdminController
 
   def update
     if @event.update(event_params)
-      redirect_to admin_event_path(@event), notice: 'Event was successfully updated.'
+      redirect_to admin_competition_event_path(current_competition, @event), notice: 'Event was successfully updated.'
     else
       render :edit
     end

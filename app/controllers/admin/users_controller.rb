@@ -1,7 +1,7 @@
 class Admin::UsersController < AdminController
   layout 'admin'
-
   before_action :set_user, only: [:edit, :update, :destroy]
+  skip_before_action :ensure_current_competition
 
   def index
     @users = User.all

@@ -3,8 +3,8 @@
 <ul>
   <% @theme.file_templates.each do |template| %>
     <li>
-      <%= link_to template.filename, edit_admin_theme_file_template_path(template) %>
-      (<%= link_to 'Destroy', admin_theme_file_template_path(template), method: :delete, data: { confirm: 'Are you sure?' } %>)
+      <%= link_to template.filename, edit_admin_theme_theme_file_template_path(@theme, template) %>
+      (<%= link_to 'Destroy', admin_theme_theme_file_template_path(@theme, template), method: :delete, data: { confirm: 'Are you sure?' } %>)
     </li>
   <% end %>
 </ul>

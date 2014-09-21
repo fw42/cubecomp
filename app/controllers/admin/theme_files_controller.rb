@@ -6,7 +6,6 @@ class Admin::ThemeFilesController < AdminController
   end
 
   def new
-    @competition = current_competition
     @theme_file = current_competition.theme_files.new
   end
 
@@ -14,11 +13,10 @@ class Admin::ThemeFilesController < AdminController
   end
 
   def create
-    @competition = current_competition
     @theme_file = current_competition.theme_files.new(theme_file_params)
 
     if @theme_file.save
-      redirect_to edit_admin_theme_file_path(@theme_file), notice: 'Theme file was successfully created.'
+      redirect_to edit_admin_competition_theme_file_path(current_competition, @theme_file), notice: 'Theme file was successfully created.'
     else
       render :new
     end
@@ -26,7 +24,7 @@ class Admin::ThemeFilesController < AdminController
 
   def update
     if @theme_file.update(theme_file_params)
-      redirect_to edit_admin_theme_file_path(@theme_file), notice: 'Theme file was successfully updated.'
+      redirect_to edit_admin_competition_theme_file_path(current_competition, @theme_file), notice: 'Theme file was successfully updated.'
     else
       render :edit
     end

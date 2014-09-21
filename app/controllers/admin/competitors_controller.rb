@@ -9,7 +9,6 @@ class Admin::CompetitorsController < AdminController
   end
 
   def new
-    @competition = current_competition
     @competitor = current_competition.competitors.new
   end
 
@@ -17,11 +16,10 @@ class Admin::CompetitorsController < AdminController
   end
 
   def create
-    @competition = current_competition
     @competitor = current_competition.competitors.new(competitor_params)
 
     if @competitor.save
-      redirect_to admin_competitor_path(@competitor), notice: 'Competitor was successfully created.'
+      redirect_to admin_competition_competitor_path(current_competition, @competitor), notice: 'Competitor was successfully created.'
     else
       render :new
     end
@@ -29,7 +27,7 @@ class Admin::CompetitorsController < AdminController
 
   def update
     if @competitor.update(competitor_params)
-      redirect_to admin_competitor_path(@competitor), notice: 'Competitor was successfully updated.'
+      redirect_to admin_competition_competitor_path(current_competition, @competitor), notice: 'Competitor was successfully updated.'
     else
       render :edit
     end

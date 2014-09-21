@@ -41,19 +41,19 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       post :create, competition_id: @competition.id, competitor: params
     end
 
-    assert_redirected_to admin_competitor_path(assigns(:competitor))
+    assert_redirected_to admin_competition_competitor_path(@competition.id, assigns(:competitor))
     bob = @competition.competitors.find_by(wca: '2000BOB')
     assert_attributes(params.except(:birthday), bob)
     assert_equal Date.parse(params[:birthday]), bob.birthday
   end
 
   test "#show" do
-    get :show, id: @competitor
+    get :show, competition_id: @competition.id, id: @competitor.id
     assert_response :success
   end
 
   test "#edit" do
-    get :edit, id: @competitor
+    get :edit, competition_id: @competition.id, id: @competitor.id
     assert_response :success
   end
 
@@ -75,9 +75,9 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       wca: '2000BOB'
     }
 
-    patch :update, id: @competitor, competitor: params
+    patch :update, competition_id: @competition.id, id: @competitor.id, competitor: params
 
-    assert_redirected_to admin_competitor_path(assigns(:competitor))
+    assert_redirected_to admin_competition_competitor_path(@competition.id, assigns(:competitor))
     @competitor.reload
     assert_attributes(params.except(:birthday), @competitor)
     assert_equal Date.parse(params[:birthday]), @competitor.birthday
@@ -85,9 +85,9 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
 
   test "should destroy competitor" do
     assert_difference('@competition.competitors.count', -1) do
-      delete :destroy, id: @competitor
+      delete :destroy, competition_id: @competition.id, id: @competitor.id
     end
 
-    assert_redirected_to admin_competition_competitors_path(@competition)
+    assert_redirected_to admin_competition_competitors_path(@competition.id)
   end
 end

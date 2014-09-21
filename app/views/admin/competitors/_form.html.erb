@@ -1,4 +1,4 @@
-<%= form_for([:admin, @competition, @competitor]) do |f| %>
+<%= form_for([:admin, current_competition, @competitor]) do |f| %>
   <% if @competitor.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@competitor.errors.count, "error") %> prohibited this competitor from being saved:</h2>

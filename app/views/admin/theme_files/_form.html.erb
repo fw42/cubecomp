@@ -1,4 +1,4 @@
-<%= form_for([:admin, @competition, @theme_file]) do |f| %>
+<%= form_for([:admin, current_competition, @theme_file]) do |f| %>
   <%= render 'form_errors', object: @theme_file, label: 'theme file' %>
   <%= render 'theme_file_settings', f: f %>
 

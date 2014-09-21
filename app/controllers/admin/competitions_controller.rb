@@ -1,5 +1,6 @@
 class Admin::CompetitionsController < AdminController
   before_action :set_competition, only: [:edit, :update, :destroy]
+  skip_before_filter :ensure_current_competition
 
   def index
     @competitions = Competition.all
@@ -7,9 +8,6 @@ class Admin::CompetitionsController < AdminController
 
   def new
     @competition = Competition.new
-  end
-
-  def edit
   end
 
   def create
@@ -20,6 +18,9 @@ class Admin::CompetitionsController < AdminController
     else
       render :new
     end
+  end
+
+  def edit
   end
 
   def update

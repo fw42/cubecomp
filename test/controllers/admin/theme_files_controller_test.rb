@@ -28,12 +28,12 @@ class Admin::ThemeFilesControllerTest < ActionController::TestCase
       post :create, competition_id: @competition.id, theme_file: params
     end
 
-    assert_redirected_to edit_admin_theme_file_path(assigns(:theme_file))
+    assert_redirected_to edit_admin_competition_theme_file_path(@competition.id, assigns(:theme_file))
     assert_attributes(params, @competition.theme_files.last)
   end
 
   test "#edit" do
-    get :edit, id: @theme_file
+    get :edit, competition_id: @competition.id, id: @theme_file.id
     assert_response :success
   end
 
@@ -43,15 +43,15 @@ class Admin::ThemeFilesControllerTest < ActionController::TestCase
       content: 'foobar!'
     }
 
-    patch :update, id: @theme_file, theme_file: params
+    patch :update, competition_id: @competition.id, id: @theme_file.id, theme_file: params
 
-    assert_redirected_to edit_admin_theme_file_path(assigns(:theme_file))
+    assert_redirected_to edit_admin_competition_theme_file_path(@competition.id, assigns(:theme_file))
     assert_attributes(params, @theme_file.reload)
   end
 
   test "#destroy" do
     assert_difference('@competition.theme_files.count', -1) do
-      delete :destroy, id: @theme_file
+      delete :destroy, competition_id: @competition.id, id: @theme_file.id
     end
 
     assert_redirected_to admin_competition_theme_files_path(@competition)

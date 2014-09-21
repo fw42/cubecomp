@@ -9,15 +9,15 @@ Rails.application.routes.draw do
     resources :users, except: [:show]
 
     resources :themes, only: [:index, :show] do
-      resources :theme_file_templates, except: [:index, :show], shallow: true
+      resources :theme_file_templates, except: [:index, :show]
     end
 
     resources :competitions, except: [:show] do
       resources :dashboard, only: [:index]
-      resources :competitors, shallow: true
-      resources :events, shallow: true
-      resources :news, except: [:show], shallow: true
-      resources :theme_files, except: [:show], shallow: true
+      resources :competitors
+      resources :events
+      resources :news, except: [:show]
+      resources :theme_files, except: [:show]
     end
   end
 end

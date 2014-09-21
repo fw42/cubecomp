@@ -41,9 +41,9 @@
         <td><%= competitor.birthday %></td>
         <td></td>
         <td>
-          <%= link_to 'Show', admin_competitor_path(competitor) %>
-          <%= link_to 'Edit', edit_admin_competitor_path(competitor) %>
-          <%= link_to 'Destroy', admin_competitor_path(competitor), method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Show', admin_competition_competitor_path(current_competition, competitor) %>
+          <%= link_to 'Edit', edit_admin_competition_competitor_path(current_competition, competitor) %>
+          <%= link_to 'Destroy', admin_competition_competitor_path(current_competition, competitor), method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>
       </tr>
     <% end %>
