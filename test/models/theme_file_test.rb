@@ -28,12 +28,4 @@ class ThemeFileTest < ActiveSupport::TestCase
     @theme_file.competition_id = 17
     assert_not_valid(@theme_file, :competition)
   end
-
-  test "validates presence of content" do
-    @theme_file.content = nil
-    assert_not_valid(@theme_file, :content)
-
-    @theme_file.content = ''
-    assert_not_valid(@theme_file, :content)
-  end
 end

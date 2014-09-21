@@ -4,6 +4,4 @@ class ThemeFile < ActiveRecord::Base
 
   validates :filename, presence: true
   validates :filename, uniqueness: { scope: :competition }, allow_nil: true, allow_blank: true
-
-  validates :content, presence: true
 end

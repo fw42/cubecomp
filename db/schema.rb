@@ -11,17 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140920222929) do
+ActiveRecord::Schema.define(version: 20140921005434) do
 
   create_table "competitions", force: true do |t|
-    t.string   "name"
-    t.string   "handle"
-    t.string   "staff_email"
+    t.string   "name",                              null: false
+    t.string   "handle",                            null: false
+    t.string   "staff_email",                       null: false
     t.string   "staff_name"
-    t.string   "city_name"
+    t.string   "city_name",                         null: false
     t.string   "city_name_short"
     t.string   "venue_address"
-    t.integer  "country_id"
+    t.integer  "country_id",                        null: false
     t.boolean  "cc_orga",           default: false
     t.boolean  "registration_open", default: false
     t.datetime "created_at"
@@ -32,13 +32,13 @@ ActiveRecord::Schema.define(version: 20140920222929) do
   add_index "competitions", ["handle"], name: "index_competitions_on_handle"
 
   create_table "competitors", force: true do |t|
-    t.integer  "competition_id"
-    t.string   "first_name"
-    t.string   "last_name"
+    t.integer  "competition_id",          null: false
+    t.string   "first_name",              null: false
+    t.string   "last_name",               null: false
     t.string   "wca"
-    t.string   "email"
+    t.string   "email",                   null: false
     t.date     "birthday"
-    t.integer  "country_id"
+    t.integer  "country_id",              null: false
     t.boolean  "local"
     t.boolean  "staff"
     t.text     "user_comment"
@@ -57,34 +57,34 @@ ActiveRecord::Schema.define(version: 20140920222929) do
   add_index "competitors", ["competition_id"], name: "index_competitors_on_competition_id"
 
   create_table "countries", force: true do |t|
-    t.string   "name"
+    t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "day_registrations", force: true do |t|
-    t.integer  "competition_id"
-    t.integer  "competitor_id"
-    t.integer  "day_id"
+    t.integer  "competition_id", null: false
+    t.integer  "competitor_id",  null: false
+    t.integer  "day_id",         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "days", force: true do |t|
-    t.integer  "competition_id"
-    t.date     "date"
+    t.integer  "competition_id",                                    null: false
+    t.date     "date",                                              null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "entrance_fee_competitors", precision: 10, scale: 2
-    t.decimal  "entrance_fee_guests",      precision: 10, scale: 2
+    t.decimal  "entrance_fee_competitors", precision: 10, scale: 2, null: false
+    t.decimal  "entrance_fee_guests",      precision: 10, scale: 2, null: false
   end
 
   add_index "days", ["competition_id"], name: "index_days_on_competition_id"
 
   create_table "event_registrations", force: true do |t|
-    t.integer  "competition_id"
-    t.integer  "event_id"
-    t.integer  "competitor_id"
+    t.integer  "competition_id", null: false
+    t.integer  "event_id",       null: false
+    t.integer  "competitor_id",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -92,14 +92,14 @@ ActiveRecord::Schema.define(version: 20140920222929) do
   add_index "event_registrations", ["competition_id"], name: "index_event_registrations_on_competition_id"
 
   create_table "events", force: true do |t|
-    t.integer  "competition_id"
-    t.integer  "day_id"
-    t.string   "name_short"
-    t.string   "name"
-    t.string   "handle"
-    t.string   "state"
+    t.integer  "competition_id",              null: false
+    t.integer  "day_id",                      null: false
+    t.string   "name_short",                  null: false
+    t.string   "name",                        null: false
+    t.string   "handle",                      null: false
+    t.string   "state",                       null: false
     t.integer  "max_number_of_registrations"
-    t.time     "start_time"
+    t.time     "start_time",                  null: false
     t.integer  "length_in_minutes"
     t.string   "timelimit"
     t.string   "format"
@@ -112,28 +112,28 @@ ActiveRecord::Schema.define(version: 20140920222929) do
   add_index "events", ["competition_id"], name: "index_events_on_competition_id"
 
   create_table "locales", force: true do |t|
-    t.string   "handle"
+    t.string   "handle",         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "competition_id"
+    t.integer  "competition_id", null: false
   end
 
   add_index "locales", ["competition_id"], name: "index_locales_on_competition_id"
 
   create_table "news", force: true do |t|
-    t.integer  "competition_id"
-    t.datetime "time"
-    t.string   "text"
+    t.integer  "competition_id", null: false
+    t.datetime "time",           null: false
+    t.string   "text",           null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "locale_id"
+    t.integer  "locale_id",      null: false
   end
 
   add_index "news", ["competition_id"], name: "index_news_on_competition_id"
 
   create_table "permissions", force: true do |t|
-    t.integer  "competition_id"
-    t.integer  "user_id"
+    t.integer  "competition_id", null: false
+    t.integer  "user_id",        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -141,38 +141,38 @@ ActiveRecord::Schema.define(version: 20140920222929) do
   add_index "permissions", ["competition_id", "user_id"], name: "index_permissions_on_competition_id_and_user_id"
 
   create_table "theme_file_templates", force: true do |t|
-    t.string   "filename"
+    t.string   "filename",   null: false
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "theme_id"
+    t.integer  "theme_id",   null: false
   end
 
   add_index "theme_file_templates", ["theme_id"], name: "index_theme_file_templates_on_theme_id"
 
   create_table "theme_files", force: true do |t|
-    t.integer  "competition_id"
+    t.integer  "competition_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "content"
-    t.string   "filename"
+    t.string   "filename",       null: false
   end
 
   create_table "themes", force: true do |t|
-    t.string   "name"
+    t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
-    t.string   "email"
+    t.string   "email",            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password_digest"
-    t.string   "first_name"
-    t.string   "last_name"
+    t.string   "first_name",       null: false
+    t.string   "last_name",        null: false
     t.boolean  "delegate"
-    t.integer  "permission_level"
+    t.integer  "permission_level", null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email"
