@@ -8,7 +8,7 @@ class AdminControllerTest < ActionController::TestCase
   end
 
   test "#index redirects to login page if old user session exists but user doesn't exist anymore" do
-    user = users(:regular_user)
+    user = users(:regular_user_with_no_competitions)
     login_as(user)
     user.destroy!
     get :index
@@ -36,11 +36,8 @@ class AdminControllerTest < ActionController::TestCase
   end
 
   test "#index redirects to user page if user has no competitions" do
-    user = users(:regular_user)
+    user = users(:regular_user_with_no_competitions)
     login_as(user)
-
-    user.competitions.each(&:destroy!)
-
     get :index
     assert_redirected_to edit_admin_user_path(user.id)
   end
@@ -92,10 +89,10 @@ class AdminControllerTest < ActionController::TestCase
 
   test "forms contain CSRF tokens" do
     @controller = Admin::UsersController.new
-    login_as(users(:regular_user))
+    login_as(users(:regular_user_with_no_competitions))
 
     with_csrf_protection do
-      get :edit, id: users(:regular_user)
+      get :edit, id: users(:regular_user_with_no_competitions)
       assert_match /<meta content="authenticity_token" name="csrf-param" \/>/, @response.body
       assert_match /<meta content="[^"]+" name="csrf-token" \/>/, @response.body
     end
@@ -103,11 +100,11 @@ class AdminControllerTest < ActionController::TestCase
 
   test "POST fails if CSRF token is missing" do
     @controller = Admin::UsersController.new
-    login_as(users(:regular_user))
+    login_as(users(:regular_user_with_no_competitions))
 
     with_csrf_protection do
       assert_raises ActionController::InvalidAuthenticityToken do
-        post :edit, id: users(:regular_user), user: {
+        post :edit, id: users(:regular_user_with_no_competitions), user: {
           permission_level: User::PERMISSION_LEVELS.values.max
         }
       end

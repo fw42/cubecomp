@@ -5,17 +5,24 @@ flo:
   password_digest: "$2a$10$mr3btGrOKm/4fN66mxO53.VCFqbo2cXJG.fHX0tJPGYSrWEViI1SS"
   permission_level: <%= User::PERMISSION_LEVELS[:regular] %>
 
-regular_user_with_two_competitions:
-  email: regular@bob.com
+regular_user_with_no_competitions:
+  email: no@regular.com
   first_name: Regular
-  last_name: Bob
+  last_name: Zero
   password_digest: "$2a$10$mr3btGrOKm/4fN66mxO53.VCFqbo2cXJG.fHX0tJPGYSrWEViI1SS"
   permission_level: <%= User::PERMISSION_LEVELS[:regular] %>
 
-regular_user:
-  email: regular@user.com
+regular_user_with_one_competition:
+  email: one@regular.com
   first_name: Regular
-  last_name: User
+  last_name: One
+  password_digest: "$2a$10$mr3btGrOKm/4fN66mxO53.VCFqbo2cXJG.fHX0tJPGYSrWEViI1SS"
+  permission_level: <%= User::PERMISSION_LEVELS[:regular] %>
+
+regular_user_with_two_competitions:
+  email: two@regular.com
+  first_name: Regular
+  last_name: Two
   password_digest: "$2a$10$mr3btGrOKm/4fN66mxO53.VCFqbo2cXJG.fHX0tJPGYSrWEViI1SS"
   permission_level: <%= User::PERMISSION_LEVELS[:regular] %>
 

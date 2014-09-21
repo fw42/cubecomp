@@ -2,6 +2,10 @@ flo_aachen_open:
   competition: aachen_open
   user: flo
 
+regular_user_with_one_competition_aachen_open:
+  competition: aachen_open
+  user: regular_user_with_one_competition
+
 regular_user_with_two_competitions_aachen_open:
   competition: aachen_open
   user: regular_user_with_two_competitions

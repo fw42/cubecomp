@@ -10,7 +10,7 @@ class SessionsTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     session_ids << cookies[SESSION_KEY]
 
-    user = users(:regular_user)
+    user = users(:regular_user_with_no_competitions)
     post '/admin/login', user: { email: user.email, password: 'test' }
     assert_response :redirect
     session_ids << cookies[SESSION_KEY]
@@ -24,7 +24,7 @@ class SessionsTest < ActionDispatch::IntegrationTest
   end
 
   test "Session fixation - logout resets session" do
-    user = users(:regular_user)
+    user = users(:regular_user_with_no_competitions)
     post '/admin/login', user: { email: user.email, password: 'test' }
     assert_response :redirect
     old_session_id = cookies[SESSION_KEY]
