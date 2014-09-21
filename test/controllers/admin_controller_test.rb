@@ -15,7 +15,7 @@ class AdminControllerTest < ActionController::TestCase
     assert_redirected_to admin_login_path
   end
 
-  test "#index redirects to competition dashboard from session" do
+  test "#index redirects to dashboard from session" do
     user = users(:regular_user_with_two_competitions)
     login_as(user)
 
@@ -26,7 +26,7 @@ class AdminControllerTest < ActionController::TestCase
     assert_redirected_to admin_competition_dashboard_index_path(competition.id)
   end
 
-  test "#index redirects to users' last competition if it exists" do
+  test "#index redirects to users' last competition if it exists and no competition is set in the session" do
     user = users(:regular_user_with_two_competitions)
     login_as(user)
 
@@ -55,7 +55,7 @@ class AdminControllerTest < ActionController::TestCase
     assert_redirected_to admin_competition_dashboard_index_path(competition.id)
   end
 
-  test "#index renders 401 if user session has old competition but user doesn't have permission anymore" do
+  test "#index redirects to last competition if user session has old competition but user doesn't have permission anymore" do
     user = users(:regular_user_with_two_competitions)
     login_as(user)
 
@@ -64,19 +64,8 @@ class AdminControllerTest < ActionController::TestCase
     user.permissions.where(competition: competition).each(&:destroy!)
 
     get :index
-    assert_response :unauthorized
-  end
-
-  test "#index redirects to user page if user session has competition that doesn't exist anymore and user doesn't have any other competitions" do
-    user = users(:regular_user_with_two_competitions)
-    login_as(user)
-
-    competition = user.competitions.first
-    session[:competition_id] = competition.id
-    user.competitions.each(&:destroy!)
-
-    get :index
-    assert_redirected_to edit_admin_user_path(user.id)
+    competition = user.competitions.last
+    assert_redirected_to admin_competition_dashboard_index_path(competition.id)
   end
 
   test "#index redirects to last competition if user is admin and doesn't have any explicit permissions" do
