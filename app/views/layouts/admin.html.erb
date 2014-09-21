@@ -46,9 +46,7 @@
               </li>
               <li class="divider"></li>
               <li>
-                <a href="<%= admin_logout_path %>">
-                  <i class="fa fa-sign-out fa-fw"></i> Logout
-                </a>
+                <%= link_to '<i class="fa fa-sign-out fa-fw"></i> Logout'.html_safe, admin_logout_path, method: :delete %>
               </li>
             </ul>
           </li>

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AuthenticationTest < ActionDispatch::IntegrationTest
+class SessionsTest < ActionDispatch::IntegrationTest
   SESSION_KEY = '_cubecomp_session'
 
   test "Session fixation - login resets session" do
@@ -29,7 +29,7 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     old_session_id = cookies[SESSION_KEY]
 
-    get '/admin/logout'
+    delete '/admin/logout'
     assert_response :redirect
     new_session_id = cookies[SESSION_KEY]
 

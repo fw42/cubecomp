@@ -1,11 +1,11 @@
-class Admin::LoginController < ApplicationController
+class Admin::SessionsController < ApplicationController
   layout 'admin_empty'
   protect_from_forgery with: :null_session
 
-  def index
+  def new
   end
 
-  def login
+  def create
     if user = authenticate_user(user_params)
       successful_login(user)
     else
@@ -13,7 +13,7 @@ class Admin::LoginController < ApplicationController
     end
   end
 
-  def logout
+  def destroy
     reset_session
     redirect_to admin_login_path
   end
@@ -35,7 +35,7 @@ class Admin::LoginController < ApplicationController
   def failed_login
     reset_session
     flash[:error] = 'Login failed.'
-    render action: 'index', status: 401
+    render action: 'new', status: 401
   end
 
   def user_params
