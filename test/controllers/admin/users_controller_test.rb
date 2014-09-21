@@ -50,6 +50,11 @@ class Admin::UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "#edit renders 404 with invalid competition id" do
+    get :edit, id: 17
+    assert_response :not_found
+  end
+
   test "#update" do
     params = {
       email: 'bob@cubecomp.de',

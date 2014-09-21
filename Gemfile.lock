@@ -76,8 +76,11 @@ GEM
     json (1.8.1)
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
+    metaclass (0.0.4)
     mime-types (2.3)
     minitest (5.4.1)
+    mocha (1.1.0)
+      metaclass (~> 0.0.1)
     multi_json (1.10.1)
     mysql2 (0.3.16)
     rack (1.5.2)
@@ -152,6 +155,7 @@ DEPENDENCIES
   foreigner
   immigrant
   jquery-rails (= 3.1.2)
+  mocha
   mysql2
   rails
   sass-rails

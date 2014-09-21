@@ -16,4 +16,9 @@ class Admin::ThemesControllerTest < ActionController::TestCase
     get :show, id: @theme
     assert_response :success
   end
+
+  test "#show renders 404 with invalid competition id" do
+    get :show, id: 17
+    assert_response :not_found
+  end
 end

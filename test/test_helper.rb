@@ -30,4 +30,20 @@ class ActionController::TestCase
   def logout
     session.delete(:user_id)
   end
+
+  def mock_login_not_allowed(competition)
+    UserPolicyService.any_instance.expects(:login?).with{ |c|
+      c.id == competition.id
+    }.returns(false)
+  end
+
+  def mock_create_competitions_not_allowed
+    UserPolicyService.any_instance.expects(:create_competitions?).returns(false)
+  end
+
+  def mock_destroy_competition_not_allowed(competition)
+    UserPolicyService.any_instance.expects(:destroy_competition?).with{ |c|
+      c.id == competition.id
+    }.returns(false)
+  end
 end

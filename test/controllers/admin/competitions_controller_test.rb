@@ -33,8 +33,8 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:competitions)
   end
 
-  test "#index as regular user renders 401" do
-    login_as(users(:regular_user_with_one_competition))
+  test "#index without permission renders 401" do
+    mock_create_competitions_not_allowed
     get :index
     assert_response :unauthorized
   end
@@ -44,8 +44,8 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "#new as regular user renders 401" do
-    login_as(users(:regular_user_with_one_competition))
+  test "#new without permissions renders 401" do
+    mock_create_competitions_not_allowed
     get :new
     assert_response :unauthorized
   end
@@ -59,8 +59,8 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     assert_attributes(@new_competition_params, Competition.find_by(handle: @new_competition_params[:handle]))
   end
 
-  test "#create as regular user renders 401" do
-    login_as(users(:regular_user_with_one_competition))
+  test "#create without permission renders 401" do
+    mock_create_competitions_not_allowed
 
     assert_no_difference 'Competition.count' do
       post :create, competition: @new_competition_params
@@ -74,21 +74,26 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "#edit as regular user without permission renders 401" do
-    login_as(users(:regular_user_with_no_competitions))
+  test "#edit renders 404 with invalid competition id" do
+    get :edit, id: 17
+    assert_response :not_found
+  end
+
+  test "#edit without permission renders 401" do
+    mock_login_not_allowed(@competition)
     get :edit, id: @competition.id
     assert_response :unauthorized
   end
 
   test "#update" do
-    patch :update, id: @competition, competition: @update_params
+    patch :update, id: @competition.id, competition: @update_params
     assert_redirected_to edit_admin_competition_path(assigns(:competition))
     assert_attributes(@update_params, @competition.reload)
   end
 
-  test "#update as regular user without permission renders 401" do
-    login_as(users(:regular_user_with_no_competitions))
-    patch :update, id: @competition, competition: @update_params
+  test "#update without permission renders 401" do
+    mock_login_not_allowed(@competition)
+    patch :update, id: @competition.id, competition: @update_params
     assert_response :unauthorized
   end
 
@@ -107,7 +112,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
 
     assert_difference "Locale.count", +1 do
       assert_difference "@competition.reload.locales.count", +1 do
-        patch :update, id: @competition, competition: params
+        patch :update, id: @competition.id, competition: params
       end
     end
 
@@ -129,7 +134,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
 
     assert_difference "Locale.count", -1 do
       assert_difference "@competition.reload.locales.count", -1 do
-        patch :update, id: @competition, competition: params
+        patch :update, id: @competition.id, competition: params
       end
     end
 
@@ -151,7 +156,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
 
     assert_difference 'Day.count', +1 do
       assert_difference "@competition.reload.days.count", +1 do
-        patch :update, id: @competition, competition: params
+        patch :update, id: @competition.id, competition: params
       end
     end
 
@@ -178,7 +183,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
 
     assert_difference 'Day.count', -1 do
       assert_difference "@competition.reload.days.count", -1 do
-        patch :update, id: @competition, competition: params
+        patch :update, id: @competition.id, competition: params
       end
     end
 
@@ -202,7 +207,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     }
 
     assert_no_difference 'Day.count' do
-      patch :update, id: @competition, competition: params
+      patch :update, id: @competition.id, competition: params
     end
 
     day.reload
@@ -213,16 +218,16 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
 
   test "#destroy" do
     assert_difference 'Competition.count', -1 do
-      delete :destroy, id: @competition
+      delete :destroy, id: @competition.id
     end
 
     assert_redirected_to admin_competitions_path
   end
 
-  test "#destroy as regular user renders 401" do
-    login_as(users(:regular_user_with_one_competition))
+  test "#destroy without permission renders 401" do
+    mock_destroy_competition_not_allowed(@competition)
     assert_no_difference 'Competition.count' do
-      delete :destroy, id: @competition
+      delete :destroy, id: @competition.id
     end
     assert_response :unauthorized
   end

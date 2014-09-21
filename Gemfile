@@ -27,4 +27,5 @@ group :development, :test do
   gem 'spring'
   gem 'byebug'
   gem 'brakeman'
+  gem 'mocha'
 end

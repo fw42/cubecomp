@@ -13,6 +13,11 @@ class Admin::ThemeFilesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:theme_files)
   end
 
+  test "#index renders 404 with invalid competition id" do
+    get :index, competition_id: 17
+    assert_response :not_found
+  end
+
   test "#new" do
     get :new, competition_id: @competition.id
     assert_response :success
