@@ -12,6 +12,7 @@ class Admin::UsersController < AdminController
   end
 
   def edit
+    @delegating_competitions = @user.delegating_competitions
   end
 
   def create
@@ -28,6 +29,7 @@ class Admin::UsersController < AdminController
     if @user.update(user_params)
       redirect_to edit_admin_user_path(@user), notice: 'User was successfully updated.'
     else
+      edit
       render :edit
     end
   end
