@@ -157,7 +157,7 @@ DEPENDENCIES
   jquery-rails (= 3.1.2)
   mocha
   mysql2
-  rails
+  rails (>= 4.1.6)
   sass-rails
   spring
   sqlite3
