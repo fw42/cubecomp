@@ -1,11 +1,8 @@
 class Admin::CompetitorsController < AdminController
-  before_action :set_competitor, only: [:show, :edit, :update, :destroy]
+  before_action :set_competitor, only: [:edit, :update, :destroy]
 
   def index
     @competitors = current_competition.competitors.all
-  end
-
-  def show
   end
 
   def new
@@ -50,7 +47,9 @@ class Admin::CompetitorsController < AdminController
       :last_name,
       :wca,
       :email,
-      :birthday,
+      :"birthday(1i)",
+      :"birthday(2i)",
+      :"birthday(3i)",
       :country_id,
       :local,
       :staff,
@@ -60,7 +59,10 @@ class Admin::CompetitorsController < AdminController
       :free_entrance_reason,
       :paid,
       :paid_comment,
-      :male
+      :male,
+      :state,
+      :nametag,
+      :confirmation_email_sent
     )
   end
 end

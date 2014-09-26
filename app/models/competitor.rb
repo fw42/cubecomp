@@ -1,4 +1,6 @@
 class Competitor < ActiveRecord::Base
+  STATES = ['new', 'confirmed', 'disabled']
+
   belongs_to :competition
   validates :competition, presence: true
 
@@ -9,7 +11,13 @@ class Competitor < ActiveRecord::Base
   validates :email, presence: true
   validates :email, email: true, allow_nil: true, allow_blank: true
 
-  validates :birthday, inclusion: { in: (Date.new(1900)..(Time.now.utc - 1.years).to_date) }
+  def self.valid_birthday_range
+    Date.new(1900) .. (Time.now.utc - 1.years).to_date
+  end
+  validates :birthday, inclusion: { in: Competitor.valid_birthday_range }
+
+  validates :state, presence: true
+  validates :state, inclusion: { in: STATES }, allow_nil: true, allow_blank: true
 
   belongs_to :country
   validates :country, presence: true
@@ -20,8 +28,12 @@ class Competitor < ActiveRecord::Base
   has_many :day_registrations, dependent: :destroy
   has_many :days, through: :day_registrations
 
+  before_validation :set_default_state
   validate :registered_for_at_least_one_day?
   validate :male_not_nil?
+
+  accepts_nested_attributes_for :days, allow_destroy: true
+  accepts_nested_attributes_for :events, allow_destroy: true
 
   def name
     [first_name, last_name].join(" ")
@@ -39,7 +51,12 @@ class Competitor < ActiveRecord::Base
     registered_on?(day) && !competing_on?(day)
   end
 
+
   private
+
+  def set_default_state
+    self.state ||= STATES.first
+  end
 
   def registered_for_at_least_one_day?
     ### TODO: add test, make nested_attributes work for days, etc.

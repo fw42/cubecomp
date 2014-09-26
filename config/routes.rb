@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
     resources :competitions, except: [:show] do
       resources :dashboard, only: [:index]
-      resources :competitors
+      resources :competitors, except: [:show]
       resources :events
       resources :news, except: [:show]
       resources :theme_files, except: [:show]

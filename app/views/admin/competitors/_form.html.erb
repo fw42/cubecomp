@@ -1,81 +1,96 @@
 <%= form_for([:admin, current_competition, @competitor]) do |f| %>
-  <% if @competitor.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@competitor.errors.count, "error") %> prohibited this competitor from being saved:</h2>
+  <%= render 'form_errors', object: @competitor, label: 'competitor' %>
 
-      <ul>
-      <% @competitor.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
+  <%= form_section 'Personal data' do %>
+    <table class="form-table">
+      <tr>
+        <td><%= f.label :wca, 'WCA ID:' %></td>
+        <td><%= f.text_field :wca %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :first_name, 'First name:' %></td>
+        <td><%= f.text_field :first_name %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :last_name, 'Last name:' %></td>
+        <td><%= f.text_field :last_name %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :email, 'E-mail:' %></td>
+        <td><%= f.text_field :email %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :birthday %></td>
+        <td>
+          <%=
+            f.date_select :birthday, {
+              start_year: Competitor.valid_birthday_range.first.year,
+              end_year: Competitor.valid_birthday_range.last.year,
+              order: [:month, :day, :year ]
+            },
+            {
+              class: 'date-select'
+            }
+          %>
+        </td>
+      </tr>
+      <tr>
+        <td><%= f.label :country, 'Country:' %></td>
+        <td>
+          <%= f.select :country_id, Country.all.map{ |c| [ c.name, c.id ] } %>
+          (<%= f.check_box :local %>&nbsp;<%= current_competition.city_name %>)
+        </td>
+      </tr>
+      <tr>
+        <td><%= f.label :male, 'Gender:' %></td>
+        <td>
+          <%= f.radio_button :male, true %> male
+          <%= f.radio_button :male, false %> female
+        </td>
+      </tr>
+      <tr>
+        <td><%= f.label :nametag %></td>
+        <td><%= f.text_field :nametag %></td>
+      </tr>
+    </table>
   <% end %>
 
-  <div class="field">
-    <%= f.label :first_name %><br>
-    <%= f.text_field :first_name %>
-  </div>
-  <div class="field">
-    <%= f.label :last_name %><br>
-    <%= f.text_field :last_name %>
-  </div>
-  <div class="field">
-    <%= f.label :wca %><br>
-    <%= f.text_field :wca %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :birthday %><br>
-    <%= f.text_field :birthday %>
-  </div>
-  <div class="field">
-    <%= f.label :country_id %><br>
-    <%= f.text_field :country_id %>
-  </div>
-  <div class="field">
-    <%= f.label :local %><br>
-    <%= f.text_field :local %>
-  </div>
-  <div class="field">
-    <%= f.label :staff %><br>
-    <%= f.text_field :staff %>
-  </div>
-  <div class="field">
-    <%= f.label :user_comment %><br>
-    <%= f.text_field :user_comment %>
-  </div>
-  <div class="field">
-    <%= f.label :admin_comment %><br>
-    <%= f.text_field :admin_comment %>
-  </div>
-  <div class="field">
-    <%= f.label :free_entrance %><br>
-    <%= f.text_field :free_entrance %>
-  </div>
-  <div class="field">
-    <%= f.label :free_entrance_reason %><br>
-    <%= f.text_field :free_entrance_reason %>
-  </div>
-  <div class="field">
-    <%= f.label :state %><br>
-    <%= f.text_field :state %>
-  </div>
-  <div class="field">
-    <%= f.label :confirmation_email_sent %><br>
-    <%= f.text_field :confirmation_email_sent %>
-  </div>
-  <div class="field">
-    <%= f.label :paid %><br>
-    <%= f.text_field :paid %>
-  </div>
-  <div class="field">
-    <%= f.label :paid_comment %><br>
-    <%= f.text_field :paid_comment %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= form_section 'Options' do %>
+    <p>
+      <%= f.label :state, 'State:' %>
+      <%= f.select :state, Competitor::STATES, {}, { class: 'small', style: 'display: inline' } %>
+    </p>
+
+    <p><%= f.check_box :staff %> Staff member</p>
+    <p><%= f.check_box :confirmation_email_sent %> Confirmation email sent</p>
+  <% end %>
+
+  <%= form_section 'Financial settings' do %>
+    <p>
+      <%= f.check_box :free_entrance %> Free entrance
+      (Reason: <%= f.text_field :free_entrance_reason, class: 'inline' %>)
+    </p>
+
+    <p>
+      <%= f.check_box :paid %> Entrance fee paid
+      (Comment: <%= f.text_field :paid_comment, class: 'inline' %>)
+    </p>
+  <% end %>
+
+  <%= form_section 'Comments' do %>
+    <p>
+      <%= f.label :user_comment, 'Registration comment:' %><br/>
+      <%= f.text_area :user_comment, disabled: true %>
+    </p>
+
+    <p>
+      <%= f.label :admin_comment, 'Admin comment:' %><br/>
+      <%= f.text_area :admin_comment %>
+    </p>
+  <% end %>
+
+  <%= form_section 'Events' do %>
+  <% end %>
+
+  <%= submit_button(f) %>
 <% end %>

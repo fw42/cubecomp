@@ -35,6 +35,12 @@ select.small
   width: 100px !important;
 }
 
+input.inline {
+  width: 250px !important;
+  height: 2.5em !important;
+  display: inline !important;
+}
+
 select.date-select,
 select.time-select {
   display: inline;
