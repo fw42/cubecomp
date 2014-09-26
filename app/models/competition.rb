@@ -33,8 +33,8 @@ class Competition < ActiveRecord::Base
   private
 
   def delegate_user_is_a_delegate?
-    if delegate && !delegate.delegate?
-      errors.add(:delegate, "does not have permissions to be delegate of this competition")
-    end
+    return unless delegate
+    return if delegate.delegate?
+    errors.add(:delegate, 'does not have permissions to be delegate of this competition')
   end
 end

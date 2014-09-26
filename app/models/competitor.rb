@@ -1,5 +1,5 @@
 class Competitor < ActiveRecord::Base
-  STATES = ['new', 'confirmed', 'disabled']
+  STATES = %w(new confirmed disabled)
 
   belongs_to :competition
   validates :competition, presence: true
@@ -12,7 +12,7 @@ class Competitor < ActiveRecord::Base
   validates :email, email: true, allow_nil: true, allow_blank: true
 
   def self.valid_birthday_range
-    Date.new(1900) .. (Time.now.utc - 1.years).to_date
+    Date.new(1900)..(Time.now.utc - 1.years).to_date
   end
   validates :birthday, inclusion: { in: Competitor.valid_birthday_range }
 
@@ -36,7 +36,7 @@ class Competitor < ActiveRecord::Base
   accepts_nested_attributes_for :events, allow_destroy: true
 
   def name
-    [first_name, last_name].join(" ")
+    [first_name, last_name].join(' ')
   end
 
   def registered_on?(day)
@@ -50,7 +50,6 @@ class Competitor < ActiveRecord::Base
   def guest_on?(day)
     registered_on?(day) && !competing_on?(day)
   end
-
 
   private
 
@@ -66,8 +65,7 @@ class Competitor < ActiveRecord::Base
   end
 
   def male_not_nil?
-    if male.nil?
-      errors.add(:male, 'must be either true or false')
-    end
+    return unless male.nil?
+    errors.add(:male, 'must be either true or false')
   end
 end

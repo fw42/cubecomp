@@ -6,18 +6,18 @@ class Admin::UsersControllerTest < ActionController::TestCase
     @user = users(:flo)
   end
 
-  test "#index" do
+  test '#index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:users)
   end
 
-  test "#new" do
+  test '#new' do
     get :new
     assert_response :success
   end
 
-  test "#create" do
+  test '#create' do
     params = {
       email: 'bob@cubecomp.de',
       first_name: 'Bob',
@@ -37,25 +37,25 @@ class Admin::UsersControllerTest < ActionController::TestCase
     assert user.authenticate(params[:password])
   end
 
-  test "#edit on another user is not possible if not logged in as super admin" do
+  test '#edit on another user is not possible if not logged in as super admin' do
     # TODO
   end
 
-  test "#edit on another user is possible if logged in as super admin" do
+  test '#edit on another user is possible if logged in as super admin' do
     # TODO
   end
 
-  test "#edit" do
+  test '#edit' do
     get :edit, id: @user
     assert_response :success
   end
 
-  test "#edit renders 404 with invalid competition id" do
+  test '#edit renders 404 with invalid competition id' do
     get :edit, id: 17
     assert_response :not_found
   end
 
-  test "#update" do
+  test '#update' do
     params = {
       email: 'bob@cubecomp.de',
       first_name: 'Bob',
@@ -80,13 +80,13 @@ class Admin::UsersControllerTest < ActionController::TestCase
     refute @user.reload.authenticate(:foo)
   end
 
-  test "#update with blank password fields doesnt change password" do
-    patch :update, id: @user, user: { password: "", password_confirmation: "" }
+  test '#update with blank password fields doesnt change password' do
+    patch :update, id: @user, user: { password: '', password_confirmation: '' }
     @user.reload
     assert @user.authenticate('test')
   end
 
-  test "#destroy" do
+  test '#destroy' do
     assert_difference('User.count', -1) do
       delete :destroy, id: @user
     end

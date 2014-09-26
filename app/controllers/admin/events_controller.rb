@@ -1,6 +1,23 @@
 class Admin::EventsController < AdminController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
+  PERMITTED_PARAMS = [
+    :name_short,
+    :name,
+    :handle,
+
+    :day_id,
+    :start_time,
+    :length_in_minutes,
+
+    :round,
+    :timelimit,
+    :format,
+    :proceed,
+    :max_number_of_registrations,
+    :state
+  ]
+
   def index
     @events = current_competition.events.all
   end
@@ -45,21 +62,6 @@ class Admin::EventsController < AdminController
   end
 
   def event_params
-    params.require(:event).permit(
-      :name_short,
-      :name,
-      :handle,
-
-      :day_id,
-      :start_time,
-      :length_in_minutes,
-
-      :round,
-      :timelimit,
-      :format,
-      :proceed,
-      :max_number_of_registrations,
-      :state
-    )
+    params.require(:event).permit(PERMITTED_PARAMS)
   end
 end

@@ -8,7 +8,7 @@ class ActiveSupport::TestCase
 
   def assert_not_valid(object, attribute)
     refute object.valid?, "record shouldn't be valid"
-    assert_not_equal [], object.errors[attribute], "record should have errors"
+    assert_not_equal [], object.errors[attribute], 'record should have errors'
   end
 
   def assert_valid(object)
@@ -23,7 +23,6 @@ end
 
 class ActionController::TestCase
   def login_as(user)
-    raise 'Invalid user' unless user
     session[:user_id] = user.id
   end
 
@@ -32,18 +31,17 @@ class ActionController::TestCase
   end
 
   def mock_login_not_allowed(competition)
-    UserPolicyService.any_instance.expects(:login?).with{ |c|
-      c.id == competition.id
-    }.returns(false)
+    policy = UserPolicyService.any_instance
+    policy.expects(:login?).with{ |c| c.id == competition.id }.returns(false)
   end
 
   def mock_create_competitions_not_allowed
-    UserPolicyService.any_instance.expects(:create_competitions?).returns(false)
+    policy = UserPolicyService.any_instance
+    policy.expects(:create_competitions?).returns(false)
   end
 
   def mock_destroy_competition_not_allowed(competition)
-    UserPolicyService.any_instance.expects(:destroy_competition?).with{ |c|
-      c.id == competition.id
-    }.returns(false)
+    policy = UserPolicyService.any_instance
+    policy.expects(:destroy_competition?).with{ |c| c.id == competition.id }.returns(false)
   end
 end

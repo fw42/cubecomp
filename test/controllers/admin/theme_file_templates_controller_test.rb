@@ -7,12 +7,12 @@ class Admin::ThemeFileTemplatesControllerTest < ActionController::TestCase
     login_as(users(:admin))
   end
 
-  test "#new" do
+  test '#new' do
     get :new, theme_id: @theme.id
     assert_response :success
   end
 
-  test "#create" do
+  test '#create' do
     params = {
       filename: 'foobar.html',
       content: 'foobar'
@@ -26,12 +26,12 @@ class Admin::ThemeFileTemplatesControllerTest < ActionController::TestCase
     assert_attributes(params, ThemeFileTemplate.last)
   end
 
-  test "#edit" do
+  test '#edit' do
     get :edit, theme_id: @theme.id, id: @template.id
     assert_response :success
   end
 
-  test "#update" do
+  test '#update' do
     params = {
       filename: 'foobar.html',
       content: 'foobar'
@@ -43,7 +43,7 @@ class Admin::ThemeFileTemplatesControllerTest < ActionController::TestCase
     assert_attributes(params, @template.reload)
   end
 
-  test "#destroy" do
+  test '#destroy' do
     assert_difference('ThemeFileTemplate.count', -1) do
       delete :destroy, theme_id: @theme.id, id: @template.id
     end

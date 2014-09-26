@@ -28,4 +28,5 @@ group :development, :test do
   gem 'byebug'
   gem 'brakeman'
   gem 'mocha'
+  gem 'rubocop'
 end

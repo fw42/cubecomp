@@ -5,7 +5,7 @@ class ThemeFileTemplateTest < ActiveSupport::TestCase
     @template = theme_file_templates(:default_index)
   end
 
-  test "validates presence of filename" do
+  test 'validates presence of filename' do
     @template.filename = ''
     assert_not_valid(@template, :filename)
 
@@ -13,7 +13,7 @@ class ThemeFileTemplateTest < ActiveSupport::TestCase
     assert_not_valid(@template, :filename)
   end
 
-  test "validates uniqueness of filename, scoped by theme" do
+  test 'validates uniqueness of filename, scoped by theme' do
     new_template = @template.dup
     assert_not_valid(new_template, :filename)
 
@@ -21,7 +21,7 @@ class ThemeFileTemplateTest < ActiveSupport::TestCase
     assert_valid(new_template)
   end
 
-  test "does validate presence and integrity of theme" do
+  test 'does validate presence and integrity of theme' do
     @template.theme = nil
     assert_not_valid(@template, :theme)
 

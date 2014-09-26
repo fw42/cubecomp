@@ -30,7 +30,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       paid_comment: 'moneys!',
 
       user_comment: 'hello',
-      admin_comment: 'this guy is awesome',
+      admin_comment: 'this guy is awesome'
     }
 
     @update_params = {
@@ -50,39 +50,39 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       state: 'confirmed',
       :"birthday(1i)" => '1980',
       :"birthday(2i)" => '02',
-      :"birthday(3i)" => '01',
+      :"birthday(3i)" => '01'
     }
   end
 
-  test "#index" do
+  test '#index' do
     get :index, competition_id: @competition.id
     assert_response :success
     assert_not_nil assigns(:competitors)
   end
 
-  test "#index renders 404 with invalid competition id" do
+  test '#index renders 404 with invalid competition id' do
     get :index, competition_id: 17
     assert_response :not_found
   end
 
-  test "#index without login permission renders 401" do
+  test '#index without login permission renders 401' do
     mock_login_not_allowed(@competition)
     get :index, competition_id: @competition.id
     assert_response :unauthorized
   end
 
-  test "#new" do
+  test '#new' do
     get :new, competition_id: @competition.id
     assert_response :success
   end
 
-  test "#new without login permission renders 401" do
+  test '#new without login permission renders 401' do
     mock_login_not_allowed(@competition)
     get :new, competition_id: @competition.id
     assert_response :unauthorized
   end
 
-  test "#create" do
+  test '#create' do
     assert_difference '@competition.competitors.count', +1 do
       post :create, competition_id: @competition.id, competitor: @new_competitor_params
     end
@@ -95,7 +95,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     assert_equal @new_competitor_params[:"birthday(3i)"].to_i, bob.birthday.day
   end
 
-  test "#create without login permission renders 401" do
+  test '#create without login permission renders 401' do
     mock_login_not_allowed(@competition)
 
     assert_no_difference 'Competitor.count' do
@@ -105,18 +105,18 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     assert_response :unauthorized
   end
 
-  test "#edit" do
+  test '#edit' do
     get :edit, competition_id: @competition.id, id: @competitor.id
     assert_response :success
   end
 
-  test "#edit without login permission renders 401" do
+  test '#edit without login permission renders 401' do
     mock_login_not_allowed(@competition)
     get :edit, competition_id: @competition.id, id: @competitor.id
     assert_response :unauthorized
   end
 
-  test "#update" do
+  test '#update' do
     patch :update, competition_id: @competition.id, id: @competitor.id, competitor: @update_params
 
     assert_redirected_to admin_competition_competitor_path(@competition.id, assigns(:competitor))
@@ -127,13 +127,13 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     assert_equal @update_params[:"birthday(3i)"].to_i, @competitor.birthday.day
   end
 
-  test "#update without login permission renders 401" do
+  test '#update without login permission renders 401' do
     mock_login_not_allowed(@competition)
     patch :update, competition_id: @competition.id, id: @competitor.id, competitor: @update_params
     assert_response :unauthorized
   end
 
-  test "#destroy" do
+  test '#destroy' do
     assert_difference '@competition.competitors.count', -1 do
       delete :destroy, competition_id: @competition.id, id: @competitor.id
     end
@@ -141,7 +141,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     assert_redirected_to admin_competition_competitors_path(@competition.id)
   end
 
-  test "#destroy without login permission renders 401" do
+  test '#destroy without login permission renders 401' do
     mock_login_not_allowed(@competition)
 
     assert_no_difference 'Competitor.count' do

@@ -5,7 +5,7 @@ class NewsTest < ActiveSupport::TestCase
     @news = news(:aachen_open_registration_open)
   end
 
-  test "validates presence and integrity of competition" do
+  test 'validates presence and integrity of competition' do
     @news.competition = nil
     assert_not_valid(@news, :competition)
 
@@ -13,7 +13,7 @@ class NewsTest < ActiveSupport::TestCase
     assert_not_valid(@news, :competition)
   end
 
-  test "validates presence and integrity of locale" do
+  test 'validates presence and integrity of locale' do
     @news.locale = nil
     assert_not_valid(@news, :locale)
 
@@ -21,7 +21,7 @@ class NewsTest < ActiveSupport::TestCase
     assert_not_valid(@news, :locale)
   end
 
-  test "validates presence of time" do
+  test 'validates presence of time' do
     @news.time = nil
     assert_not_valid(@news, :time)
 
@@ -29,7 +29,7 @@ class NewsTest < ActiveSupport::TestCase
     assert_not_valid(@news, :time)
   end
 
-  test "validates presence of text" do
+  test 'validates presence of text' do
     @news.text = nil
     assert_not_valid(@news, :text)
 

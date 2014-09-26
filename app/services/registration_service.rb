@@ -12,7 +12,7 @@ class RegistrationService
 
   def register_for_event!(event)
     EventRegistration.transaction do
-      if !@competitor.registered_on?(event.day_id)
+      unless @competitor.registered_on?(event.day_id)
         register_for_day!(event.day_id)
       end
 

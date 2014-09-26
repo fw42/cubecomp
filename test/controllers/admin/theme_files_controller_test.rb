@@ -7,23 +7,23 @@ class Admin::ThemeFilesControllerTest < ActionController::TestCase
     login_as(@competition.users.first)
   end
 
-  test "#index" do
+  test '#index' do
     get :index, competition_id: @competition.id
     assert_response :success
     assert_not_nil assigns(:theme_files)
   end
 
-  test "#index renders 404 with invalid competition id" do
+  test '#index renders 404 with invalid competition id' do
     get :index, competition_id: 17
     assert_response :not_found
   end
 
-  test "#new" do
+  test '#new' do
     get :new, competition_id: @competition.id
     assert_response :success
   end
 
-  test "#create" do
+  test '#create' do
     params = {
       filename: 'foobar.html',
       content: 'foobar!'
@@ -37,12 +37,12 @@ class Admin::ThemeFilesControllerTest < ActionController::TestCase
     assert_attributes(params, @competition.theme_files.last)
   end
 
-  test "#edit" do
+  test '#edit' do
     get :edit, competition_id: @competition.id, id: @theme_file.id
     assert_response :success
   end
 
-  test "#update" do
+  test '#update' do
     params = {
       filename: 'foobar.html',
       content: 'foobar!'
@@ -54,7 +54,7 @@ class Admin::ThemeFilesControllerTest < ActionController::TestCase
     assert_attributes(params, @theme_file.reload)
   end
 
-  test "#destroy" do
+  test '#destroy' do
     assert_difference('@competition.theme_files.count', -1) do
       delete :destroy, competition_id: @competition.id, id: @theme_file.id
     end

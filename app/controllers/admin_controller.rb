@@ -15,15 +15,13 @@ class AdminController < ApplicationController
   private
 
   def ensure_current_competition
-    if current_competition.nil?
-      redirect_to edit_admin_user_path(current_user)
-    end
+    return if current_competition
+    redirect_to edit_admin_user_path(current_user)
   end
 
   def ensure_authenticated
-    if current_user.nil?
-      redirect_to admin_login_path
-    end
+    return if current_user
+    redirect_to admin_login_path
   end
 
   def render_not_found
@@ -51,40 +49,41 @@ class AdminController < ApplicationController
   end
   helper_method :current_competition
 
-  def set_current_competition
-    competition_id = if self.class == Admin::CompetitionsController
+  def competition_id_from_params
+    if self.class == Admin::CompetitionsController
       params[:id]
     else
       params[:competition_id]
     end
+  end
 
+  def set_current_competition
     competition = nil
-    if competition_id
+
+    if competition_id = competition_id_from_params
       competition = current_competition_from_params(competition_id)
       return unless competition
     end
 
-    competition ||= current_competition_from_session(session[:competition_id]) if session[:competition_id]
+    competition ||= current_competition_from_session
     competition ||= current_user.policy.competitions.last
 
     session[:competition_id] = competition.try(:id)
     @current_competition = competition
   end
 
-  def current_competition_from_session(competition_id)
-    competition = Competition.find_by(id: session[:competition_id])
-
-    if competition && !current_user.policy.login?(competition)
-      return
-    end
-
+  def current_competition_from_session
+    return unless competition_id = session[:competition_id]
+    competition = Competition.find_by(id: competition_id)
+    return unless competition
+    return unless current_user.policy.login?(competition)
     competition
   end
 
   def current_competition_from_params(competition_id)
     competition = Competition.find(competition_id)
 
-    if !current_user.policy.login?(competition)
+    unless current_user.policy.login?(competition)
       render_unauthorized
       return
     end
@@ -108,7 +107,7 @@ class AdminController < ApplicationController
       },
       {
         label: 'Themes',
-        controller: [ Admin::ThemesController, Admin::ThemeFileTemplatesController ],
+        controller: [Admin::ThemesController, Admin::ThemeFileTemplatesController],
         url: admin_themes_path,
         css: 'fa-files-o'
       }

@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
   PERMISSION_LEVELS = {
-    :regular => 0,
-    :admin => 1,
-    :superadmin => 2
+    regular: 0,
+    admin: 1,
+    superadmin: 2
   }
 
   has_secure_password
@@ -40,17 +40,16 @@ class User < ActiveRecord::Base
     id == competition.delegate_user_id
   end
 
-  def has_permission?(competition)
+  def permission?(competition)
     permissions.where(competition: competition).exists?
   end
 
   private
 
   def nullify_competition_delegate_user_ids
-    if changed_attributes[:delegate] && !delegate
-      delegating_competitions.each do |competition|
-        competition.update_attribute(:delegate_user_id, nil)
-      end
+    return unless changed_attributes[:delegate] && !delegate
+    delegating_competitions.each do |competition|
+      competition.update_attribute(:delegate_user_id, nil)
     end
   end
 end

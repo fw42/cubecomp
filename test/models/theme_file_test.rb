@@ -5,7 +5,7 @@ class ThemeFileTest < ActiveSupport::TestCase
     @theme_file = theme_files(:aachen_open_index)
   end
 
-  test "validates presence of filename" do
+  test 'validates presence of filename' do
     @theme_file.filename = ''
     assert_not_valid(@theme_file, :filename)
 
@@ -13,7 +13,7 @@ class ThemeFileTest < ActiveSupport::TestCase
     assert_not_valid(@theme_file, :filename)
   end
 
-  test "validates uniqueness of filename, scoped by competition" do
+  test 'validates uniqueness of filename, scoped by competition' do
     new_file = @theme_file.dup
     assert_not_valid(new_file, :filename)
 
@@ -21,7 +21,7 @@ class ThemeFileTest < ActiveSupport::TestCase
     assert_valid(new_file)
   end
 
-  test "does validate presence and integrity of competition" do
+  test 'does validate presence and integrity of competition' do
     @theme_file.competition = nil
     assert_not_valid(@theme_file, :competition)
 

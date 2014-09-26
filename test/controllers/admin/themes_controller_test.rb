@@ -6,18 +6,18 @@ class Admin::ThemesControllerTest < ActionController::TestCase
     @theme = themes(:default)
   end
 
-  test "#index" do
+  test '#index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:themes)
   end
 
-  test "#show" do
+  test '#show' do
     get :show, id: @theme
     assert_response :success
   end
 
-  test "#show renders 404 with invalid competition id" do
+  test '#show renders 404 with invalid competition id' do
     get :show, id: 17
     assert_response :not_found
   end

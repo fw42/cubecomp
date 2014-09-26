@@ -7,23 +7,23 @@ class Admin::EventsControllerTest < ActionController::TestCase
     login_as(@competition.users.first)
   end
 
-  test "#index" do
+  test '#index' do
     get :index, competition_id: @competition.id
     assert_response :success
     assert_not_nil assigns(:events)
   end
 
-  test "#index renders 404 with invalid competition id" do
+  test '#index renders 404 with invalid competition id' do
     get :index, competition_id: 17
     assert_response :not_found
   end
 
-  test "#new" do
+  test '#new' do
     get :new, competition_id: @competition.id
     assert_response :success
   end
 
-  test "#create" do
+  test '#create' do
     params = {
       day_id: days(:aachen_open_day_one).id,
       handle: '444',
@@ -44,17 +44,17 @@ class Admin::EventsControllerTest < ActionController::TestCase
     assert_attributes(params.except(:start_time), event)
   end
 
-  test "#show" do
+  test '#show' do
     get :show, competition_id: @competition.id, id: @event.id
     assert_response :success
   end
 
-  test "#get" do
+  test '#get' do
     get :edit, competition_id: @competition.id, id: @event.id
     assert_response :success
   end
 
-  test "#update" do
+  test '#update' do
     params = {
       day_id: days(:aachen_open_day_two).id,
       handle: '444',
@@ -71,10 +71,10 @@ class Admin::EventsControllerTest < ActionController::TestCase
     assert_redirected_to admin_competition_event_path(@competition.id, assigns(:event))
     @event.reload
     assert_attributes(params.except(:start_time), @event)
-    assert_equal Time.parse(params[:start_time]).utc.strftime("%H:%M"), @event.start_time.strftime("%H:%M")
+    assert_equal Time.parse(params[:start_time]).utc.strftime('%H:%M'), @event.start_time.strftime('%H:%M')
   end
 
-  test "#destroy" do
+  test '#destroy' do
     assert_difference('@competition.events.count', -1) do
       delete :destroy, competition_id: @competition.id, id: @event.id
     end

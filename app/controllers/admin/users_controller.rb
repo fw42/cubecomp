@@ -3,6 +3,17 @@ class Admin::UsersController < AdminController
   before_action :set_user, only: [:edit, :update, :destroy]
   skip_before_action :ensure_current_competition
 
+  PERMITTED_PARAMS = [
+    :email,
+    :first_name,
+    :last_name,
+    :password,
+    :password_confirmation,
+    :permission_level,
+    :delegate,
+    permissions_attributes: [:id, :_destroy, :competition_id]
+  ]
+
   def index
     @users = User.all
   end
@@ -46,16 +57,6 @@ class Admin::UsersController < AdminController
   end
 
   def user_params
-    permitted = [
-      :email,
-      :first_name,
-      :last_name,
-      :password,
-      :password_confirmation,
-      :permission_level,
-      :delegate,
-      permissions_attributes: [:id, :_destroy, :competition_id]
-    ]
-    params.require(:user).permit(permitted)
+    params.require(:user).permit(PERMITTED_PARAMS)
   end
 end

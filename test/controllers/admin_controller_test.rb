@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class AdminControllerTest < ActionController::TestCase
-  test "#index redirects to login page if user is not logged in" do
+  test '#index redirects to login page if user is not logged in' do
     logout
     get :index
     assert_redirected_to admin_login_path
@@ -15,7 +15,7 @@ class AdminControllerTest < ActionController::TestCase
     assert_redirected_to admin_login_path
   end
 
-  test "#index redirects to dashboard from session" do
+  test '#index redirects to dashboard from session' do
     user = users(:regular_user_with_two_competitions)
     login_as(user)
 
@@ -35,7 +35,7 @@ class AdminControllerTest < ActionController::TestCase
     assert_redirected_to admin_competition_dashboard_index_path(competition.id)
   end
 
-  test "#index redirects to user page if user has no competitions" do
+  test '#index redirects to user page if user has no competitions' do
     user = users(:regular_user_with_no_competitions)
     login_as(user)
     get :index
@@ -76,18 +76,18 @@ class AdminControllerTest < ActionController::TestCase
     assert_redirected_to admin_competition_dashboard_index_path(Competition.last.id)
   end
 
-  test "forms contain CSRF tokens" do
+  test 'forms contain CSRF tokens' do
     @controller = Admin::UsersController.new
     login_as(users(:regular_user_with_no_competitions))
 
     with_csrf_protection do
       get :edit, id: users(:regular_user_with_no_competitions)
-      assert_match /<meta content="authenticity_token" name="csrf-param" \/>/, @response.body
-      assert_match /<meta content="[^"]+" name="csrf-token" \/>/, @response.body
+      assert_match(/<meta content="authenticity_token" name="csrf-param" \/>/, @response.body)
+      assert_match(/<meta content="[^"]+" name="csrf-token" \/>/, @response.body)
     end
   end
 
-  test "POST fails if CSRF token is missing" do
+  test 'POST fails if CSRF token is missing' do
     @controller = Admin::UsersController.new
     login_as(users(:regular_user_with_no_competitions))
 

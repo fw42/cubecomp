@@ -6,12 +6,12 @@ class Admin::DashboardControllerTest < ActionController::TestCase
     login_as(@competition.users.first)
   end
 
-  test "#index" do
+  test '#index' do
     get :index, competition_id: @competition.id
     assert_response :ok
   end
 
-  test "#index renders 404 with invalid competition id" do
+  test '#index renders 404 with invalid competition id' do
     get :index, competition_id: 17
     assert_response :not_found
   end

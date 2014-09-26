@@ -6,7 +6,7 @@ class RegistrationServiceTest < ActiveSupport::TestCase
     @competition = @competitor.competition
   end
 
-  test "#register_for_day" do
+  test '#register_for_day' do
     assert_difference '@competitor.day_registrations.count', 1 do
       assert_no_difference 'EventRegistration.count' do
         RegistrationService.new(@competitor).register_for_day!(@competition.days.first)
@@ -14,7 +14,7 @@ class RegistrationServiceTest < ActiveSupport::TestCase
     end
   end
 
-  test "#register_for_event if not already regsitered for day" do
+  test '#register_for_event if not already regsitered for day' do
     assert_difference '@competitor.day_registrations.count', 1 do
       assert_difference '@competitor.event_registrations.count', 1 do
         RegistrationService.new(@competitor).register_for_event!(@competition.events.first)
@@ -22,7 +22,7 @@ class RegistrationServiceTest < ActiveSupport::TestCase
     end
   end
 
-  test "#register_for_event if already registered for day" do
+  test '#register_for_event if already registered for day' do
     service = RegistrationService.new(@competitor)
     service.register_for_day!(@competition.days.first)
 

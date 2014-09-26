@@ -16,8 +16,8 @@ class EventRegistration < ActiveRecord::Base
   private
 
   def competitor_registered_for_event_day?
-    if competitor && event && !competitor.registered_on?(event.day_id)
-      errors.add(:base, "competitor is not registered for the day of the event")
-    end
+    return unless competitor && event
+    return if competitor.registered_on?(event.day_id)
+    errors.add(:base, 'competitor is not registered for the day of the event')
   end
 end

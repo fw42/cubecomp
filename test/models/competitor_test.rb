@@ -5,7 +5,7 @@ class CompetitorTest < ActiveSupport::TestCase
     @competitor = competitors(:flo_aachen_open)
   end
 
-  test "validates presence and integrity of competition" do
+  test 'validates presence and integrity of competition' do
     @competitor.competition = nil
     assert_not_valid(@competitor, :competition)
 
@@ -13,7 +13,7 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_not_valid(@competitor, :competition)
   end
 
-  test "does not validate presence of wca id" do
+  test 'does not validate presence of wca id' do
     @competitor.wca = ''
     assert_valid @competitor
 
@@ -21,7 +21,7 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_valid @competitor
   end
 
-  test "validates uniqueness of wca id, but only scoped to competition" do
+  test 'validates uniqueness of wca id, but only scoped to competition' do
     new_competitor = @competitor.dup
     assert_not_valid(new_competitor, :wca)
 
@@ -29,7 +29,7 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_valid new_competitor
   end
 
-  test "validates presence of first name" do
+  test 'validates presence of first name' do
     @competitor.first_name = ''
     assert_not_valid(@competitor, :first_name)
 
@@ -37,7 +37,7 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_not_valid(@competitor, :first_name)
   end
 
-  test "validates presence of last name" do
+  test 'validates presence of last name' do
     @competitor.last_name = ''
     assert_not_valid(@competitor, :last_name)
 
@@ -45,7 +45,7 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_not_valid(@competitor, :last_name)
   end
 
-  test "validates presence and format of email" do
+  test 'validates presence and format of email' do
     @competitor.email = ''
     assert_not_valid(@competitor, :email)
 
@@ -59,7 +59,7 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_valid @competitor
   end
 
-  test "validates presence and sanity of birthday" do
+  test 'validates presence and sanity of birthday' do
     @competitor.birthday = nil
     assert_not_valid(@competitor, :birthday)
 
@@ -76,7 +76,7 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_valid @competitor
   end
 
-  test "validates presence and integrity of country" do
+  test 'validates presence and integrity of country' do
     @competitor.country = nil
     assert_not_valid(@competitor, :country)
 
@@ -84,30 +84,30 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_not_valid(@competitor, :country)
   end
 
-  test "destroying competitor destroys event_registrations but not events" do
+  test 'destroying competitor destroys event_registrations but not events' do
     count = @competitor.event_registrations.count
-    assert_difference "EventRegistration.count", -1 * count do
-      assert_no_difference "Event.count" do
+    assert_difference 'EventRegistration.count', -1 * count do
+      assert_no_difference 'Event.count' do
         @competitor.destroy
       end
     end
   end
 
-  test "destroying competitor destroys day_registrations but not days" do
+  test 'destroying competitor destroys day_registrations but not days' do
     count = @competitor.day_registrations.count
-    assert_difference "DayRegistration.count", -1 * count do
-      assert_no_difference "Day.count" do
+    assert_difference 'DayRegistration.count', -1 * count do
+      assert_no_difference 'Day.count' do
         @competitor.destroy
       end
     end
   end
 
-  test "male is unspecified by default on new instances" do
+  test 'male is unspecified by default on new instances' do
     competitor = Competitor.new
     assert_nil competitor.male
   end
 
-  test "validates that male boolean is specified and not nil" do
+  test 'validates that male boolean is specified and not nil' do
     @competitor.male = nil
     assert_not_valid(@competitor, :male)
 
@@ -118,7 +118,7 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_valid(@competitor)
   end
 
-  test "registered_on?, competing_on?, and guest_on?" do
+  test 'registered_on?, competing_on?, and guest_on?' do
     @competitor.day_registrations.each(&:destroy)
     @competitor.event_registrations.each(&:destroy)
     @competitor.reload

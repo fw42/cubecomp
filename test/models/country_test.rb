@@ -5,7 +5,7 @@ class CountryTest < ActiveSupport::TestCase
     @country = countries(:germany)
   end
 
-  test "validates presence and uniqueness of name" do
+  test 'validates presence and uniqueness of name' do
     @country.name = ''
     assert_not_valid(@country, :name)
 

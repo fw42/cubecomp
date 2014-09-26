@@ -1,0 +1,52 @@
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'script/**/*'
+    - 'config/**/*'
+    - 'bin/**/*'
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Exclude:
+    - 'test/**/*'
+
+Lint/AssignmentInCondition:
+  Enabled: false
+
+Lint/UnusedBlockArgument:
+  Enabled: false
+
+Lint/EndAlignment:
+  AlignWith: variable
+
+Style/BracesAroundHashParameters:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/SpaceInsideBrackets:
+  Enabled: false
+
+Style/SpaceBeforeBlockBraces:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/TrailingComma:
+  Enabled: false
+
+Style/IndentHash:
+  EnforcedStyle: consistent
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/FormatString:
+  Enabled: false

@@ -5,7 +5,7 @@ class EventTest < ActiveSupport::TestCase
     @event = events(:aachen_open_rubiks_cube)
   end
 
-  test "validates presence and integrity of competition" do
+  test 'validates presence and integrity of competition' do
     @event.competition = nil
     assert_not_valid(@event, :competition)
 
@@ -13,7 +13,7 @@ class EventTest < ActiveSupport::TestCase
     assert_not_valid(@event, :competition)
   end
 
-  test "validates presence and integrity of day" do
+  test 'validates presence and integrity of day' do
     @event.day = nil
     assert_not_valid(@event, :day)
 
@@ -21,7 +21,7 @@ class EventTest < ActiveSupport::TestCase
     assert_not_valid(@event, :day)
   end
 
-  test "validates presence of name_short" do
+  test 'validates presence of name_short' do
     @event.name_short = nil
     assert_not_valid(@event, :name_short)
 
@@ -29,7 +29,7 @@ class EventTest < ActiveSupport::TestCase
     assert_not_valid(@event, :name_short)
   end
 
-  test "validates presence of name" do
+  test 'validates presence of name' do
     @event.name = nil
     assert_not_valid(@event, :name)
 
@@ -37,7 +37,7 @@ class EventTest < ActiveSupport::TestCase
     assert_not_valid(@event, :name)
   end
 
-  test "validates presence of handle unless not_for_registration" do
+  test 'validates presence of handle unless not_for_registration' do
     @event.state = 'open_for_registration'
 
     @event.handle = nil
@@ -55,7 +55,7 @@ class EventTest < ActiveSupport::TestCase
     assert_valid @event
   end
 
-  test "validates uniqueness of handle, scoped to competition" do
+  test 'validates uniqueness of handle, scoped to competition' do
     new_event = @event.dup
     assert_not_valid(new_event, :handle)
 
@@ -63,17 +63,17 @@ class EventTest < ActiveSupport::TestCase
     assert_valid new_event
   end
 
-  test "validates presence of start_time" do
+  test 'validates presence of start_time' do
     @event.start_time = nil
     assert_not_valid(@event, :start_time)
   end
 
-  test "does not validate presence of max_number_of_registrations" do
+  test 'does not validate presence of max_number_of_registrations' do
     @event.max_number_of_registrations = nil
     assert_valid @event
   end
 
-  test "validates numericality of max_number_of_registrations" do
+  test 'validates numericality of max_number_of_registrations' do
     @event.max_number_of_registrations = 'foobar'
     assert_not_valid(@event, :max_number_of_registrations)
 
@@ -81,7 +81,7 @@ class EventTest < ActiveSupport::TestCase
     assert_valid @event
   end
 
-  test "validates presence and inclusion of state" do
+  test 'validates presence and inclusion of state' do
     @event.state = nil
     assert_not_valid(@event, :state)
 
@@ -92,12 +92,12 @@ class EventTest < ActiveSupport::TestCase
     assert_valid @event
   end
 
-  test "does not validate presence of length_in_minutes" do
+  test 'does not validate presence of length_in_minutes' do
     @event.length_in_minutes = nil
     assert_valid @event
   end
 
-  test "validates numericality of length_in_minutes" do
+  test 'validates numericality of length_in_minutes' do
     @event.length_in_minutes = 'foobar'
     assert_not_valid(@event, :length_in_minutes)
 
@@ -105,21 +105,21 @@ class EventTest < ActiveSupport::TestCase
     assert_valid @event
   end
 
-  test "destroying event destroys registrations but not competitors" do
+  test 'destroying event destroys registrations but not competitors' do
     count = @event.registrations.count
-    assert_difference "EventRegistration.count", -1 * count do
-      assert_no_difference "Competitor.count" do
+    assert_difference 'EventRegistration.count', -1 * count do
+      assert_no_difference 'Competitor.count' do
         @event.destroy
       end
     end
   end
 
-  test "end_time is sum of start_time and length_in_minutes" do
+  test 'end_time is sum of start_time and length_in_minutes' do
     @event.length_in_minutes = 17
     assert_equal @event.start_time + 17.minutes, @event.end_time
   end
 
-  test "end_time if length_in_minutes is nil" do
+  test 'end_time if length_in_minutes is nil' do
     @event.length_in_minutes = nil
     assert_equal @event.start_time, @event.end_time
   end

@@ -1,19 +1,23 @@
 # Add your own tasks in files placed in lib/tasks ending in .rake,
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
+more_test_dirs = %w(services patches)
+
 require File.expand_path('../config/application', __FILE__)
 
 Rails.application.load_tasks
 
 namespace :test do
-  Rails::TestTask.new(services: "test:prepare") do |t|
-    t.pattern = 'test/services/**/*_test.rb'
-  end
-
-  Rails::TestTask.new(patches: "test:prepare") do |t|
-    t.pattern = 'test/patches/**/*_test.rb'
+  more_test_dirs.each do |test_dir|
+    Rails::TestTask.new(test_dir => 'test:prepare') do |t|
+      t.pattern = "test/#{test_dir}/**/*_test.rb"
+    end
   end
 end
 
-Rake::Task[:test].enhance(['test:services'])
-Rake::Task[:test].enhance(['test:patches'])
+more_test_dirs.each do |test_dir|
+  Rake::Task[:test].enhance(["test:#{test_dir}"])
+end
+
+require 'rubocop/rake_task'
+RuboCop::RakeTask.new

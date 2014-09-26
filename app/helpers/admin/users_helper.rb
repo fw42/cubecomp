@@ -2,14 +2,7 @@ module Admin::UsersHelper
   def user_for_form(user)
     return user unless current_user.policy.change_competition_permissions?
 
-    competition_ids = user.permissions.pluck(:competition_id)
-    missing = if competition_ids.empty?
-      Competition.all
-    else
-      Competition.where('id NOT IN (?)', competition_ids)
-    end
-
-    missing.each do |competition|
+    missing_competition_ids(user).each do |competition|
       user.permissions.build(competition: competition)
     end
 
@@ -27,5 +20,17 @@ module Admin::UsersHelper
       selected: user.permission_level,
       disabled: disabled_options.values
     })
+  end
+
+  private
+
+  def missing_competition_ids(user)
+    competition_ids = user.permissions.pluck(:competition_id)
+
+    if competition_ids.empty?
+      Competition.all
+    else
+      Competition.where('id NOT IN (?)', competition_ids)
+    end
   end
 end

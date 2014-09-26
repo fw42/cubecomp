@@ -8,7 +8,7 @@ class UserPolicyService
   end
 
   def login?(competition)
-    admin? || @user.delegate_for?(competition) || @user.has_permission?(competition)
+    admin? || @user.delegate_for?(competition) || @user.permission?(competition)
   end
 
   def admin_user_menu?
@@ -19,7 +19,7 @@ class UserPolicyService
     admin?
   end
 
-  def destroy_competition?(competition)
+  def destroy_competition?(_competition)
     admin?
   end
 
@@ -27,11 +27,11 @@ class UserPolicyService
     admin?
   end
 
-  def change_permission_level_to?(other_user, level)
+  def change_permission_level_to?(other_user, _level)
     (other_user != @user) && superadmin?
   end
 
-  def change_delegate_flag?(other_user)
+  def change_delegate_flag?(_other_user)
     admin?
   end
 

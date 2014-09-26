@@ -5,7 +5,7 @@ class DayRegistrationTest < ActiveSupport::TestCase
     @registration = day_registrations(:flo_aachen_open_day_one)
   end
 
-  test "validates presence and integrity of competition" do
+  test 'validates presence and integrity of competition' do
     @registration.competition = nil
     assert_not_valid(@registration, :competition)
 
@@ -13,7 +13,7 @@ class DayRegistrationTest < ActiveSupport::TestCase
     assert_not_valid(@registration, :competition)
   end
 
-  test "validates presence and integrity of day" do
+  test 'validates presence and integrity of day' do
     @registration.day = nil
     assert_not_valid(@registration, :day)
 
@@ -21,7 +21,7 @@ class DayRegistrationTest < ActiveSupport::TestCase
     assert_not_valid(@registration, :day)
   end
 
-  test "validates presence and integrity of competitor" do
+  test 'validates presence and integrity of competitor' do
     @registration.competitor = nil
     assert_not_valid(@registration, :competitor)
 
@@ -29,7 +29,7 @@ class DayRegistrationTest < ActiveSupport::TestCase
     assert_not_valid(@registration, :competitor)
   end
 
-  test "validates uniqueness of competitor scoped by day" do
+  test 'validates uniqueness of competitor scoped by day' do
     new_registration = @registration.dup
     assert_not_valid(new_registration, :competitor_id)
 

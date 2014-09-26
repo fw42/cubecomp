@@ -4,6 +4,30 @@ class Admin::CompetitionsController < AdminController
   before_action :ensure_user_can_create_competitions, only: [:index, :new, :create]
   before_action :ensure_user_can_destroy_competition, only: [:index, :destroy]
 
+  PERMITTED_PARAMS = [
+    :name,
+    :handle,
+    :delegate_user_id,
+    :staff_email,
+    :staff_name,
+    :city_name,
+    :city_name_short,
+    :venue_address,
+    :country_id,
+    :cc_orga,
+    :registration_open,
+    locales_attributes: [:id, :handle, :_destroy],
+    days_attributes: [
+      :id,
+      :"date(3i)",
+      :"date(2i)",
+      :"date(1i)",
+      :"entrance_fee_competitors",
+      :"entrance_fee_guests",
+      :_destroy
+    ]
+  ]
+
   def index
     @competitions = Competition.all
   end
@@ -41,15 +65,11 @@ class Admin::CompetitionsController < AdminController
   private
 
   def ensure_user_can_create_competitions
-    if !current_user.policy.create_competitions?
-      render_unauthorized
-    end
+    render_unauthorized unless current_user.policy.create_competitions?
   end
 
   def ensure_user_can_destroy_competition
-    if !current_user.policy.destroy_competition?(@competition)
-      render_unauthorized
-    end
+    render_unauthorized unless current_user.policy.destroy_competition?(@competition)
   end
 
   def set_competition
@@ -57,28 +77,6 @@ class Admin::CompetitionsController < AdminController
   end
 
   def competition_params
-    params.require(:competition).permit(
-      :name,
-      :handle,
-      :delegate_user_id,
-      :staff_email,
-      :staff_name,
-      :city_name,
-      :city_name_short,
-      :venue_address,
-      :country_id,
-      :cc_orga,
-      :registration_open,
-      locales_attributes: [:id, :handle, :_destroy],
-      days_attributes: [
-        :id,
-        :"date(3i)",
-        :"date(2i)",
-        :"date(1i)",
-        :"entrance_fee_competitors",
-        :"entrance_fee_guests",
-        :_destroy
-      ]
-    )
+    params.require(:competition).permit(PERMITTED_PARAMS)
   end
 end
