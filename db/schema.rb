@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140921015238) do
+ActiveRecord::Schema.define(version: 20140925232511) do
 
   create_table "competitions", force: true do |t|
     t.string   "name",                              null: false
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20140921015238) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "male"
+    t.string   "nametag"
   end
 
   add_index "competitors", ["competition_id"], name: "index_competitors_on_competition_id", using: :btree
