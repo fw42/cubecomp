@@ -44,12 +44,7 @@ class Admin::EventsControllerTest < ActionController::TestCase
     assert_attributes(params.except(:start_time), event)
   end
 
-  test '#show' do
-    get :show, competition_id: @competition.id, id: @event.id
-    assert_response :success
-  end
-
-  test '#get' do
+  test '#edit' do
     get :edit, competition_id: @competition.id, id: @event.id
     assert_response :success
   end
@@ -68,7 +63,7 @@ class Admin::EventsControllerTest < ActionController::TestCase
 
     patch :update, competition_id: @competition.id, id: @event.id, event: params
 
-    assert_redirected_to admin_competition_event_path(@competition.id, assigns(:event))
+    assert_redirected_to edit_admin_competition_event_path(@competition.id, assigns(:event))
     @event.reload
     assert_attributes(params.except(:start_time), @event)
     assert_equal Time.parse(params[:start_time]).utc.strftime('%H:%M'), @event.start_time.strftime('%H:%M')

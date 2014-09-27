@@ -1,5 +1,5 @@
 class Admin::EventsController < AdminController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:edit, :update, :destroy]
 
   PERMITTED_PARAMS = [
     :name_short,
@@ -22,9 +22,6 @@ class Admin::EventsController < AdminController
     @events = current_competition.events.all
   end
 
-  def show
-  end
-
   def new
     @event = current_competition.events.new
   end
@@ -36,7 +33,8 @@ class Admin::EventsController < AdminController
     @event = current_competition.events.new(event_params)
 
     if @event.save
-      redirect_to admin_competition_event_path(current_competition, @event), notice: 'Event was successfully created.'
+      redirect_to admin_competition_event_path(current_competition, @event),
+        notice: 'Event was successfully created.'
     else
       render :new
     end
@@ -44,7 +42,8 @@ class Admin::EventsController < AdminController
 
   def update
     if @event.update(event_params)
-      redirect_to admin_competition_event_path(current_competition, @event), notice: 'Event was successfully updated.'
+      redirect_to edit_admin_competition_event_path(current_competition, @event),
+        notice: 'Event was successfully updated.'
     else
       render :edit
     end
@@ -52,7 +51,8 @@ class Admin::EventsController < AdminController
 
   def destroy
     @event.destroy
-    redirect_to admin_competition_events_url(current_competition), notice: 'Event was successfully destroyed.'
+    redirect_to admin_competition_events_url(current_competition),
+      notice: 'Event was successfully destroyed.'
   end
 
   private

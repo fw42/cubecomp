@@ -21,7 +21,7 @@ module AdminMenuHelper
       }
     ]
 
-    MenuItem.parse(self.controller, items)
+    MenuItem.parse(controller, items)
   end
 
   def regular_user_menu
@@ -65,6 +65,6 @@ module AdminMenuHelper
       }
     ]
 
-    MenuItem.parse(self.controller, items)
+    MenuItem.parse(controller, items)
   end
 end
