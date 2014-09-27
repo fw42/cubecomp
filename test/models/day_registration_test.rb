@@ -37,7 +37,14 @@ class DayRegistrationTest < ActiveSupport::TestCase
     assert_valid(new_registration)
   end
 
-  test "destroying a competitor's registration for a day destroys all registrations for events on that day for him" do
+  test 'validates integrity of competition ids' do
+    @registration.competition = competitions(:german_open)
+    assert_not_valid(@registration, :competition_id)
+    errors = @registration.errors[:competition_id]
+    assert_equal ['does not match day competition_id', 'does not match competitor competition_id'], errors
+  end
+
+  test "destroying a competitor's registration for a day destroys their registrations for events on that day" do
     count = @registration.competitor.event_registrations.on_day(@registration.day).count
     assert_difference 'EventRegistration.count', -1 * count do
       assert_no_difference 'Day.count' do

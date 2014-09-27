@@ -19,7 +19,8 @@ class Admin::CompetitorsController < AdminController
     :male,
     :state,
     :nametag,
-    :confirmation_email_sent
+    :confirmation_email_sent,
+    day_registrations_attributes: [:id, :day_id, :competition_id, :_destroy]
   ]
 
   before_action :set_competitor, only: [:edit, :update, :destroy]
@@ -48,7 +49,7 @@ class Admin::CompetitorsController < AdminController
 
   def update
     if @competitor.update(competitor_params)
-      redirect_to admin_competition_competitor_path(current_competition, @competitor),
+      redirect_to edit_admin_competition_competitor_path(current_competition, @competitor),
         notice: 'Competitor was successfully updated.'
     else
       render :edit

@@ -34,6 +34,13 @@ class EventRegistrationTest < ActiveSupport::TestCase
     assert_not_valid(new_registration, :competitor_id)
   end
 
+  test 'validates integrity of competition ids' do
+    @registration.competition = competitions(:german_open)
+    assert_not_valid(@registration, :competition_id)
+    errors = @registration.errors[:competition_id]
+    assert_equal ['does not match event competition_id', 'does not match competitor competition_id'], errors
+  end
+
   test 'validates that competitor is registered for the day of the event' do
     @registration.competitor.day_registrations.delete_all
     assert_not_valid(@registration.reload, :base)

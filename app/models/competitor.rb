@@ -32,8 +32,8 @@ class Competitor < ActiveRecord::Base
   validate :registered_for_at_least_one_day?
   validate :male_not_nil?
 
-  accepts_nested_attributes_for :days, allow_destroy: true
-  accepts_nested_attributes_for :events, allow_destroy: true
+  accepts_nested_attributes_for :day_registrations, allow_destroy: true
+  accepts_nested_attributes_for :event_registrations, allow_destroy: true
 
   def name
     [first_name, last_name].join(' ')

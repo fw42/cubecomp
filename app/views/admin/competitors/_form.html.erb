@@ -1,4 +1,4 @@
-<%= form_for([:admin, current_competition, @competitor]) do |f| %>
+<%= form_for([:admin, current_competition, competitor_for_form(@competitor)]) do |f| %>
   <%= render 'form_errors', object: @competitor, label: 'competitor' %>
 
   <%= form_section 'Personal data' do %>
@@ -90,6 +90,16 @@
   <% end %>
 
   <%= form_section 'Events' do %>
+    <%= f.fields_for :day_registrations do |ff| %>
+      <b><%= ff.object.day.date.to_s(:long) %></b>
+      <p>
+        <%= ff.hidden_field :day_id %>
+        <%= ff.hidden_field :competition_id %>
+        <%= ff.radio_button :_destroy, 1, checked: !ff.object.persisted? %> not registered<br/>
+        <%= ff.radio_button :_destroy, 0, checked: ff.object.persisted? %> registered as guest<br/>
+        <%= ff.radio_button :_destroy, 0 %> registered as competitor<br/>
+      </p>
+    <% end %>
   <% end %>
 
   <%= submit_button(f) %>

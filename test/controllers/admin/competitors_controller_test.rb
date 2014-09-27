@@ -119,7 +119,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
   test '#update' do
     patch :update, competition_id: @competition.id, id: @competitor.id, competitor: @update_params
 
-    assert_redirected_to admin_competition_competitor_path(@competition.id, assigns(:competitor))
+    assert_redirected_to edit_admin_competition_competitor_path(@competition.id, assigns(:competitor))
     @competitor.reload
     assert_attributes(@update_params.except(:"birthday(1i)", :"birthday(2i)", :"birthday(3i)"), @competitor)
     assert_equal @update_params[:"birthday(1i)"].to_i, @competitor.birthday.year
@@ -131,6 +131,45 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     mock_login_not_allowed(@competition)
     patch :update, competition_id: @competition.id, id: @competitor.id, competitor: @update_params
     assert_response :unauthorized
+  end
+
+  test '#update nested day_registrations attributes to destroy existing registration' do
+    assert_no_difference 'Day.count' do
+      assert_difference '@competitor.day_registrations.count', -1 do
+        patch :update, competition_id: @competition.id, id: @competitor.id, competitor: {
+          day_registrations_attributes: {
+            '0' => {
+              id: day_registrations(:flo_aachen_open_day_one).id,
+              competition_id: @competition.id,
+              _destroy: '1'
+            }
+          }
+        }
+      end
+    end
+
+    refute @competitor.day_registrations.where(day: days(:aachen_open_day_one)).exists?
+  end
+
+  test '#update nested day_registrations attributes to create new registration' do
+    @competitor.day_registrations.each(&:destroy!)
+    day = days(:aachen_open_day_one)
+
+    assert_no_difference 'Day.count' do
+      assert_difference '@competitor.day_registrations.count', +1 do
+        patch :update, competition_id: @competition.id, id: @competitor.id, competitor: {
+          day_registrations_attributes: {
+            '0' => {
+              day_id: day.id,
+              competition_id: @competition.id,
+              _destroy: '0'
+            }
+          }
+        }
+      end
+    end
+
+    assert @competitor.day_registrations.where(day: day).exists?
   end
 
   test '#destroy' do
