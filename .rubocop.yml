@@ -6,7 +6,13 @@ AllCops:
     - 'bin/**/*'
 
 Metrics/LineLength:
-  Enabled: false
+  Max: 120
+  Enabled: true
+
+Metrics/MethodLength:
+  Max: 15
+  Exclude:
+    - 'app/helpers/admin_menu_helper.rb'
 
 Metrics/ClassLength:
   Exclude:
@@ -50,3 +56,6 @@ Style/NumericLiterals:
 
 Style/FormatString:
   Enabled: false
+
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation

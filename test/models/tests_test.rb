@@ -6,7 +6,8 @@ class TestsTest < ActiveSupport::TestCase
     keys.each do |key|
       model = key.camelize.singularize.constantize
       model.all.each do |object|
-        assert object.valid?, "Fixture for #{model} with id #{object.id} doesn't pass it's own validations: #{object.errors.full_messages}"
+        assert object.valid?, "Fixture for #{model} with id #{object.id} doesn't " \
+          "pass it's own validations: #{object.errors.full_messages}"
       end
     end
   end

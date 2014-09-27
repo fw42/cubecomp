@@ -1,4 +1,27 @@
 class Admin::CompetitorsController < AdminController
+  PERMITTED_PARAMS = [
+    :first_name,
+    :last_name,
+    :wca,
+    :email,
+    :"birthday(1i)",
+    :"birthday(2i)",
+    :"birthday(3i)",
+    :country_id,
+    :local,
+    :staff,
+    :user_comment,
+    :admin_comment,
+    :free_entrance,
+    :free_entrance_reason,
+    :paid,
+    :paid_comment,
+    :male,
+    :state,
+    :nametag,
+    :confirmation_email_sent
+  ]
+
   before_action :set_competitor, only: [:edit, :update, :destroy]
 
   def index
@@ -16,7 +39,8 @@ class Admin::CompetitorsController < AdminController
     @competitor = current_competition.competitors.new(competitor_params)
 
     if @competitor.save
-      redirect_to admin_competition_competitor_path(current_competition, @competitor), notice: 'Competitor was successfully created.'
+      redirect_to admin_competition_competitor_path(current_competition, @competitor),
+        notice: 'Competitor was successfully created.'
     else
       render :new
     end
@@ -24,7 +48,8 @@ class Admin::CompetitorsController < AdminController
 
   def update
     if @competitor.update(competitor_params)
-      redirect_to admin_competition_competitor_path(current_competition, @competitor), notice: 'Competitor was successfully updated.'
+      redirect_to admin_competition_competitor_path(current_competition, @competitor),
+        notice: 'Competitor was successfully updated.'
     else
       render :edit
     end
@@ -32,7 +57,8 @@ class Admin::CompetitorsController < AdminController
 
   def destroy
     @competitor.destroy
-    redirect_to admin_competition_competitors_url(current_competition), notice: 'Competitor was successfully destroyed.'
+    redirect_to admin_competition_competitors_url(current_competition),
+      notice: 'Competitor was successfully destroyed.'
   end
 
   private
@@ -42,27 +68,6 @@ class Admin::CompetitorsController < AdminController
   end
 
   def competitor_params
-    params.require(:competitor).permit(
-      :first_name,
-      :last_name,
-      :wca,
-      :email,
-      :"birthday(1i)",
-      :"birthday(2i)",
-      :"birthday(3i)",
-      :country_id,
-      :local,
-      :staff,
-      :user_comment,
-      :admin_comment,
-      :free_entrance,
-      :free_entrance_reason,
-      :paid,
-      :paid_comment,
-      :male,
-      :state,
-      :nametag,
-      :confirmation_email_sent
-    )
+    params.require(:competitor).permit(PERMITTED_PARAMS)
   end
 end

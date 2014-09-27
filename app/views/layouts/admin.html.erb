@@ -56,12 +56,12 @@
           <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
               <% if current_competition %>
-                <li <% if navigation_menu.any?(&:active?) %>class="active"<% end %>>
+                <li <% if regular_user_menu.any?(&:active?) %>class="active"<% end %>>
                   <a href="#">
                     <i class="fa fa-cog fa-fw"></i> Competition<span class="fa arrow"></span>
                   </a>
                   <ul class="nav nav-second-level">
-                    <% navigation_menu.each do |menu_item| %>
+                    <% regular_user_menu.each do |menu_item| %>
                       <%= render 'navigation_item', item: menu_item %>
                     <% end %>
                   </ul>

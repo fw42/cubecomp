@@ -15,7 +15,8 @@ class Admin::ThemeFileTemplatesController < AdminController
     @template = @theme.file_templates.new(template_params)
 
     if @template.save
-      redirect_to edit_admin_theme_theme_file_template_path(@theme, @template), notice: 'Template was successfully created.'
+      redirect_to edit_admin_theme_theme_file_template_path(@theme, @template),
+        notice: 'Template was successfully created.'
     else
       render :new
     end
@@ -23,7 +24,8 @@ class Admin::ThemeFileTemplatesController < AdminController
 
   def update
     if @template.update(template_params)
-      redirect_to edit_admin_theme_theme_file_template_path(@theme, @template), notice: 'Theme file template was successfully updated.'
+      redirect_to edit_admin_theme_theme_file_template_path(@theme, @template),
+        notice: 'Theme file template was successfully updated.'
     else
       render :edit
     end
@@ -31,7 +33,8 @@ class Admin::ThemeFileTemplatesController < AdminController
 
   def destroy
     @template.destroy
-    redirect_to admin_theme_path(@theme), notice: 'Theme file template was successfully destroyed.'
+    redirect_to admin_theme_path(@theme),
+      notice: 'Theme file template was successfully destroyed.'
   end
 
   private

@@ -42,7 +42,7 @@ class AdminControllerTest < ActionController::TestCase
     assert_redirected_to edit_admin_user_path(user.id)
   end
 
-  test "#index redirects to last competition if user session has old competition but competition doesn't exist anymore" do
+  test "#index redirects to last competition if user session has old competition that doesn't exist anymore" do
     user = users(:regular_user_with_two_competitions)
     login_as(user)
 
@@ -55,7 +55,7 @@ class AdminControllerTest < ActionController::TestCase
     assert_redirected_to admin_competition_dashboard_index_path(competition.id)
   end
 
-  test "#index redirects to last competition if user session has old competition but user doesn't have permission anymore" do
+  test "#index redirects to last competition if user doesn't have permission to competition from session" do
     user = users(:regular_user_with_two_competitions)
     login_as(user)
 

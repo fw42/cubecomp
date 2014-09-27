@@ -1,7 +1,8 @@
 class AdminController < ApplicationController
   layout 'admin'
+  helper AdminMenuHelper
   before_action :ensure_authenticated
-  before_action :set_current_competition
+  before_action :current_competition
   before_action :ensure_current_competition
 
   rescue_from ActiveRecord::RecordNotFound do
@@ -44,20 +45,15 @@ class AdminController < ApplicationController
   helper_method :current_user
 
   def current_competition
-    set_current_competition unless @current_competition
-    @current_competition
+    @current_competition ||= begin
+      competition = find_current_competition
+      session[:competition_id] = competition.try(:id)
+      competition
+    end
   end
   helper_method :current_competition
 
-  def competition_id_from_params
-    if self.class == Admin::CompetitionsController
-      params[:id]
-    else
-      params[:competition_id]
-    end
-  end
-
-  def set_current_competition
+  def find_current_competition
     competition = nil
 
     if competition_id = competition_id_from_params
@@ -67,17 +63,12 @@ class AdminController < ApplicationController
 
     competition ||= current_competition_from_session
     competition ||= current_user.policy.competitions.last
-
-    session[:competition_id] = competition.try(:id)
-    @current_competition = competition
+    competition
   end
 
-  def current_competition_from_session
-    return unless competition_id = session[:competition_id]
-    competition = Competition.find_by(id: competition_id)
-    return unless competition
-    return unless current_user.policy.login?(competition)
-    competition
+  def competition_id_from_params
+    return params[:id] if self.class == Admin::CompetitionsController
+    params[:competition_id]
   end
 
   def current_competition_from_params(competition_id)
@@ -91,74 +82,11 @@ class AdminController < ApplicationController
     competition
   end
 
-  def admin_user_menu
-    items = [
-      {
-        label: 'Competitions',
-        controller: Admin::CompetitionsController,
-        url: admin_competitions_path,
-        css: 'fa-wrench'
-      },
-      {
-        label: 'Users',
-        controller: Admin::UsersController,
-        url: admin_users_path,
-        css: 'fa-user'
-      },
-      {
-        label: 'Themes',
-        controller: [Admin::ThemesController, Admin::ThemeFileTemplatesController],
-        url: admin_themes_path,
-        css: 'fa-files-o'
-      }
-    ]
-
-    MenuItem.parse(self, items)
+  def current_competition_from_session
+    return unless competition_id = session[:competition_id]
+    competition = Competition.find_by(id: competition_id)
+    return unless competition
+    return unless current_user.policy.login?(competition)
+    competition
   end
-  helper_method :admin_user_menu
-
-  def navigation_menu
-    items = [
-      {
-        label: 'Dashboard',
-        controller: Admin::DashboardController,
-        url: admin_competition_dashboard_index_path(current_competition),
-        css: 'fa-dashboard'
-      },
-      {
-        label: 'Competitors',
-        controller: Admin::CompetitorsController,
-        url: admin_competition_competitors_path(current_competition),
-        css: 'fa-list-alt'
-      },
-      {
-        label: 'Events',
-        controller: Admin::EventsController,
-        url: admin_competition_events_path(current_competition),
-        css: 'fa-table'
-      },
-      {
-        label: 'News',
-        controller: Admin::NewsController,
-        url: admin_competition_news_index_path(current_competition),
-        css: 'fa-star'
-      },
-      {
-        label: 'Theme',
-        controller: Admin::ThemeFilesController,
-        url: admin_competition_theme_files_path(current_competition),
-        css: 'fa-files-o'
-      },
-      {
-        label: 'Settings',
-        controller: Admin::CompetitionsController,
-        actions: ['edit'],
-        url: edit_admin_competition_path(current_competition),
-        css: 'fa-wrench'
-      }
-    ]
-
-    MenuItem.parse(self, items)
-  end
-  helper_method :navigation_menu
 end
