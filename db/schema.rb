@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140925232511) do
+ActiveRecord::Schema.define(version: 20140927203709) do
 
   create_table "competitions", force: true do |t|
     t.string   "name",                              null: false
@@ -95,11 +95,12 @@ ActiveRecord::Schema.define(version: 20140925232511) do
   add_index "days", ["date", "competition_id"], name: "index_days_on_date_and_competition_id", unique: true, using: :btree
 
   create_table "event_registrations", force: true do |t|
-    t.integer  "competition_id", null: false
-    t.integer  "event_id",       null: false
-    t.integer  "competitor_id",  null: false
+    t.integer  "competition_id",                 null: false
+    t.integer  "event_id",                       null: false
+    t.integer  "competitor_id",                  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "waiting",        default: false, null: false
   end
 
   add_index "event_registrations", ["competition_id"], name: "index_event_registrations_on_competition_id", using: :btree

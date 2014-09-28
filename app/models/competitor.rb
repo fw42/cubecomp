@@ -32,9 +32,6 @@ class Competitor < ActiveRecord::Base
   validate :registered_for_at_least_one_day?
   validate :male_not_nil?
 
-  accepts_nested_attributes_for :day_registrations, allow_destroy: true
-  accepts_nested_attributes_for :event_registrations, allow_destroy: true
-
   def name
     [first_name, last_name].join(' ')
   end
@@ -49,6 +46,18 @@ class Competitor < ActiveRecord::Base
 
   def guest_on?(day)
     registered_on?(day) && !competing_on?(day)
+  end
+
+  def event_registration_status(event)
+    registration = event_registrations.where(event: event).first
+
+    if registration.nil?
+      'not_registered'
+    elsif registration.waiting
+      'waiting'
+    else
+      'registered'
+    end
   end
 
   private

@@ -1,4 +1,4 @@
-<%= form_for([:admin, current_competition, competitor_for_form(@competitor)]) do |f| %>
+<%= form_for([:admin, current_competition, @competitor]) do |f| %>
   <%= render 'form_errors', object: @competitor, label: 'competitor' %>
 
   <%= form_section 'Personal data' do %>
@@ -90,15 +90,68 @@
   <% end %>
 
   <%= form_section 'Events' do %>
-    <%= f.fields_for :day_registrations do |ff| %>
-      <b><%= ff.object.day.date.to_s(:long) %></b>
+    <% current_competition.days.each do |day| %>
+      <b><%= day.date.to_s(:long) %></b>
       <p>
-        <%= ff.hidden_field :day_id %>
-        <%= ff.hidden_field :competition_id %>
-        <%= ff.radio_button :_destroy, 1, checked: !ff.object.persisted? %> not registered<br/>
-        <%= ff.radio_button :_destroy, 0, checked: ff.object.persisted? %> registered as guest<br/>
-        <%= ff.radio_button :_destroy, 0 %> registered as competitor<br/>
+        <%=
+          radio_button "#{f.object_name}[days][#{day.id}]", :status, 'not_registered',
+            checked: !@competitor.registered_on?(day)
+        %>
+        not registered<br/>
+
+        <%=
+          radio_button "#{f.object_name}[days][#{day.id}]", :status, 'guest',
+            checked: @competitor.guest_on?(day)
+        %>
+        registered as guest<br/>
+
+        <%=
+          radio_button "#{f.object_name}[days][#{day.id}]", :status, 'competitor',
+            checked: @competitor.competing_on?(day)
+        %>
+        registered as competitor<br/>
       </p>
+
+      <table class='default-table'>
+        <tr>
+          <th>Event</th>
+          <th colspan="3">Registration status</th>
+        </tr>
+        <% current_competition.events.where(day: day).each do |event| %>
+          <tr>
+            <td>
+              <%= event.name %>
+            </td>
+            <td>
+              <%=
+                radio_button "#{f.object_name}[days][#{day.id}][events][#{event.id}]",
+                  :status,
+                  'not_registered',
+                  checked: @competitor.event_registration_status(event) == 'not_registered'
+              %>
+              not registered
+            </td>
+            <td>
+              <%=
+                radio_button "#{f.object_name}[days][#{day.id}][events][#{event.id}]",
+                  :status,
+                  'waiting',
+                  checked: @competitor.event_registration_status(event) == 'waiting'
+              %>
+              waiting
+            </td>
+            <td>
+              <%=
+                radio_button "#{f.object_name}[days][#{day.id}][events][#{event.id}]",
+                  :status,
+                  'registered',
+                  checked: @competitor.event_registration_status(event) == 'registered'
+              %>
+              registered
+            </td>
+          </tr>
+        <% end %>
+      </table>
     <% end %>
   <% end %>
 

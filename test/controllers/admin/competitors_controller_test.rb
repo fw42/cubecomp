@@ -133,45 +133,6 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     assert_response :unauthorized
   end
 
-  test '#update nested day_registrations attributes to destroy existing registration' do
-    assert_no_difference 'Day.count' do
-      assert_difference '@competitor.day_registrations.count', -1 do
-        patch :update, competition_id: @competition.id, id: @competitor.id, competitor: {
-          day_registrations_attributes: {
-            '0' => {
-              id: day_registrations(:flo_aachen_open_day_one).id,
-              competition_id: @competition.id,
-              _destroy: '1'
-            }
-          }
-        }
-      end
-    end
-
-    refute @competitor.day_registrations.where(day: days(:aachen_open_day_one)).exists?
-  end
-
-  test '#update nested day_registrations attributes to create new registration' do
-    @competitor.day_registrations.each(&:destroy!)
-    day = days(:aachen_open_day_one)
-
-    assert_no_difference 'Day.count' do
-      assert_difference '@competitor.day_registrations.count', +1 do
-        patch :update, competition_id: @competition.id, id: @competitor.id, competitor: {
-          day_registrations_attributes: {
-            '0' => {
-              day_id: day.id,
-              competition_id: @competition.id,
-              _destroy: '0'
-            }
-          }
-        }
-      end
-    end
-
-    assert @competitor.day_registrations.where(day: day).exists?
-  end
-
   test '#destroy' do
     assert_difference '@competition.competitors.count', -1 do
       delete :destroy, competition_id: @competition.id, id: @competitor.id
