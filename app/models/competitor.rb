@@ -60,6 +60,10 @@ class Competitor < ActiveRecord::Base
     end
   end
 
+  def registration_service
+    @registration_service ||= RegistrationService.new(self)
+  end
+
   private
 
   def set_default_state

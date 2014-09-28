@@ -146,4 +146,23 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_equal true, @competitor.competing_on?(day)
     assert_equal true, @competitor.competing_on?(day.id)
   end
+
+  test 'event_registration_status' do
+    event = events(:aachen_open_rubiks_cube)
+
+    @competitor.event_registrations.each(&:destroy!)
+    assert_equal 'not_registered', @competitor.event_registration_status(event)
+
+    registration = @competitor.event_registrations.create!(
+      event: event,
+      competition: @competitor.competition
+    )
+    assert_equal 'registered', @competitor.event_registration_status(event)
+
+    registration.update_attribute :waiting, true
+    assert_equal 'waiting', @competitor.event_registration_status(event)
+
+    other_event = events(:aachen_open_rubiks_professor)
+    assert_equal 'not_registered', @competitor.event_registration_status(other_event)
+  end
 end

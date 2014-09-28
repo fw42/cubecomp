@@ -79,27 +79,28 @@ class Admin::CompetitorsController < AdminController
   end
 
   def apply_registration_params(competitor)
-    service = RegistrationService.new(competitor)
-
     competitor_params[:days].each do |day_id, day_attributes|
       if day_attributes[:status] == 'not_registered'
-        service.unregister_from_day!(day_id)
+        competitor.registration_service.unregister_from_day!(day_id)
         next
       elsif day_attributes[:status] == 'guest'
-        service.register_as_guest!(day_id)
+        competitor.registration_service.register_as_guest!(day_id)
         next
       end
 
-      apply_event_registration_params(service, day_attributes[:events])
+      apply_event_registration_params(competitor, day_attributes[:events])
     end
   end
 
-  def apply_event_registration_params(service, attributes)
+  def apply_event_registration_params(competitor, attributes)
     attributes.each do |event_id, event_attributes|
       if event_attributes[:status] == 'not_registered'
-        service.unregister_from_event!(event_id)
+        competitor.registration_service.unregister_from_event!(event_id)
       else
-        service.register_for_event!(Event.find(event_id), event_attributes[:status] == 'waiting')
+        competitor.registration_service.register_for_event!(
+          Event.find(event_id),
+          event_attributes[:status] == 'waiting'
+        )
       end
     end
   end
