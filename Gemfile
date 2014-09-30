@@ -1,9 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '>= 4.1.6'
-
 gem 'sass-rails'
-
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails'
 
@@ -12,21 +10,22 @@ gem 'coffee-rails'
 gem 'jquery-rails', '= 3.1.2'
 
 gem 'turbolinks'
-
 gem 'bcrypt'
-
 gem 'codemirror-rails'
-
 gem 'mysql2'
 
+group :test do
+  gem 'mocha'
+end
+
 group :development, :test do
-  gem 'consistency_fail'
   gem 'foreigner'
   gem 'immigrant'
-  gem 'sqlite3'
-  gem 'spring'
+
+  gem 'consistency_fail'
   gem 'byebug'
   gem 'brakeman'
-  gem 'mocha'
+  gem 'spring'
   gem 'rubocop'
+  gem 'bundler-audit'
 end
