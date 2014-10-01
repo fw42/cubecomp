@@ -30,7 +30,18 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       paid_comment: 'moneys!',
 
       user_comment: 'hello',
-      admin_comment: 'this guy is awesome'
+      admin_comment: 'this guy is awesome',
+
+      days: {
+        @competition.events.first.day_id.to_s => {
+          status: 'competitor',
+          events: {
+            @competition.events.first.id.to_s => {
+              status: 'registered'
+            }
+          }
+        }
+      }
     }
 
     @update_params = {
@@ -84,12 +95,18 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
 
   test '#create' do
     assert_difference '@competition.competitors.count', +1 do
-      post :create, competition_id: @competition.id, competitor: @new_competitor_params
+      assert_difference '@competition.event_registrations.count', +1 do
+        assert_difference '@competition.day_registrations.count', +1 do
+          post :create, competition_id: @competition.id, competitor: @new_competitor_params
+        end
+      end
     end
 
+    assert_response :redirect
     assert_redirected_to admin_competition_competitor_path(@competition.id, assigns(:competitor))
     bob = @competition.competitors.find_by(wca: '2000BOB')
-    assert_attributes(@new_competitor_params.except(:"birthday(1i)", :"birthday(2i)", :"birthday(3i)"), bob)
+    expected = @new_competitor_params.except(:"birthday(1i)", :"birthday(2i)", :"birthday(3i)", :days)
+    assert_attributes(expected, bob)
     assert_equal @new_competitor_params[:"birthday(1i)"].to_i, bob.birthday.year
     assert_equal @new_competitor_params[:"birthday(2i)"].to_i, bob.birthday.month
     assert_equal @new_competitor_params[:"birthday(3i)"].to_i, bob.birthday.day
@@ -131,6 +148,211 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     mock_login_not_allowed(@competition)
     patch :update, competition_id: @competition.id, id: @competitor.id, competitor: @update_params
     assert_response :unauthorized
+  end
+
+  test '#update to change day registration from not_registered to guest' do
+    competitor = competitors(:aachen_open_day_one_guest)
+    event = events(:aachen_open_rubiks_revenge_day_two)
+
+    assert_difference 'competitor.day_registrations.count', +1 do
+      assert_no_difference 'EventRegistration.count' do
+        patch :update, competition_id: @competition.id, id: competitor.id, competitor: {
+          days: {
+            event.day_id.to_s => {
+              status: 'guest',
+              events: {
+                event.id.to_s => {
+                  status: 'not_registered'
+                }
+              }
+            }
+          }
+        }
+      end
+    end
+
+    assert competitor.guest_on?(event.day)
+  end
+
+  test '#update to change day registration from not_registered to registered' do
+    competitor = competitors(:aachen_open_day_one_guest)
+    event = events(:aachen_open_rubiks_revenge_day_two)
+
+    assert_difference 'competitor.day_registrations.count', +1 do
+      assert_difference 'competitor.event_registrations.count', +1 do
+        patch :update, competition_id: @competition.id, id: competitor.id, competitor: {
+          days: {
+            event.day_id.to_s => {
+              status: 'registered',
+              events: {
+                event.id.to_s => {
+                  status: 'registered'
+                }
+              }
+            }
+          }
+        }
+      end
+    end
+
+    assert competitor.competing_on?(event.day)
+    assert competitor.events.include?(event)
+  end
+
+  test '#update to change day registration from guest to not_registered' do
+    competitor = competitors(:aachen_open_day_one_guest)
+    day = days(:aachen_open_day_one)
+    event = day.events.first
+
+    assert_difference 'competitor.day_registrations.count', -1 do
+      assert_no_difference 'competitor.event_registrations.count' do
+        patch :update, competition_id: @competition.id, id: competitor.id, competitor: {
+          days: {
+            day.id.to_s => {
+              status: 'not_registered',
+              events: {
+                event.id.to_s => {
+                  status: 'not_registered'
+                }
+              }
+            }
+          }
+        }
+      end
+    end
+
+    refute competitor.registered_on?(event.day)
+  end
+
+  test '#update to change day registration from guest to competitor' do
+    competitor = competitors(:aachen_open_day_one_guest)
+    day = days(:aachen_open_day_one)
+    event = day.events.first
+
+    assert_no_difference 'competitor.day_registrations.count' do
+      assert_difference 'competitor.event_registrations.count', +1 do
+        patch :update, competition_id: @competition.id, id: competitor.id, competitor: {
+          days: {
+            day.id.to_s => {
+              status: 'registered',
+              events: {
+                event.id.to_s => {
+                  status: 'registered'
+                }
+              }
+            }
+          }
+        }
+      end
+    end
+
+    assert competitor.competing_on?(event.day)
+    assert competitor.events.include?(event)
+  end
+
+  test '#update to change day registration from competitor to not_registered' do
+    event = @competitor.events.first
+    day = event.day
+
+    events = {}
+    @competitor.events.where(day: day).each do |e|
+      # because checkboxes will still be checked in the form
+      events[e.id.to_s] = { status: 'registered' }
+    end
+
+    assert_difference '@competitor.day_registrations.count', -1 do
+      assert_difference '@competitor.event_registrations.count', -1 * events.keys.size do
+        patch :update, competition_id: @competition.id, id: @competitor.id, competitor: {
+          days: {
+            day.id.to_s => {
+              status: 'not_registered',
+              events: events
+            }
+          }
+        }
+      end
+    end
+
+    refute @competitor.registered_on?(event.day)
+    refute @competitor.events.include?(event)
+  end
+
+  test '#update to change day registration from competitor to guest' do
+    event = @competitor.events.first
+    day = event.day
+
+    events = {}
+    @competitor.events.where(day: day).each do |e|
+      # because checkboxes will still be checked in the form
+      events[e.id.to_s] = { status: 'registered' }
+    end
+
+    assert_no_difference '@competitor.day_registrations.count' do
+      assert_difference '@competitor.event_registrations.count', -1 * events.keys.size do
+        patch :update, competition_id: @competition.id, id: @competitor.id, competitor: {
+          days: {
+            day.id.to_s => {
+              status: 'guest',
+              events: events
+            }
+          }
+        }
+      end
+    end
+
+    assert @competitor.guest_on?(event.day)
+  end
+
+  test '#update to change event registration from not_registered to waiting' do
+    competitor = competitors(:aachen_open_day_one_guest)
+    day = days(:aachen_open_day_one)
+    event = day.events.first
+
+    assert_no_difference 'competitor.day_registrations.count' do
+      assert_difference 'competitor.event_registrations.count', +1 do
+        patch :update, competition_id: @competition.id, id: competitor.id, competitor: {
+          days: {
+            day.id.to_s => {
+              status: 'registered',
+              events: {
+                event.id.to_s => {
+                  status: 'waiting'
+                }
+              }
+            }
+          }
+        }
+      end
+    end
+
+    assert competitor.competing_on?(event.day)
+    assert competitor.event_registrations.where(event: event).first.waiting
+  end
+
+  test '#update to change all event registrations to not_registered changes day registration to guest' do
+    event = @competitor.events.first
+    day = event.day
+
+    events = {}
+    @competitor.events.where(day: day).each do |e|
+      # because checkboxes will still be checked in the form
+      events[e.id.to_s] = { status: 'not_registered' }
+    end
+
+    assert_no_difference '@competitor.day_registrations.count' do
+      assert_difference '@competitor.event_registrations.count', -1 * events.keys.size do
+        patch :update, competition_id: @competition.id, id: @competitor.id, competitor: {
+          days: {
+            day.id.to_s => {
+              status: 'registered',
+              events: events
+            }
+          }
+        }
+      end
+    end
+
+    assert @competitor.guest_on?(event.day)
   end
 
   test '#destroy' do

@@ -74,7 +74,8 @@ class Admin::CompetitorsController < AdminController
       apply_registration_params(competitor) if competitor_params[:days]
       competitor
     end
-  rescue ActiveRecord::RecordInvalid
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
+    Rails.logger.info("[#{self.class.name}] #{e.class.name}: #{e.message}")
     nil
   end
 

@@ -29,7 +29,6 @@ class Competitor < ActiveRecord::Base
   has_many :days, through: :day_registrations
 
   before_validation :set_default_state
-  validate :registered_for_at_least_one_day?
   validate :male_not_nil?
 
   def name
@@ -68,13 +67,6 @@ class Competitor < ActiveRecord::Base
 
   def set_default_state
     self.state ||= STATES.first
-  end
-
-  def registered_for_at_least_one_day?
-    ### TODO: add test, make nested_attributes work for days, etc.
-    # if day_registrations.count == 0
-    #   errors.add(:base, 'must register for at least one competition day')
-    # end
   end
 
   def male_not_nil?

@@ -5,14 +5,14 @@ class RegistrationService
 
   def register_for_day!(day_or_day_id)
     @competitor.day_registrations.where(
-      competition: @competitor.competition,
+      competition_id: @competitor.competition.id,
       day_id: day_id(day_or_day_id)
     ).first_or_create!
   end
 
   def unregister_from_day!(day_or_day_id)
     rel = @competitor.day_registrations.where(
-      competition: @competitor.competition,
+      competition_id: @competitor.competition.id,
       day_id: day_id(day_or_day_id)
     )
 
@@ -30,7 +30,7 @@ class RegistrationService
     end
 
     registration = @competitor.event_registrations.where(
-      competition: @competitor.competition,
+      competition_id: @competitor.competition.id,
       event: event,
     ).first_or_initialize
 
@@ -40,7 +40,7 @@ class RegistrationService
 
   def unregister_from_event!(event_or_event_id)
     rel = @competitor.event_registrations.where(
-      competition: @competitor.competition,
+      competition_id: @competitor.competition.id,
       event: event_or_event_id
     )
 

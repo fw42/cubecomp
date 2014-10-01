@@ -2,3 +2,18 @@ flo_aachen_open_day_one:
   competition: aachen_open
   competitor: flo_aachen_open
   day: aachen_open_day_one
+
+aachen_open_day_one_guest_day_one:
+  competition: aachen_open
+  competitor: aachen_open_day_one_guest
+  day: aachen_open_day_one
+
+basti_aachen_open_day_one:
+  competition: aachen_open
+  competitor: basti_aachen_open
+  day: aachen_open_day_one
+
+basti_german_open_day_one:
+  competition: german_open
+  competitor: basti_german_open
+  day: german_open_day_one

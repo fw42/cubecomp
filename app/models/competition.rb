@@ -19,8 +19,9 @@ class Competition < ActiveRecord::Base
   has_many :news, dependent: :destroy
   has_many :competitors, dependent: :destroy
   has_many :days, dependent: :destroy
+  has_many :day_registrations
   has_many :events, dependent: :destroy
-  has_many :event_registrations, dependent: :destroy
+  has_many :event_registrations
   has_many :locales, dependent: :destroy
   has_many :theme_files, dependent: :destroy
 
