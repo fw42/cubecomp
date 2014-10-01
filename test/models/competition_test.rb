@@ -76,6 +76,13 @@ class CompetitionTest < ActiveSupport::TestCase
     end
   end
 
+  test 'destroys day registrations' do
+    count = @competition.day_registrations.count
+    assert_difference 'DayRegistration.count', -1 * count do
+      @competition.destroy
+    end
+  end
+
   test 'destroys events' do
     count = @competition.events.count
     assert_difference 'Event.count', -1 * count do

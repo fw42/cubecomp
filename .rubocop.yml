@@ -39,6 +39,10 @@ Style/SpaceInsideBrackets:
 Style/SpaceBeforeBlockBraces:
   Enabled: false
 
+Style/AccessorMethodName:
+  Exclude:
+    - 'app/controllers/**/*'
+
 Style/Documentation:
   Enabled: false
 

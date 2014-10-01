@@ -29,11 +29,7 @@ class Competitor < ActiveRecord::Base
   has_many :days, through: :day_registrations
 
   before_validation :set_default_state
-  validate :registered_for_at_least_one_day?
   validate :male_not_nil?
-
-  accepts_nested_attributes_for :day_registrations, allow_destroy: true
-  accepts_nested_attributes_for :event_registrations, allow_destroy: true
 
   def name
     [first_name, last_name].join(' ')
@@ -51,17 +47,26 @@ class Competitor < ActiveRecord::Base
     registered_on?(day) && !competing_on?(day)
   end
 
+  def event_registration_status(event)
+    registration = event_registrations.where(event: event).first
+
+    if registration.nil?
+      'not_registered'
+    elsif registration.waiting
+      'waiting'
+    else
+      'registered'
+    end
+  end
+
+  def registration_service
+    @registration_service ||= RegistrationService.new(self)
+  end
+
   private
 
   def set_default_state
     self.state ||= STATES.first
-  end
-
-  def registered_for_at_least_one_day?
-    ### TODO: add test, make nested_attributes work for days, etc.
-    # if day_registrations.count == 0
-    #   errors.add(:base, 'must register for at least one competition day')
-    # end
   end
 
   def male_not_nil?
