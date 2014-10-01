@@ -71,17 +71,38 @@ class RegistrationServiceTest < ActiveSupport::TestCase
   end
 
   test '#register_as_guest! if already registered for day as competitor' do
-    # TODO
-    # assert deletes events but keeps day registration
+    event_registration = event_registrations(:aachen_open_flo_rubiks_cube)
+    competitor = event_registration.competitor
+    day = event_registration.event.day
+    service = RegistrationService.new(competitor)
+    count = competitor.event_registrations.count
+
+    assert_difference 'competitor.event_registrations.count', -1 * count do
+      assert_no_difference 'DayRegistration.count' do
+        service.register_as_guest!(day)
+      end
+    end
+
+    assert competitor.guest_on?(day)
   end
 
   test '#unregister_from_event!' do
-    # TODO
-    # assert doesn't delete day
+    event_registration = event_registrations(:aachen_open_flo_rubiks_cube)
+    competitor = event_registration.competitor
+    service = RegistrationService.new(competitor)
+
+    assert_difference 'competitor.event_registrations.count', -1 do
+      assert_no_difference 'DayRegistration.count' do
+        service.unregister_from_event!(event_registration.event)
+      end
+    end
   end
 
   test '#unregister_from_event! if not registered' do
-    # TODO
-    # doesnt do anything
+    assert_no_difference 'EventRegistration.count' do
+      assert_no_difference 'DayRegistration.count' do
+        @service.unregister_from_event!(Event.first)
+      end
+    end
   end
 end
