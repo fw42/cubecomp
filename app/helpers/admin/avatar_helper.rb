@@ -1,14 +1,14 @@
 module Admin::AvatarHelper
-  def avatar_url(email, size)
-    gravatar_id = Digest::MD5.hexdigest(email.downcase)
+  def avatar_url(user, size)
+    gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
     "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
   end
 
   def small_avatar_image(user)
-    image_tag avatar_url(user.email, 25)
+    image_tag avatar_url(user, 25)
   end
 
   def large_avatar_image(user)
-    image_tag avatar_url(user.email, 50)
+    image_tag avatar_url(user, 50)
   end
 end
