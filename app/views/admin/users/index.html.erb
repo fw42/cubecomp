@@ -14,7 +14,10 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= link_to user.name, edit_admin_user_path(user) %></td>
+        <td>
+          <%= small_avatar_image(user) %>
+          <%= link_to user.name, edit_admin_user_path(user) %>
+        </td>
         <td><%= user.email %></td>
         <td><%= user.permission_level %></td>
         <td><%= user.delegate %></td>

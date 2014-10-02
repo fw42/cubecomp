@@ -1,4 +1,7 @@
-<% page_title @user.name %>
+<% content_for :page_title do %>
+  <%= large_avatar_image(@user) %>
+  <%= @user.name %>
+<% end %>
 
 <%= render 'notice' %>
 
