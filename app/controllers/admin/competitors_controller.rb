@@ -69,7 +69,7 @@ class Admin::CompetitorsController < AdminController
 
   def apply_params_and_save_competitor_with_registrations(competitor)
     Competitor.transaction do
-      competitor.attributes = competitor_params.except(:days, :keys)
+      competitor.attributes = competitor_params.except(:days)
       competitor.save!
       apply_registration_params(competitor) if competitor_params[:days]
       competitor
