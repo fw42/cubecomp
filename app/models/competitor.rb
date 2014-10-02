@@ -55,6 +55,17 @@ class Competitor < ActiveRecord::Base
     registered_on?(day) && !competing_on?(day)
   end
 
+  def age
+    today = Time.now.to_date
+    age = today.year - birthday.year
+
+    unless (today.month > birthday.month) || (today.month == birthday.month && today.day >= birthday.day)
+      age -= 1
+    end
+
+    age
+  end
+
   def event_registration_status(event)
     registration = event_registrations.where(event: event).first
 

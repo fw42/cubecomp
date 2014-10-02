@@ -16,6 +16,7 @@ gem 'mysql2'
 
 group :test do
   gem 'mocha'
+  gem 'timecop'
 end
 
 group :development, :test do

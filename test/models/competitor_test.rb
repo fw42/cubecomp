@@ -165,4 +165,39 @@ class CompetitorTest < ActiveSupport::TestCase
     other_event = events(:aachen_open_rubiks_professor)
     assert_equal 'not_registered', @competitor.event_registration_status(other_event)
   end
+
+  test '#age' do
+    competitor = Competitor.new
+    competitor.birthday = '1985-10-03'
+
+    Timecop.freeze(Time.parse('2014-10-01')) do
+      assert_equal 28, competitor.age
+    end
+
+    Timecop.freeze(Time.parse('2014-10-03')) do
+      assert_equal 29, competitor.age
+    end
+
+    Timecop.freeze(Time.parse('2014-10-04')) do
+      assert_equal 29, competitor.age
+    end
+
+    Timecop.freeze(Time.parse('2014-11-01')) do
+      assert_equal 29, competitor.age
+    end
+
+    Timecop.freeze('2016-02-29') do
+      assert_equal 30, competitor.age
+    end
+
+    Timecop.freeze('1986-12-18') do
+      assert_equal 1, competitor.age
+    end
+
+    competitor.birthday = '2000-02-29'
+
+    Timecop.freeze('2014-10-01') do
+      assert_equal 14, competitor.age
+    end
+  end
 end
