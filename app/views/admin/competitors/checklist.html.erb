@@ -1,0 +1,45 @@
+<table class='checklist'>
+  <thead>
+    <tr>
+      <th>Country</th>
+      <th>Name</th>
+      <th>WCA</th>
+      <th>Birthday</th>
+      <th>Days</th>
+      <th>Events</th>
+      <th>$</th>
+      <th class='comment'>Comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @competitors.each do |competitor| %>
+      <tr>
+        <td>
+          <%= competitor.country.name %>
+          <% if competitor.local && current_competition.city_name_short %>
+            (<%= current_competition.city_name_short %>)
+          <% end %>
+        </td>
+        <td><%= [competitor.last_name, competitor.first_name].join(", ") %></td>
+        <td><%= competitor.wca %></td>
+        <td><%= competitor.birthday %> (<%= competitor.age %>)</td>
+        <td><%= competitor.days.order(:date).map{ |day| day.date.strftime("%a") }.join(", ") %></td>
+        <td><%= competitor.event_counts.join("+") %></td>
+        <td><%= competitor.checklist_service.entrance_fee %></td>
+        <td class='comment'>
+          <% competitor.checklist_service.comments.each_with_index do |comment, index| %>
+            <% if index > 0 %><br/><% end %>
+            <%= comment %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    <% 25.times do %>
+      <tr>
+        <% 8.times do %>
+          <td>&nbsp;</td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
       resources :competitors, except: [:show] do
         collection do
+          get :checklist
           get :nametags
         end
       end

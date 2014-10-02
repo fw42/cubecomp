@@ -71,6 +71,12 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:competitors)
   end
 
+  test '#checklist' do
+    get :checklist, competition_id: @competition.id
+    assert_response :success
+    assert_not_nil assigns(:competitors)
+  end
+
   test '#nametags' do
     get :nametags, competition_id: @competition.id
     assert_response :success

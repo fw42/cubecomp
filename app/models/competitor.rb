@@ -33,6 +33,14 @@ class Competitor < ActiveRecord::Base
 
   scope :confirmed, ->{ where(state: 'confirmed') }
 
+  scope :for_checklist, lambda {
+    confirmed
+      .joins(:country)
+      .includes(:events)
+      .includes(:days)
+      .order('countries.name', :last_name, :first_name)
+  }
+
   scope :for_nametags, lambda {
     confirmed
       .includes(:country)
@@ -55,6 +63,16 @@ class Competitor < ActiveRecord::Base
     registered_on?(day) && !competing_on?(day)
   end
 
+  def events_by_day(include_waiting = false)
+    rel = event_registrations
+    rel = rel.where(waiting: false) unless include_waiting
+    rel.map(&:event).group_by(&:day)
+  end
+
+  def event_counts(include_waiting = false)
+    events_by_day(include_waiting).to_a.sort_by{ |day, _| day }.map{ |_, events| events.count }
+  end
+
   def age
     today = Time.now.to_date
     age = today.year - birthday.year
@@ -68,6 +86,10 @@ class Competitor < ActiveRecord::Base
 
   def birthday_on?(date)
     birthday.month == date.month && birthday.day == date.day
+  end
+
+  def birthday_on_competition?
+    competition.days.any?{ |day| birthday_on?(day.date) }
   end
 
   def event_registration_status(event)
@@ -84,6 +106,10 @@ class Competitor < ActiveRecord::Base
 
   def registration_service
     @registration_service ||= RegistrationService.new(self)
+  end
+
+  def checklist_service
+    @checklist_service ||= ChecklistService.new(self)
   end
 
   private
