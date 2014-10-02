@@ -66,6 +66,10 @@ class Competitor < ActiveRecord::Base
     age
   end
 
+  def birthday_on?(date)
+    birthday.month == date.month && birthday.day == date.day
+  end
+
   def event_registration_status(event)
     registration = event_registrations.where(event: event).first
 
