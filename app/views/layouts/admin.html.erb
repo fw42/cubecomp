@@ -34,7 +34,7 @@
           <% end %>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-              <i class="fa fa-user fa-fw"></i>
+              <%= small_avatar_image(current_user) %>
               <%= current_user.name %>
               <i class="fa fa-caret-down"></i>
             </a>
