@@ -7,8 +7,4 @@ module Admin::AvatarHelper
   def small_avatar_image(user)
     image_tag avatar_url(user, 25)
   end
-
-  def large_avatar_image(user)
-    image_tag avatar_url(user, 50)
-  end
 end
