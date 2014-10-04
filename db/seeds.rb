@@ -53,7 +53,7 @@ end
 def create_event(competition)
   Event.create({
     competition: competition,
-    day: competition.days.shuffle.first,
+    day: competition.days.to_a.shuffle.first,
     state: Event::STATES.keys.shuffle.first,
     start_time: Time.new(2000, 1, 1, rand(24), rand(60)),
     length_in_minutes: 30 + rand(60),
@@ -72,7 +72,7 @@ def create_competitor(competition)
     email: Forgery(:internet).email_address,
     birthday: Forgery::Date.date(past: true, min_delta: 10*365, max_delta: 50*365),
     state: Competitor::STATES.shuffle.first,
-    country: Country.all.shuffle.first,
+    country: Country.all.to_a.shuffle.first,
     male: rand(2) == 0,
     staff: rand < 0.1,
     local: rand < 0.2,
@@ -108,7 +108,7 @@ def create_competitor(competition)
   end
 
   if competitor.event_registrations.count == 0
-    competitor.registration_service.register_as_guest!(competition.days.shuffle.first)
+    competitor.registration_service.register_as_guest!(competition.days.to_a.shuffle.first)
   end
 
   puts "Creating competitor #{competitor.name}"
