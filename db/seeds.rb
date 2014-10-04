@@ -79,6 +79,10 @@ def create_competitor(competition)
     paid: rand < 0.2
   )
 
+  if rand < 0.1
+    competitor.birthday = competition.days.to_a.shuffle.first.date - (10 + rand(10)).years
+  end
+
   if rand < 0.5
     competitor.wca = "#{2000 + rand(14)}#{competitor.last_name.upcase}1"
   end
