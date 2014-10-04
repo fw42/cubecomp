@@ -68,6 +68,7 @@ GEM
     fastercsv (1.5.5)
     foreigner (1.6.1)
       activerecord (>= 3.0.0)
+    forgery (0.6.0)
     haml (4.0.5)
       tilt
     highline (1.6.21)
@@ -176,6 +177,7 @@ DEPENDENCIES
   coffee-rails
   consistency_fail
   foreigner
+  forgery
   immigrant
   jquery-rails (= 3.1.2)
   mocha

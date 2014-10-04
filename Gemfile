@@ -22,6 +22,7 @@ end
 group :development, :test do
   gem 'foreigner'
   gem 'immigrant'
+  gem 'forgery'
 
   gem 'consistency_fail'
   gem 'byebug'
