@@ -1,0 +1,42 @@
+<% @competitors.each_with_index do |competitor, index| %>
+  <% if index % 8 == 0 %>
+    <table>
+  <% end %>
+
+  <% if index % 2 == 0 %>
+    <tr>
+  <% end %>
+
+    <td>
+      <span class="competition"><%= current_competition.name %></span>
+
+      <div class="namebox">
+        <span class="name"><%= competitor.name %></span>
+        <% if competitor.staff? %>
+          <span class="orga">ORGA TEAM</span>
+        <% end %>
+      </div>
+
+      <span class="country">
+        <%= competitor.country.name %>
+        <% if current_competition.city_name && competitor.local %>
+          (<%= current_competition.city_name %>)
+        <% end %>
+      </span>
+
+      <% if competitor.nametag %>
+        <span class="extra">
+          <%= competitor.nametag %>
+        </span>
+      <% end %>
+    </td>
+
+  <% if index % 2 == 1 || index == @competitors.length-1 %>
+    </tr>
+  <% end %>
+
+  <% if index % 8 == 7 || index == @competitors.length-1 %>
+    </table>
+    <hr>
+  <% end %>
+<% end %>

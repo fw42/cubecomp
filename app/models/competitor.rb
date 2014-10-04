@@ -31,6 +31,14 @@ class Competitor < ActiveRecord::Base
   before_validation :set_default_state
   validate :male_not_nil?
 
+  scope :confirmed, ->{ where(state: 'confirmed') }
+
+  scope :for_nametags, lambda {
+    confirmed
+      .includes(:country)
+      .order(:last_name, :first_name)
+  }
+
   def name
     [first_name, last_name].join(' ')
   end

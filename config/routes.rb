@@ -14,7 +14,13 @@ Rails.application.routes.draw do
 
     resources :competitions, except: [:show] do
       resources :dashboard, only: [:index]
-      resources :competitors, except: [:show]
+
+      resources :competitors, except: [:show] do
+        collection do
+          get :nametags
+        end
+      end
+
       resources :events, except: [:show]
       resources :news, except: [:show]
       resources :theme_files, except: [:show]

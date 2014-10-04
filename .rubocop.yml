@@ -15,6 +15,11 @@ Metrics/MethodLength:
     - 'app/helpers/admin_menu_helper.rb'
 
 Metrics/ClassLength:
+  Max: 150
+  Exclude:
+    - 'test/**/*'
+
+Lint/AmbiguousRegexpLiteral:
   Exclude:
     - 'test/**/*'
 

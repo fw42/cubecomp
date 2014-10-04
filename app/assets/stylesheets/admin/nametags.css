@@ -1,0 +1,62 @@
+body {
+  font-family: "Trebuchet MS";
+  padding: 0px;
+  margin: 0px;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0px;
+  margin: 0px;
+}
+
+hr {
+  page-break-after: always;
+  border: 1px dotted silver;
+  margin: 0px;
+}
+
+td {
+  text-align: center;
+  padding: 10px;
+  border: 1px dashed silver;
+  width: 8cm;
+  max-width: 8cm;
+  min-width: 8cm;
+  height: 5.5cm;
+  max-height: 5.5cm;
+  min-height: 5.5cm;
+  font-size: 12pt;
+  vertical-align: middle;
+}
+
+div.namebox {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+span {
+  display: block;
+}
+
+span.orga {
+  color: red;
+  font-weight: bold;
+  font-size: 15pt;
+}
+
+span.name {
+  font-weight: bold;
+  color: black;
+  font-size: 20pt;
+}
+
+span.extra {
+  font-size: 9pt;
+  margin-top: 15px;
+}
+
+td span.competition {
+  top: 0px;
+  position: relative;
+}

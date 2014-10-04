@@ -3,7 +3,7 @@ require 'test_helper'
 class Admin::SessionsControllerTest < ActionController::TestCase
   test '#new page' do
     get :new
-    assert_template 'admin_empty'
+    assert_template 'admin/empty'
     assert_template 'sessions/new'
     assert_response :ok
   end
@@ -38,7 +38,7 @@ class Admin::SessionsControllerTest < ActionController::TestCase
     assert_equal 'Login failed.', flash[:error]
     assert session.to_hash.tap{ |s| s.delete('flash') }.empty?
     assert_response 401
-    assert_template 'admin_empty'
+    assert_template 'admin/empty'
     assert_template 'sessions/new'
   end
 end
