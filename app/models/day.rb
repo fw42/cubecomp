@@ -21,5 +21,5 @@ class Day < ActiveRecord::Base
   has_many :registrations, class_name: 'DayRegistration', dependent: :destroy
   has_many :competitors, through: :registrations
 
-  scope :with_events, ->{ joins(:events) }
+  scope :with_events, ->{ joins(:events).select('DISTINCT(days.id), days.*') }
 end
