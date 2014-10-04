@@ -1,0 +1,34 @@
+<% @competitors.each_slice(8) do |competitors_for_page| %>
+  <table>
+    <% competitors_for_page.each_slice(2) do |competitors_for_row| %>
+      <tr>
+        <% competitors_for_row.each do |competitor| %>
+          <td>
+            <span class="competition"><%= current_competition.name %></span>
+
+            <div class="namebox">
+              <span class="name"><%= competitor.name %></span>
+              <% if competitor.staff? %>
+                <span class="orga">ORGA TEAM</span>
+              <% end %>
+            </div>
+
+            <span class="country">
+              <%= competitor.country.name %>
+              <% if current_competition.city_name && competitor.local %>
+                (<%= current_competition.city_name %>)
+              <% end %>
+            </span>
+
+            <% if competitor.nametag %>
+              <span class="extra">
+                <%= competitor.nametag %>
+              </span>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  <hr>
+<% end %>

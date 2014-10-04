@@ -71,6 +71,12 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:competitors)
   end
 
+  test '#nametags' do
+    get :nametags, competition_id: @competition.id
+    assert_response :success
+    assert_not_nil assigns(:competitors)
+  end
+
   test '#index renders 404 with invalid competition id' do
     get :index, competition_id: 17
     assert_response :not_found

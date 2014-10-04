@@ -1,5 +1,5 @@
 class Admin::SessionsController < ApplicationController
-  layout 'admin_empty'
+  layout 'admin/empty'
   protect_from_forgery with: :null_session
 
   def new

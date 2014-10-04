@@ -32,6 +32,11 @@ class Admin::CompetitorsController < AdminController
     @competitors = current_competition.competitors.all
   end
 
+  def nametags
+    @competitors = current_competition.competitors.for_nametags
+    render layout: 'admin/nametags'
+  end
+
   def new
     @competitor = current_competition.competitors.new
   end
