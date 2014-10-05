@@ -66,7 +66,7 @@ class Admin::EventsControllerTest < ActionController::TestCase
     assert_redirected_to edit_admin_competition_event_path(@competition.id, assigns(:event))
     @event.reload
     assert_attributes(params.except(:start_time), @event)
-    assert_equal Time.parse(params[:start_time]).utc.strftime('%H:%M'), @event.start_time.strftime('%H:%M')
+    assert_equal Time.zone.parse(params[:start_time]).strftime('%H:%M'), @event.start_time.strftime('%H:%M')
   end
 
   test '#destroy' do

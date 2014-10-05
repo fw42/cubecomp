@@ -41,7 +41,7 @@ class Admin::NewsControllerTest < ActionController::TestCase
     assert_redirected_to admin_competition_news_index_path(@competition)
     news = @competition.news.last
     assert_equal @competition.locales.first, news.locale
-    assert_equal Time.parse('2014-09-11 11:30'), news.time
+    assert_equal Time.parse('2014-09-11 11:30 UTC'), news.time
   end
 
   test '#edit' do
@@ -65,7 +65,7 @@ class Admin::NewsControllerTest < ActionController::TestCase
     assert_redirected_to admin_competition_news_index_path(@competition)
     news = @competition.news.last
     assert_equal @competition.locales.first, news.locale
-    assert_equal Time.parse('2014-09-11 11:30'), news.time
+    assert_equal Time.parse('2014-09-11 11:30 UTC'), news.time
   end
 
   test '#destroy' do
