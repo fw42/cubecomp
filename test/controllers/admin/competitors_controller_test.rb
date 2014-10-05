@@ -109,7 +109,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     end
 
     assert_response :redirect
-    assert_redirected_to admin_competition_competitor_path(@competition.id, assigns(:competitor))
+    assert_redirected_to admin_competition_competitors_path(@competition.id)
     bob = @competition.competitors.find_by(wca: '2000BOB')
     expected = @new_competitor_params.except(:"birthday(1i)", :"birthday(2i)", :"birthday(3i)", :days)
     assert_attributes(expected, bob)

@@ -48,7 +48,7 @@ class Admin::CompetitorsController < AdminController
     @competitor = current_competition.competitors.new
 
     if apply_params_and_save_competitor_with_registrations(@competitor)
-      redirect_to admin_competition_competitor_path(current_competition, @competitor),
+      redirect_to admin_competition_competitors_path(current_competition),
         notice: 'Competitor was successfully created.'
     else
       render :new
