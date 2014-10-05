@@ -13,6 +13,7 @@ class EventRegistration < ActiveRecord::Base
   validate :competition_ids_match
 
   scope :on_day, ->(day){ joins(:event).where('events.day_id = ?', day) }
+  scope :waiting, ->{ where(waiting: true) }
 
   private
 

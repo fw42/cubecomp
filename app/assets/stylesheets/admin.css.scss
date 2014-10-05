@@ -110,8 +110,13 @@ table.form-table select
 table.competitors {
   width: auto;
 
-  td {
+  td, th {
+    padding: 4px !important;
     white-space: nowrap;
+  }
+
+  td {
+    font-size: 90%;
   }
 
   tr.new {

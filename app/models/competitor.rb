@@ -47,6 +47,16 @@ class Competitor < ActiveRecord::Base
       .order(:last_name, :first_name)
   }
 
+  scope :for_index, lambda {
+    all
+      .includes(:country)
+      .includes(:day_registrations)
+      .includes(:days)
+      .includes(:event_registrations)
+      .includes(:events)
+      .order(created_at: :desc)
+  }
+
   auto_strip_attributes :first_name, :last_name, :wca, :email
 
   before_validation do
@@ -58,11 +68,11 @@ class Competitor < ActiveRecord::Base
   end
 
   def registered_on?(day)
-    day_registrations.where(day: day).exists?
+    day_registrations.select{ |registration| registration.day == day.id }.size > 0
   end
 
   def competing_on?(day)
-    events.where(day: day).exists?
+    events.select{ |event| event.day_id == day.id }.size > 0
   end
 
   def guest_on?(day)
