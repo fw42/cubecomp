@@ -47,6 +47,12 @@ class Competitor < ActiveRecord::Base
       .order(:last_name, :first_name)
   }
 
+  auto_strip_attributes :first_name, :last_name, :wca, :email
+
+  before_validation do
+    self.wca = wca.upcase if wca
+  end
+
   def name
     [first_name, last_name].join(' ')
   end

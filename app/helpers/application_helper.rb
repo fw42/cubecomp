@@ -8,4 +8,8 @@ module ApplicationHelper
       image_tag(image_url) + ' ' + page_title
     end
   end
+
+  def wca_url(wca_id)
+    "http://www.worldcubeassociation.org/results/p.php?i=#{wca_id}"
+  end
 end

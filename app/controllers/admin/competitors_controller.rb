@@ -29,7 +29,7 @@ class Admin::CompetitorsController < AdminController
   before_action :set_competitor, only: [:edit, :update, :destroy]
 
   def index
-    @competitors = current_competition.competitors.all
+    @competitors = current_competition.competitors.all.order(created_at: :desc)
   end
 
   def nametags

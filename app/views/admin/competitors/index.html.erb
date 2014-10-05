@@ -4,12 +4,12 @@
 <%= link_to 'New Competitor', new_admin_competition_competitor_path %>
 </p>
 
-<table class='default-table'>
+<table class='default-table competitors'>
   <thead>
     <tr>
       <th>Name</th>
       <% current_competition.days.each do |day| %>
-        <th><%= day.date.strftime("%a") %></th>
+        <th><%= day.date.strftime("%a")[0,2] %></th>
       <% end %>
       <th>Info</th>
       <th>WCA</th>
@@ -23,26 +23,59 @@
 
   <tbody>
     <% @competitors.each do |competitor| %>
-      <tr>
-        <td><%= competitor.name %></td>
+      <tr class="<%= competitor.state == 'new' && 'new' %>">
+        <td>
+          <%= link_to(competitor.name,
+            edit_admin_competition_competitor_path(current_competition, competitor))
+          %>
+        </td>
         <% current_competition.days.each do |day| %>
           <td>
             <% if competitor.competing_on?(day) %>
-              c
+              <%= image_tag 'cube.png' %>
             <% elsif competitor.guest_on?(day) %>
-              g
+              <%= image_tag 'guest.png' %>
             <% end %>
           </td>
         <% end %>
-        <td></td>
-        <td><%= competitor.wca %></td>
+        <td>
+          <% if competitor.male? %>
+            <%= image_tag 'male.png' %>
+          <% else %>
+            <%= image_tag 'female.png' %>
+          <% end %>
+
+          <% if competitor.user_comment.present? %>
+            <%= image_tag 'user_comment.png' %>
+          <% end %>
+
+          <% if competitor.admin_comment.present? %>
+            <%= image_tag 'admin_comment.png' %>
+          <% end %>
+
+          <% if competitor.free_entrance? %>
+            <%= image_tag 'free_entrance.png' %>
+          <% end %>
+
+          <% if competitor.staff? %>
+            <%= image_tag 'staff.png' %>
+          <% end %>
+
+          <% if competitor.nametag.present? %>
+            <%= image_tag 'nametag.png' %>
+          <% end %>
+
+          <% if competitor.local? %>
+            <%= image_tag 'local.png' %>
+          <% end %>
+        </td>
+        <td><%= competitor.wca && link_to(competitor.wca, wca_url(competitor.wca)) %></td>
         <td><%= competitor.country.name %></td>
-        <td><%= competitor.email %></td>
+        <td><%= mail_to(competitor.email) %></td>
         <td><%= competitor.birthday %></td>
         <td></td>
         <td>
-          <%= link_to 'Edit', edit_admin_competition_competitor_path(current_competition, competitor) %>
-          <%= link_to 'Destroy', admin_competition_competitor_path(current_competition, competitor), method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to image_tag('delete.png'), admin_competition_competitor_path(current_competition, competitor), method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>
       </tr>
     <% end %>

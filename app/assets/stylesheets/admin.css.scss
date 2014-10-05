@@ -18,6 +18,10 @@ table.default-table {
   @extend .table-bordered;
 }
 
+table.default-table th {
+  text-align: center;
+}
+
 div.panel-body div.text-editor {
   margin: -15px;
 }
@@ -101,4 +105,19 @@ table.form-table select
 {
   display: inline;
   width: 300px;
+}
+
+table.competitors {
+  width: auto;
+
+  td {
+    white-space: nowrap;
+  }
+
+  tr.new {
+    background-color: #ff7766;
+  }
+
+  tr.disabled {
+  }
 }
