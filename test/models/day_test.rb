@@ -41,6 +41,12 @@ class DayTest < ActiveSupport::TestCase
 
       @day.send("#{fee}=", 42.17)
       assert_valid(@day)
+
+      @day.send("#{fee}=", 0)
+      assert_valid(@day)
+
+      @day.send("#{fee}=", -10)
+      assert_not_valid(@day, fee)
     end
   end
 
