@@ -32,6 +32,9 @@ Lint/UnusedBlockArgument:
 Lint/EndAlignment:
   AlignWith: variable
 
+Style/SignalException:
+  Enabled: false
+
 Style/BracesAroundHashParameters:
   Enabled: false
 

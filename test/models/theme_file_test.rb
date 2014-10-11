@@ -28,4 +28,9 @@ class ThemeFileTest < ActiveSupport::TestCase
     @theme_file.competition_id = 17
     assert_not_valid(@theme_file, :competition)
   end
+
+  test 'validates liquid syntax' do
+    @theme_file.content = '{{ foo'
+    assert_not_valid(@theme_file, :content)
+  end
 end

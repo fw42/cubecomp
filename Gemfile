@@ -14,6 +14,8 @@ gem 'bcrypt'
 gem 'codemirror-rails'
 gem 'mysql2'
 
+gem 'liquid'
+
 group :test do
   gem 'mocha'
   gem 'timecop'

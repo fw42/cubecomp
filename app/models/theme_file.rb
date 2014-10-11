@@ -17,4 +17,14 @@ class ThemeFile < ActiveRecord::Base
 
     where(filename: filenames).order(order_query_segments.join(', '))
   }
+
+  validate :validate_template_errors
+
+  private
+
+  def validate_template_errors
+    Liquid::Template.parse(content)
+  rescue Liquid::SyntaxError => e
+    errors.add(:content, "Contains invalid Liquid code: #{e.message}")
+  end
 end
