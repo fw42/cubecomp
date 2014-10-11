@@ -136,4 +136,10 @@ class CompetitionTest < ActiveSupport::TestCase
     @competition.delegate = users(:delegate)
     assert_valid(@competition)
   end
+
+  test 'validates that the owner has permission to login' do
+    @competition.owner = users(:flo)
+    @competition.owner.policy.expects(:login?).with(@competition).returns(false)
+    assert_not_valid(@competition, :owner)
+  end
 end

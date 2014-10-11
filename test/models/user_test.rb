@@ -56,6 +56,17 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
+  test 'destroying an owner nullifies the column on competition' do
+    competition = competitions(:aachen_open)
+    competition.owner = users(:flo)
+    competition.save!
+
+    assert_no_difference 'Competition.count' do
+      competition.owner.destroy!
+      assert_nil competition.reload.owner_user_id
+    end
+  end
+
   test 'removing delegate attribute from user nullifies the column on competition' do
     competition = competitions(:aachen_open)
     competition.delegate = user = users(:delegate)

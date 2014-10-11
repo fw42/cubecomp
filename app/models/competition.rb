@@ -13,6 +13,9 @@ class Competition < ActiveRecord::Base
   belongs_to :country
   validates :country, presence: true
 
+  belongs_to :owner, class_name: 'User', foreign_key: 'owner_user_id'
+  validate :owner_has_permission?
+
   belongs_to :delegate, class_name: 'User', foreign_key: 'delegate_user_id'
   validate :delegate_user_is_a_delegate?
 
@@ -36,6 +39,12 @@ class Competition < ActiveRecord::Base
   def delegate_user_is_a_delegate?
     return unless delegate
     return if delegate.delegate?
-    errors.add(:delegate, 'does not have permissions to be delegate of this competition')
+    errors.add(:delegate, 'does not have permission to be delegate of this competition')
+  end
+
+  def owner_has_permission?
+    return unless owner
+    return if owner.policy.login?(self)
+    errors.add(:owner, 'does not have permission to be the owner of this competition')
   end
 end

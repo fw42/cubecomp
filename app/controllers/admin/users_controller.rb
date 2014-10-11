@@ -11,6 +11,7 @@ class Admin::UsersController < AdminController
     :password_confirmation,
     :permission_level,
     :delegate,
+    :address,
     permissions_attributes: [:id, :_destroy, :competition_id]
   ]
 
@@ -24,6 +25,7 @@ class Admin::UsersController < AdminController
 
   def edit
     @delegating_competitions = @user.delegating_competitions
+    @owned_competitions = @user.owned_competitions
   end
 
   def create
