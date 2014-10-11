@@ -44,6 +44,10 @@ class User < ActiveRecord::Base
     permissions.where(competition: competition).exists?
   end
 
+  def to_liquid
+    @liquid_drop ||= UserDrop.new(self)
+  end
+
   private
 
   def nullify_competition_delegate_user_ids

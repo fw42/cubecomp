@@ -70,7 +70,7 @@ def create_competitor(competition)
     first_name: Forgery::Name.first_name,
     last_name: Forgery::Name.last_name,
     email: Forgery(:internet).email_address,
-    birthday: Forgery::Date.date(past: true, min_delta: 10*365, max_delta: 50*365),
+    birthday: Date.today - 10.years - rand(50*365).days,
     state: Competitor::STATES.shuffle.first,
     country: Country.all.to_a.shuffle.first,
     male: rand(2) == 0,
@@ -140,8 +140,8 @@ def create_associations(competition)
     content: <<-HTML
 <html>
   <body>
-    <h1>Test!</h1>
-    Welcome to this competition!
+    <h1>{{ competition.name }}</h1>
+    Welcome!
   </body>
 </html>
     HTML
