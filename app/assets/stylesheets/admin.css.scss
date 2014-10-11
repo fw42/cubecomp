@@ -107,6 +107,10 @@ table.form-table select
   width: 300px;
 }
 
+span.with-tooltip {
+
+}
+
 table.competitors {
   width: auto;
 
@@ -119,7 +123,7 @@ table.competitors {
     font-size: 90%;
   }
 
-  tr.new {
+  tr.competitor-new {
     background-color: #ff7766;
   }
 

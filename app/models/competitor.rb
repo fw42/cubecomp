@@ -51,7 +51,6 @@ class Competitor < ActiveRecord::Base
     all
       .includes(:country)
       .includes(:day_registrations)
-      .includes(:days)
       .includes(:event_registrations)
       .includes(:events)
       .order(created_at: :desc)
@@ -67,26 +66,34 @@ class Competitor < ActiveRecord::Base
     [first_name, last_name].join(' ')
   end
 
-  def registered_on?(day)
-    day_registrations.select{ |registration| registration.day == day.id }.size > 0
+  def registered_on?(day_id)
+    day_id = day_id.id if day_id.is_a?(Day)
+    day_registrations.select{ |registration| registration.day_id == day_id }.size > 0
   end
 
-  def competing_on?(day)
-    events.select{ |event| event.day_id == day.id }.size > 0
+  def competing_on?(day_id)
+    day_id = day_id.id if day_id.is_a?(Day)
+    events.select{ |event| event.day_id == day_id }.size > 0
   end
 
   def guest_on?(day)
     registered_on?(day) && !competing_on?(day)
   end
 
-  def events_by_day(include_waiting = false)
+  def event_registrations_by_day(include_waiting = false)
     rel = event_registrations
     rel = rel.where(waiting: false) unless include_waiting
-    rel.map(&:event).group_by(&:day)
+
+    grouped = {}
+    competition.days.each do |day|
+      grouped[day] = rel.select{ |registration| registration.event.day == day }
+    end
+    grouped
   end
 
-  def event_counts(include_waiting = false)
-    events_by_day(include_waiting).to_a.sort_by{ |day, _| day }.map{ |_, events| events.count }
+  def event_registration_counts(include_waiting = false)
+    grouped = event_registrations_by_day(include_waiting)
+    grouped.to_a.sort_by{ |day, _| day }.map{ |_, registrations| registrations.count }
   end
 
   def age

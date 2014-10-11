@@ -131,6 +131,7 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_equal false, @competitor.competing_on?(day.id)
 
     RegistrationService.new(@competitor).register_for_day!(day)
+    @competitor.reload
     assert_equal true, @competitor.registered_on?(day)
     assert_equal true, @competitor.registered_on?(day.id)
     assert_equal true, @competitor.guest_on?(day)
@@ -139,6 +140,7 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_equal false, @competitor.competing_on?(day.id)
 
     RegistrationService.new(@competitor).register_for_event!(@competitor.competition.events.first)
+    @competitor.reload
     assert_equal true, @competitor.registered_on?(day)
     assert_equal true, @competitor.registered_on?(day.id)
     assert_equal false, @competitor.guest_on?(day)

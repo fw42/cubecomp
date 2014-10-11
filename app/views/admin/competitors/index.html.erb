@@ -24,68 +24,97 @@
 
   <tbody>
     <% @competitors.each do |competitor| %>
-      <tr class="<%= competitor.state == 'new' && 'new' %>">
+      <tr class="competitor-<%= competitor.state %>">
         <td>
-          <%= link_to(competitor.name,
-            edit_admin_competition_competitor_path(current_competition, competitor))
+          <%=
+            link_to(
+              competitor.name,
+              edit_admin_competition_competitor_path(current_competition, competitor)
+            )
           %>
         </td>
         <% current_competition.days.each do |day| %>
           <td>
             <% if competitor.competing_on?(day) %>
-              <%= image_tag 'cube.png' %>
+              <%= tooltip(image_tag('cube.png'), "Competing on #{day.date.strftime("%A")}") %>
             <% elsif competitor.guest_on?(day) %>
-              <%= image_tag 'guest.png' %>
+              <%= tooltip(image_tag('guest.png'), "Guest on #{day.date.strftime("%A")}") %>
             <% end %>
           </td>
         <% end %>
         <td>
           <% if competitor.free_entrance? %>
-            <%= image_tag 'free_entrance.png' %>
+            <%=
+              tooltip(
+                image_tag('free_entrance.png'),
+                competitor.free_entrance_reason.presence || "Free entrance"
+              )
+            %>
+          <% elsif competitor.paid? %>
+            <%=
+              tooltip(
+                image_tag('free_entrance.png'),
+                competitor.paid_comment.presence || "Paid"
+              )
+            %>
           <% end %>
         </td>
         <td>
           <% if competitor.male? %>
-            <%= image_tag 'male.png' %>
+            <%= image_tag('male.png') %>
           <% else %>
-            <%= image_tag 'female.png' %>
+            <%= image_tag('female.png') %>
           <% end %>
 
           <% if competitor.user_comment.present? %>
-            <%= image_tag 'user_comment.png' %>
+            <%= tooltip(image_tag('user_comment.png'), competitor.user_comment) %>
           <% end %>
 
           <% if competitor.admin_comment.present? %>
-            <%= image_tag 'admin_comment.png' %>
+            <%= tooltip(image_tag('admin_comment.png'), competitor.admin_comment) %>
           <% end %>
 
           <% if competitor.staff? %>
-            <%= image_tag 'staff.png' %>
+            <%= tooltip(image_tag('staff.png'), "Staff") %>
           <% end %>
 
           <% if competitor.nametag.present? %>
-            <%= image_tag 'nametag.png' %>
+            <%= tooltip(image_tag('nametag.png'), competitor.nametag) %>
           <% end %>
 
           <% if competitor.birthday_on_competition? %>
-            <%= image_tag 'birthday.png' %>
+            <%= tooltip(image_tag('birthday.png'), "Birthday on #{competitor.birthday.strftime("%A")}") %>
           <% end %>
 
           <% if competitor.event_registrations.select(&:waiting).size > 0 %>
-            <%= image_tag 'waiting.png' %>
+            <%=
+              tooltip(
+                image_tag('waiting.png'),
+                "<b>On waiting list for:</b><br/>" +
+                  competitor.event_registrations.waiting.map(&:event).map(&:name).join("<br>\n")
+              )
+            %>
           <% end %>
 
-          <% if competitor.local? %>
-            <%= image_tag 'local.png' %>
+          <% if current_competition.city_name && competitor.local? %>
+            <%= tooltip(image_tag('local.png'), "#{competitor.name} lives in #{current_competition.city_name}") %>
           <% end %>
         </td>
         <td><%= competitor.wca && link_to(competitor.wca, wca_url(competitor.wca)) %></td>
         <td><%= competitor.country.name %></td>
         <td><%= mail_to(competitor.email) %></td>
         <td><%= competitor.birthday %> (<%= competitor.age %>)</td>
-        <td></td>
         <td>
-          <%= link_to image_tag('delete.png'), admin_competition_competitor_path(current_competition, competitor), method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% counts = competitor.event_registration_counts(true) %>
+          <%=
+            tooltip(
+              "#{counts.join("+")}=#{counts.reduce(:+)}",
+              events_by_day_list(competitor)
+            )
+          %>
+        </td>
+        <td>
+          <%= delete_button('Delete', admin_competition_competitor_path(current_competition, competitor), method: :delete, data: { confirm: 'Are you sure?' }) %>
         </td>
       </tr>
     <% end %>
