@@ -5,10 +5,6 @@ class AdminController < ApplicationController
   before_action :current_competition
   before_action :ensure_current_competition
 
-  rescue_from ActiveRecord::RecordNotFound do
-    render_not_found
-  end
-
   def index
     redirect_to admin_competition_dashboard_index_path(current_competition)
   end

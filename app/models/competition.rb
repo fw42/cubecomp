@@ -31,6 +31,11 @@ class Competition < ActiveRecord::Base
   accepts_nested_attributes_for :locales, allow_destroy: true
   accepts_nested_attributes_for :days, allow_destroy: true
 
+  def default_locale
+    # TODO, store/fetch from cookie
+    locales.first
+  end
+
   private
 
   def delegate_user_is_a_delegate?

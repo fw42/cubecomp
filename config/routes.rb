@@ -27,4 +27,8 @@ Rails.application.routes.draw do
       resources :theme_files, except: [:show]
     end
   end
+
+  get '/:competition_handle/(:locale/(:theme_file))',
+    to: 'competitions#theme_file',
+    as: 'competition_area'
 end
