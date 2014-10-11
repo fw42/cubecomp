@@ -41,6 +41,11 @@ class Admin::CompetitorsController < AdminController
     @competitor = current_competition.competitors.new
   end
 
+  def checklist
+    @competitors = current_competition.competitors.for_checklist
+    render layout: 'admin/checklist'
+  end
+
   def edit
   end
 

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= current_competition.name %></title>
+    <%= stylesheet_link_tag 'admin/checklist', media: 'all' %>
+  </head>
+
+  <body>
+    <h1><%= current_competition.name %></h1>
+    <%= yield %>
+  </body>
+</html>

@@ -16,6 +16,7 @@ gem 'mysql2'
 
 group :test do
   gem 'mocha'
+  gem 'timecop'
 end
 
 group :development do
@@ -25,6 +26,7 @@ end
 group :development, :test do
   gem 'foreigner'
   gem 'immigrant'
+  gem 'forgery'
 
   gem 'consistency_fail'
   gem 'byebug'
