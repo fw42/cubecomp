@@ -85,6 +85,9 @@ GEM
     json (1.8.1)
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
+    marginalia (1.1.5)
+      actionpack (>= 2.3)
+      activerecord (>= 2.3)
     metaclass (0.0.4)
     mime-types (2.4.1)
     minitest (5.4.2)
@@ -181,6 +184,7 @@ DEPENDENCIES
   forgery
   immigrant
   jquery-rails (= 3.1.2)
+  marginalia
   mocha
   mysql2
   quiet_assets
