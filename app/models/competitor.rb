@@ -41,7 +41,7 @@ class Competitor < ActiveRecord::Base
 
   scope :for_checklist, lambda {
     confirmed
-      .joins(:country)
+      .includes(:country)
       .includes(:events)
       .includes(:days)
       .order('countries.name', :last_name, :first_name)
@@ -49,7 +49,7 @@ class Competitor < ActiveRecord::Base
 
   scope :for_nametags, lambda {
     confirmed
-      .joins(:country)
+      .includes(:country)
       .order(:last_name, :first_name)
   }
 
@@ -64,7 +64,7 @@ class Competitor < ActiveRecord::Base
 
   scope :for_csv, lambda {
     confirmed
-      .joins(:country)
+      .includes(:country)
       .includes(:event_registrations)
       .includes(:events)
       .includes(:day_registrations)
