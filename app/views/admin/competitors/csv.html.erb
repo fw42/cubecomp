@@ -1,0 +1,32 @@
+<% page_title 'CSV Export' %>
+
+<h2>Active competitors (no waiting list registrations or guests)</h2>
+
+<pre><%= @exporter.header_to_csv %></pre>
+
+<pre>
+<% @active.each do |competitor| %>
+<%= @exporter.competitor_to_csv(competitor) %>
+<% end %>
+</pre>
+
+<h2>Active competitors and active waiting competitors (no guests)</h2>
+
+<pre><%= @exporter.header_to_csv %></pre>
+
+<pre>
+<% @active_and_waiting.each do |competitor| %>
+<%= @exporter.competitor_to_csv(competitor) %>
+<% end %>
+</pre>
+
+
+<h2>Active guests and active waiting competitors</h2>
+
+<pre><%= @exporter.header_to_csv(with_handles: false) %></pre>
+
+<pre>
+<% @active_guests.each do |competitor| %>
+<%= @exporter.competitor_to_csv(competitor, with_handles: false) %>
+<% end %>
+</pre>

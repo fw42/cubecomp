@@ -77,6 +77,11 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:competitors)
   end
 
+  test '#csv' do
+    get :csv, competition_id: @competition.id
+    assert_response :success
+  end
+
   test '#nametags' do
     get :nametags, competition_id: @competition.id
     assert_response :success

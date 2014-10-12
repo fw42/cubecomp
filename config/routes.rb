@@ -20,6 +20,7 @@ Rails.application.routes.draw do
           get :checklist
           get :nametags
           get :email_addresses
+          get :csv
         end
       end
 
