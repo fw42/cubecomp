@@ -46,4 +46,9 @@ class EventRegistrationTest < ActiveSupport::TestCase
     assert_not_valid(@registration.reload, :base)
     assert_equal ['competitor is not registered for the day of the event'], @registration.errors[:base]
   end
+
+  test 'validates that event is not not_for_registration' do
+    @registration.event.update_attribute(:state, 'not_for_registration')
+    assert_not_valid(@registration, :event)
+  end
 end
