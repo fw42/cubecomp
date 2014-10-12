@@ -1,0 +1,24 @@
+<% page_title 'Email addresses' %>
+
+<p>Only active (i.e., confirmed and not disabled) competitors and guests are shown.</p>
+
+<h2>Competitors and guests</h2>
+
+<p>
+  <b>BCC:</b>
+  <%= @active.map(&:email).join(', ') %>
+</p>
+
+<h2>Guests</h2>
+
+<p>
+  <b>BCC:</b>
+  <%= @guests.map(&:email).join(', ') %>
+</p>
+
+<h2>Locals</h2>
+
+<p>
+  <b>BCC:</b>
+  <%= @locals.map(&:email).join(', ') %>
+</p>
