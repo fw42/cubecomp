@@ -25,14 +25,14 @@
           <% if registration.waiting %>
             <%=
               unset_waiting_button(
-                set_waiting_admin_competition_event_event_registration_path(current_competition, @event, registration, waiting: false),
+                update_waiting_admin_competition_event_event_registration_path(current_competition, @event, registration, waiting: false),
                 method: :patch,
               )
             %>
           <% else %>
             <%=
               waiting_button(
-                set_waiting_admin_competition_event_event_registration_path(current_competition, @event, registration, waiting: true),
+                update_waiting_admin_competition_event_event_registration_path(current_competition, @event, registration, waiting: true),
                 method: :patch,
               )
             %>

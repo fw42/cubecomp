@@ -1,5 +1,5 @@
 class Admin::EventsController < AdminController
-  before_action :set_event, only: [:edit, :update, :destroy, :registrations]
+  before_action :set_event, only: [:edit, :update, :destroy]
 
   PERMITTED_PARAMS = [
     :name_short,

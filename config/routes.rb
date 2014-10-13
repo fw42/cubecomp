@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       resources :events, except: [:show] do
         resources :event_registrations, only: [:index, :destroy] do
           member do
-            patch :set_waiting
+            patch :update_waiting
           end
         end
       end

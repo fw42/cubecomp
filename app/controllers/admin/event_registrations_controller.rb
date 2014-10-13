@@ -1,5 +1,5 @@
 class Admin::EventRegistrationsController < AdminController
-  before_action :set_registration, only: [:destroy, :set_waiting]
+  before_action :set_registration, only: [:destroy, :update_waiting]
 
   def index
     @event = current_competition.events.find(params[:event_id])
@@ -23,7 +23,7 @@ class Admin::EventRegistrationsController < AdminController
       notice: 'Removed competitors from all waiting lists.'
   end
 
-  def set_waiting
+  def update_waiting
     @registration.update_attribute(:waiting, params[:waiting] == 'true')
     redirect_to admin_competition_event_event_registrations_path(current_competition, params[:event_id]),
       notice: 'Registration was marked as waiting.'
