@@ -27,7 +27,7 @@ module AdminHelper
     render 'tooltip', body: link_to(image_tag('show.png'), *link_args), title: title
   end
 
-  def set_waiting_button(*link_args)
+  def waiting_button(*link_args)
     render 'tooltip', body: link_to(image_tag('set_waiting.png'), *link_args), title: 'Put on waiting list'
   end
 

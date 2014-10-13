@@ -1,44 +1,63 @@
 <% page_title 'Event waiting list overview' %>
 
-<% @registrations.each do |event, registrations| %>
-  <h2><%= event.name %></h2>
+<ul>
+  <li>
+    <%=
+      link_to(
+        'Remove all competitors from all waiting lists',
+        remove_all_waiting_admin_competition_event_registrations_path(current_competition),
+        method: :patch,
+        data: { confirm: 'Are you sure?' }
+      )
+    %>
+  </li>
+</ul>
 
-  <table class='default-table events'>
-    <thead>
-      <tr>
-        <th>Competitor</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% registrations.each do |registration| %>
+<% if @registrations.size == 0 %>
+  <p>
+    All waiting lists are empty.
+  </p>
+<% else %>
+  <% @registrations.each do |event, registrations| %>
+    <h2><%= event.name %></h2>
+
+    <table class='default-table events'>
+      <thead>
         <tr>
-          <td>
-            <%=
-              link_to(
-                registration.competitor.name,
-                edit_admin_competition_competitor_path(
-                  current_competition,
-                  registration.competitor
-                )
-              )
-            %>
-          </td>
-          <td class='actions'>
-            <%=
-              unset_waiting_button(
-                set_waiting_admin_competition_event_event_registration_path(
-                  current_competition,
-                  registration.event,
-                  registration,
-                  waiting: false
-                ),
-                method: :patch,
-              )
-            %>
-          </td>
+          <th>Competitor</th>
+          <th>Actions</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% registrations.each do |registration| %>
+          <tr>
+            <td>
+              <%=
+                link_to(
+                  registration.competitor.name,
+                  edit_admin_competition_competitor_path(
+                    current_competition,
+                    registration.competitor
+                  )
+                )
+              %>
+            </td>
+            <td class='actions'>
+              <%=
+                unset_waiting_button(
+                  set_waiting_admin_competition_event_event_registration_path(
+                    current_competition,
+                    registration.event,
+                    registration,
+                    waiting: false
+                  ),
+                  method: :patch,
+                )
+              %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
 <% end %>

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       resources :event_registrations, only: [] do
         collection do
           get :waiting
+          patch :remove_all_waiting
         end
       end
 

@@ -31,7 +31,7 @@
             %>
           <% else %>
             <%=
-              set_waiting_button(
+              waiting_button(
                 set_waiting_admin_competition_event_event_registration_path(current_competition, @event, registration, waiting: true),
                 method: :patch,
               )

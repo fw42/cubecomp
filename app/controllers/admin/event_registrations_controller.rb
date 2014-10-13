@@ -14,6 +14,15 @@ class Admin::EventRegistrationsController < AdminController
       .group_by(&:event)
   end
 
+  def remove_all_waiting
+    EventRegistration.transaction do
+      current_competition.event_registrations.where(waiting: true).each(&:destroy!)
+    end
+
+    redirect_to admin_competition_events_path(current_competition),
+      notice: 'Removed competitors from all waiting lists.'
+  end
+
   def set_waiting
     @registration.update_attribute(:waiting, params[:waiting] == 'true')
     redirect_to admin_competition_event_event_registrations_path(current_competition, params[:event_id]),
