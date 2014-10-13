@@ -40,7 +40,7 @@ module AdminMenuHelper
       },
       {
         label: 'Events',
-        controller: Admin::EventsController,
+        controller: [Admin::EventsController, Admin::EventRegistrationsController],
         url: admin_competition_events_path(current_competition),
         css: 'fa-table'
       },

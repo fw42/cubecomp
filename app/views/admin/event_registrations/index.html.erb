@@ -1,0 +1,44 @@
+<% page_title "Registrations for #{@event.name}" %>
+
+<table class='default-table events'>
+  <thead>
+    <tr>
+      <th>Competitor</th>
+      <th>Registered at</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @registrations.each do |registration| %>
+      <tr>
+        <td><%= link_to registration.competitor.name, edit_admin_competition_competitor_path(current_competition, registration.competitor) %></td>
+        <td><%= registration.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+        <td class='actions'>
+          <%=
+            delete_button(
+              admin_competition_event_event_registration_path(current_competition, @event, registration),
+              method: :delete,
+              data: { confirm: 'Are you sure?' }
+            )
+          %>
+          <% if registration.waiting %>
+            <%=
+              unset_waiting_button(
+                set_waiting_admin_competition_event_event_registration_path(current_competition, @event, registration, waiting: false),
+                method: :patch,
+              )
+            %>
+          <% else %>
+            <%=
+              set_waiting_button(
+                set_waiting_admin_competition_event_event_registration_path(current_competition, @event, registration, waiting: true),
+                method: :patch,
+              )
+            %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

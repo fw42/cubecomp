@@ -18,6 +18,10 @@ table.default-table {
   @extend .table-bordered;
 }
 
+table.default-table td.actions {
+  text-align: center;
+}
+
 div.row h2 {
   font-size: 22px;
   margin-top: 20px;
