@@ -16,7 +16,9 @@ class Admin::EventRegistrationsController < AdminController
 
   def remove_all_waiting
     EventRegistration.transaction do
-      current_competition.event_registrations.where(waiting: true).each(&:destroy!)
+      current_competition.event_registrations.where(waiting: true).each do |registration|
+        registration.update_attribute(:waiting, false)
+      end
     end
 
     redirect_to admin_competition_events_path(current_competition),
