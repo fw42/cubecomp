@@ -23,8 +23,12 @@ module AdminHelper
     tooltip(image_tag('help.png'), text)
   end
 
-  def delete_button(text, *link_args)
-    render 'tooltip', body: link_to(image_tag('delete.png'), *link_args), title: text
+  def edit_button(*link_args)
+    render 'tooltip', body: link_to(image_tag('edit.png'), *link_args), title: 'Edit'
+  end
+
+  def delete_button(*link_args)
+    render 'tooltip', body: link_to(image_tag('delete.png'), *link_args), title: 'Delete'
   end
 
   def options_for_minutes

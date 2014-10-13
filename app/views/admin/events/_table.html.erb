@@ -1,6 +1,6 @@
 <h2><%= day.date.to_s(:long) %></h2>
 
-<table class='default-table'>
+<table class='default-table events'>
   <thead>
     <tr>
       <th>Start</th>
@@ -10,13 +10,13 @@
       <th>Time-limit</th>
       <th>Format</th>
       <th>Registrations</th>
-      <th colspan="2"></th>
+      <th>Actions</th>
     </tr>
   </thead>
 
   <tbody>
     <% @events.where(day: day).each do |event| %>
-      <tr>
+      <tr class="<%= "not_for_registration" if event.for_registration? %>">
         <td><%= event.start_time.strftime("%H:%M") %></td>
         <td><%= event.end_time.strftime("%H:%M") %></td>
         <td>
@@ -29,9 +29,17 @@
         <td><%= event.round %></td>
         <td><%= event.timelimit %></td>
         <td><%= event.format %></td>
-        <td>todo</td>
-        <td><%= link_to 'Edit', edit_admin_competition_event_path(current_competition, event) %></td>
-        <td><%= link_to 'Destroy', admin_competition_event_path(current_competition, event), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= event.registrations.size %> (<%= event.registrations.select(&:waiting).size %> waiting)</td>
+        <td>
+          <%= edit_button(edit_admin_competition_event_path(current_competition, event)) %>
+          <%=
+            delete_button(
+              admin_competition_event_path(current_competition, event),
+              method: :delete,
+              data: { confirm: 'Are you sure?' }
+            )
+          %>
+        </td>
       </tr>
     <% end %>
   </tbody>

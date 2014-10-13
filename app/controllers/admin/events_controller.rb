@@ -1,5 +1,5 @@
 class Admin::EventsController < AdminController
-  before_action :set_event, only: [:edit, :update, :destroy]
+  before_action :set_event, only: [:edit, :update, :destroy, :registrations]
 
   PERMITTED_PARAMS = [
     :name_short,
@@ -19,7 +19,7 @@ class Admin::EventsController < AdminController
   ]
 
   def index
-    @events = current_competition.events.all
+    @events = current_competition.events.includes(:registrations)
   end
 
   def new
