@@ -35,6 +35,9 @@ Lint/EndAlignment:
 Style/SignalException:
   Enabled: false
 
+Style/StringLiterals:
+  Enabled: false
+
 Style/BracesAroundHashParameters:
   Enabled: false
 

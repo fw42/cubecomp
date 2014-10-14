@@ -40,7 +40,17 @@ Rails.application.routes.draw do
       end
 
       resources :news, except: [:show]
-      resources :theme_files, except: [:show]
+
+      resources :theme_files, except: [:show] do
+        collection do
+          get :new_image
+          post :create_image
+        end
+
+        member do
+          get :show_image
+        end
+      end
     end
   end
 

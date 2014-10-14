@@ -33,4 +33,28 @@ class ThemeFileTest < ActiveSupport::TestCase
     @theme_file.content = '{{ foo'
     assert_not_valid(@theme_file, :content)
   end
+
+  test 'validates image content type' do
+    # TODO
+  end
+
+  test 'validates image file name' do
+    # TODO
+  end
+
+  test 'validates image size' do
+    # TODO
+  end
+
+  test "validates that content is empty if image_file_name isn't" do
+    # TODO
+  end
+
+  test 'changing image_file_name changes filename' do
+    # TODO
+  end
+
+  test 'image url' do
+    # TODO
+  end
 end

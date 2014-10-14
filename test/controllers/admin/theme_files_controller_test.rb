@@ -61,4 +61,17 @@ class Admin::ThemeFilesControllerTest < ActionController::TestCase
 
     assert_redirected_to admin_competition_theme_files_path(@competition)
   end
+
+  test '#new_image' do
+    # response ok
+  end
+
+  test '#show_image' do
+    # response ok
+    # 404 if id belongs to non-image
+  end
+
+  test '#create_image' do
+    # response ok
+  end
 end
