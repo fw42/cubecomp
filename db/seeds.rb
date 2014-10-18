@@ -119,6 +119,35 @@ def create_competitor(competition)
   competitor
 end
 
+
+def create_associations(competition)
+  create_day(competition)
+  create_day(competition)
+
+  competition.locales.create(handle: 'de')
+  competition.locales.create(handle: 'en')
+
+  10.times do
+    create_event(competition)
+  end
+
+  50.times do
+    create_competitor(competition)
+  end
+
+  competition.theme_files.create!(
+    filename: 'index.html',
+    content: <<-HTML
+<html>
+  <body>
+    <h1>Test!</h1>
+    Welcome to this competition!
+  </body>
+</html>
+    HTML
+  )
+end
+
 def create_user(params)
   user = User.where(params.except(:password, :password_confirmation))
   user.first_or_create!(params.slice(:password, :password_confirmation))
@@ -162,7 +191,7 @@ create_user(
   permission_level: User::PERMISSION_LEVELS[:superadmin]
 )
 
-aachen_open = Competition.create!(
+competition = Competition.create!(
   name: "Aachen Open 2014",
   handle: "aachen-open-2014",
   staff_email: "foo@bar.com",
@@ -171,12 +200,4 @@ aachen_open = Competition.create!(
   country: germany
 )
 
-create_day(aachen_open)
-create_day(aachen_open)
-10.times do
-  create_event(aachen_open)
-end
-
-50.times do
-  create_competitor(aachen_open)
-end
+create_associations(competition)

@@ -4,4 +4,17 @@ class ThemeFile < ActiveRecord::Base
 
   validates :filename, presence: true
   validates :filename, uniqueness: { scope: :competition_id }, allow_nil: true, allow_blank: true
+
+  scope :for_filename, lambda { |name, locale, extension|
+    filenames = [
+      "#{name}.#{locale}.#{extension}",
+      "#{name}.#{extension}",
+    ]
+
+    order_query_segments = filenames.map do |file|
+      "filename = \"#{ThemeFile.connection.quote_string(file)}\" DESC"
+    end
+
+    where(filename: filenames).order(order_query_segments.join(', '))
+  }
 end
