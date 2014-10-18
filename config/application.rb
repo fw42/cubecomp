@@ -22,5 +22,6 @@ module Cubecomp
 
     config.autoload_paths << Rails.root.join('lib')
     config.autoload_paths << Rails.root.join('app/liquid/drops')
+    config.autoload_paths << Rails.root.join('app/liquid/filters')
   end
 end
