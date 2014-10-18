@@ -18,7 +18,20 @@ table.default-table {
   @extend .table-bordered;
 }
 
+table.default-table td.actions {
+  text-align: center;
+}
+
+div.row h2 {
+  font-size: 22px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
 table.default-table th {
+  background-color: #0077bb;
+  color: white;
+  font-weight: bold;
   text-align: center;
 }
 
@@ -107,17 +120,8 @@ table.form-table select
   width: 300px;
 }
 
-span.with-tooltip {
-
-}
-
 table.competitors {
   width: auto;
-
-  td, th {
-    padding: 4px !important;
-    white-space: nowrap;
-  }
 
   td {
     font-size: 90%;
@@ -128,5 +132,19 @@ table.competitors {
   }
 
   tr.disabled {
+  }
+}
+
+table.events {
+  width: auto;
+  margin-bottom: 25px;
+
+  tr.not_for_registration {
+    background-color: #ffff99;
+  }
+
+  td, th {
+    padding: 4px !important;
+    white-space: nowrap;
   }
 }

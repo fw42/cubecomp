@@ -24,7 +24,21 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :events, except: [:show]
+      resources :event_registrations, only: [] do
+        collection do
+          get :waiting
+          patch :remove_all_waiting
+        end
+      end
+
+      resources :events, except: [:show] do
+        resources :event_registrations, only: [:index, :destroy] do
+          member do
+            patch :update_waiting
+          end
+        end
+      end
+
       resources :news, except: [:show]
       resources :theme_files, except: [:show]
     end

@@ -19,7 +19,7 @@ class Admin::EventsController < AdminController
   ]
 
   def index
-    @events = current_competition.events.all
+    @events = current_competition.events.includes(:registrations)
   end
 
   def new

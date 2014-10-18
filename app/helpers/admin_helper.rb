@@ -23,8 +23,24 @@ module AdminHelper
     tooltip(image_tag('help.png'), text)
   end
 
-  def delete_button(text, *link_args)
-    render 'tooltip', body: link_to(image_tag('delete.png'), *link_args), title: text
+  def show_button(title, *link_args)
+    render 'tooltip', body: link_to(image_tag('show.png'), *link_args), title: title
+  end
+
+  def waiting_button(*link_args)
+    render 'tooltip', body: link_to(image_tag('set_waiting.png'), *link_args), title: 'Put on waiting list'
+  end
+
+  def unset_waiting_button(*link_args)
+    render 'tooltip', body: link_to(image_tag('unset_waiting.png'), *link_args), title: 'Remove from waiting list'
+  end
+
+  def edit_button(*link_args)
+    render 'tooltip', body: link_to(image_tag('edit.png'), *link_args), title: 'Edit'
+  end
+
+  def delete_button(*link_args)
+    render 'tooltip', body: link_to(image_tag('delete.png'), *link_args), title: 'Delete'
   end
 
   def options_for_minutes
