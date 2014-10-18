@@ -16,7 +16,7 @@
       <tr>
         <td>
           <%= competitor.country.name %>
-          <% if competitor.local && current_competition.city_name_short %>
+          <% if competitor.local.present? && current_competition.city_name_short.present? %>
             (<%= current_competition.city_name_short %>)
           <% end %>
         </td>
