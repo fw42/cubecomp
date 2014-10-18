@@ -35,6 +35,13 @@
         </td>
       </tr>
       <tr>
+        <td><%= f.label :owner, 'Owner / official contact:' %></td>
+        <td>
+          <%= f.select :owner_user_id, [["", nil]] + @competition.users.map{ |user| [ user.name, user.id ] } %>
+          <%= help_tooltip "This user's address will be shown in the disclaimer section of this competition's theme" %>
+        </td>
+      </tr>
+      <tr>
         <td><%= f.label :delegate, 'Main WCA delegate:' %></td>
         <td>
           <%= f.select :delegate_user_id, [["", nil]] + User.delegates.map{ |user| [ user.name, user.id ] } %>

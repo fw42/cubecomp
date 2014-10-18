@@ -24,7 +24,8 @@ class Admin::UsersControllerTest < ActionController::TestCase
       last_name: 'Bobsen',
       password: 'foobar',
       password_confirmation: 'foobar',
-      permission_level: User::PERMISSION_LEVELS.values.min
+      permission_level: User::PERMISSION_LEVELS.values.min,
+      address: 'Foo Bar 1, 123 Foo, Germany'
     }
 
     assert_difference('User.count') do
@@ -61,7 +62,8 @@ class Admin::UsersControllerTest < ActionController::TestCase
       first_name: 'Bob',
       last_name: 'Bobsen',
       password: 'foobar',
-      password_confirmation: 'foobar'
+      password_confirmation: 'foobar',
+      address: 'Foo Bar 1, 123 Foo, Germany'
     }
 
     patch :update, id: @user, user: params

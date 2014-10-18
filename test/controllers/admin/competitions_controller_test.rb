@@ -23,7 +23,9 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
       registration_open: true,
       staff_email: 'ao-winter@cubecomp.de',
       staff_name: 'aachen team',
-      venue_address: 'rwth'
+      venue_address: 'rwth',
+      delegate_user_id: users(:delegate).id,
+      owner_user_id: @competition.users.first.id
     }
   end
 

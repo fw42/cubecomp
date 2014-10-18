@@ -23,6 +23,10 @@
         <td><%= f.label :password_confirmation, 'Password confirmation:' %></td>
         <td><%= f.password_field :password_confirmation, placeholder: 'Enter new password again' %></td>
       </tr>
+      <tr>
+        <td><%= f.label :address, 'Address:' %></td>
+        <td><%= f.text_area :address %></td>
+      </tr>
     </table>
   <% end %>
 
@@ -45,6 +49,16 @@
     </table>
   <% end %>
 
+  <% if current_user.policy.change_competition_permissions? %>
+    <%= form_section 'Competition staff permissions' do %>
+      <%= f.fields_for :permissions, @user.permissions.sort_by{ |p| p.competition.name } do |ff| %>
+        <%= ff.hidden_field :competition_id %>
+        <%= ff.check_box :_destroy, { checked: ff.object.persisted? }, '0', '1' %>
+        <%= ff.object.competition.name %><br/>
+      <% end %>
+    <% end %>
+  <% end %>
+
   <% if @user.persisted? && @user.delegate && @delegating_competitions.size > 0 %>
     <%= form_section 'Delegacies' do %>
       <ul>
@@ -55,13 +69,13 @@
     <% end %>
   <% end %>
 
-  <% if current_user.policy.change_competition_permissions? %>
-    <%= form_section 'Competition staff permissions' do %>
-      <%= f.fields_for :permissions, @user.permissions.sort_by{ |p| p.competition.name } do |ff| %>
-        <%= ff.hidden_field :competition_id %>
-        <%= ff.check_box :_destroy, { checked: ff.object.persisted? }, '0', '1' %>
-        <%= ff.object.competition.name %><br/>
-      <% end %>
+  <% if @user.persisted? && @owned_competitions.size > 0 %>
+    <%= form_section 'Owned competitions' do %>
+      <ul>
+        <% @owned_competitions.each do |competition| %>
+          <li><%= link_to competition.name, edit_admin_competition_path(competition) %></li>
+        <% end %>
+      </ul>
     <% end %>
   <% end %>
 

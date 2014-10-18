@@ -22,7 +22,15 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :permissions, allow_destroy: true
 
-  has_many :delegating_competitions, class_name: 'Competition', foreign_key: 'delegate_user_id', dependent: :nullify
+  has_many :owned_competitions,
+    class_name: 'Competition',
+    foreign_key: 'owner_user_id',
+    dependent: :nullify
+
+  has_many :delegating_competitions,
+    class_name: 'Competition',
+    foreign_key: 'delegate_user_id',
+    dependent: :nullify
 
   scope :delegates, ->{ where(delegate: true) }
 
