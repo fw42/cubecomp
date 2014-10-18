@@ -2,13 +2,15 @@
 
 <%= render 'notice' %>
 
+<p><%= link_to 'New News item', new_admin_competition_news_path %></p>
+
 <table class='default-table'>
   <thead>
     <tr>
       <th>Time</th>
       <th>Language</th>
       <th>Text</th>
-      <th colspan="2"></th>
+      <th>Actions</th>
     </tr>
   </thead>
 
@@ -18,13 +20,17 @@
         <td><%= news.time.to_s(:short) %></td>
         <td><%= news.locale.name %></td>
         <td><%= truncate(news.text, length: 50, separator: ' ') %></td>
-        <td><%= link_to 'Edit', edit_admin_competition_news_path(current_competition, news) %></td>
-        <td><%= link_to 'Destroy', admin_competition_news_path(current_competition, news), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td class='actions'>
+          <%= edit_button edit_admin_competition_news_path(current_competition, news) %>
+          <%=
+            delete_button(
+              admin_competition_news_path(current_competition, news),
+              method: :delete,
+              data: { confirm: 'Are you sure?' }
+            )
+          %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New News item', new_admin_competition_news_path %>
