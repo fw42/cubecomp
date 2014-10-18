@@ -15,8 +15,8 @@ gem 'codemirror-rails'
 gem 'mysql2'
 
 gem 'auto_strip_attributes'
-
 gem 'marginalia'
+gem 'liquid'
 
 group :test do
   gem 'mocha'

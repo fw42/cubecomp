@@ -39,6 +39,10 @@ class Competition < ActiveRecord::Base
     locales.first
   end
 
+  def to_liquid
+    @liquid_drop ||= CompetitionDrop.new(self)
+  end
+
   private
 
   def delegate_user_is_a_delegate?
