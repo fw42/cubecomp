@@ -40,9 +40,9 @@
         <% current_competition.days.each do |day| %>
           <td>
             <% if competitor.competing_on?(day) %>
-              <%= tooltip(image_tag('cube.png'), "Competing on #{day.date.strftime("%A")}") %>
+              <%= tooltip(icon_image_tag('cube.png'), "Competing on #{day.date.strftime("%A")}") %>
             <% elsif competitor.guest_on?(day) %>
-              <%= tooltip(image_tag('guest.png'), "Guest on #{day.date.strftime("%A")}") %>
+              <%= tooltip(icon_image_tag('guest.png'), "Guest on #{day.date.strftime("%A")}") %>
             <% end %>
           </td>
         <% end %>
@@ -50,14 +50,14 @@
           <% if competitor.free_entrance? %>
             <%=
               tooltip(
-                image_tag('free_entrance.png'),
+                icon_image_tag('free_entrance.png'),
                 competitor.free_entrance_reason.presence || "Free entrance"
               )
             %>
           <% elsif competitor.paid? %>
             <%=
               tooltip(
-                image_tag('free_entrance.png'),
+                icon_image_tag('free_entrance.png'),
                 competitor.paid_comment.presence || "Paid"
               )
             %>
@@ -65,35 +65,35 @@
         </td>
         <td>
           <% if competitor.male? %>
-            <%= image_tag('male.png') %>
+            <%= icon_image_tag('male.png') %>
           <% else %>
-            <%= image_tag('female.png') %>
+            <%= icon_image_tag('female.png') %>
           <% end %>
 
           <% if competitor.user_comment.present? %>
-            <%= tooltip(image_tag('user_comment.png'), competitor.user_comment) %>
+            <%= tooltip(icon_image_tag('user_comment.png'), competitor.user_comment) %>
           <% end %>
 
           <% if competitor.admin_comment.present? %>
-            <%= tooltip(image_tag('admin_comment.png'), competitor.admin_comment) %>
+            <%= tooltip(icon_image_tag('admin_comment.png'), competitor.admin_comment) %>
           <% end %>
 
           <% if competitor.staff? %>
-            <%= tooltip(image_tag('staff.png'), "Staff") %>
+            <%= tooltip(icon_image_tag('staff.png'), "Staff") %>
           <% end %>
 
           <% if competitor.nametag.present? %>
-            <%= tooltip(image_tag('nametag.png'), competitor.nametag) %>
+            <%= tooltip(icon_image_tag('nametag.png'), competitor.nametag) %>
           <% end %>
 
           <% if competitor.birthday_on_competition? %>
-            <%= tooltip(image_tag('birthday.png'), "Birthday on #{competitor.birthday.strftime("%A")}") %>
+            <%= tooltip(icon_image_tag('birthday.png'), "Birthday on #{competitor.birthday.strftime("%A")}") %>
           <% end %>
 
           <% if competitor.event_registrations.select(&:waiting).size > 0 %>
             <%=
               tooltip(
-                image_tag('waiting.png'),
+                icon_image_tag('waiting.png'),
                 "<b>On waiting list for:</b><br/>" +
                   competitor.event_registrations.waiting.map(&:event).map(&:name).join("<br>\n")
               )
@@ -101,7 +101,7 @@
           <% end %>
 
           <% if current_competition.city_name && competitor.local? %>
-            <%= tooltip(image_tag('local.png'), "#{competitor.name} lives in #{current_competition.city_name}") %>
+            <%= tooltip(icon_image_tag('local.png'), "#{competitor.name} lives in #{current_competition.city_name}") %>
           <% end %>
         </td>
         <td><%= competitor.wca && link_to(competitor.wca, wca_url(competitor.wca)) %></td>

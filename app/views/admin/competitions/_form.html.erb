@@ -100,7 +100,7 @@
             <td><%= ff.text_field :entrance_fee_competitors, { class: 'small' } %></td>
             <td><%= ff.text_field :entrance_fee_guests, { class: 'small'} %></td>
             <td><%= ff.object.events.count %></td>
-            <td class='actions'><%= link_to image_tag('delete.png'), {}, { class: 'destroy' } %></th>
+            <td class='actions'><%= delete_button({}, { class: 'destroy' }) %></th>
           </tr>
         <% end %>
       </tbody>
