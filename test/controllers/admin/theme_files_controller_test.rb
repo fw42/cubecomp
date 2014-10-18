@@ -7,38 +7,8 @@ class Admin::ThemeFilesControllerTest < ActionController::TestCase
     login_as(@competition.users.first)
   end
 
-  test '#index' do
-    get :index, competition_id: @competition.id
-    assert_response :success
-    assert_not_nil assigns(:theme_files)
-  end
-
-  test '#index renders 404 with invalid competition id' do
-    get :index, competition_id: 17
-    assert_response :not_found
-  end
-
-  test '#new' do
-    get :new, competition_id: @competition.id
-    assert_response :success
-  end
-
-  test '#create' do
-    params = {
-      filename: 'foobar.html',
-      content: 'foobar!'
-    }
-
-    assert_difference('@competition.theme_files.count') do
-      post :create, competition_id: @competition.id, theme_file: params
-    end
-
-    assert_redirected_to edit_admin_competition_theme_file_path(@competition.id, assigns(:theme_file))
-    assert_attributes(params, @competition.theme_files.last)
-  end
-
   test '#edit' do
-    get :edit, competition_id: @competition.id, id: @theme_file.id
+    get :edit, id: @theme_file.id
     assert_response :success
   end
 
@@ -48,30 +18,34 @@ class Admin::ThemeFilesControllerTest < ActionController::TestCase
       content: 'foobar!'
     }
 
-    patch :update, competition_id: @competition.id, id: @theme_file.id, theme_file: params
+    patch :update, id: @theme_file.id, theme_file: params
 
-    assert_redirected_to edit_admin_competition_theme_file_path(@competition.id, assigns(:theme_file))
+    assert_redirected_to edit_admin_theme_file_path(assigns(:theme_file))
     assert_attributes(params, @theme_file.reload)
   end
 
   test '#destroy' do
-    assert_difference('@competition.theme_files.count', -1) do
-      delete :destroy, competition_id: @competition.id, id: @theme_file.id
+    assert_difference('ThemeFile.count', -1) do
+      delete :destroy, id: @theme_file.id
     end
 
     assert_redirected_to admin_competition_theme_files_path(@competition)
   end
 
-  test '#new_image' do
-    # response ok
+  test "#update can't unassign competition_id" do
+    # TODO
+  end
+
+  test "#update can't assign different competition_id" do
+    # TODO
+  end
+
+  test "#update can't assign theme_id" do
+    # TODO
   end
 
   test '#show_image' do
-    # response ok
-    # 404 if id belongs to non-image
-  end
-
-  test '#create_image' do
-    # response ok
+    # TODO: response ok
+    # TODO: 404 if id belongs to non-image
   end
 end

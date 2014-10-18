@@ -1,7 +1,7 @@
-<%= form_for([:admin, current_competition, @theme_file]) do |f| %>
+<%= form_for(theme_file_for_form(@theme_file)) do |f| %>
   <%= render 'form_errors', object: @theme_file, label: 'theme file' %>
-  <%= render 'theme_file_settings', f: f %>
+  <%= render 'admin/theme_files/text_form', f: f %>
 
   <%= submit_button(f) %>
-  <%= cancel_button(admin_competition_theme_files_path(current_competition)) %>
+  <%= cancel_button(cancel_url) %>
 <% end %>

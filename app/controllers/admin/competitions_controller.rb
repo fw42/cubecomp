@@ -17,7 +17,7 @@ class Admin::CompetitionsController < AdminController
     :country_id,
     :cc_orga,
     :registration_open,
-    locales_attributes: [:id, :handle, :_destroy],
+    locales_attributes: [:id, :competition_id, :handle, :_destroy],
     days_attributes: [
       :id,
       :"date(3i)",
