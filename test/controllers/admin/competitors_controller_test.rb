@@ -83,6 +83,11 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:competitors)
   end
 
+  test '#email_addresses' do
+    get :email_addresses, competition_id: @competition.id
+    assert_response :success
+  end
+
   test '#index renders 404 with invalid competition id' do
     get :index, competition_id: 17
     assert_response :not_found

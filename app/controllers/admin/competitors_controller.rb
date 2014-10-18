@@ -46,6 +46,16 @@ class Admin::CompetitorsController < AdminController
     render layout: 'admin/checklist'
   end
 
+  def email_addresses
+    @active = current_competition
+      .competitors
+      .confirmed
+      .includes(:event_registrations)
+
+    @guests = @active.select{ |competitor| competitor.event_registrations.size == 0 }
+    @locals = @active.select(&:local)
+  end
+
   def edit
   end
 
