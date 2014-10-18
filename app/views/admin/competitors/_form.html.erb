@@ -113,44 +113,48 @@
       </p>
 
       <table class='default-table'>
-        <tr>
-          <th>Event</th>
-          <th colspan="3">Registration status</th>
-        </tr>
-        <% current_competition.events.where(day: day).each do |event| %>
+        <thead>
           <tr>
-            <td>
-              <%= event.name %>
-            </td>
-            <td>
-              <%=
-                radio_button "#{f.object_name}[days][#{day.id}][events][#{event.id}]",
-                  :status,
-                  'not_registered',
-                  checked: @competitor.event_registration_status(event) == 'not_registered'
-              %>
-              not registered
-            </td>
-            <td>
-              <%=
-                radio_button "#{f.object_name}[days][#{day.id}][events][#{event.id}]",
-                  :status,
-                  'waiting',
-                  checked: @competitor.event_registration_status(event) == 'waiting'
-              %>
-              waiting
-            </td>
-            <td>
-              <%=
-                radio_button "#{f.object_name}[days][#{day.id}][events][#{event.id}]",
-                  :status,
-                  'registered',
-                  checked: @competitor.event_registration_status(event) == 'registered'
-              %>
-              registered
-            </td>
+            <th>Event</th>
+            <th colspan="3">Registration status</th>
           </tr>
-        <% end %>
+        </thead>
+        <tbody>
+          <% current_competition.events.where(day: day).each do |event| %>
+            <tr>
+              <td>
+                <%= event.name %>
+              </td>
+              <td>
+                <%=
+                  radio_button "#{f.object_name}[days][#{day.id}][events][#{event.id}]",
+                    :status,
+                    'not_registered',
+                    checked: @competitor.event_registration_status(event) == 'not_registered'
+                %>
+                not registered
+              </td>
+              <td>
+                <%=
+                  radio_button "#{f.object_name}[days][#{day.id}][events][#{event.id}]",
+                    :status,
+                    'waiting',
+                    checked: @competitor.event_registration_status(event) == 'waiting'
+                %>
+                waiting
+              </td>
+              <td>
+                <%=
+                  radio_button "#{f.object_name}[days][#{day.id}][events][#{event.id}]",
+                    :status,
+                    'registered',
+                    checked: @competitor.event_registration_status(event) == 'registered'
+                %>
+                registered
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
       </table>
     <% end %>
   <% end %>

@@ -11,28 +11,10 @@
 
 @import "../../../vendor/assets/stylesheets/sb-admin-2/bootstrap.scss";
 
-table.default-table {
-  @extend .table;
-  @extend .table-striped;
-  @extend .table-hover;
-  @extend .table-bordered;
-}
-
-table.default-table td.actions {
-  text-align: center;
-}
-
 div.row h2 {
   font-size: 22px;
   margin-top: 20px;
   margin-bottom: 15px;
-}
-
-table.default-table th {
-  background-color: #0077bb;
-  color: white;
-  font-weight: bold;
-  text-align: center;
 }
 
 div.panel-body div.text-editor {
@@ -120,31 +102,44 @@ table.form-table select
   width: 300px;
 }
 
-table.competitors {
+table.default-table {
+  @extend .table;
+  @extend .table-striped;
+  @extend .table-hover;
+  @extend .table-bordered;
+
   width: auto;
+
+  td.actions {
+    text-align: center;
+  }
 
   td {
     font-size: 90%;
   }
 
-  tr.competitor-new {
-    background-color: #ff7766;
+  td, th {
+    white-space: nowrap;
   }
 
-  tr.disabled {
+  th {
+    background-color: #0077bb;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
+}
+
+table.competitors {
+  tr.competitor-new {
+    background-color: #ff7766;
   }
 }
 
 table.events {
-  width: auto;
   margin-bottom: 25px;
 
   tr.not_for_registration {
     background-color: #ffff99;
-  }
-
-  td, th {
-    padding: 4px !important;
-    white-space: nowrap;
   }
 }

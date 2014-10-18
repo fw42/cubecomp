@@ -74,13 +74,15 @@
 
   <%= form_section 'Date and financial settings' do %>
     <table class='default-table'>
-      <tr>
-        <th>Date</th>
-        <th>Entrance fee for competitors</th>
-        <th>Entrance fee for guests</th>
-        <th>Events</th>
-        <th></th>
-      </tr>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Entrance fee for competitors</th>
+          <th>Entrance fee for guests</th>
+          <th>Events</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
       <tbody id='date-table'>
         <%= f.fields_for :days do |ff| %>
           <tr>
@@ -98,7 +100,7 @@
             <td><%= ff.text_field :entrance_fee_competitors, { class: 'small' } %></td>
             <td><%= ff.text_field :entrance_fee_guests, { class: 'small'} %></td>
             <td><%= ff.object.events.count %></td>
-            <td><%= link_to image_tag('delete.png'), {}, { class: 'destroy' } %></th>
+            <td class='actions'><%= link_to image_tag('delete.png'), {}, { class: 'destroy' } %></th>
           </tr>
         <% end %>
       </tbody>

@@ -1,31 +1,43 @@
 <% page_title "Competitions" %>
 
+<p><%= link_to 'New competition', new_admin_competition_path %></p>
+
 <table class='default-table'>
   <thead>
     <tr>
-      <th>Handle</th>
       <th>Name</th>
+      <th>Handle</th>
       <th>Country</th>
       <th>Status</th>
       <th>Competitors</th>
-      <th></th>
+      <th>Owner</th>
+      <th>Delegate</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
   <tbody>
     <% @competitions.each do |competition| %>
       <tr>
-        <td><%= competition.handle %></td>
         <td><%= link_to competition.name, edit_admin_competition_path(competition) %></td>
+        <td><%= competition.handle %></td>
         <td><%= competition.country.name %></td>
         <td><%= competition.registration_open ? 'open' : 'closed' %></td>
         <td><%= competition.competitors.count %></td>
-        <td><%= link_to 'Destroy', [:admin, competition], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if competition.owner %>
+            <%= link_to competition.owner.name, edit_admin_user_path(competition.owner) %>
+          <% end %>
+        </td>
+        <td>
+          <% if competition.delegate %>
+            <%= link_to competition.delegate.name, edit_admin_user_path(competition.delegate) %>
+          <% end %>
+        </td>
+        <td class='actions'>
+          <%= delete_button([:admin, competition], method: :delete, data: { confirm: 'Are you sure?' }) %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<p>
-  <%= link_to 'New competition', new_admin_competition_path %>
-</p>

@@ -1,5 +1,7 @@
 <% page_title "Users" %>
 
+<p><%= link_to 'New user', new_admin_user_path %></p>
+
 <table class='default-table'>
   <thead>
     <tr>
@@ -7,10 +9,9 @@
       <th>Email</th>
       <th>Admin</th>
       <th>Delegate</th>
-      <th></th>
+      <th>Actions</th>
     </tr>
   </thead>
-
   <tbody>
     <% @users.each do |user| %>
       <tr>
@@ -21,12 +22,10 @@
         <td><%= user.email %></td>
         <td><%= user.permission_level %></td>
         <td><%= user.delegate %></td>
-        <td><%= link_to 'Destroy', [:admin, user], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td class='actions'>
+          <%= delete_button([:admin, user], method: :delete, data: { confirm: 'Are you sure?' }) %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<p>
-  <%= link_to 'New user', new_admin_user_path %>
-</p>
