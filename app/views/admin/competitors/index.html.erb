@@ -114,7 +114,7 @@
           %>
         </td>
         <td>
-          <%= delete_button('Delete', admin_competition_competitor_path(current_competition, competitor), method: :delete, data: { confirm: 'Are you sure?' }) %>
+          <%= delete_button(admin_competition_competitor_path(current_competition, competitor), method: :delete, data: { confirm: 'Are you sure?' }) %>
         </td>
       </tr>
     <% end %>
