@@ -37,10 +37,6 @@ class Admin::CompetitorsController < AdminController
     render layout: 'admin/nametags'
   end
 
-  def new
-    @competitor = current_competition.competitors.new
-  end
-
   def checklist
     @competitors = current_competition.competitors.for_checklist
     render layout: 'admin/checklist'
@@ -54,6 +50,18 @@ class Admin::CompetitorsController < AdminController
 
     @guests = @active.select{ |competitor| competitor.event_registrations.size == 0 }
     @locals = @active.select(&:local)
+  end
+
+  def csv
+    @exporter = CsvService.new(current_competition)
+    @handles = @exporter.handles
+    @active = @exporter.active_competitors
+    @active_and_waiting = @exporter.active_and_waiting
+    @active_guests = @exporter.active_guests
+  end
+
+  def new
+    @competitor = current_competition.competitors.new
   end
 
   def edit

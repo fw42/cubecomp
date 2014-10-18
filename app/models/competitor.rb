@@ -31,11 +31,17 @@ class Competitor < ActiveRecord::Base
   before_validation :set_default_state
   validate :male_not_nil?
 
+  auto_strip_attributes :first_name, :last_name, :wca, :email
+
+  before_validation do
+    self.wca = wca.upcase if wca
+  end
+
   scope :confirmed, ->{ where(state: 'confirmed') }
 
   scope :for_checklist, lambda {
     confirmed
-      .joins(:country)
+      .includes(:country)
       .includes(:events)
       .includes(:days)
       .order('countries.name', :last_name, :first_name)
@@ -56,11 +62,13 @@ class Competitor < ActiveRecord::Base
       .order(created_at: :desc)
   }
 
-  auto_strip_attributes :first_name, :last_name, :wca, :email
-
-  before_validation do
-    self.wca = wca.upcase if wca
-  end
+  scope :for_csv, lambda {
+    confirmed
+      .includes(:country)
+      .includes(:event_registrations)
+      .includes(:events)
+      .includes(:day_registrations)
+  }
 
   def name
     [first_name, last_name].join(' ')
