@@ -1,6 +1,7 @@
 class ThemeFile < ActiveRecord::Base
+  belongs_to :theme
   belongs_to :competition
-  validates :competition, presence: true
+  validate :validate_belongs_to_either_theme_or_competition
 
   has_attached_file :image
 
@@ -8,6 +9,7 @@ class ThemeFile < ActiveRecord::Base
   validates :filename, uniqueness: { scope: :competition_id }, allow_nil: true, allow_blank: true
 
   validate :validate_template_errors
+  validate :validate_has_content_or_is_image
 
   validates :image, attachment_content_type: {
     content_type: [ 'image/jpeg', 'image/gif', 'image/png' ],
@@ -23,9 +25,7 @@ class ThemeFile < ActiveRecord::Base
     less_than: 1.megabytes, message: "has to be smaller than 1 megabyte"
   }
 
-  validate :cant_have_both_content_and_image
-
-  scope :for_filename, lambda { |name, locale, extension|
+  scope :with_filename, lambda { |name, locale, extension|
     filenames = [
       "#{name}.#{locale}.#{extension}",
       "#{name}.#{extension}",
@@ -66,8 +66,19 @@ class ThemeFile < ActiveRecord::Base
     errors.add(:content, "Contains invalid Liquid code: #{e.message}")
   end
 
-  def cant_have_both_content_and_image
-    return if content.blank? || image_file_name.blank?
-    errors.add(:content, "has to be blank for image files")
+  def validate_has_content_or_is_image
+    if content.present? && image_file_name.present?
+      errors.add(:content, "has to be blank for image files")
+    elsif content.blank? && image_file_name.blank?
+      errors.add(:content, "can't be blank for text files")
+    end
+  end
+
+  def validate_belongs_to_either_theme_or_competition
+    if competition && theme
+      errors.add(:base, "can't belong to both a competition and a theme")
+    elsif !competition && !theme
+      errors.add(:base, "needs to belong to either a theme or a competition")
+    end
   end
 end

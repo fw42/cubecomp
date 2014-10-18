@@ -4,7 +4,7 @@ class Admin::ThemeFileTemplatesController < AdminController
 
   def new
     @theme = Theme.find(params[:theme_id])
-    @template = ThemeFileTemplate.new
+    @template = ThemeFile.new(theme_id: @theme.id)
   end
 
   def edit
@@ -12,10 +12,10 @@ class Admin::ThemeFileTemplatesController < AdminController
 
   def create
     @theme = Theme.find(params[:theme_id])
-    @template = @theme.file_templates.new(template_params)
+    @template = @theme.files.new(template_params)
 
     if @template.save
-      redirect_to edit_admin_theme_theme_file_template_path(@theme, @template),
+      redirect_to edit_admin_theme_theme_file_path(@theme, @template),
         notice: 'Template was successfully created.'
     else
       render :new
@@ -24,7 +24,7 @@ class Admin::ThemeFileTemplatesController < AdminController
 
   def update
     if @template.update(template_params)
-      redirect_to edit_admin_theme_theme_file_template_path(@theme, @template),
+      redirect_to edit_admin_theme_theme_file_path(@theme, @template),
         notice: 'Theme file template was successfully updated.'
     else
       render :edit
@@ -41,10 +41,10 @@ class Admin::ThemeFileTemplatesController < AdminController
 
   def set_theme_and_template
     @theme = Theme.find(params[:theme_id])
-    @template = @theme.file_templates.find(params[:id])
+    @template = @theme.files.find(params[:id])
   end
 
   def template_params
-    params.require(:theme_file_template).permit(:filename, :content)
+    params.require(:theme_file).permit(:filename, :content)
   end
 end

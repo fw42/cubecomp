@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Admin::ThemeFileTemplatesControllerTest < ActionController::TestCase
   setup do
-    @template = theme_file_templates(:default_index)
+    @template = theme_files(:template_index)
     @theme = @template.theme
     login_as(users(:admin))
   end
@@ -18,12 +18,12 @@ class Admin::ThemeFileTemplatesControllerTest < ActionController::TestCase
       content: 'foobar'
     }
 
-    assert_difference('ThemeFileTemplate.count') do
-      post :create, theme_id: @theme.id, theme_file_template: params
+    assert_difference('ThemeFile.count') do
+      post :create, theme_id: @theme.id, theme_file: params
     end
 
-    assert_redirected_to edit_admin_theme_theme_file_template_path(assigns(:theme), assigns(:template))
-    assert_attributes(params, ThemeFileTemplate.last)
+    assert_redirected_to edit_admin_theme_theme_file_path(assigns(:theme), assigns(:template))
+    assert_attributes(params, ThemeFile.last)
   end
 
   test '#edit' do
@@ -37,14 +37,14 @@ class Admin::ThemeFileTemplatesControllerTest < ActionController::TestCase
       content: 'foobar'
     }
 
-    patch :update, theme_id: @theme.id, id: @template.id, theme_file_template: params
+    patch :update, theme_id: @theme.id, id: @template.id, theme_file: params
 
-    assert_redirected_to edit_admin_theme_theme_file_template_path(assigns(:theme), assigns(:template))
+    assert_redirected_to edit_admin_theme_theme_file_path(assigns(:theme), assigns(:template))
     assert_attributes(params, @template.reload)
   end
 
   test '#destroy' do
-    assert_difference('ThemeFileTemplate.count', -1) do
+    assert_difference('ThemeFile.count', -1) do
       delete :destroy, theme_id: @theme.id, id: @template.id
     end
 

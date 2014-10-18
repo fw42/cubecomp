@@ -23,7 +23,7 @@ class CompetitionsController < ApplicationController
     filename = params[:theme_file] || 'index'
     extension = params[:format] || 'html'
 
-    @theme_file = @competition.theme_files.text_files.for_filename(
+    @theme_file = @competition.theme_files.text_files.with_filename(
       filename,
       @locale.handle,
       extension

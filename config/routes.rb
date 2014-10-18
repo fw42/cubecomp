@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :users, except: [:show]
 
     resources :themes, only: [:index, :show] do
-      resources :theme_file_templates, except: [:index, :show]
+      resources :theme_files, except: [:index, :show], controller: 'theme_file_templates'
     end
 
     resources :competitions, except: [:show] do

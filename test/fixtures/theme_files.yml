@@ -2,3 +2,8 @@ aachen_open_index:
   competition: aachen_open
   filename: index.html
   content: Hello!
+
+template_index:
+  theme: default
+  filename: index.html
+  content: Hello!

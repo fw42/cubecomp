@@ -21,17 +21,13 @@ class ThemeFileTest < ActiveSupport::TestCase
     assert_valid(new_file)
   end
 
-  test 'does validate presence and integrity of competition' do
-    @theme_file.competition = nil
-    assert_not_valid(@theme_file, :competition)
-
-    @theme_file.competition_id = 17
-    assert_not_valid(@theme_file, :competition)
-  end
-
   test 'validates liquid syntax' do
     @theme_file.content = '{{ foo'
     assert_not_valid(@theme_file, :content)
+  end
+
+  test 'does validate presence and integrity of competition' do
+    # TODO
   end
 
   test 'validates image content type' do
