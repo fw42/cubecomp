@@ -14,6 +14,10 @@ gem 'bcrypt'
 gem 'codemirror-rails'
 gem 'mysql2'
 
+gem 'auto_strip_attributes'
+
+gem 'marginalia'
+
 group :test do
   gem 'mocha'
   gem 'timecop'

@@ -15,8 +15,12 @@ module AdminHelper
     render 'text_editor', form: form, field: field, id: "#{form.object_name}_#{field}"
   end
 
+  def tooltip(link, text)
+    render 'tooltip', body: link, title: text
+  end
+
   def help_tooltip(text)
-    render 'tooltip', body: image_tag('help.png'), title: text
+    tooltip(image_tag('help.png'), text)
   end
 
   def delete_button(text, *link_args)

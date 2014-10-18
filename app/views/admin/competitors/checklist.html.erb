@@ -24,7 +24,7 @@
         <td><%= competitor.wca %></td>
         <td><%= competitor.birthday %> (<%= competitor.age %>)</td>
         <td><%= competitor.days.order(:date).map{ |day| day.date.strftime("%a") }.join(", ") %></td>
-        <td><%= competitor.event_counts.join("+") %></td>
+        <td><%= competitor.event_registration_counts.join("+") %></td>
         <td><%= competitor.checklist_service.entrance_fee %></td>
         <td class='comment'>
           <% competitor.checklist_service.comments.each_with_index do |comment, index| %>
