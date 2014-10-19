@@ -35,7 +35,7 @@ class Admin::CompetitionThemeFilesControllerTest < ActionController::TestCase
       post :create, competition_id: @competition.id, theme_file: params
     end
 
-    assert_redirected_to edit_admin_theme_file_path(assigns(:theme_file))
+    assert_redirected_to admin_competition_theme_files_path(@competition)
     assert_attributes(params, @competition.theme_files.last)
   end
 

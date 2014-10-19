@@ -4,7 +4,9 @@ class Admin::ThemeThemeFilesControllerTest < ActionController::TestCase
   tests Admin::ThemeFilesController
 
   setup do
-    # ...
+    @theme_file = theme_files(:template_index)
+    @theme = @theme_file.theme
+    login_as(users(:admin))
   end
 
   test '#index' do
@@ -33,7 +35,7 @@ class Admin::ThemeThemeFilesControllerTest < ActionController::TestCase
       post :create, theme_id: @theme.id, theme_file: params
     end
 
-    assert_redirected_to edit_admin_theme_file_path(assigns(:theme_file))
+    assert_redirected_to admin_theme_theme_files_path(@theme.id)
     assert_attributes(params, @theme.files.last)
   end
 
