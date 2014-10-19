@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141018201016) do
+ActiveRecord::Schema.define(version: 20141019002536) do
 
   create_table "competitions", force: true do |t|
     t.string   "name",                              null: false
@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(version: 20141018201016) do
 
   add_index "theme_files", ["competition_id"], name: "theme_files_competition_id_fk", using: :btree
   add_index "theme_files", ["filename", "competition_id"], name: "index_theme_files_on_filename_and_competition_id", unique: true, using: :btree
+  add_index "theme_files", ["theme_id"], name: "theme_files_theme_id_fk", using: :btree
 
   create_table "themes", force: true do |t|
     t.string   "name",       null: false
@@ -230,5 +231,6 @@ ActiveRecord::Schema.define(version: 20141018201016) do
   add_foreign_key "permissions", "users", name: "permissions_user_id_fk"
 
   add_foreign_key "theme_files", "competitions", name: "theme_files_competition_id_fk"
+  add_foreign_key "theme_files", "themes", name: "theme_files_theme_id_fk"
 
 end
