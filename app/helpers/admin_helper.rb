@@ -3,8 +3,8 @@ module AdminHelper
     form.button 'Save', type: 'submit'
   end
 
-  def cancel_button(link_target)
-    link_to 'Cancel', link_target, { class: 'button' }
+  def back_button(link_target)
+    link_to 'Back', link_target, { class: 'button' }
   end
 
   def form_section(title, &block)
