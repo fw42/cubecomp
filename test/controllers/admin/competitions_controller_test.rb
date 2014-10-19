@@ -10,7 +10,8 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
       country_id: countries(:germany).id,
       handle: 'go15',
       name: 'German Open 2015',
-      staff_email: 'german-open@cubecomp.de'
+      staff_email: 'german-open@cubecomp.de',
+      # TODO: add locales
     }
 
     @update_params = {
@@ -25,7 +26,8 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
       staff_name: 'aachen team',
       venue_address: 'rwth',
       delegate_user_id: users(:delegate).id,
-      owner_user_id: @competition.users.first.id
+      owner_user_id: @competition.users.first.id,
+      # TODO: add locales
     }
   end
 
