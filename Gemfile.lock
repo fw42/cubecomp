@@ -90,7 +90,7 @@ GEM
       actionpack (>= 2.3)
       activerecord (>= 2.3)
     metaclass (0.0.4)
-    mime-types (2.4.1)
+    mime-types (2.4.2)
     minitest (5.4.2)
     mocha (1.1.0)
       metaclass (~> 0.0.1)
