@@ -25,3 +25,8 @@ if %w(development test).include?(Rails.env)
 
   task default: [:test, :rubocop]
 end
+
+task :audit do
+  system("bundle exec bundle-audit update")
+  system("bundle exec bundle-audit")
+end
