@@ -6,7 +6,16 @@ class ThemeFile < ActiveRecord::Base
   has_attached_file :image
 
   validates :filename, presence: true
-  validates :filename, uniqueness: { scope: :competition_id }, allow_nil: true, allow_blank: true
+  validates :filename,
+    uniqueness: { scope: :competition_id },
+    allow_nil: true,
+    allow_blank: true,
+    unless: ->{ competition_id.nil? }
+  validates :filename,
+    uniqueness: { scope: :theme_id },
+    allow_nil: true,
+    allow_blank: true,
+    unless: ->{ theme_id.nil? }
 
   validate :validate_template_errors
   validate :validate_has_content_or_is_image
@@ -38,12 +47,19 @@ class ThemeFile < ActiveRecord::Base
     where(filename: filenames).order(order_query_segments.join(', '))
   }
 
-  scope :text_files, ->{ where(image_file_name: nil) }
-  scope :image_files, ->{ where.not(image_file_name: nil) }
+  scope :text_files, ->{ where(image_content_type: nil) }
+  scope :image_files, ->{ where.not(image_content_type: nil) }
+
+  def image_file_name
+    if image?
+      filename
+    else
+      nil
+    end
+  end
 
   def image_file_name=(filename)
     self.filename = filename
-    write_attribute(:image_file_name, filename)
   end
 
   def type
@@ -55,7 +71,7 @@ class ThemeFile < ActiveRecord::Base
   end
 
   def image?
-    image_file_name.present?
+    image_content_type.present?
   end
 
   private
@@ -67,9 +83,9 @@ class ThemeFile < ActiveRecord::Base
   end
 
   def validate_has_content_or_is_image
-    if content.present? && image_file_name.present?
+    if content.present? && image?
       errors.add(:content, "has to be blank for image files")
-    elsif content.blank? && image_file_name.blank?
+    elsif content.blank? && !image?
       errors.add(:content, "can't be blank for text files")
     end
   end

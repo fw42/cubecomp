@@ -39,4 +39,8 @@ Rails.application.configure do
 
   # Raises error on unpermitted parameters
   config.action_controller.action_on_unpermitted_parameters = :raise
+
+  Paperclip::Attachment.default_options.merge!({
+    :path => "tmp/cubecomp/test/uploads/:style/:filename"
+  })
 end

@@ -21,7 +21,7 @@ class ThemeTest < ActiveSupport::TestCase
     assert_valid(new_theme)
   end
 
-  test 'destroys theme file templates' do
+  test 'destroys theme files' do
     count = @theme.files.count
     assert_difference 'ThemeFile.count', -1 * count do
       @theme.destroy

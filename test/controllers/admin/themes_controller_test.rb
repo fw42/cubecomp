@@ -12,6 +12,26 @@ class Admin::ThemesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:themes)
   end
 
+  test '#new' do
+    # TODO
+  end
+
+  test '#edit' do
+    # TODO
+  end
+
+  test '#create' do
+    # TODO
+  end
+
+  test '#update' do
+    # TODO
+  end
+
+  test '#destroy' do
+    # TODO
+  end
+
   test '#show' do
     get :show, id: @theme
     assert_response :success

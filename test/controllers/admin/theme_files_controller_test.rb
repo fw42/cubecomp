@@ -12,6 +12,14 @@ class Admin::ThemeFilesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test '#edit theme file that has theme has back button to theme page' do
+    # TODO
+  end
+
+  test '#edit theme file that has competition has back button to competition' do
+    # TODO
+  end
+
   test '#update' do
     params = {
       filename: 'foobar.html',
