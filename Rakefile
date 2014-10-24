@@ -27,6 +27,6 @@ if %w(development test).include?(Rails.env)
 end
 
 task :audit do
-  system("bundle exec bundle-audit update")
-  system("bundle exec bundle-audit")
+  system('bundle exec bundle-audit update')
+  system('bundle exec bundle-audit')
 end
