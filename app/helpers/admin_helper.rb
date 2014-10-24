@@ -19,28 +19,32 @@ module AdminHelper
     render 'tooltip', body: link, title: text
   end
 
+  def icon_image_tag(filename)
+    image_tag(filename, width: 16, height: 16)
+  end
+
   def help_tooltip(text)
-    tooltip(image_tag('help.png'), text)
+    tooltip(icon_image_tag('help.png'), text)
   end
 
   def show_button(title, *link_args)
-    render 'tooltip', body: link_to(image_tag('show.png'), *link_args), title: title
+    render 'tooltip', body: link_to(icon_image_tag('show.png'), *link_args), title: title
   end
 
   def waiting_button(*link_args)
-    render 'tooltip', body: link_to(image_tag('set_waiting.png'), *link_args), title: 'Put on waiting list'
+    render 'tooltip', body: link_to(icon_image_tag('set_waiting.png'), *link_args), title: 'Put on waiting list'
   end
 
   def unset_waiting_button(*link_args)
-    render 'tooltip', body: link_to(image_tag('unset_waiting.png'), *link_args), title: 'Remove from waiting list'
+    render 'tooltip', body: link_to(icon_image_tag('unset_waiting.png'), *link_args), title: 'Remove from waiting list'
   end
 
   def edit_button(*link_args)
-    render 'tooltip', body: link_to(image_tag('edit.png'), *link_args), title: 'Edit'
+    render 'tooltip', body: link_to(icon_image_tag('edit.png'), *link_args), title: 'Edit'
   end
 
   def delete_button(*link_args)
-    render 'tooltip', body: link_to(image_tag('delete.png'), *link_args), title: 'Delete'
+    render 'tooltip', body: link_to(icon_image_tag('delete.png'), *link_args), title: 'Delete'
   end
 
   def options_for_minutes
