@@ -31,7 +31,7 @@ class Admin::CompetitionThemeFilesControllerTest < ActionController::TestCase
       content: 'foobar!'
     }
 
-    assert_difference('@competition.theme_files.count') do
+    assert_difference('@competition.theme_files.text_files.count') do
       post :create, competition_id: @competition.id, theme_file: params
     end
 
@@ -40,10 +40,21 @@ class Admin::CompetitionThemeFilesControllerTest < ActionController::TestCase
   end
 
   test '#new_image' do
-    # TODO: response ok
+    get :new_image, competition_id: @competition.id
+    assert_response :success
   end
 
   test '#create_image' do
-    # TODO: response ok
+    image = fixture_file_upload('files/logo.png', 'image/jpeg')
+    params = {
+      filename: 'logo.png',
+      image: image
+    }
+
+    assert_difference('@competition.theme_files.image_files.count') do
+      post :create_image, competition_id: @competition.id, theme_file: params
+    end
+
+    assert_redirected_to admin_competition_theme_files_path(@competition)
   end
 end

@@ -23,6 +23,14 @@ module Admin::ThemeFilesHelper
     end
   end
 
+  def create_image_file_url
+    if @theme
+      create_image_admin_theme_theme_files_path(@theme)
+    else
+      create_image_admin_competition_theme_files_path(current_competition)
+    end
+  end
+
   def theme_file_for_form(theme_file)
     if theme_file.persisted?
       [:admin, theme_file]

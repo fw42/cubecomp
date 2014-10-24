@@ -13,23 +13,36 @@ class Admin::ThemesControllerTest < ActionController::TestCase
   end
 
   test '#new' do
-    # TODO
+    get :new
+    assert_response :ok
   end
 
   test '#edit' do
-    # TODO
+    get :edit, id: @theme.id
+    assert_response :ok
   end
 
   test '#create' do
-    # TODO
+    assert_difference('Theme.count', +1) do
+      post :create, theme: { name: 'test theme' }
+    end
+
+    assert_redirected_to admin_themes_path
+    assert_equal 'test theme', Theme.last.name
   end
 
   test '#update' do
-    # TODO
+    patch :update, id: @theme.id, theme: { name: 'new name from update' }
+    assert_equal 'new name from update', @theme.reload.name
+    assert_redirected_to admin_themes_path
   end
 
   test '#destroy' do
-    # TODO
+    assert_difference('Theme.count', -1) do
+      delete :destroy, id: @theme.id
+    end
+
+    assert_redirected_to admin_themes_path
   end
 
   test '#show' do

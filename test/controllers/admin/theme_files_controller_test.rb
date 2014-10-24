@@ -13,11 +13,16 @@ class Admin::ThemeFilesControllerTest < ActionController::TestCase
   end
 
   test '#edit theme file that has theme has back button to theme page' do
-    # TODO
+    get :edit, id: @theme_file.id
+    url = admin_competition_theme_files_path(@competition)
+    assert @response.body.include?(url)
   end
 
   test '#edit theme file that has competition has back button to competition' do
-    # TODO
+    theme_file = theme_files(:template_index)
+    get :edit, id: theme_file.id
+    url = admin_theme_theme_files_path(theme_file.theme)
+    assert @response.body.include?(url)
   end
 
   test '#update' do
@@ -40,20 +45,14 @@ class Admin::ThemeFilesControllerTest < ActionController::TestCase
     assert_redirected_to admin_competition_theme_files_path(@competition)
   end
 
-  test "#update can't unassign competition_id" do
-    # TODO
-  end
-
-  test "#update can't assign different competition_id" do
-    # TODO
-  end
-
-  test "#update can't assign theme_id" do
-    # TODO
-  end
-
   test '#show_image' do
-    # TODO: response ok
-    # TODO: 404 if id belongs to non-image
+    theme_file = theme_files(:aachen_open_logo)
+    get :show_image, id: theme_file.id
+    assert_response :ok
+  end
+
+  test '#show_image on a theme file that is not an image returns 404' do
+    get :show_image, id: @theme_file.id
+    assert_response :not_found
   end
 end
