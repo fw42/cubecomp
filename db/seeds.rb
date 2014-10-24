@@ -105,7 +105,7 @@ def create_competitor(competition)
 
   competitor.save!
 
-  competition.events.each do |event|
+  competition.events.where(state: 'open_for_registration').each do |event|
     if rand < 0.3
       competitor.registration_service.register_for_event!(event)
     end
