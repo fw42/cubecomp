@@ -10,7 +10,7 @@ class Admin::CompetitorEmailController < AdminController
 
     if @email.valid?
       # TODO
-      # @email.deliver
+      @email.deliver
     else
       render :new
     end
