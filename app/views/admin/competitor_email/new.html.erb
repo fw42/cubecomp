@@ -1,0 +1,16 @@
+<% page_title "Confirmation email for #{@competitor.name}" %>
+
+<form>
+  <%= form_section 'Sender and recipient' do %>
+    <table class="form-table">
+      <tr>
+        <td>From:</td>
+        <td><%= staff_name %> (<%= staff_email %>)</td>
+      </tr>
+      <tr>
+        <td>To:</td>
+        <td><%= <%= f.text_field :handle %></td>
+      </tr>
+    </table>
+  <% end %>
+</form>
