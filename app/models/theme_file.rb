@@ -1,6 +1,4 @@
 class ThemeFile < ActiveRecord::Base
-  include LiquidContent
-
   belongs_to :theme
   belongs_to :competition
   validate :validate_belongs_to_either_theme_or_competition
@@ -20,6 +18,7 @@ class ThemeFile < ActiveRecord::Base
     unless: ->{ theme_id.nil? }
 
   validate :validate_has_content_or_is_image
+  validates :content, liquid: true, allow_nil: true, allow_blank: true
 
   validates :image, attachment_content_type: {
     content_type: [ 'image/jpeg', 'image/gif', 'image/png' ],
