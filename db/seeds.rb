@@ -84,7 +84,7 @@ def create_competitor(competition)
   end
 
   if rand < 0.5
-    competitor.wca = "#{2000 + rand(14)}#{competitor.last_name.upcase}1"
+    competitor.wca = "#{2000 + rand(14)}#{competitor.last_name.upcase}#{rand(10)}"
   end
 
   if rand < 0.2
