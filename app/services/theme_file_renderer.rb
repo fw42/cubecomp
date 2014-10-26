@@ -12,6 +12,7 @@ class ThemeFileRenderer
   def render
     parsed = Liquid::Template.parse(theme_file.content)
     parsed.registers[:file_system] = self
+    parsed.registers[:competition] = @competition
     parsed.render(assigns.stringify_keys)
   end
 

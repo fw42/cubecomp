@@ -1,7 +1,0 @@
-<%= form_for([:admin, @theme, @template]) do |f| %>
-  <%= render 'form_errors', object: @template, label: 'template' %>
-  <%= render 'theme_file_settings', f: f %>
-
-  <%= submit_button(f) %>
-  <%= cancel_button(admin_theme_path(@theme || @template.theme)) %>
-<% end %>

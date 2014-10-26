@@ -8,8 +8,19 @@ Rails.application.routes.draw do
 
     resources :users, except: [:show]
 
-    resources :themes, only: [:index, :show] do
-      resources :theme_file_templates, except: [:index, :show]
+    resources :theme_files, only: [:edit, :update, :destroy] do
+      member do
+        get :show_image
+      end
+    end
+
+    resources :themes do
+      resources :theme_files, only: [:index, :new, :create] do
+        collection do
+          get :new_image
+          post :create_image
+        end
+      end
     end
 
     resources :competitions, except: [:show] do
@@ -40,7 +51,13 @@ Rails.application.routes.draw do
       end
 
       resources :news, except: [:show]
-      resources :theme_files, except: [:show]
+
+      resources :theme_files, only: [:index, :new, :create] do
+        collection do
+          get :new_image
+          post :create_image
+        end
+      end
     end
   end
 

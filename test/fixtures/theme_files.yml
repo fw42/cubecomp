@@ -2,3 +2,14 @@ aachen_open_index:
   competition: aachen_open
   filename: index.html
   content: Hello!
+
+aachen_open_logo:
+  competition: aachen_open
+  filename: "logo.jpg"
+  image_content_type: "image/jpeg"
+  image_file_size: 47603
+
+template_index:
+  theme: default
+  filename: index.html
+  content: Hello!

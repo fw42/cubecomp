@@ -1,7 +1,27 @@
 <% page_title 'Themes' %>
 
-<ul>
-  <% @themes.each do |theme| %>
-    <li><%= link_to theme.name, [:admin, theme] %></li>
-  <% end %>
-</ul>
+<%= render 'notice' %>
+
+<p><%= link_to 'New theme', new_admin_theme_path %></p>
+
+<table class='default-table'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Files</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @themes.each do |theme| %>
+      <tr>
+        <td><%= link_to theme.name, admin_theme_theme_files_path(theme) %></td>
+        <td><%= theme.files.count %></td>
+        <td class='actions'>
+          <%= edit_button(edit_admin_theme_path(theme)) %>
+          <%= delete_button(admin_theme_path(theme), method: :delete, data: { confirm: 'Are you sure?' }) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

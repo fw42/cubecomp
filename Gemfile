@@ -17,6 +17,7 @@ gem 'mysql2'
 gem 'auto_strip_attributes'
 gem 'marginalia'
 gem 'liquid'
+gem 'paperclip'
 
 group :test do
   gem 'mocha'

@@ -1,0 +1,15 @@
+<%= form_for([:admin, @theme]) do |f| %>
+  <%= render 'form_errors', object: @theme, label: 'theme' %>
+
+  <%= form_section 'Settings' do %>
+    <table class="form-table">
+      <tr>
+        <td><%= f.label :name %></td>
+        <td><%= f.text_field :name %></td>
+      </tr>
+    </table>
+  <% end %>
+
+  <%= submit_button(f) %>
+  <%= back_button(admin_themes_path) %>
+<% end %>

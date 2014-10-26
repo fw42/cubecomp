@@ -80,5 +80,5 @@
   <% end %>
 
   <%= f.button 'Save', type: 'submit' %>
-  <%= cancel_button(admin_users_path) unless @user.persisted? %>
+  <%= back_button(admin_users_path) unless @user.persisted? %>
 <% end %>

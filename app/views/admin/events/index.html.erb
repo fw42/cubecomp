@@ -1,9 +1,9 @@
 <% page_title 'Events' %>
 
-<ul>
-  <li><%= link_to 'New Event', new_admin_competition_event_path %></li>
-  <li><%= link_to 'Waiting list overview', waiting_admin_competition_event_registrations_path(current_competition) %></li>
-</ul>
+<p>
+  <%= link_to 'New event', new_admin_competition_event_path %><br/>
+  <%= link_to 'Waiting list overview', waiting_admin_competition_event_registrations_path(current_competition) %>
+</p>
 
 <% current_competition.days.with_events.each do |day| %>
   <%= render 'table', day: day %>

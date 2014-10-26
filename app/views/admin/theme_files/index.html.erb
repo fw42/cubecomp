@@ -1,14 +1,43 @@
-<% page_title 'Theme' %>
+<% page_title(index_title) %>
 
 <%= render 'notice' %>
 
-<ul>
-  <% @theme_files.each do |theme_file| %>
-    <li>
-      <%= link_to theme_file.filename, edit_admin_competition_theme_file_path(current_competition, theme_file) %>
-      (<%= link_to 'Destroy', admin_competition_theme_file_path(current_competition, theme_file), method: :delete, data: { confirm: 'Are you sure?' } %>)
-    </Li>
-  <% end %>
-</ul>
+<p>
+  <%= link_to 'New text file', new_text_file_url %><br/>
+  <%= link_to 'Upload image file', new_image_file_url %><br/>
+</p>
 
-<%= link_to 'New theme file', new_admin_competition_theme_file_path %>
+<table class='default-table'>
+  <thead>
+    <tr>
+      <th>Filename</th>
+      <th>Type</th>
+      <th>Size</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @theme_files.each do |theme_file| %>
+      <tr>
+        <td>
+          <% if theme_file.image? %>
+            <%= link_to(theme_file.filename, show_image_admin_theme_file_path(theme_file)) %>
+          <% else %>
+            <%= link_to(theme_file.filename, edit_admin_theme_file_path(theme_file)) %>
+          <% end %>
+        </td>
+        <td><%= theme_file.type %></td>
+        <td><%= theme_file.size %> bytes</td>
+        <td class='actions'>
+          <%=
+            delete_button(
+              admin_theme_file_path(theme_file),
+              method: :delete,
+              data: { confirm: 'Are you sure?' }
+            )
+          %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

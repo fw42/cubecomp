@@ -1,0 +1,24 @@
+<% page_title @theme_file.filename  %>
+
+<%= form_section 'Settings' do %>
+  <table class="form-table">
+    <tr>
+      <td><b>Content type:</b></td>
+      <td><%= @theme_file.image_content_type %></td>
+    </tr>
+    <tr>
+      <td><b>Size:</b></td>
+      <td><%= @theme_file.image_file_size %> bytes</td>
+    </tr>
+    <tr>
+      <td><b>URL:</b></td>
+      <td><%= @theme_file.image.url %></td>
+    </tr>
+  </table>
+<% end %>
+
+<%= form_section 'Image file' do %>
+  <%= image_tag @theme_file.image.url %>
+<% end %>
+
+<%= back_button(back_button_url) %>

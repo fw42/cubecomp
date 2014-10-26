@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141011202808) do
+ActiveRecord::Schema.define(version: 20141020023420) do
 
   create_table "competitions", force: true do |t|
     t.string   "name",                              null: false
@@ -163,27 +163,21 @@ ActiveRecord::Schema.define(version: 20141011202808) do
   add_index "permissions", ["competition_id", "user_id"], name: "index_permissions_on_competition_id_and_user_id", using: :btree
   add_index "permissions", ["user_id", "competition_id"], name: "index_permissions_on_user_id_and_competition_id", unique: true, using: :btree
 
-  create_table "theme_file_templates", force: true do |t|
-    t.string   "filename",   null: false
-    t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "theme_id",   null: false
-  end
-
-  add_index "theme_file_templates", ["filename", "theme_id"], name: "index_theme_file_templates_on_filename_and_theme_id", unique: true, using: :btree
-  add_index "theme_file_templates", ["theme_id"], name: "index_theme_file_templates_on_theme_id", using: :btree
-
   create_table "theme_files", force: true do |t|
-    t.integer  "competition_id", null: false
+    t.integer  "competition_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "content"
-    t.string   "filename",       null: false
+    t.string   "filename",           null: false
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "theme_id"
   end
 
   add_index "theme_files", ["competition_id"], name: "theme_files_competition_id_fk", using: :btree
   add_index "theme_files", ["filename", "competition_id"], name: "index_theme_files_on_filename_and_competition_id", unique: true, using: :btree
+  add_index "theme_files", ["theme_id", "filename"], name: "index_theme_files_on_theme_id_and_filename", unique: true, using: :btree
 
   create_table "themes", force: true do |t|
     t.string   "name",       null: false
@@ -235,8 +229,7 @@ ActiveRecord::Schema.define(version: 20141011202808) do
   add_foreign_key "permissions", "competitions", name: "permissions_competition_id_fk"
   add_foreign_key "permissions", "users", name: "permissions_user_id_fk"
 
-  add_foreign_key "theme_file_templates", "themes", name: "theme_file_templates_theme_id_fk"
-
   add_foreign_key "theme_files", "competitions", name: "theme_files_competition_id_fk"
+  add_foreign_key "theme_files", "themes", name: "theme_files_theme_id_fk"
 
 end

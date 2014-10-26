@@ -15,7 +15,7 @@ module AdminMenuHelper
       },
       {
         label: 'Themes',
-        controller: [Admin::ThemesController, Admin::ThemeFileTemplatesController],
+        controller: [Admin::ThemesController, Admin::ThemeFilesController],
         url: admin_themes_path,
         css: 'fa-files-o'
       }

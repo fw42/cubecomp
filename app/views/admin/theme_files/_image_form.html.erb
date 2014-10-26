@@ -1,0 +1,16 @@
+<%=
+  form_for(theme_file_for_form(@theme_file), {
+    url: create_image_file_url,
+    html: { multipart: true }
+  }) do |f|
+%>
+
+  <%= render 'form_errors', object: @theme_file, label: 'theme file' %>
+
+  <%= form_section 'Image file' do %>
+    <%= f.file_field :image %>
+  <% end %>
+
+  <%= submit_button(f) %>
+  <%= back_button(back_button_url) %>
+<% end %>
