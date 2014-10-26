@@ -24,7 +24,7 @@ class Admin::EmailTemplatesControllerTest < ActionController::TestCase
   end
 
   test '#create' do
-    params = { name: 'foo', content: 'bar' }
+    params = { name: 'foo', content: 'bar', subject: 'foobar' }
 
     assert_difference('@competition.email_templates.count') do
       post :create, competition_id: @competition.id, email_template: params
@@ -34,6 +34,7 @@ class Admin::EmailTemplatesControllerTest < ActionController::TestCase
     template = @competition.email_templates.last
     assert_equal 'foo', template.name
     assert_equal 'bar', template.content
+    assert_equal 'foobar', template.subject
   end
 
   test '#edit' do
@@ -42,7 +43,7 @@ class Admin::EmailTemplatesControllerTest < ActionController::TestCase
   end
 
   test '#update' do
-    params = { name: 'foo', content: 'bar' }
+    params = { name: 'foo', content: 'bar', subject: 'foobar' }
 
     patch :update, competition_id: @competition.id, id: @template.id, email_template: params
 
@@ -50,6 +51,7 @@ class Admin::EmailTemplatesControllerTest < ActionController::TestCase
     template = @competition.email_templates.last
     assert_equal 'foo', template.name
     assert_equal 'bar', template.content
+    assert_equal 'foobar', template.subject
   end
 
   test '#destroy' do

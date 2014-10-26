@@ -45,6 +45,6 @@ class Admin::EmailTemplatesController < AdminController
   end
 
   def template_params
-    params.require(:email_template).permit(:name, :content)
+    params.require(:email_template).permit(:name, :content, :subject)
   end
 end

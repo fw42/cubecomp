@@ -5,5 +5,6 @@ class EmailTemplate < ActiveRecord::Base
   validates :name, presence: true
   validates :name, uniqueness: { scope: :competition_id }, allow_nil: true, allow_blank: true
 
+  validates :subject, liquid: true, allow_nil: true, allow_blank: true
   validates :content, liquid: true, allow_nil: true, allow_blank: true
 end

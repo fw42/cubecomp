@@ -1,4 +1,5 @@
 aachen_open_confirmation:
   competition: aachen_open
   name: Confirmation
+  subject: 'Aachen open'
   content: 'Welcome!'
