@@ -34,7 +34,7 @@ module AdminMenuHelper
       },
       {
         label: 'Competitors',
-        controller: Admin::CompetitorsController,
+        controller: [Admin::CompetitorsController, Admin::CompetitorEmailController],
         url: admin_competition_competitors_path(current_competition),
         css: 'fa-list-alt'
       },

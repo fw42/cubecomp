@@ -33,6 +33,16 @@ Rails.application.routes.draw do
           get :email_addresses
           get :csv
         end
+
+        member do
+          patch :confirm
+          patch :disable
+        end
+
+        member do
+          get 'email(/:activate)', to: 'competitor_email#new'
+          post 'email(/:activate)', to: 'competitor_email#create'
+        end
       end
 
       resources :event_registrations, only: [] do

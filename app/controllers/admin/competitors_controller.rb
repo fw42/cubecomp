@@ -87,6 +87,12 @@ class Admin::CompetitorsController < AdminController
     end
   end
 
+  def confirm
+  end
+
+  def disable
+  end
+
   def destroy
     @competitor.destroy
     redirect_to admin_competition_competitors_url(current_competition),
