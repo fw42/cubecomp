@@ -1,4 +1,6 @@
 class ThemeFile < ActiveRecord::Base
+  include LiquidContent
+
   belongs_to :theme
   belongs_to :competition
   validate :validate_belongs_to_either_theme_or_competition
@@ -17,7 +19,6 @@ class ThemeFile < ActiveRecord::Base
     allow_blank: true,
     unless: ->{ theme_id.nil? }
 
-  validate :validate_template_errors
   validate :validate_has_content_or_is_image
 
   validates :image, attachment_content_type: {
@@ -75,12 +76,6 @@ class ThemeFile < ActiveRecord::Base
   end
 
   private
-
-  def validate_template_errors
-    Liquid::Template.parse(content)
-  rescue Liquid::SyntaxError => e
-    errors.add(:content, "Contains invalid Liquid code: #{e.message}")
-  end
 
   def validate_has_content_or_is_image
     if content.present? && image?
