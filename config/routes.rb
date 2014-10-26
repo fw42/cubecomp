@@ -68,6 +68,8 @@ Rails.application.routes.draw do
           post :create_image
         end
       end
+
+      resources :email_templates, except: [:show]
     end
   end
 

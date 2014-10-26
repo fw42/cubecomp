@@ -1,0 +1,37 @@
+<% page_title 'Email templates' %>
+
+<%= render 'notice' %>
+
+<p><%= link_to 'New template', new_admin_competition_email_template_path %></p>
+
+<table class='default-table'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @templates.each do |template| %>
+      <tr>
+        <td>
+          <%=
+            link_to(
+              template.name,
+              edit_admin_competition_email_template_path(current_competition, template)
+            )
+          %>
+        </td>
+        <td class='actions'>
+          <%=
+            delete_button(
+              admin_competition_email_template_path(current_competition, template),
+              method: :delete,
+              data: { confirm: 'Are you sure?' }
+            )
+          %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

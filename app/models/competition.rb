@@ -27,7 +27,7 @@ class Competition < ActiveRecord::Base
   has_many :event_registrations
   has_many :locales, dependent: :destroy
   has_many :theme_files, dependent: :destroy
-
+  has_many :email_templates, dependent: :destroy
   has_many :permissions, dependent: :destroy
   has_many :users, through: :permissions
 

@@ -57,6 +57,12 @@ module AdminMenuHelper
         css: 'fa-files-o'
       },
       {
+        label: 'Email',
+        controller: Admin::EmailTemplatesController,
+        url: admin_competition_email_templates_path(current_competition),
+        css: 'fa-envelope'
+      },
+      {
         label: 'Settings',
         controller: Admin::CompetitionsController,
         actions: ['edit'],
