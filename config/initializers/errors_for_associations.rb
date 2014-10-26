@@ -6,7 +6,7 @@ module ActionView::Helpers::ActiveModelInstanceTag
     if @method_name.end_with?('_ids')
       # Check for a has_(and_belongs_to_)many association (these always use the _ids postfix field).
       association = object.class.reflect_on_association(@method_name.chomp('_ids').pluralize.to_sym)
-    else
+    elsif object.class.respond_to?(:reflect_on_all_associations)
       # Check for a belongs_to association with method_name matching the foreign key column
       association = object.class.reflect_on_all_associations.find do |a|
         a.macro == :belongs_to && a.foreign_key == @method_name
