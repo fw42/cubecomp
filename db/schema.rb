@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141020023420) do
+ActiveRecord::Schema.define(version: 20141026183103) do
 
   create_table "competitions", force: true do |t|
     t.string   "name",                              null: false
@@ -95,6 +95,16 @@ ActiveRecord::Schema.define(version: 20141020023420) do
 
   add_index "days", ["competition_id"], name: "index_days_on_competition_id", using: :btree
   add_index "days", ["date", "competition_id"], name: "index_days_on_date_and_competition_id", unique: true, using: :btree
+
+  create_table "email_templates", force: true do |t|
+    t.integer  "competition_id", null: false
+    t.string   "name",           null: false
+    t.text     "content",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "email_templates", ["competition_id", "name"], name: "index_email_templates_on_competition_id_and_name", unique: true, using: :btree
 
   create_table "event_registrations", force: true do |t|
     t.integer  "competition_id",                 null: false
@@ -213,6 +223,8 @@ ActiveRecord::Schema.define(version: 20141020023420) do
   add_foreign_key "day_registrations", "days", name: "day_registrations_day_id_fk"
 
   add_foreign_key "days", "competitions", name: "days_competition_id_fk"
+
+  add_foreign_key "email_templates", "competitions", name: "email_templates_competition_id_fk"
 
   add_foreign_key "event_registrations", "competitions", name: "event_registrations_competition_id_fk"
   add_foreign_key "event_registrations", "competitors", name: "event_registrations_competitor_id_fk"
