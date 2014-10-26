@@ -136,10 +136,18 @@ table.competitors {
   }
 }
 
+$table-highlight: #ffff99;
+
+table.registrations {
+  td.highlight {
+    background-color: $table-highlight !important;
+  }
+}
+
 table.events {
   margin-bottom: 25px;
 
   tr.not_for_registration {
-    background-color: #ffff99;
+    background-color: $table-highlight;
   }
 }
