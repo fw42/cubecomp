@@ -32,7 +32,7 @@ class Admin::NewsController < AdminController
 
   def destroy
     @news.destroy
-    redirect_to admin_competition_news_index_url(current_competition), notice: 'News item was successfully destroyed.'
+    redirect_to admin_competition_news_index_url(current_competition), notice: 'News item was successfully deleted.'
   end
 
   private

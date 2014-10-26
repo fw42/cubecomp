@@ -96,7 +96,7 @@ class Admin::CompetitorsController < AdminController
   def destroy
     @competitor.destroy
     redirect_to admin_competition_competitors_url(current_competition),
-      notice: 'Competitor was successfully destroyed.'
+      notice: 'Competitor was successfully deleted.'
   end
 
   private

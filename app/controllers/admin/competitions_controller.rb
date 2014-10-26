@@ -60,7 +60,7 @@ class Admin::CompetitionsController < AdminController
 
   def destroy
     @competition.destroy
-    redirect_to admin_competitions_url, notice: 'Competition was successfully destroyed.'
+    redirect_to admin_competitions_url, notice: 'Competition was successfully deleted.'
   end
 
   private

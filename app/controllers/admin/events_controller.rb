@@ -52,7 +52,7 @@ class Admin::EventsController < AdminController
   def destroy
     @event.destroy
     redirect_to admin_competition_events_url(current_competition),
-      notice: 'Event was successfully destroyed.'
+      notice: 'Event was successfully deleted.'
   end
 
   private
