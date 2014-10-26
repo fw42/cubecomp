@@ -2,7 +2,7 @@
   <%= form.text_area field, rows: 10 %>
 
   <script type='text/javascript'>
-    CodeMirror.fromTextArea(document.getElementById(<%= raw id.to_json %>), {
+    var textEditor = CodeMirror.fromTextArea(document.getElementById(<%= raw id.to_json %>), {
       lineNumbers: true,
       mode: { name: "htmlmixed" }
     });

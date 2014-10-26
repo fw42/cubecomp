@@ -2,7 +2,7 @@ class CompetitorEmail
   include ActiveModel::Validations
   include ActiveModel::Model
 
-  attr_accessor :from_name, :from_email, :to_name, :to_email, :cc_email, :subject, :template
+  attr_accessor :from_name, :from_email, :to_name, :to_email, :cc_name, :cc_email, :subject, :content
 
   validates :from_name, presence: true
   validates :to_name, presence: true
@@ -14,5 +14,5 @@ class CompetitorEmail
   validates :to_email, email: true, allow_nil: true, allow_blank: true
 
   validates :subject, presence: true
-  validates :template, presence: true
+  validates :content, presence: true
 end

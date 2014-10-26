@@ -1,5 +1,5 @@
 aachen_open_confirmation:
   competition: aachen_open
   name: Confirmation
-  subject: 'Aachen open'
-  content: 'Welcome!'
+  subject: '[{{ competition.name}}] Registration confirmation'
+  content: 'Welcome {{ competitor.name }}, see you, {{ user.name }}'

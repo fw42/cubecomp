@@ -63,6 +63,10 @@ Style/ClassAndModuleChildren:
 Style/TrailingComma:
   Enabled: false
 
+Style/TrailingWhitespace:
+  Exclude:
+    - 'test/services/email_template_renderer_test.rb'
+
 Style/IndentHash:
   EnforcedStyle: consistent
 

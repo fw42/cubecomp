@@ -21,6 +21,9 @@ class EmailTemplateRendererTest < ActiveSupport::TestCase
       {% for registration in competitor.registrations %}
       - {{ registration.name }} ({{ registration.day }})
       {% endfor %}
+
+      See you,
+      {{ user.name }}
     LIQUID
 
     expected = <<-LIQUID
@@ -32,6 +35,9 @@ class EmailTemplateRendererTest < ActiveSupport::TestCase
       
       - Rubik's Professor (2014-01-01)
       
+
+      See you,
+      #{@user.name}
     LIQUID
 
     @template.content = template
