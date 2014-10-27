@@ -16,7 +16,15 @@ module AdminHelper
   end
 
   def tooltip(link, text)
-    render 'tooltip', body: link, title: text
+    str = <<-HTML
+      <span class='with-tooltip'>
+        <span class='with-tooltip' data-toggle="tooltip" data-placement="top" data-original-title="#{text}">
+          #{link.html_safe}
+        </span>
+      </span>
+    HTML
+
+    str.html_safe
   end
 
   def icon_image_tag(filename)
@@ -28,23 +36,23 @@ module AdminHelper
   end
 
   def show_button(title, *link_args)
-    render 'tooltip', body: link_to(icon_image_tag('show.png'), *link_args), title: title
+    tooltip(link_to(icon_image_tag('show.png'), *link_args), title)
   end
 
   def waiting_button(*link_args)
-    render 'tooltip', body: link_to(icon_image_tag('set_waiting.png'), *link_args), title: 'Put on waiting list'
+    tooltip(link_to(icon_image_tag('set_waiting.png'), *link_args), 'Put on waiting list')
   end
 
   def unset_waiting_button(*link_args)
-    render 'tooltip', body: link_to(icon_image_tag('unset_waiting.png'), *link_args), title: 'Remove from waiting list'
+    tooltip(link_to(icon_image_tag('unset_waiting.png'), *link_args), 'Remove from waiting list')
   end
 
   def edit_button(*link_args)
-    render 'tooltip', body: link_to(icon_image_tag('edit.png'), *link_args), title: 'Edit'
+    tooltip(link_to(icon_image_tag('edit.png'), *link_args), 'Edit')
   end
 
   def delete_button(*link_args)
-    render 'tooltip', body: link_to(icon_image_tag('delete.png'), *link_args), title: 'Delete'
+    tooltip(link_to(icon_image_tag('delete.png'), *link_args), 'Delete')
   end
 
   def options_for_minutes
