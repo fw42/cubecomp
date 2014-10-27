@@ -1,5 +1,7 @@
 <% page_title 'Competitors' %>
 
+<%= render 'notice' %>
+
 <p>
   <%= link_to 'New competitor', new_admin_competition_competitor_path %><br/>
   <%= link_to 'CSV export', csv_admin_competition_competitors_path %><br/>
@@ -150,10 +152,30 @@
             %>
           <% end %>
 
-          <%= link_to(image_tag('mail.png'), new_email_admin_competition_competitor_path(current_competition, competitor)) %>
+          <%=
+            tooltip(
+              link_to(
+                image_tag('mail.png'),
+                new_email_admin_competition_competitor_path(current_competition, competitor)
+              ),
+              'Send email'
+            )
+          %>
 
           <% unless competitor.confirmation_email_sent? %>
-            <%= link_to(image_tag('mail_and_confirm.png'), new_email_admin_competition_competitor_path(current_competition, competitor, activate: 'activate')) %>
+            <%=
+              tooltip(
+                link_to(
+                  image_tag('mail_and_confirm.png'),
+                  new_email_admin_competition_competitor_path(
+                    current_competition,
+                    competitor,
+                    activate: 'activate'
+                  )
+                ),
+                'Send email and mark competitor as confirmed'
+              )
+            %>
           <% end %>
         </td>
       </tr>
