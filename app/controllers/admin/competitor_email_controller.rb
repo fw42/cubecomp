@@ -8,12 +8,20 @@ class Admin::CompetitorEmailController < AdminController
     @email.subject = email_params[:subject]
     @email.content = email_params[:content]
 
-    if @email.valid?
-      # TODO
-      @email.deliver
-    else
+    unless @email.valid?
       render :new
+      return
     end
+
+    CompetitorMailer.competitor_email(@email).deliver
+
+    flashes = if @activate
+      activate_competitor
+    else
+      { notice: "Email to #{@email.to_email} sent." }
+    end
+
+    redirect_to admin_competition_competitors_path(current_competition), flashes
   end
 
   def render_template
@@ -39,7 +47,7 @@ class Admin::CompetitorEmailController < AdminController
     @competitor = current_competition.competitors.find(params[:id])
 
     email_attributes = {
-      from_name: current_competition.staff_name,
+      from_name: current_competition.staff_name || current_competition.name,
       from_email: current_competition.staff_email,
       to_name: @competitor.name,
       to_email: @competitor.email,
@@ -53,5 +61,16 @@ class Admin::CompetitorEmailController < AdminController
     @email = CompetitorEmail.new(email_attributes)
 
     @activate = params[:activate]
+  end
+
+  def activate_competitor
+    @competitor.state = 'confirmed'
+    @competitor.confirmation_email_sent = true
+
+    if @competitor.save
+      { notice: "Email to #{@email.to_email} sent and competitor successfully confirmed." }
+    else
+      { error: "Email to #{@email.to_email} sent, but failed to confirm competitor." }
+    end
   end
 end

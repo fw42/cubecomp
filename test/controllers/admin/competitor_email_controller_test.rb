@@ -7,6 +7,10 @@ class Admin::CompetitorEmailControllerTest < ActionController::TestCase
     login_as(@competition.users.first)
   end
 
+  teardown do
+    ActionMailer::Base.deliveries.clear
+  end
+
   test '#new' do
     get :new, competition_id: @competition.id, id: @competitor.id
     assert_response :success
@@ -14,8 +18,36 @@ class Admin::CompetitorEmailControllerTest < ActionController::TestCase
     assert_not_nil assigns(:email)
   end
 
-  test '#create' do
-    # TODO
+  test '#create sends an email' do
+    params = {
+      "subject" => "[Aachen Open 2014] Welcome!",
+      "content" => "Hello!"
+    }
+
+    post :create, competition_id: @competition.id, id: @competitor.id, competitor_email: params
+    assert_redirected_to admin_competition_competitors_path(@competition)
+
+    emails = ActionMailer::Base.deliveries
+    assert_equal 1, emails.size
+    email = emails.first
+    assert_equal [@competitor.email], email.to
+    assert_equal [@competition.staff_email], email.from
+    assert_equal params['subject'], email.subject
+    assert_equal params['content'], email.body.to_s
+  end
+
+  test '#create with activate confirms the competitor and sets confirmation_email_sent to true' do
+    params = {
+      "subject" => "[Aachen Open 2014] Welcome!",
+      "content" => "Hello!"
+    }
+
+    @competitor.update_attributes(state: 'new', confirmation_email_sent: false)
+    post :create, competition_id: @competition.id, id: @competitor.id, competitor_email: params, activate: 'activate'
+    assert_redirected_to admin_competition_competitors_path(@competition)
+    @competitor.reload
+    assert_equal 'confirmed', @competitor.state
+    assert_equal true, @competitor.confirmation_email_sent
   end
 
   test '#render_template' do
