@@ -140,6 +140,8 @@ table.competitors {
   }
 }
 
+$table-highlight: #ffff99;
+
 table.registrations {
   td.highlight {
     background-color: $table-highlight !important;
