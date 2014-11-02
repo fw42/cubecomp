@@ -17,6 +17,10 @@ class EventRegistration < ActiveRecord::Base
 
   validate :event_for_registration?
 
+  def to_liquid
+    @liquid_drop ||= EventRegistrationDrop.new(self)
+  end
+
   private
 
   def competitor_registered_for_event_day?

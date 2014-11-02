@@ -1,7 +1,4 @@
 class ThemeFileRenderer
-  attr_reader :theme_file
-  attr_accessor :assigns
-
   def initialize(theme_file)
     @theme_file = theme_file
     @competition = @theme_file.competition
@@ -10,7 +7,7 @@ class ThemeFileRenderer
   end
 
   def render
-    parsed = Liquid::Template.parse(theme_file.content)
+    parsed = Liquid::Template.parse(@theme_file.content)
     parsed.registers[:file_system] = self
     parsed.registers[:competition] = @competition
     parsed.render(assigns.stringify_keys)

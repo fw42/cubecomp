@@ -53,7 +53,7 @@ class Admin::ThemeFilesController < AdminController
 
   def destroy
     @theme_file.destroy
-    redirect_to index_url, notice: 'Theme file was successfully destroyed.'
+    redirect_to index_url, notice: 'Theme file was successfully deleted.'
   end
 
   private

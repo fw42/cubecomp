@@ -34,7 +34,7 @@ module AdminMenuHelper
       },
       {
         label: 'Competitors',
-        controller: Admin::CompetitorsController,
+        controller: [Admin::CompetitorsController, Admin::CompetitorEmailController],
         url: admin_competition_competitors_path(current_competition),
         css: 'fa-list-alt'
       },
@@ -55,6 +55,12 @@ module AdminMenuHelper
         controller: Admin::ThemeFilesController,
         url: admin_competition_theme_files_path(current_competition),
         css: 'fa-files-o'
+      },
+      {
+        label: 'Email',
+        controller: Admin::EmailTemplatesController,
+        url: admin_competition_email_templates_path(current_competition),
+        css: 'fa-envelope'
       },
       {
         label: 'Settings',

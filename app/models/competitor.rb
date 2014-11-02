@@ -143,6 +143,10 @@ class Competitor < ActiveRecord::Base
     @checklist_service ||= ChecklistService.new(self)
   end
 
+  def to_liquid
+    @liquid_drop ||= CompetitorDrop.new(self)
+  end
+
   private
 
   def set_default_state

@@ -104,8 +104,6 @@ table.form-table select
 
 table.default-table {
   @extend .table;
-  @extend .table-striped;
-  @extend .table-hover;
   @extend .table-bordered;
 
   width: auto;
@@ -130,9 +128,21 @@ table.default-table {
   }
 }
 
+$table-highlight: #ffff99;
+
 table.competitors {
-  tr.competitor-new {
+  tr.new {
+    background-color: $table-highlight;
+  }
+
+  tr.disabled {
     background-color: #ff7766;
+  }
+}
+
+table.registrations {
+  td.highlight {
+    background-color: $table-highlight !important;
   }
 }
 
@@ -140,6 +150,6 @@ table.events {
   margin-bottom: 25px;
 
   tr.not_for_registration {
-    background-color: #ffff99;
+    background-color: $table-highlight;
   }
 }

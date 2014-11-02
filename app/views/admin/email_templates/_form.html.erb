@@ -1,0 +1,23 @@
+<%= form_for([:admin, current_competition, @template]) do |f| %>
+  <%= render 'form_errors', object: @template, label: 'template' %>
+
+  <%= form_section 'Settings' do %>
+    <table class="form-table">
+      <tr>
+        <td><%= f.label :name %></td>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :subject %></td>
+        <td><%= f.text_field :subject %></td>
+      </tr>
+    </table>
+  <% end %>
+
+  <%= form_section 'Text' do %>
+    <%= text_editor(f, :content) %>
+  <% end %>
+
+  <%= submit_button(f) %>
+  <%= back_button(admin_competition_email_templates_path) %>
+<% end %>

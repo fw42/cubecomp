@@ -120,6 +120,13 @@ class CompetitionTest < ActiveSupport::TestCase
     end
   end
 
+  test 'destroys email templates' do
+    count = @competition.email_templates.count
+    assert_difference 'EmailTemplate.count', -1 * count do
+      @competition.destroy
+    end
+  end
+
   test 'destroys theme_files, but not themes' do
     count = @competition.theme_files.count
     assert_difference 'ThemeFile.count', -1 * count do

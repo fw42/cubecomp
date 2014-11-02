@@ -33,6 +33,21 @@ Rails.application.routes.draw do
           get :email_addresses
           get :csv
         end
+
+        member do
+          patch :confirm
+          patch :disable
+        end
+
+        member do
+          get 'email(/:activate)', to: 'competitor_email#new', as: 'new_email'
+          post 'email', to: 'competitor_email#create', as: 'create_email'
+
+          get 'email/render(/:email_template_id)',
+            to: 'competitor_email#render_template',
+            as: 'render_email',
+            constraints: { format: 'json' }
+        end
       end
 
       resources :event_registrations, only: [] do
@@ -58,6 +73,8 @@ Rails.application.routes.draw do
           post :create_image
         end
       end
+
+      resources :email_templates, except: [:show]
     end
   end
 

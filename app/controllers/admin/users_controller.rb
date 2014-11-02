@@ -49,7 +49,7 @@ class Admin::UsersController < AdminController
 
   def destroy
     @user.destroy
-    redirect_to admin_users_url, notice: 'User was successfully destroyed.'
+    redirect_to admin_users_url, notice: 'User was successfully deleted.'
   end
 
   private

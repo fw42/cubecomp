@@ -1,0 +1,72 @@
+<script type='text/javascript'>
+  var templateFetcher = new EmailTemplateFetcher('<%= j(render_email_admin_competition_competitor_path(current_competition, @competitor)) %>')
+</script>
+
+<% if @activate %>
+  <% page_title "Confirmation email for #{@competitor.name}" %>
+<% else %>
+  <% page_title "Email for #{@competitor.name}" %>
+<% end %>
+
+<%= form_for(@email, url: create_email_admin_competition_competitor_path(current_competition, @competitor)) do |f| %>
+  <%= render 'form_errors', object: @email, label: 'email' %>
+
+  <% if current_competition.email_templates.exists? %>
+    <%= form_section 'Template' do %>
+      <table class="form-table">
+        <tr>
+          <td><label>Template:</label></td>
+          <td>
+            <select onchange="templateFetcher.fetch(this.value)">
+              <option></option>
+              <%=
+                options_for_select(current_competition.email_templates.map{ |template|
+                  [ template.name, template.id ]
+                })
+              %>
+            </select>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+  <% end %>
+
+  <%= form_section 'Settings' do %>
+    <table class="form-table">
+      <tr>
+        <td><label>From:</label></td>
+        <td><%= @email.from_name %> (<%= @email.from_email %>)</td>
+      </tr>
+      <tr>
+        <td><label>To:</label></td>
+        <td><%= @email.to_name %> (<%= @email.to_email %>)</td>
+      </tr>
+      <% if @email.cc_email %>
+        <tr>
+          <td><%= f.label :cc_email, 'CC:' %></td>
+          <td><%= @email.cc_name %> (<%= @email.cc_email %>)</td>
+        </tr>
+      <% end %>
+      <tr>
+        <td><%= f.label :subject %></td>
+        <td><%= f.text_field :subject %></td>
+      </tr>
+    </table>
+  <% end %>
+
+  <%= form_section 'Text' do %>
+    <%= text_editor(f, :content) %>
+    <script>
+      templateFetcher.setEditor(textEditor);
+    </script>
+  <% end %>
+
+  <% if @activate %>
+    <input type="hidden" name="activate" value="1" />
+    <%= submit_button(f, 'Send email and confirm competitor') %>
+  <% else %>
+    <%= submit_button(f, 'Send email') %>
+  <% end %>
+
+  <%= back_button(admin_competition_competitors_path) %>
+<% end %>
