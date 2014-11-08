@@ -45,21 +45,7 @@ class Admin::CompetitorEmailController < AdminController
 
   def set_competitor_and_email
     @competitor = current_competition.competitors.find(params[:id])
-
-    email_attributes = {
-      from_name: current_competition.staff_name || current_competition.name,
-      from_email: current_competition.staff_email,
-      to_name: @competitor.name,
-      to_email: @competitor.email,
-    }
-
-    if current_competition.cc_orga?
-      email_attributes[:cc_name] = current_competition.staff_name
-      email_attributes[:cc_email] = current_competition.staff_email
-    end
-
-    @email = CompetitorEmail.new(email_attributes)
-
+    @email = CompetitorEmail.for_competitor(@competitor)
     @activate = params[:activate]
   end
 

@@ -19,6 +19,9 @@ Metrics/ClassLength:
   Exclude:
     - 'test/**/*'
 
+Metrics/AbcSize:
+  Max: 20
+
 Lint/AmbiguousRegexpLiteral:
   Exclude:
     - 'test/**/*'
@@ -75,3 +78,6 @@ Style/FormatString:
 
 Style/AlignParameters:
   EnforcedStyle: with_fixed_indentation
+
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented

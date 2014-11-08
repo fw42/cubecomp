@@ -15,4 +15,22 @@ class CompetitorEmail
 
   validates :subject, presence: true
   validates :content, presence: true
+
+  def self.for_competitor(competitor)
+    competition = competitor.competition
+
+    attributes = {
+      from_name: competition.staff_name || competition.name,
+      from_email: competition.staff_email,
+      to_name: competitor.name,
+      to_email: competitor.email,
+    }
+
+    if competition.cc_orga?
+      attributes[:cc_name] = competition.staff_name
+      attributes[:cc_email] = competition.staff_email
+    end
+
+    new(attributes)
+  end
 end
