@@ -166,6 +166,18 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     assert_equal @update_params[:"birthday(3i)"].to_i, @competitor.birthday.day
   end
 
+  test '#confirm' do
+    @competitor.update_attributes(state: 'new')
+    patch :confirm, competition_id: @competition.id, id: @competitor.id
+    assert_equal 'confirmed', @competitor.reload.state
+  end
+
+  test '#disable' do
+    @competitor.update_attributes(state: 'new')
+    patch :disable, competition_id: @competition.id, id: @competitor.id
+    assert_equal 'disabled', @competitor.reload.state
+  end
+
   test '#update without login permission renders 401' do
     mock_login_not_allowed(@competition)
     patch :update, competition_id: @competition.id, id: @competitor.id, competitor: @update_params

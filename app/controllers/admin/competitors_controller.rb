@@ -26,7 +26,7 @@ class Admin::CompetitorsController < AdminController
     ]
   ]
 
-  before_action :set_competitor, only: [:edit, :update, :destroy]
+  before_action :set_competitor, only: [:edit, :update, :confirm, :disable, :destroy]
 
   def index
     @competitors = current_competition.competitors.for_index
@@ -88,9 +88,23 @@ class Admin::CompetitorsController < AdminController
   end
 
   def confirm
+    if @competitor.update_attributes(state: 'confirmed')
+      notice = { notice: 'Competitor was successfully confirmed.' }
+    else
+      notice = { error: 'Failed to confirm competitor.' }
+    end
+
+    redirect_to admin_competition_competitors_path(current_competition), notice
   end
 
   def disable
+    if @competitor.update_attributes(state: 'disabled')
+      notice = { notice: 'Competitor was successfully disabled.' }
+    else
+      notice = { error: 'Failed to disable competitor.' }
+    end
+
+    redirect_to admin_competition_competitors_path(current_competition), notice
   end
 
   def destroy
