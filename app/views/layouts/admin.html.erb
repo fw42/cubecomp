@@ -90,6 +90,9 @@
         <div class="row">
           <div class="col-lg-12">
             <h1 class="page-header"><%= yield(:page_title) %></h1>
+
+            <%= render 'notice' %>
+
             <%= yield %>
             <br/>
           </div>
