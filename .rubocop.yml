@@ -81,3 +81,6 @@ Style/AlignParameters:
 
 Style/MultilineOperationIndentation:
   EnforcedStyle: indented
+
+Style/IfUnlessModifier:
+  Enabled: false
