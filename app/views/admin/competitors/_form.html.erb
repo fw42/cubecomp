@@ -20,7 +20,7 @@
         <td><%= f.text_field :email %></td>
       </tr>
       <tr>
-        <td><%= f.label :birthday %></td>
+        <td><%= f.label :birthday, 'Birthday:' %>:</td>
         <td>
           <%=
             f.date_select :birthday, {
@@ -38,18 +38,23 @@
         <td><%= f.label :country, 'Country:' %></td>
         <td>
           <%= f.select :country_id, Country.all.map{ |c| [ c.name, c.id ] } %>
-          (<%= f.check_box :local %>&nbsp;<%= current_competition.city_name %>)
+          (
+            <%= f.check_box :local %>
+            <%= f.label :local, current_competition.city_name, class: 'checkbox' %>
+          )
         </td>
       </tr>
       <tr>
         <td><%= f.label :male, 'Gender:' %></td>
         <td>
-          <%= f.radio_button :male, true %> male
-          <%= f.radio_button :male, false %> female
+          <%= f.radio_button :male, true %>
+          <%= f.label :male, 'male', value: true, class: 'checkbox' %>
+          <%= f.radio_button :male, false %>
+          <%= f.label :male, 'female', value: false, class: 'checkbox' %>
         </td>
       </tr>
       <tr>
-        <td><%= f.label :nametag %></td>
+        <td><%= f.label :nametag, 'Nametag:' %></td>
         <td><%= f.text_field :nametag %></td>
       </tr>
     </table>
@@ -61,18 +66,26 @@
       <%= f.select :state, Competitor::STATES, {}, { class: 'small', style: 'display: inline' } %>
     </p>
 
-    <p><%= f.check_box :staff %> Staff member</p>
-    <p><%= f.check_box :confirmation_email_sent %> Confirmation email sent</p>
+    <p>
+      <%= f.check_box :staff %>
+      <%= f.label :staff, 'Staff member', class: 'checkbox' %>
+    </p>
+    <p>
+      <%= f.check_box :confirmation_email_sent %>
+      <%= f.label :confirmation_email_sent, 'Confirmation email sent', class: 'checkbox' %>
+    </p>
   <% end %>
 
   <%= form_section 'Financial settings' do %>
     <p>
-      <%= f.check_box :free_entrance %> Free entrance
+      <%= f.check_box :free_entrance %>
+      <%= f.label :free_entrance, 'Free entrance', class: 'checkbox' %>
       (Reason: <%= f.text_field :free_entrance_reason, class: 'inline' %>)
     </p>
 
     <p>
-      <%= f.check_box :paid %> Entrance fee paid
+      <%= f.check_box :paid %>
+      <%= f.label :paid, 'Entrance fee paid', class: 'checkbox' %>
       (Comment: <%= f.text_field :paid_comment, class: 'inline' %>)
     </p>
   <% end %>
@@ -98,21 +111,24 @@
             checked: !@competitor.registered_on?(day),
             onclick: 'jQuery("#day_' + day.id.to_s + '").slideUp("slow");'
         %>
-        not registered<br/>
+        <%= label "#{f.object_name}[days][#{day.id}]", 'status_not_registered', 'not registered', class: 'checkbox' %>
+        <br/>
 
         <%=
           radio_button "#{f.object_name}[days][#{day.id}]", :status, 'guest',
             checked: @competitor.guest_on?(day),
             onclick: 'jQuery("#day_' + day.id.to_s + '").slideUp("slow");'
         %>
-        registered as guest<br/>
+        <%= label "#{f.object_name}[days][#{day.id}]", 'status_guest', 'registered as guest', class: 'checkbox' %>
+        <br/>
 
         <%=
           radio_button "#{f.object_name}[days][#{day.id}]", :status, 'competitor',
             checked: @competitor.competing_on?(day),
             onclick: 'jQuery("#day_' + day.id.to_s + '").slideDown("slow");'
         %>
-        registered as competitor<br/>
+        <%= label "#{f.object_name}[days][#{day.id}]", 'status_competitor', 'registered as competitor', class: 'checkbox' %>
+        <br/>
       </p>
 
       <div id='day_<%= day.id %>' <% unless @competitor.competing_on?(day) %>style="display: none"<% end %>>
@@ -136,7 +152,12 @@
                       'not_registered',
                       checked: @competitor.event_registration_status(event) == 'not_registered'
                   %>
-                  not registered
+                  <%=
+                    label "#{f.object_name}[days][#{day.id}][events][#{event.id}]",
+                      'status_not_registered',
+                      'not registered',
+                      class: 'checkbox'
+                  %>
                 </td>
                 <td <% if @competitor.event_registration_status(event) == 'waiting' %>class='highlight'<% end %>>
                   <%=
@@ -145,7 +166,12 @@
                       'waiting',
                       checked: @competitor.event_registration_status(event) == 'waiting'
                   %>
-                  waiting
+                  <%=
+                    label "#{f.object_name}[days][#{day.id}][events][#{event.id}]",
+                      'status_waiting',
+                      'waiting',
+                      class: 'checkbox'
+                  %>
                 </td>
                 <td <% if @competitor.event_registration_status(event) == 'registered' %>class='highlight'<% end %>>
                   <%=
@@ -154,7 +180,12 @@
                       'registered',
                       checked: @competitor.event_registration_status(event) == 'registered'
                   %>
-                  registered
+                  <%=
+                    label "#{f.object_name}[days][#{day.id}][events][#{event.id}]",
+                      'status_registered',
+                      'registered',
+                      class: 'checkbox'
+                  %>
                 </td>
               </tr>
             <% end %>

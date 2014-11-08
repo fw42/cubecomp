@@ -30,8 +30,11 @@
       <tr>
         <td><%= f.label :cc_orga, 'Send copy of all emails to team:' %></td>
         <td>
-          <%= f.radio_button :cc_orga, true %> yes &nbsp;
-          <%= f.radio_button :cc_orga, false %> no
+          <%= f.radio_button :cc_orga, true %>
+          <%= f.label :cc_orga, 'yes', value: true, class: 'checkbox' %>
+          &nbsp;
+          <%= f.radio_button :cc_orga, false %>
+          <%= f.label :cc_orga, 'no', value: false, class: 'checkbox' %>
         </td>
       </tr>
       <tr>
@@ -48,19 +51,21 @@
           <%= help_tooltip 'The delegate will have permissions to log into this competition' %>
         </td>
       </tr>
-      <tr>
-        <td><label>Staff users:</label></td>
-        <td>
-          <% @competition.users.each do |user| %>
-            <% if current_user.policy.edit_user?(user) %>
-              <%= link_to user.name, admin_user_path(user) %>
-            <% else %>
-              <%= user.name %>
+      <% if @competition.users.size > 0 %>
+        <tr>
+          <td><label>Staff users:</label></td>
+          <td>
+            <% @competition.users.each do |user| %>
+              <% if current_user.policy.edit_user?(user) %>
+                <%= link_to user.name, admin_user_path(user) %>
+              <% else %>
+                <%= user.name %>
+              <% end %>
+              (<%= user.email %>)<br/>
             <% end %>
-            (<%= user.email %>)<br/>
-          <% end %>
-        </td>
-      </tr>
+          </td>
+        </tr>
+      <% end %>
     </table>
   <% end %>
 
@@ -69,7 +74,7 @@
       <%= ff.hidden_field :competition_id %>
       <%= ff.hidden_field :handle %>
       <%= ff.check_box :_destroy, { checked: ff.object.persisted? }, '0', '1' %>
-      <%= ff.object.name %><br/>
+      <%= ff.label :_destroy, ff.object.name, class: 'checkbox' %><br/>
     <% end %>
   <% end %>
 
@@ -151,8 +156,11 @@
       <tr>
         <td><%= f.label :registration_open, 'Registration status:' %></td>
         <td>
-          <%= f.radio_button :registration_open, true %> open<br/>
-          <%= f.radio_button :registration_open, false %> closed
+          <%= f.radio_button :registration_open, true %>
+          <%= f.label :registration_open, 'open', value: true, class: 'checkbox' %>
+          <br/>
+          <%= f.radio_button :registration_open, false %>
+          <%= f.label :registration_open, 'closed', value: false, class: 'checkbox' %>
         </td>
       </tr>
     </table>

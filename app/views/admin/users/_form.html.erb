@@ -42,8 +42,12 @@
         <td><%= f.label :delegate, 'WCA delegate:' %></td>
         <td>
           <% delegate_radio_disabled = !current_user.policy.change_delegate_flag?(@user) %>
-          <%= f.radio_button :delegate, true, disabled: delegate_radio_disabled %> yes &nbsp;
-          <%= f.radio_button :delegate, false, disabled: delegate_radio_disabled %> no
+
+          <%= f.radio_button :delegate, true, disabled: delegate_radio_disabled %>
+          <%= f.label :delegate, 'yes', value: true, class: 'checkbox' %>
+          &nbsp;
+          <%= f.radio_button :delegate, false, disabled: delegate_radio_disabled %>
+          <%= f.label :delegate, 'no', value: false, class: 'checkbox' %>
         </td>
       </tr>
     </table>
@@ -54,7 +58,7 @@
       <%= f.fields_for :permissions, @user.permissions.sort_by{ |p| p.competition.name } do |ff| %>
         <%= ff.hidden_field :competition_id %>
         <%= ff.check_box :_destroy, { checked: ff.object.persisted? }, '0', '1' %>
-        <%= ff.object.competition.name %><br/>
+        <%= ff.label :_destroy, ff.object.competition.name, class: 'checkbox' %><br/>
       <% end %>
     <% end %>
   <% end %>

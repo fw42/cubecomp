@@ -62,6 +62,11 @@ form label {
   @extend .control-label;
 }
 
+form label.checkbox {
+  font-weight: normal;
+  display: inline;
+}
+
 p#notice {
   @extend .alert;
   @extend .alert-success;
