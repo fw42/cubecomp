@@ -25,15 +25,32 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'password authentication' do
-    @user.password = 'foobar'
+    @user.password = 'foobartest'
     assert_valid @user
 
     refute @user.authenticate('wrong')
-    assert @user.authenticate('foobar')
+    assert @user.authenticate('foobartest')
+  end
+
+  test 'password presence' do
+    new_user = @user.dup
+    @user.destroy!
+    new_user.password = nil
+    assert_not_valid(new_user, :password)
+    new_user.password = 'x' * 10
+    assert_valid(new_user)
+  end
+
+  test 'validates password minimum length' do
+    @user.password = 'x'
+    assert_not_valid(@user, :password)
+
+    @user.password = 'x' * 8
+    assert_valid(@user)
   end
 
   test 'checks if passwords match if both given' do
-    @user.password = 'foobar'
+    @user.password = 'foobartest'
     @user.password_confirmation = 'bblabla'
     assert_not_valid(@user, :password_confirmation)
   end

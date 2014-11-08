@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   }
 
   has_secure_password
+  validates :password, presence: { on: :create }, length: { minimum: 8 }, if: :password_digest_changed?
 
   validates :email, presence: true
   validates :email, email: true, allow_nil: true, allow_blank: true
@@ -17,7 +18,7 @@ class User < ActiveRecord::Base
   validates :permission_level, presence: true
   validates :permission_level, inclusion: { in: PERMISSION_LEVELS.values }, allow_nil: true, allow_blank: true
 
-  has_many :permissions, dependent: :destroy
+  has_many :permissions, inverse_of: :user, dependent: :destroy
   has_many :competitions, through: :permissions
 
   accepts_nested_attributes_for :permissions, allow_destroy: true

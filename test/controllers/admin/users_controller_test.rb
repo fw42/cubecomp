@@ -22,8 +22,8 @@ class Admin::UsersControllerTest < ActionController::TestCase
       email: 'bob@cubecomp.de',
       first_name: 'Bob',
       last_name: 'Bobsen',
-      password: 'foobar',
-      password_confirmation: 'foobar',
+      password: 'foobartest',
+      password_confirmation: 'foobartest',
       permission_level: User::PERMISSION_LEVELS.values.min,
       address: 'Foo Bar 1, 123 Foo, Germany'
     }
@@ -61,8 +61,8 @@ class Admin::UsersControllerTest < ActionController::TestCase
       email: 'bob@cubecomp.de',
       first_name: 'Bob',
       last_name: 'Bobsen',
-      password: 'foobar',
-      password_confirmation: 'foobar',
+      password: 'foobartest',
+      password_confirmation: 'foobartest',
       address: 'Foo Bar 1, 123 Foo, Germany'
     }
 
@@ -76,7 +76,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
   end
 
   test "#update when passwords don't match fails" do
-    patch :update, id: @user, user: { password: 'foo', password_confirmation: 'bar' }
+    patch :update, id: @user, user: { password: 'foofoofoo', password_confirmation: 'barbarbar' }
     assert_response 200
     assert_equal ["doesn't match Password"], assigns(:user).errors[:password_confirmation]
     refute @user.reload.authenticate(:foo)
