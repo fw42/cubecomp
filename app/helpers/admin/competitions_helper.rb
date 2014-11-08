@@ -4,6 +4,11 @@ module Admin::CompetitionsHelper
     missing_locales.each do |locale|
       competition.locales.build(handle: locale)
     end
+
+    if competition.days.size == 0
+      competition.days.build
+    end
+
     competition
   end
 end
