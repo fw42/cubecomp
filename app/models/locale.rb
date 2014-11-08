@@ -4,7 +4,7 @@ class Locale < ActiveRecord::Base
     'en' => 'English'
   }
 
-  belongs_to :competition
+  belongs_to :competition, inverse_of: :locales
   validates :competition, presence: true
 
   validates :handle, presence: true

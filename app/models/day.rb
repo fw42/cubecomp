@@ -1,5 +1,5 @@
 class Day < ActiveRecord::Base
-  belongs_to :competition
+  belongs_to :competition, inverse_of: :days
   validates :competition, presence: true
 
   validates :date, presence: true

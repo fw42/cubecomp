@@ -22,7 +22,7 @@ class LocaleTest < ActiveSupport::TestCase
   end
 
   test 'validates uniqueness of handle scoped to competition' do
-    new_locale = @locale.dup
+    new_locale = locales(:aachen_open_english).dup
     assert_not_valid(new_locale, :handle)
 
     new_locale.competition = competitions(:german_open)

@@ -13,6 +13,18 @@ class CompetitionTest < ActiveSupport::TestCase
     assert_not_valid(@competition, :name)
   end
 
+  test 'validates presence of days' do
+    @competition.days.destroy_all
+    refute @competition.valid?
+    assert_match /at least one day/, @competition.errors[:base].first
+  end
+
+  test 'validates presence of locales' do
+    @competition.locales.destroy_all
+    refute @competition.valid?
+    assert_match /at least one language/, @competition.errors[:base].first
+  end
+
   test 'validates uniqueness of name' do
     new_competition = Competition.new
     new_competition.name = @competition.name

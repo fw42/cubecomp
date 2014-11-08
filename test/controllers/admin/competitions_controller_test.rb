@@ -5,13 +5,30 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     login_as(users(:admin))
     @competition = competitions(:aachen_open)
 
+    @days_attributes = {
+      '0' => {
+        'date(2i)' => '1',
+        'date(3i)' => '2',
+        'date(1i)' => '2019',
+        'entrance_fee_competitors' => '5',
+        'entrance_fee_guests' => '6.7'
+      }
+    }
+
     @new_competition_params = {
       city_name: 'Gütersloh',
       country_id: countries(:germany).id,
       handle: 'go15',
       name: 'German Open 2015',
       staff_email: 'german-open@cubecomp.de',
-      # TODO: add locales
+      locales_attributes: {
+        "0" => {
+          competition_id: "",
+          handle: "en",
+          _destroy: 0
+        }
+      },
+      days_attributes: @days_attributes
     }
 
     @update_params = {
@@ -27,7 +44,6 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
       venue_address: 'rwth',
       delegate_user_id: users(:delegate).id,
       owner_user_id: @competition.users.first.id,
-      # TODO: add locales
     }
   end
 
@@ -56,11 +72,23 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
 
   test '#create' do
     assert_difference 'Competition.count' do
-      post :create, competition: @new_competition_params
+      assert_difference 'Day.count' do
+        assert_difference 'Locale.count' do
+          post :create, competition: @new_competition_params
+        end
+      end
     end
 
+    competition = Competition.find_by(handle: @new_competition_params[:handle])
+
     assert_redirected_to admin_competitions_path
-    assert_attributes(@new_competition_params, Competition.find_by(handle: @new_competition_params[:handle]))
+    assert_attributes(@new_competition_params.except(:locales_attributes, :days_attributes), competition)
+    assert_equal @new_competition_params[:locales_attributes]['0'][:handle], competition.locales.first.handle
+
+    day = competition.days.last
+    assert_equal Date.parse('2019-01-02'), day.date
+    assert_equal 5.0, day.entrance_fee_competitors
+    assert_equal 6.7, day.entrance_fee_guests
   end
 
   test '#create without permission renders 401' do
@@ -146,17 +174,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
   end
 
   test '#update nested attributes for adding a day' do
-    params = {
-      days_attributes: {
-        '0' => {
-          'date(2i)' => '1',
-          'date(3i)' => '2',
-          'date(1i)' => '2019',
-          'entrance_fee_competitors' => '5',
-          'entrance_fee_guests' => '6.7'
-        }
-      }
-    }
+    params = { days_attributes: @days_attributes }
 
     assert_difference 'Day.count', +1 do
       assert_difference '@competition.reload.days.count', +1 do
