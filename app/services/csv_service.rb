@@ -67,6 +67,12 @@ class CsvService
   attr_reader :competition
 
   def all_competitors
-    @all_competitors ||= competition.competitors.for_csv
+    @all_competitors ||= competition
+      .competitors
+      .confirmed
+      .includes(:country)
+      .includes(:event_registrations)
+      .includes(:events)
+      .includes(:day_registrations)
   end
 end

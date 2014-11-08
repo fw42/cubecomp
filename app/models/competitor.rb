@@ -29,7 +29,7 @@ class Competitor < ActiveRecord::Base
   has_many :days, through: :day_registrations
 
   before_validation :set_default_state
-  validate :male_not_nil?
+  validate :validate_male_not_nil
 
   auto_strip_attributes :first_name, :last_name, :wca, :email
 
@@ -38,37 +38,6 @@ class Competitor < ActiveRecord::Base
   end
 
   scope :confirmed, ->{ where(state: 'confirmed') }
-
-  scope :for_checklist, lambda {
-    confirmed
-      .includes(:country)
-      .includes(:events)
-      .includes(:days)
-      .order('countries.name', :last_name, :first_name)
-  }
-
-  scope :for_nametags, lambda {
-    confirmed
-      .includes(:country)
-      .order(:last_name, :first_name)
-  }
-
-  scope :for_index, lambda {
-    all
-      .includes(:country)
-      .includes(:day_registrations)
-      .includes(:event_registrations)
-      .includes(:events)
-      .order(created_at: :desc)
-  }
-
-  scope :for_csv, lambda {
-    confirmed
-      .includes(:country)
-      .includes(:event_registrations)
-      .includes(:events)
-      .includes(:day_registrations)
-  }
 
   def name
     [first_name, last_name].join(' ')
@@ -153,7 +122,7 @@ class Competitor < ActiveRecord::Base
     self.state ||= STATES.first
   end
 
-  def male_not_nil?
+  def validate_male_not_nil
     return unless male.nil?
     errors.add(:male, 'must be either true or false')
   end

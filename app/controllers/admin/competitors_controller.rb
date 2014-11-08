@@ -29,16 +29,34 @@ class Admin::CompetitorsController < AdminController
   before_action :set_competitor, only: [:edit, :update, :confirm, :disable, :destroy]
 
   def index
-    @competitors = current_competition.competitors.for_index
+    @competitors = current_competition
+      .competitors
+      .includes(:country)
+      .includes(:day_registrations)
+      .includes(:event_registrations)
+      .includes(:events)
+      .order(created_at: :desc)
   end
 
   def nametags
-    @competitors = current_competition.competitors.for_nametags
+    @competitors = current_competition
+      .competitors
+      .confirmed
+      .includes(:country)
+      .order(:last_name, :first_name)
+
     render layout: 'admin/nametags'
   end
 
   def checklist
-    @competitors = current_competition.competitors.for_checklist
+    @competitors = current_competition
+      .competitors
+      .confirmed
+      .includes(:country)
+      .includes(:events)
+      .includes(:days)
+      .order('countries.name', :last_name, :first_name)
+
     render layout: 'admin/checklist'
   end
 
