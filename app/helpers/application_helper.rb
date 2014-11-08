@@ -3,9 +3,9 @@ module ApplicationHelper
     content_for(:page_title) { page_title }
   end
 
-  def page_title_with_image(page_title, image_url)
+  def page_title_with_image(page_title, image_tag)
     content_for(:page_title) do
-      image_tag(image_url) + ' ' + page_title
+      image_tag + ' ' + page_title
     end
   end
 
