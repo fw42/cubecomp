@@ -9,13 +9,12 @@ class EventRegistration < ActiveRecord::Base
   validates :competitor, presence: true
   validates :competitor_id, uniqueness: { scope: :event_id }, allow_nil: true
 
-  validate :competitor_registered_for_event_day?
-  validate :competition_ids_match
+  validate :validate_competitor_registered_for_event_day
+  validate :validate_event_for_registration
+  validate :validate_competition_ids_match
 
   scope :on_day, ->(day){ joins(:event).where('events.day_id = ?', day) }
   scope :waiting, ->{ where(waiting: true) }
-
-  validate :event_for_registration?
 
   def to_liquid
     @liquid_drop ||= EventRegistrationDrop.new(self)
@@ -23,19 +22,19 @@ class EventRegistration < ActiveRecord::Base
 
   private
 
-  def competitor_registered_for_event_day?
+  def validate_competitor_registered_for_event_day
     return unless competitor && event
     return if competitor.registered_on?(event.day_id)
     errors.add(:base, 'competitor is not registered for the day of the event')
   end
 
-  def event_for_registration?
+  def validate_event_for_registration
     return unless event
     return if event.state != 'not_for_registration'
     errors.add(:event, 'is not for registration')
   end
 
-  def competition_ids_match
+  def validate_competition_ids_match
     return unless competition_id
 
     if event && competition_id != event.competition_id

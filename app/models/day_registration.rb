@@ -9,7 +9,7 @@ class DayRegistration < ActiveRecord::Base
   validates :competitor, presence: true
   validates :competitor_id, uniqueness: { scope: :day_id }, allow_nil: true, allow_blank: true
 
-  validate :competition_ids_match
+  validate :validate_competition_ids_match
 
   after_destroy :destroy_event_registrations
 
@@ -19,7 +19,7 @@ class DayRegistration < ActiveRecord::Base
     competitor.event_registrations.on_day(day).each(&:destroy)
   end
 
-  def competition_ids_match
+  def validate_competition_ids_match
     return unless competition_id
 
     if day && competition_id != day.competition_id
