@@ -57,7 +57,7 @@
     <%= form_section 'Competition staff permissions' do %>
       <%= f.fields_for :permissions, @user.permissions.sort_by{ |p| p.competition.name } do |ff| %>
         <%= ff.hidden_field :competition_id %>
-        <%= ff.check_box :_destroy, { checked: ff.object.persisted? }, '0', '1' %>
+        <%= ff.check_box :_destroy, { checked: !ff.object.marked_for_destruction? && ff.object.persisted? }, '0', '1' %>
         <%= ff.label :_destroy, ff.object.competition.name, class: 'checkbox' %><br/>
       <% end %>
     <% end %>

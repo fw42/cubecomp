@@ -25,7 +25,7 @@ module Admin::UsersHelper
   private
 
   def missing_competition_ids(user)
-    competition_ids = user.permissions.pluck(:competition_id)
+    competition_ids = user.permissions.map(&:competition_id)
 
     if competition_ids.empty?
       Competition.all
