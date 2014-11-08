@@ -12,7 +12,7 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
   end
 
   test '#render Liquid template with competition and staff' do
-    @competition.update_attribute(:delegate, users(:delegate))
+    @competition.update_attributes(delegate: users(:delegate))
 
     template = <<-LIQUID
         Welcome to {{ competition.name }}

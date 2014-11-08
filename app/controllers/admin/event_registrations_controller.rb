@@ -17,7 +17,7 @@ class Admin::EventRegistrationsController < AdminController
   def remove_all_waiting
     EventRegistration.transaction do
       current_competition.event_registrations.where(waiting: true).each do |registration|
-        registration.update_attribute(:waiting, false)
+        registration.update_attributes(waiting: false)
       end
     end
 
@@ -26,7 +26,7 @@ class Admin::EventRegistrationsController < AdminController
   end
 
   def update_waiting
-    @registration.update_attribute(:waiting, params[:waiting] == 'true')
+    @registration.update_attributes(waiting: params[:waiting] == 'true')
     redirect_to admin_competition_event_event_registrations_path(current_competition, params[:event_id]),
       notice: 'Registration was marked as waiting.'
   end

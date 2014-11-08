@@ -22,7 +22,7 @@ class Admin::EventRegistrationsControllerTest < ActionController::TestCase
   end
 
   test '#remove_all_waiting' do
-    @registration.update_attribute(:waiting, true)
+    @registration.update_attributes(waiting: true)
     patch :remove_all_waiting, competition_id: @competition.id
     assert_equal false, @registration.reload.waiting
   end
