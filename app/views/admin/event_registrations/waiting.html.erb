@@ -1,23 +1,21 @@
 <% page_title 'Event waiting list overview' %>
 
-<ul>
-  <li>
-    <%=
-      link_to(
-        'Remove all competitors from all waiting lists',
-        remove_all_waiting_admin_competition_event_registrations_path(current_competition),
-        method: :patch,
-        data: { confirm: 'Are you sure?' }
-      )
-    %>
-  </li>
-</ul>
-
 <% if @registrations.size == 0 %>
-  <p>
-    All waiting lists are empty.
-  </p>
+  <p>All waiting lists are empty.</p>
 <% else %>
+  <ul>
+    <li>
+      <%=
+        link_to(
+          'Remove all competitors from all waiting lists',
+          remove_all_waiting_admin_competition_event_registrations_path(current_competition),
+          method: :patch,
+          data: { confirm: 'Are you sure?' }
+        )
+      %>
+    </li>
+  </ul>
+
   <% @registrations.each do |event, registrations| %>
     <h2><%= event.name %></h2>
 
