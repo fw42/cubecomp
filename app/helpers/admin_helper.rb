@@ -18,7 +18,7 @@ module AdminHelper
   def tooltip(link, text)
     str = <<-HTML
       <span class='with-tooltip'>
-        <span class='with-tooltip' data-toggle="tooltip" data-placement="top" data-original-title="#{text}">
+        <span class='with-tooltip' data-toggle="tooltip" data-placement="top" data-original-title="#{h(text)}">
           #{link.html_safe}
         </span>
       </span>
