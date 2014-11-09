@@ -13,6 +13,12 @@ class Locale < ActiveRecord::Base
 
   has_many :news, dependent: :destroy
 
+  has_one :competition_with_default,
+    class_name: 'Competition',
+    foreign_key: 'default_locale_id',
+    inverse_of: :default_locale,
+    dependent: :nullify
+
   def name
     Locale::ALL[handle]
   end

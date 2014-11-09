@@ -4,6 +4,7 @@ aachen_open:
   staff_email: cube@hackvalue.de
   city_name: Aachen
   country: germany
+  default_locale: aachen_open_german
 
 german_open:
   name: German Open 2014
@@ -11,3 +12,4 @@ german_open:
   staff_email: german_open@something.com
   city_name: Gütersloh
   country: germany
+  default_locale: german_open_german

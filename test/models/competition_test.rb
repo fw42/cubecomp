@@ -161,4 +161,9 @@ class CompetitionTest < ActiveSupport::TestCase
     @competition.owner.policy.expects(:login?).with(@competition).returns(false)
     assert_not_valid(@competition, :owner)
   end
+
+  test 'validates that default locale belongs to this competition' do
+    @competition.default_locale = locales(:german_open_german)
+    assert_not_valid(@competition, :default_locale)
+  end
 end

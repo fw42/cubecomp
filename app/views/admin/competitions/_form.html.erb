@@ -57,7 +57,7 @@
           <td>
             <% @competition.users.each do |user| %>
               <% if current_user.policy.edit_user?(user) %>
-                <%= link_to user.name, admin_user_path(user) %>
+                <%= link_to user.name, edit_admin_user_path(user) %>
               <% else %>
                 <%= user.name %>
               <% end %>
@@ -70,12 +70,25 @@
   <% end %>
 
   <%= form_section 'Language settings' do %>
-    <%= f.fields_for :locales, @competition.locales.to_a.sort_by(&:handle) do |ff| %>
-      <%= ff.hidden_field :competition_id %>
-      <%= ff.hidden_field :handle %>
-      <%= ff.check_box :_destroy, { checked: !ff.object.marked_for_destruction? && ff.object.persisted? }, '0', '1' %>
-      <%= ff.label :_destroy, ff.object.name, class: 'checkbox' %><br/>
-    <% end %>
+    <table class='form-table'>
+      <tr>
+        <td><label>Available languages:</label></td>
+        <td>
+          <%= f.fields_for :locales, @competition.locales.to_a.sort_by(&:handle) do |ff| %>
+            <%= ff.hidden_field :competition_id %>
+            <%= ff.hidden_field :handle %>
+            <%= ff.check_box :_destroy, { checked: !ff.object.marked_for_destruction? && ff.object.persisted? }, '0', '1' %>
+            <%= ff.label :_destroy, ff.object.name, class: 'checkbox' %><br/>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Default language:</label></td>
+        <td>
+          <%= f.select :default_locale_handle, @competition.locales.to_a.sort_by(&:handle).map{ |l| [ l.name, l.handle ] } %>
+        </td>
+      </tr>
+    </table>
   <% end %>
 
   <%= form_section 'Date and financial settings' do %>

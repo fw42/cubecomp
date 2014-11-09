@@ -45,4 +45,13 @@ class LocaleTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test 'deleting a default locale nullifies the default_locale_id column on competition' do
+    competition = @locale.competition
+    competition.default_locale = @locale
+    competition.save!
+
+    @locale.destroy!
+    assert_equal nil, competition.reload.default_locale_id
+  end
 end

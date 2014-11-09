@@ -130,7 +130,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
   end
 
   test '#update nested attributes for adding a locale' do
-    @competition.locales.each(&:destroy)
+    @competition.locales.where(handle: 'de').each(&:destroy!)
     @competition.reload
 
     params = {
@@ -171,6 +171,35 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     end
 
     refute Locale.where(id: locale.id).exists?
+  end
+
+  test '#update to change the default locale' do
+    @competition.update_attributes(default_locale: locales(:aachen_open_german))
+    patch :update, id: @competition.id, competition: { default_locale_handle: locales(:aachen_open_english).handle }
+    assert_equal 'en', @competition.reload.default_locale.handle
+  end
+
+  test '#update nested attributes for removing default locale sets remaining locale as default' do
+    locale = @competition.default_locale
+
+    params = {
+      locales_attributes: {
+        '0' => {
+          id: locale.id,
+          handle: locale.handle,
+          _destroy: '1'
+        }
+      }
+    }
+
+    assert_difference 'Locale.count', -1 do
+      assert_difference '@competition.reload.locales.count', -1 do
+        patch :update, id: @competition.id, competition: params
+      end
+    end
+
+    @competition.reload
+    assert_equal @competition.locales.first, @competition.default_locale
   end
 
   test '#update nested attributes for adding a day' do

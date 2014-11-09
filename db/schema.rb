@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141026193402) do
+ActiveRecord::Schema.define(version: 20141109001509) do
 
   create_table "competitions", force: true do |t|
     t.string   "name",                              null: false
@@ -28,9 +28,11 @@ ActiveRecord::Schema.define(version: 20141026193402) do
     t.datetime "updated_at"
     t.integer  "delegate_user_id"
     t.integer  "owner_user_id"
+    t.integer  "default_locale_id"
   end
 
   add_index "competitions", ["country_id"], name: "competitions_country_id_fk", using: :btree
+  add_index "competitions", ["default_locale_id"], name: "index_competitions_on_default_locale_id", unique: true, using: :btree
   add_index "competitions", ["delegate_user_id"], name: "competitions_delegate_user_id_fk", using: :btree
   add_index "competitions", ["handle"], name: "index_competitions_on_handle", unique: true, using: :btree
   add_index "competitions", ["name"], name: "index_competitions_on_name", unique: true, using: :btree
@@ -213,6 +215,7 @@ ActiveRecord::Schema.define(version: 20141026193402) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
   add_foreign_key "competitions", "countries", name: "competitions_country_id_fk"
+  add_foreign_key "competitions", "locales", name: "competitions_default_locale_id_fk", column: "default_locale_id"
   add_foreign_key "competitions", "users", name: "competitions_delegate_user_id_fk", column: "delegate_user_id"
   add_foreign_key "competitions", "users", name: "competitions_owner_user_id_fk", column: "owner_user_id"
 
