@@ -158,8 +158,8 @@ create_user(
   first_name: "WCA",
   last_name: "Delegate",
   email: "delegate@wca.com",
-  password: "delegate",
-  password_confirmation: "delegate",
+  password: "delegate123",
+  password_confirmation: "delegate123",
   permission_level: User::PERMISSION_LEVELS[:regular],
   delegate: true
 )
@@ -168,8 +168,8 @@ create_user(
   first_name: "Regular",
   last_name: "User",
   email: "regular@user.com",
-  password: "regular",
-  password_confirmation: "regular",
+  password: "regular123",
+  password_confirmation: "regular123",
   permission_level: User::PERMISSION_LEVELS[:regular]
 )
 
@@ -177,8 +177,8 @@ create_user(
   first_name: "Florian",
   last_name: "Weingarten",
   email: "flo@hackvalue.de",
-  password: "flo",
-  password_confirmation: "flo",
+  password: "floflo123",
+  password_confirmation: "floflo123",
   permission_level: User::PERMISSION_LEVELS[:superadmin]
 )
 
@@ -186,10 +186,13 @@ create_user(
   first_name: "Average",
   last_name: "Joe",
   email: "admin@admin.com",
-  password: "admin",
-  password_confirmation: "admin",
+  password: "admin123",
+  password_confirmation: "admin123",
   permission_level: User::PERMISSION_LEVELS[:superadmin]
 )
+
+locales = [Locale.new(handle: "de"), Locale.new(handle: "en")]
+days = [Day.new(date: Date.new(2014, 2, 13), entrance_fee_guests: 0, entrance_fee_competitors: 12)]
 
 competition = Competition.create!(
   name: "Aachen Open 2014",
@@ -197,7 +200,9 @@ competition = Competition.create!(
   staff_email: "foo@bar.com",
   staff_name: "Mister Staff",
   city_name: "Aachen",
-  country: germany
+  country: germany,
+  locales: locales,
+  days: days
 )
 
 create_associations(competition)
