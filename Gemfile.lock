@@ -81,6 +81,8 @@ GEM
     debugger-linecache (1.2.0)
     erubis (2.7.0)
     execjs (2.2.2)
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
     fastercsv (1.5.5)
     foreigner (1.7.0)
       activerecord (>= 3.0.0)
@@ -118,6 +120,7 @@ GEM
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     multi_json (1.10.1)
+    multipart-post (2.0.0)
     mysql2 (0.3.17)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
@@ -220,6 +223,7 @@ DEPENDENCIES
   codemirror-rails
   coffee-rails
   consistency_fail
+  faraday
   foreigner
   forgery
   immigrant

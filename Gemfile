@@ -9,6 +9,8 @@ gem 'coffee-rails'
 # work before version-bumping jQuery
 gem 'jquery-rails', '= 3.1.2'
 
+gem 'faraday'
+
 gem 'turbolinks'
 gem 'bcrypt'
 gem 'codemirror-rails'

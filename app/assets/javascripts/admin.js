@@ -15,3 +15,5 @@
 //= require codemirror/modes/xml
 //= require codemirror/modes/javascript
 //= require codemirror/modes/css
+
+//= require wca-autocomplete
