@@ -8,6 +8,7 @@ class Admin::CompetitionsController < AdminController
     :name,
     :handle,
     :delegate_user_id,
+    :default_locale_handle,
     :owner_user_id,
     :staff_email,
     :staff_name,

@@ -16,6 +16,9 @@ class Competition < ActiveRecord::Base
   belongs_to :owner, class_name: 'User', foreign_key: 'owner_user_id'
   validate :validate_owner_has_permission
 
+  belongs_to :default_locale, class_name: 'Locale', inverse_of: :competition, foreign_key: 'default_locale_id'
+  validate :validate_default_locale_belongs_to_competition
+
   belongs_to :delegate, class_name: 'User', foreign_key: 'delegate_user_id'
   validate :validate_delegate_user_is_a_delegate
 
@@ -38,8 +41,15 @@ class Competition < ActiveRecord::Base
   validate :validate_has_at_least_one_day
 
   def default_locale
-    # TODO, store/fetch from cookie
-    locales.first
+    super || locales.first
+  end
+
+  def default_locale_handle
+    default_locale.handle
+  end
+
+  def default_locale_handle=(handle)
+    self.default_locale = locales.detect{ |locale| locale.handle == handle }
   end
 
   def to_liquid
@@ -68,5 +78,10 @@ class Competition < ActiveRecord::Base
   def validate_has_at_least_one_day
     return if days.detect{ |day| !day.marked_for_destruction? }
     errors.add(:base, 'must have at least one day')
+  end
+
+  def validate_default_locale_belongs_to_competition
+    return if default_locale.nil? || default_locale.competition == self
+    errors.add(:default_locale, 'must belong to this competition')
   end
 end
