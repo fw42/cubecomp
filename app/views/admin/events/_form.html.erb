@@ -2,7 +2,33 @@
   <%= render 'form_errors', object: @event, label: 'event' %>
 
   <%= form_section 'Standard WCA Events' do %>
-    TODO
+    <table class='form-table'>
+      <tr>
+        <td>
+          <select id="standard-wca-events">
+            <% WCA_EVENTS.each_with_index do |event, index| %>
+              <option value="<%= index %>"><%= event[:name] %> (<%= event[:format] %>)</option>
+            <% end %>
+          </select>
+        </td>
+        <td>
+          <%= link_to 'Load', {}, { id: 'standard-wca-event-load-button', class: 'button' } %>
+          <%= javascript_tag do %>
+            var wca_events = <%= raw WCA_EVENTS.to_json %>
+            $("a#standard-wca-event-load-button").click(function(event) {
+              index = parseInt($("select#standard-wca-events").val());
+              wca_event = wca_events[index];
+              $("#event_name_short").val(wca_event["name_short"]);
+              $("#event_name").val(wca_event["name"]);
+              $("#event_format").val(wca_event["format"]);
+              $("#event_handle").val(wca_event["handle"]);
+
+              event.preventDefault();
+            });
+          <% end %>
+        </td>
+      </tr>
+    </table>
   <% end %>
 
   <%= form_section 'Name' do %>
