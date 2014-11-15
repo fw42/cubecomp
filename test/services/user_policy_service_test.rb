@@ -42,7 +42,7 @@ class UserPolicyServiceTest < ActiveSupport::TestCase
   end
 
   test 'change_competition_permissions? is true iff user is admin or better' do
-    assert_true_iff_admin_or_better(:change_competition_permissions?)
+    assert_true_iff_admin_or_better(:change_competition_permissions?, @competition)
   end
 
   test 'change_permission_level_to? is false if user is self' do

@@ -1,9 +1,9 @@
 module Admin::UsersHelper
   def user_for_form(user)
-    return user unless current_user.policy.change_competition_permissions?
-
     missing_competition_ids(user).each do |competition|
-      user.permissions.build(competition: competition)
+      if current_user.policy.change_competition_permissions?(competition)
+        user.permissions.build(competition: competition)
+      end
     end
 
     user

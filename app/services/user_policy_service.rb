@@ -23,7 +23,7 @@ class UserPolicyService
     admin?
   end
 
-  def change_competition_permissions? # TODO: take competition as parameter
+  def change_competition_permissions?(_competition)
     admin?
   end
 
