@@ -1,3 +1,5 @@
+Liquid::Template.error_mode = :strict
+
 filters = [
   ImageFilters
 ]
