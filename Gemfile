@@ -36,6 +36,8 @@ group :development, :test do
   gem 'immigrant'
   gem 'forgery'
 
+  gem 'webmock'
+
   gem 'consistency_fail'
   gem 'byebug'
   gem 'brakeman'
