@@ -101,7 +101,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
   test '#index without login permission renders 401' do
     mock_login_not_allowed(@competition)
     get :index, competition_id: @competition.id
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test '#new' do
@@ -112,7 +112,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
   test '#new without login permission renders 401' do
     mock_login_not_allowed(@competition)
     get :new, competition_id: @competition.id
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test '#create' do
@@ -141,7 +141,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       post :create, competition_id: @competition.id, competitor: @new_competitor_params
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test '#edit' do
@@ -152,7 +152,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
   test '#edit without login permission renders 401' do
     mock_login_not_allowed(@competition)
     get :edit, competition_id: @competition.id, id: @competitor.id
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test '#update' do
@@ -181,7 +181,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
   test '#update without login permission renders 401' do
     mock_login_not_allowed(@competition)
     patch :update, competition_id: @competition.id, id: @competitor.id, competitor: @update_params
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test '#update to change day registration from not_registered to guest' do
@@ -404,6 +404,6 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       delete :destroy, competition_id: @competition.id, id: @competitor.id
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 end

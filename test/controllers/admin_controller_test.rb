@@ -42,6 +42,32 @@ class AdminControllerTest < ActionController::TestCase
     assert_redirected_to edit_admin_user_path(user.id)
   end
 
+  test '#index redirects to user page if user is not allowed to login to any competitions' do
+    user = users(:regular_user_with_two_competitions)
+    login_as(user)
+    UserPolicy.any_instance.expects(:login?).with(anything).at_least_once.returns(false)
+    get :index
+    assert_redirected_to edit_admin_user_path(user.id)
+  end
+
+  test '#index allowed if user can #login? to competition' do
+    user = users(:regular_user_with_no_competitions)
+    login_as(user)
+    competition = Competition.first
+    UserPolicy.any_instance.expects(:login?).with(competition).at_least_once.returns(true)
+    get :index, competition_id: competition.id
+    assert_redirected_to admin_competition_dashboard_index_path(competition.id)
+  end
+
+  test '#index renders 403 if user cannot #login? to competition' do
+    user = users(:regular_user_with_no_competitions)
+    login_as(user)
+    competition = Competition.first
+    UserPolicy.any_instance.expects(:login?).with(competition).at_least_once.returns(false)
+    get :index, competition_id: competition.id
+    assert_response :forbidden
+  end
+
   test "#index redirects to last competition if user session has old competition that doesn't exist anymore" do
     user = users(:regular_user_with_two_competitions)
     login_as(user)
@@ -81,7 +107,7 @@ class AdminControllerTest < ActionController::TestCase
     login_as(users(:regular_user_with_no_competitions))
 
     with_csrf_protection do
-      get :edit, id: users(:regular_user_with_no_competitions)
+      get :edit, id: users(:regular_user_with_no_competitions).id
       assert_match(/<meta content="authenticity_token" name="csrf-param" \/>/, @response.body)
       assert_match(/<meta content="[^"]+" name="csrf-token" \/>/, @response.body)
     end

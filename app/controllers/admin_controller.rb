@@ -21,12 +21,20 @@ class AdminController < ApplicationController
     redirect_to admin_login_path
   end
 
+  def ensure_user_can_see_admin_menu
+    return render_forbidden unless current_user.policy.admin_user_menu?
+  end
+
   def render_not_found
     render text: 'not found', status: :not_found
   end
 
   def render_unauthorized
     render text: 'unauthorized', status: :unauthorized
+  end
+
+  def render_forbidden
+    render text: 'forbidden', status: :forbidden
   end
 
   def current_user
@@ -71,7 +79,7 @@ class AdminController < ApplicationController
     competition = Competition.find(competition_id)
 
     unless current_user.policy.login?(competition)
-      render_unauthorized
+      render_forbidden
       return
     end
 

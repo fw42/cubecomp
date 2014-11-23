@@ -53,10 +53,10 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:competitions)
   end
 
-  test '#index without permission renders 401' do
+  test '#index without permission renders forbidden' do
     mock_create_competitions_not_allowed
     get :index
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test '#new' do
@@ -64,10 +64,10 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test '#new without permissions renders 401' do
+  test '#new without permissions renders forbidden' do
     mock_create_competitions_not_allowed
     get :new
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test '#create' do
@@ -91,14 +91,14 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     assert_equal 6.7, day.entrance_fee_guests
   end
 
-  test '#create without permission renders 401' do
+  test '#create without permission renders forbidden' do
     mock_create_competitions_not_allowed
 
     assert_no_difference 'Competition.count' do
       post :create, competition: @new_competition_params
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test '#edit' do
@@ -111,10 +111,10 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     assert_response :not_found
   end
 
-  test '#edit without permission renders 401' do
+  test '#edit without login permission renders forbidden' do
     mock_login_not_allowed(@competition)
     get :edit, id: @competition.id
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test '#update' do
@@ -123,10 +123,10 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     assert_attributes(@update_params, @competition.reload)
   end
 
-  test '#update without permission renders 401' do
+  test '#update without permission renders forbidden' do
     mock_login_not_allowed(@competition)
     patch :update, id: @competition.id, competition: @update_params
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test '#update nested attributes for adding a locale' do
@@ -275,11 +275,11 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     assert_redirected_to admin_competitions_path
   end
 
-  test '#destroy without permission renders 401' do
+  test '#destroy without permission renders forbidden' do
     mock_destroy_competition_not_allowed(@competition)
     assert_no_difference 'Competition.count' do
       delete :destroy, id: @competition.id
     end
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 end

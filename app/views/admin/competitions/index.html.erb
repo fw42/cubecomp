@@ -1,6 +1,8 @@
 <% page_title "Competitions" %>
 
-<p><%= link_to 'New competition', new_admin_competition_path %></p>
+<% if current_user.policy.create_competitions? %>
+  <p><%= link_to 'New competition', new_admin_competition_path %></p>
+<% end %>
 
 <table class='default-table'>
   <thead>
@@ -35,7 +37,9 @@
           <% end %>
         </td>
         <td class='actions'>
-          <%= delete_button([:admin, competition], method: :delete, data: { confirm: 'Are you sure?' }) %>
+          <% if current_user.policy.destroy_competition?(competition) %>
+            <%= delete_button([:admin, competition], method: :delete, data: { confirm: 'Are you sure?' }) %>
+          <% end %>
         </td>
       </tr>
     <% end %>

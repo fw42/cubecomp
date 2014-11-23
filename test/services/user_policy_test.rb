@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class UserPolicyServiceTest < ActiveSupport::TestCase
+class UserPolicyTest < ActiveSupport::TestCase
   setup do
     @regular = users(:regular_user_with_no_competitions)
     @admin = users(:admin)
@@ -53,24 +53,20 @@ class UserPolicyServiceTest < ActiveSupport::TestCase
     end
   end
 
-  test 'change_permission_level_to? is true for superadmins' do
-    other_superadmin = @superadmin.dup
-    other_superadmin.email = 'other@superadmin.com'
-
-    [ @regular, @admin, @superadmin ].each do |user|
-      User::PERMISSION_LEVELS.values.each do |level|
-        assert other_superadmin.policy.change_permission_level_to?(user, level)
+  test "change_permission_level_to? is true iff level is lower than current user's level" do
+    User::PERMISSION_LEVELS.values.each do |level1|
+      user1 = User.new(permission_level: level1)
+      User::PERMISSION_LEVELS.values.each do |level2|
+        user2 = User.new
+        assert_equal(level2 < level1, user1.policy.change_permission_level_to?(user2, level2))
       end
     end
   end
 
-  test 'change_permission_level_to? is false if not superadmin' do
-    User::PERMISSION_LEVELS.values.each do |new_level|
-      User::PERMISSION_LEVELS.values.each do |user_level|
-        user_2 = User.new(permission_level: user_level)
-        [ @regular, @admin ].each do |user_1|
-          refute user_1.policy.change_permission_level_to?(user_2, new_level)
-        end
+  test "user can't change their own permission level, not even lower it" do
+    [ @regular, @admin, @superadmin ].each do |user|
+      User::PERMISSION_LEVELS.values.each do |level|
+        assert_equal false, user.policy.change_permission_level_to?(user, level)
       end
     end
   end
