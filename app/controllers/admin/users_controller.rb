@@ -1,6 +1,13 @@
 class Admin::UsersController < AdminController
   layout 'admin'
-  before_action :set_user, only: [:edit, :update, :destroy]
+
+  before_action :set_user, only: [:create, :edit, :update, :destroy]
+  before_action :ensure_user_can_see_admin_menu, except: [:edit, :update]
+  before_action :ensure_user_can_edit_user, only: [:edit, :update]
+  before_action :ensure_user_can_edit_permissions, only: [:update, :create]
+  before_action :ensure_user_can_edit_permission_level, only: [:update, :create]
+  before_action :ensure_user_can_edit_delegate_flag, only: [:update, :create]
+
   skip_before_action :ensure_current_competition
 
   PERMITTED_PARAMS = [
@@ -29,7 +36,7 @@ class Admin::UsersController < AdminController
   end
 
   def create
-    @user = User.new(user_params)
+    return render_forbidden unless current_user.policy.create_user?(@user)
 
     if @user.save
       redirect_to edit_admin_user_path(@user), notice: 'User was successfully created.'
@@ -48,6 +55,7 @@ class Admin::UsersController < AdminController
   end
 
   def destroy
+    return render_forbidden unless current_user.policy.destroy_user?(@user)
     @user.destroy
     redirect_to admin_users_url, notice: 'User was successfully deleted.'
   end
@@ -55,10 +63,40 @@ class Admin::UsersController < AdminController
   private
 
   def set_user
-    @user = User.find(params[:id])
+    if action_name == 'create'
+      @user = User.new(user_params)
+    else
+      @user = User.find(params[:id])
+    end
   end
 
   def user_params
     params.require(:user).permit(PERMITTED_PARAMS)
+  end
+
+  def ensure_user_can_edit_user
+    return render_forbidden unless current_user.policy.edit_user?(@user)
+  end
+
+  def ensure_user_can_edit_permissions
+    return unless user_params.key?(:permissions_attributes)
+
+    user_params[:permissions_attributes].each do |_, attributes|
+      next unless attributes[:competition_id]
+      competition = Competition.find(attributes[:competition_id])
+      return render_forbidden unless current_user.policy.change_competition_permissions?(competition)
+    end
+  end
+
+  def ensure_user_can_edit_permission_level
+    return unless user_params.key?(:permission_level)
+    return if current_user.policy.change_permission_level_to?(@user, user_params[:permission_level].to_i)
+    render_forbidden
+  end
+
+  def ensure_user_can_edit_delegate_flag
+    return unless user_params.key?(:delegate)
+    return if current_user.policy.change_delegate_flag?(@user)
+    render_forbidden
   end
 end

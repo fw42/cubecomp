@@ -1,5 +1,6 @@
 class Admin::ThemesController < AdminController
   before_action :set_theme, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_user_can_see_admin_menu
   skip_before_action :ensure_current_competition
 
   def index

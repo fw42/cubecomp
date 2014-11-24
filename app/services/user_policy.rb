@@ -1,4 +1,4 @@
-class UserPolicyService
+class UserPolicy
   def initialize(user)
     @user = user
   end
@@ -27,8 +27,8 @@ class UserPolicyService
     admin?
   end
 
-  def change_permission_level_to?(other_user, _level)
-    (other_user != @user) && superadmin?
+  def change_permission_level_to?(other_user, level)
+    !same_user?(other_user) && level < @user.permission_level
   end
 
   def change_delegate_flag?(_other_user)
@@ -40,14 +40,18 @@ class UserPolicyService
   end
 
   def edit_user?(other_user)
-    (other_user == @user) || higher_permission_level_than?(other_user)
+    same_user?(other_user) || higher_permission_level_than?(other_user)
   end
 
   def destroy_user?(other_user)
-    (other_user != @user) && higher_permission_level_than?(other_user)
+    !same_user?(other_user) && higher_permission_level_than?(other_user)
   end
 
   private
+
+  def same_user?(other_user)
+    (other_user == @user) || (@user.id.present? && @user.id == other_user.id)
+  end
 
   def admin?
     @user.permission_level >= User::PERMISSION_LEVELS[:admin]

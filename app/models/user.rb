@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   end
 
   def policy
-    @policy ||= UserPolicyService.new(self)
+    @policy ||= UserPolicy.new(self)
   end
 
   def delegate_for?(competition)

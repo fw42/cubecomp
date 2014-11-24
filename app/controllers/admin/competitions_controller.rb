@@ -67,11 +67,11 @@ class Admin::CompetitionsController < AdminController
   private
 
   def ensure_user_can_create_competitions
-    render_unauthorized unless current_user.policy.create_competitions?
+    render_forbidden unless current_user.policy.create_competitions?
   end
 
   def ensure_user_can_destroy_competition
-    render_unauthorized unless current_user.policy.destroy_competition?(@competition)
+    render_forbidden unless current_user.policy.destroy_competition?(@competition)
   end
 
   def set_competition

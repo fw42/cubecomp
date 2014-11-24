@@ -12,9 +12,21 @@ class Admin::UsersControllerTest < ActionController::TestCase
     assert_not_nil assigns(:users)
   end
 
+  test '#index without admin menu permission renders forbidden' do
+    UserPolicy.any_instance.expects(:admin_user_menu?).at_least_once.returns(false)
+    get :index
+    assert_response :forbidden
+  end
+
   test '#new' do
     get :new
     assert_response :success
+  end
+
+  test '#new without admin menu permission renders forbidden' do
+    UserPolicy.any_instance.expects(:admin_user_menu?).at_least_once.returns(false)
+    get :new
+    assert_response :forbidden
   end
 
   test '#create' do
@@ -38,17 +50,52 @@ class Admin::UsersControllerTest < ActionController::TestCase
     assert user.authenticate(params[:password])
   end
 
-  test '#edit on another user is not possible if not logged in as super admin' do
-    # TODO
+  test '#create without admin menu permission renders forbidden' do
+    UserPolicy.any_instance.expects(:admin_user_menu?).at_least_once.returns(false)
+    post :create, user: { first_name: 'Bob' }
+    assert_response :forbidden
   end
 
-  test '#edit on another user is possible if logged in as super admin' do
-    # TODO
+  test '#create without create_user? permission renders forbidden' do
+    UserPolicy.any_instance.expects(:create_user?).at_least_once.returns(false)
+    post :create, user: { first_name: 'Bob' }
+    assert_response :forbidden
+  end
+
+  test '#create permission level renders forbidden if UserPolicy#change_permission_level_to? is false' do
+    UserPolicy.any_instance.expects(:change_permission_level_to?)
+      .with{ |_, level| level.to_i == 1 }
+      .at_least_once
+      .returns(false)
+
+    assert_no_difference('User.count') do
+      post :create, user: { permission_level: 1 }
+    end
+
+    assert_response :forbidden
+  end
+
+  test '#create delegate flag without permission' do
+    UserPolicy.any_instance.expects(:change_delegate_flag?)
+      .at_least_once
+      .returns(false)
+
+    assert_no_difference('User.count') do
+      post :create, user: { delegate: true }
+    end
+
+    assert_response :forbidden
   end
 
   test '#edit' do
-    get :edit, id: @user
+    get :edit, id: @user.id
     assert_response :success
+  end
+
+  test '#edit with UserPolicy#edit_user? false renders forbidden' do
+    UserPolicy.any_instance.expects(:edit_user?).with{ |user| user.id == @user.id }.at_least_once.returns(false)
+    get :edit, id: @user.id
+    assert_response :forbidden
   end
 
   test '#edit renders 404 with invalid competition id' do
@@ -63,10 +110,11 @@ class Admin::UsersControllerTest < ActionController::TestCase
       last_name: 'Bobsen',
       password: 'foobartest',
       password_confirmation: 'foobartest',
-      address: 'Foo Bar 1, 123 Foo, Germany'
+      address: 'Foo Bar 1, 123 Foo, Germany',
+      delegate: true
     }
 
-    patch :update, id: @user, user: params
+    patch :update, id: @user.id, user: params
 
     assert assigns(:user)
     assert_redirected_to edit_admin_user_path(assigns(:user))
@@ -75,24 +123,118 @@ class Admin::UsersControllerTest < ActionController::TestCase
     assert user.authenticate(params[:password])
   end
 
+  test '#update permission level renders forbidden if UserPolicy#change_permission_level_to? is false' do
+    UserPolicy.any_instance.expects(:change_permission_level_to?)
+      .with{ |user, level| user.id == @user.id && level.to_i == 1 }
+      .at_least_once
+      .returns(false)
+
+    patch :update, id: @user.id, user: { permission_level: 1 }
+    assert_response :forbidden
+  end
+
+  test '#update with UserPolicy#edit_user? false renders forbidden' do
+    UserPolicy.any_instance.expects(:edit_user?).with{ |user| user.id == @user.id }.at_least_once.returns(false)
+    patch :update, id: @user.id, user: {}
+    assert_response :forbidden
+  end
+
+  test '#update delegate flag without permission' do
+    UserPolicy.any_instance.expects(:change_delegate_flag?)
+      .with{ |user| user.id == @user.id }
+      .at_least_once
+      .returns(false)
+
+    patch :update, id: @user.id, user: { delegate: true }
+    assert_response :forbidden
+    assert_equal false, @user.reload.delegate
+  end
+
   test "#update when passwords don't match fails" do
-    patch :update, id: @user, user: { password: 'foofoofoo', password_confirmation: 'barbarbar' }
+    patch :update, id: @user.id, user: { password: 'foofoofoo', password_confirmation: 'barbarbar' }
     assert_response 200
     assert_equal ["doesn't match Password"], assigns(:user).errors[:password_confirmation]
     refute @user.reload.authenticate(:foo)
   end
 
   test '#update with blank password fields doesnt change password' do
-    patch :update, id: @user, user: { password: '', password_confirmation: '' }
+    patch :update, id: @user.id, user: { password: '', password_confirmation: '' }
     @user.reload
     assert @user.authenticate('test')
   end
 
+  test '#update to change competition permissions for user' do
+    competition1 = competitions(:aachen_open)
+    competition2 = competitions(:german_open)
+    @user.permissions.each(&:destroy!)
+    @user.permissions.create!(competition_id: competition1.id)
+
+    patch :update, id: @user.id, user: {
+      permissions_attributes: {
+        "0" => {
+          "competition_id" => competition1.id,
+          "_destroy" => "0"
+        },
+        "1" => {
+          "competition_id" => competition2.id,
+          "_destroy" => "1"
+        }
+      }
+    }
+
+    @user.reload
+    assert_equal 1, @user.permissions.where(competition_id: competition1.id).size
+    assert_equal 0, @user.permissions.where(competition_id: competition2.id).size
+  end
+
+  test '#create and #update permissions without #change_competition_permissions? renders forbidden' do
+    competition = competitions(:aachen_open)
+
+    UserPolicy.any_instance.expects(:change_competition_permissions?)
+      .with{ |c| c.id == competition.id }
+      .at_least_once
+      .returns(false)
+
+    post :create, id: @user.id, user: {
+      permissions_attributes: {
+        "0" => {
+          "competition_id" => competition.id,
+          "_destroy" => "0"
+        }
+      }
+    }
+    assert_response :forbidden
+
+    patch :update, id: @user.id, user: {
+      permissions_attributes: {
+        "0" => {
+          "competition_id" => competition.id,
+          "_destroy" => "0"
+        }
+      }
+    }
+    assert_response :forbidden
+  end
+
   test '#destroy' do
     assert_difference('User.count', -1) do
-      delete :destroy, id: @user
+      delete :destroy, id: @user.id
     end
 
     assert_redirected_to admin_users_path
+  end
+
+  test '#destroy without admin menu permission renders forbidden' do
+    UserPolicy.any_instance.expects(:admin_user_menu?).at_least_once.returns(false)
+    delete :destroy, id: @user.id
+    assert_response :forbidden
+  end
+
+  test '#destroy with UserPolicy#destroy_user? false renders forbidden' do
+    UserPolicy.any_instance.expects(:destroy_user?).with{ |user| user.id == @user.id }.returns(false)
+    assert_no_difference('User.count') do
+      delete :destroy, id: @user.id
+    end
+    assert_response :forbidden
   end
 end

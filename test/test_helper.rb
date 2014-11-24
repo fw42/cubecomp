@@ -31,17 +31,17 @@ class ActionController::TestCase
   end
 
   def mock_login_not_allowed(competition)
-    policy = UserPolicyService.any_instance
+    policy = UserPolicy.any_instance
     policy.expects(:login?).with{ |c| c.id == competition.id }.returns(false)
   end
 
   def mock_create_competitions_not_allowed
-    policy = UserPolicyService.any_instance
+    policy = UserPolicy.any_instance
     policy.expects(:create_competitions?).returns(false)
   end
 
   def mock_destroy_competition_not_allowed(competition)
-    policy = UserPolicyService.any_instance
+    policy = UserPolicy.any_instance
     policy.expects(:destroy_competition?).with{ |c| c.id == competition.id }.returns(false)
   end
 end
