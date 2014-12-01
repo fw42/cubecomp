@@ -43,4 +43,6 @@ Rails.application.configure do
   Paperclip::Attachment.default_options.merge!({
     :path => "tmp/cubecomp/test/uploads/:style/:filename"
   })
+
+  config.active_support.test_order = :random
 end

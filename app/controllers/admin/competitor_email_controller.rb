@@ -13,7 +13,7 @@ class Admin::CompetitorEmailController < AdminController
       return
     end
 
-    CompetitorMailer.competitor_email(@email).deliver
+    CompetitorMailer.competitor_email(@email).deliver_now
 
     flashes = if @activate
       activate_competitor

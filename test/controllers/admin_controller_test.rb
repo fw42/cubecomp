@@ -108,8 +108,8 @@ class AdminControllerTest < ActionController::TestCase
 
     with_csrf_protection do
       get :edit, id: users(:regular_user_with_no_competitions).id
-      assert_match(/<meta content="authenticity_token" name="csrf-param" \/>/, @response.body)
-      assert_match(/<meta content="[^"]+" name="csrf-token" \/>/, @response.body)
+      assert_match(/<meta name="csrf-param" content="authenticity_token" \/>/, @response.body)
+      assert_match(/<meta name="csrf-token" content="[^"]+" \/>/, @response.body)
     end
   end
 

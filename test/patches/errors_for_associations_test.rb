@@ -13,8 +13,8 @@ class ErrorsForAssociationsTest < ActionController::TestCase
       first_name: 'Bob'
     }
 
-    label_error = 'div class="field_with_errors"><label for="competitor_country">Country:</label></div>'
-    select_error = '<div class="field_with_errors"><select id="competitor_country_id"'
+    label_error = '<div class="field_with_errors"><label for="competitor_country">Country:</label></div>'
+    select_error = '<div class="field_with_errors"><select name="competitor[country_id]" id="competitor_country_id"'
 
     assert @response.body.include?(label_error), 'should include error styling for the association'
     assert @response.body.include?(select_error), 'should include error styling for the foreign key'
