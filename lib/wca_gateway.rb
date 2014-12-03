@@ -4,7 +4,9 @@ class WCAGateway
   def initialize(url)
     @conn = Faraday.new(url: url) do |faraday|
       faraday.request  :url_encoded
-      faraday.response :logger
+      if !Rails.env.test?
+        faraday.response :logger
+      end
       faraday.adapter  Faraday.default_adapter
     end
   end
