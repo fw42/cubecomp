@@ -24,6 +24,7 @@ gem 'paperclip'
 group :test do
   gem 'mocha'
   gem 'timecop'
+  gem 'webmock'
 end
 
 group :development do
@@ -35,8 +36,6 @@ group :development, :test do
   gem 'foreigner'
   gem 'immigrant'
   gem 'forgery'
-
-  gem 'webmock'
 
   gem 'consistency_fail'
   gem 'byebug'
