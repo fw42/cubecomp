@@ -1,4 +1,7 @@
 $(document).ready ->
+  return unless $("#competitor_wca").length > 0
+  return unless $("#competitor_wca").attr("data-enable") == "true"
+
   autocompleteURL = $("#competitor_wca").attr("data-url")
 
   auto = $("#competitor_wca").typeahead {
