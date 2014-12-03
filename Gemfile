@@ -43,4 +43,5 @@ group :development, :test do
   gem 'spring'
   gem 'rubocop'
   gem 'bundler-audit'
+  gem 'dotenv-rails'
 end

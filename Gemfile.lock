@@ -81,6 +81,9 @@ GEM
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     debugger-linecache (1.2.0)
+    dotenv (1.0.2)
+    dotenv-rails (1.0.2)
+      dotenv (= 1.0.2)
     erubis (2.7.0)
     execjs (2.2.2)
     faraday (0.9.0)
@@ -229,6 +232,7 @@ DEPENDENCIES
   codemirror-rails
   coffee-rails
   consistency_fail
+  dotenv-rails
   faraday
   foreigner
   forgery
