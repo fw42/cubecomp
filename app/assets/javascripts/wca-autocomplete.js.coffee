@@ -15,7 +15,7 @@ $(document).ready ->
       object.id
     templates:
       suggestion: (item) ->
-        '<li role="presentation"><a role="menuitem" tabindex="-1" href="#"><strong>' + item.id + '</strong></a>'
+        '<li role="presentation"><a role="menuitem" tabindex="-1" href="#"><strong>' + item.id + '</strong></a> <small>(' + item.name + ')</small></li>'
   }
   auto.bind "typeahead:selected", (event, object) ->
     names = object.name.split(" ")
