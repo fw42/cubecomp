@@ -15,8 +15,16 @@ class WCAGatewayTest < ActiveSupport::TestCase
   end
 
   test '#search_by_id with several results' do
+    body = <<-eos
+      {
+        "competitors": [
+          {"id":"2009URBA01","name":"Micky Urban","gender":"m","country":"Germany"},
+          {"id":"2009URBA02","name":"Lucito Urbano","gender":"m","country":"Philippines"},
+          {"id":"2009URBI01","name":"Diego Urbina","gender":"m","country":"Chile"}]
+      }
+    eos
     stub_request(:get, "http://178.62.217.148/competitors?q=2009UR")
-      .to_return(status: 200, body: '{"competitors":[{"id":"2009URBA01","name":"Micky Urban","gender":"m","country":"Germany"},{"id":"2009URBA02","name":"Lucito Urbano","gender":"m","country":"Philippines"},{"id":"2009URBI01","name":"Diego Urbina","gender":"m","country":"Chile"}]}')
+      .to_return(status: 200, body: body)
 
     persons = @wca_api.search_by_id('2009UR')
 
