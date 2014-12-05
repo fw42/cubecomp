@@ -5,6 +5,8 @@ SimpleCov.start('rails') do
   add_group "Liquid", "app/liquid/"
 end
 
+SimpleCov.minimum_coverage(90)
+SimpleCov.maximum_coverage_drop(5)
 SimpleCov.command_name('MiniTest')
 
 ENV['RAILS_ENV'] ||= 'test'
