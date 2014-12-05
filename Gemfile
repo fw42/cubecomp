@@ -25,6 +25,7 @@ group :test do
   gem 'mocha'
   gem 'timecop'
   gem 'webmock'
+  gem 'simplecov'
 end
 
 group :development do

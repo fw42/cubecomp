@@ -5,3 +5,4 @@ TODO
 /log/*.log
 /tmp
 /public/system
+coverage
