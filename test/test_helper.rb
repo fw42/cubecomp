@@ -1,5 +1,10 @@
 require 'simplecov'
-SimpleCov.start('rails')
+SimpleCov.start('rails') do
+  add_group "Services", "app/services/"
+  add_group "Validators", "app/validators/"
+  add_group "Liquid", "app/liquid/"
+end
+
 SimpleCov.command_name('MiniTest')
 
 ENV['RAILS_ENV'] ||= 'test'
