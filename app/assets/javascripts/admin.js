@@ -15,3 +15,6 @@
 //= require codemirror/modes/xml
 //= require codemirror/modes/javascript
 //= require codemirror/modes/css
+
+//= require typeahead.jquery
+//= require wca-autocomplete

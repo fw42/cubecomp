@@ -9,6 +9,8 @@ gem 'coffee-rails'
 # work before version-bumping jQuery
 gem 'jquery-rails', '= 3.1.2'
 
+gem 'faraday'
+
 gem 'turbolinks'
 gem 'bcrypt'
 gem 'codemirror-rails'
@@ -22,6 +24,7 @@ gem 'paperclip'
 group :test do
   gem 'mocha'
   gem 'timecop'
+  gem 'webmock'
 end
 
 group :development do
@@ -40,4 +43,5 @@ group :development, :test do
   gem 'spring'
   gem 'rubocop'
   gem 'bundler-audit'
+  gem 'dotenv-rails'
 end

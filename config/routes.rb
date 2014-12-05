@@ -78,6 +78,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/wca_autocomplete', to: 'competitors#search', as: 'wca_autocomplete'
   get '/:competition_handle/(:locale/(:theme_file))',
     to: 'competitions#theme_file',
     as: 'competition_area'
