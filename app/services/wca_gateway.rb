@@ -1,4 +1,4 @@
-class WCAGateway
+class WcaGateway
   class ConnectionError < StandardError
     def initialize(exception)
       @exception = exception
@@ -23,11 +23,11 @@ class WCAGateway
     end
 
   rescue Faraday::ConnectionFailed => e
-    raise WCAGateway::ConnectionError.new(e)
+    raise WcaGateway::ConnectionError.new(e)
   # ClientError is Faraday's most generic error
   rescue Faraday::ClientError => e
-    raise WCAGateway::ConnectionError.new(e)
+    raise WcaGateway::ConnectionError.new(e)
   rescue JSON::ParserError => e
-    raise WCAGateway::ConnectionError.new(e)
+    raise WcaGateway::ConnectionError.new(e)
   end
 end

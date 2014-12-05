@@ -1,12 +1,12 @@
 require 'test_helper'
 
-class WCAGatewayTest < ActiveSupport::TestCase
+class WcaGatewayTest < ActiveSupport::TestCase
   setup do
-    @wca_api = WCAGateway.new('http://178.62.217.148')
+    @wca_api = WcaGateway.new('http://some-wca-api-url')
   end
 
   test '#search_by_id with no results' do
-    stub_request(:get, "http://178.62.217.148/competitors?q=2009URAI")
+    stub_request(:get, "http://some-wca-api-url/competitors?q=2009URAI")
       .to_return(status: 200, body: '{"competitors": []}')
 
     persons = @wca_api.search_by_id('2009URAI')
@@ -23,7 +23,7 @@ class WCAGatewayTest < ActiveSupport::TestCase
           {"id":"2009URBI01","name":"Diego Urbina","gender":"m","country":"Chile"}]
       }
     eos
-    stub_request(:get, "http://178.62.217.148/competitors?q=2009UR")
+    stub_request(:get, "http://some-wca-api-url/competitors?q=2009UR")
       .to_return(status: 200, body: body)
 
     persons = @wca_api.search_by_id('2009UR')
@@ -36,24 +36,24 @@ class WCAGatewayTest < ActiveSupport::TestCase
   end
 
   test '#search_by_id with connection error' do
-    stub_request(:get, "http://178.62.217.148/competitors?q=2009UR").to_raise(Errno::ECONNREFUSED)
-    assert_raises(WCAGateway::ConnectionError) do
+    stub_request(:get, "http://some-wca-api-url/competitors?q=2009UR").to_raise(Errno::ECONNREFUSED)
+    assert_raises(WcaGateway::ConnectionError) do
       @wca_api.search_by_id('2009UR')
     end
   end
 
   test '#search_by_id with invalid JSON' do
-    stub_request(:get, "http://178.62.217.148/competitors?q=2009UR")
+    stub_request(:get, "http://some-wca-api-url/competitors?q=2009UR")
       .to_return(status: 200, body: "404")
-    assert_raises(WCAGateway::ConnectionError) do
+    assert_raises(WcaGateway::ConnectionError) do
       @wca_api.search_by_id('2009UR')
     end
   end
 
   test '#search_by_id with non-successful response code' do
-    stub_request(:get, "http://178.62.217.148/competitors?q=2009UR")
+    stub_request(:get, "http://some-wca-api-url/competitors?q=2009UR")
       .to_return(status: 404, body: "{competitors: []}")
-    assert_raises(WCAGateway::ConnectionError) do
+    assert_raises(WcaGateway::ConnectionError) do
       @wca_api.search_by_id('2009UR')
     end
   end

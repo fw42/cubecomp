@@ -25,5 +25,7 @@ module Cubecomp
     config.autoload_paths << Rails.root.join('app/liquid/filters')
 
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.wca_api_url = ENV["WCA_API_URL"]
   end
 end

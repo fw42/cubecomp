@@ -5,7 +5,7 @@
     <table class="form-table">
       <tr>
         <td><%= f.label :wca, 'WCA ID:' %></td>
-        <td><%= f.text_field :wca, autocomplete: "off", data: {enable: ENV.key?("WCA_API_URL"), url: wca_autocomplete_path} %></td>
+        <td><%= f.text_field :wca, autocomplete: "off", data: {enable: Cubecomp::Application.config.wca_api_url.present?, url: wca_autocomplete_path} %></td>
       </tr>
       <tr>
         <td><%= f.label :first_name, 'First name:' %></td>
