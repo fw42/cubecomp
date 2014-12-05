@@ -1,10 +1,11 @@
 $(document).ready ->
-  return unless $("#competitor_wca").length > 0
-  return unless $("#competitor_wca").attr("data-enable") == "true"
+  $wcaIdField = $("#competitor_wca")
+  return unless $wcaIdField.length > 0
+  return unless $wcaIdField.attr("data-enable") == "true"
 
-  autocompleteURL = $("#competitor_wca").attr("data-url")
+  autocompleteURL = $wcaIdField.attr("data-url")
 
-  auto = $("#competitor_wca").typeahead {
+  auto = $wcaIdField.typeahead {
     minLength: 6
   },{
     source: (q, callback) ->
