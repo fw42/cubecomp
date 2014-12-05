@@ -57,10 +57,6 @@ class UserPolicy
     @user.permission_level >= User::PERMISSION_LEVELS[:admin]
   end
 
-  def superadmin?
-    @user.permission_level >= User::PERMISSION_LEVELS[:superadmin]
-  end
-
   def higher_permission_level_than?(other_user)
     @user.permission_level > (other_user.permission_level || 0)
   end

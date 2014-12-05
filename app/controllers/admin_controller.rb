@@ -29,10 +29,6 @@ class AdminController < ApplicationController
     render text: 'not found', status: :not_found
   end
 
-  def render_unauthorized
-    render text: 'unauthorized', status: :unauthorized
-  end
-
   def render_forbidden
     render text: 'forbidden', status: :forbidden
   end
