@@ -78,6 +78,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
   end
 
   test '#csv' do
+    @competition.competitors.each{ |competitor| competitor.update_attributes(state: 'confirmed') }
     get :csv, competition_id: @competition.id
     assert_response :success
   end
