@@ -40,6 +40,7 @@ class Event < ActiveRecord::Base
   end
 
   def end_time
-    start_time + (length_in_minutes || 0).minutes
+    return unless length_in_minutes
+    start_time + length_in_minutes.minutes
   end
 end

@@ -1,9 +1,11 @@
 class ThemeFileRenderer
-  def initialize(theme_file)
+  def initialize(theme_file:, controller:)
     @theme_file = theme_file
     @competition = @theme_file.competition
+    @controller = controller
 
     assign_drops
+    assign_views
   end
 
   def render
@@ -30,5 +32,14 @@ class ThemeFileRenderer
     assigns[:delegate] = @competition.delegate
     assigns[:owner] = @competition.owner
     assigns[:staff] = @competition.users
+  end
+
+  def assign_views
+    assigns[:news] = ViewDrop.new(template: 'news', controller: @controller)
+    assigns[:competitors] = ViewDrop.new(template: 'competitors', controller: @controller)
+
+    assigns[:days] = @competition.days.map do |day|
+      DayDrop.new(day: day, controller: @controller)
+    end
   end
 end

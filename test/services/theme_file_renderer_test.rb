@@ -10,7 +10,8 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
       delegate: users(:delegate)
     )
 
-    @renderer = ThemeFileRenderer.new(@theme_file)
+    @controller = ActionController::Base.new
+    @renderer = ThemeFileRenderer.new(theme_file: @theme_file, controller: @controller)
   end
 
   test '#assigns contains competition' do

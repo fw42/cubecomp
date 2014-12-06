@@ -121,6 +121,6 @@ class EventTest < ActiveSupport::TestCase
 
   test 'end_time if length_in_minutes is nil' do
     @event.length_in_minutes = nil
-    assert_equal @event.start_time, @event.end_time
+    assert_equal nil, @event.end_time
   end
 end

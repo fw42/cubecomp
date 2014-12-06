@@ -59,7 +59,7 @@ def create_event(competition)
     length_in_minutes: 30 + rand(60),
     max_number_of_registrations: 10 + rand(100),
     round: "First round",
-    timelimit: "10:00min",
+    timelimit: "10:00",
     format: "Average of 5"
   }.merge(EVENTS.shuffle.first))
 end
