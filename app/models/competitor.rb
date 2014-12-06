@@ -93,7 +93,7 @@ class Competitor < ActiveRecord::Base
   end
 
   def event_registration_status(event)
-    registration = event_registrations.where(event: event).first
+    registration = event_registrations.detect{ |event_registration| event_registration.event == event }
 
     if registration.nil?
       'not_registered'

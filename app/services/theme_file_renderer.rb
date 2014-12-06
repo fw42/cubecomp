@@ -36,7 +36,16 @@ class ThemeFileRenderer
 
   def assign_views
     assigns[:news] = ViewDrop.new(template: 'news', controller: @controller)
-    assigns[:competitors] = ViewDrop.new(template: 'competitors', controller: @controller)
+
+    assigns[:competitors] = ViewDrop.new(
+      template: 'competitors',
+      controller: @controller,
+      locals: {
+        :@competition => @competition,
+        :@competitors => @competition.competitors.confirmed
+          .includes(:country, :day_registrations, :event_registrations, :events)
+      }
+    )
 
     assigns[:days] = @competition.days.map do |day|
       DayDrop.new(day: day, controller: @controller)

@@ -53,6 +53,21 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
     assert_equal expected, @renderer.render
   end
 
+  test '#render Liquid template with competitors' do
+    @theme_file.content = "{{ competitors }}"
+    assert_match /<table class="competitors">/, @renderer.render
+  end
+
+  test '#render Liquid template with schedule' do
+    @theme_file.content = <<-LIQUID
+      {% for day in days %}
+        {{ day.schedule }}
+      {% endfor %}
+    LIQUID
+
+    assert_match /<table class="schedule">/, @renderer.render
+  end
+
   test '#render renders included Liquid templates' do
     @competition.theme_files.create!(filename: 'other_file.html', content: 'other file')
     @theme_file.content = "{% include 'other_file.html' %}"

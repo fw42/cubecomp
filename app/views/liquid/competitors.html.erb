@@ -1,1 +1,86 @@
-competitors
+<table class="competitors">
+  <% @competitors.each_with_index do |competitor, index| %>
+    <% if index % 25 == 0 %>
+      <% if index == 0 %>
+        <thead>
+      <% end %>
+
+      <tr>
+        <th><%= t(:name) %></th>
+        <th><%= t(:country) %></th>
+        <% if @competition.days.size > 1 %>
+          <% @competition.days.each do |day| %>
+            <th><small><%= day.date %></small></th>
+          <% end %>
+        <% end %>
+
+        <% @competition.events.map{ |event| event.handle }.sort.each do |handle| %>
+          <th><small><%= handle %></small></th>
+        <% end %>
+      </tr>
+
+      <% if index == 0 %>
+        </thead>
+        <tbody>
+      <% end %>
+    <% end %>
+
+    <tr>
+      <td>
+        <% if competitor.wca %>
+          <%= link_to competitor.name, wca_url(competitor.wca) %>
+        <% else %>
+          <%= competitor.name %>
+        <% end %>
+      </td>
+      <td>
+        <%= competitor.country.name %>
+        <% if @competition.city_name_short && competitor.local%>
+          (<%= @competition.city_name_short %>)
+        <% end %>
+      </td>
+
+      <% if @competition.days.size > 1 %>
+        <% @competition.days.each do |day| %>
+          <td>
+            <% if competitor.registered_on?(day) %>
+              <small>x</small>
+            <% end %>
+          </td>
+        <% end %>
+      <% end %>
+
+      <% @competition.events.sort_by{ |event| event.handle }.each do |event| %>
+        <td>
+          <small>
+            <%=
+              case competitor.event_registration_status(event)
+              when 'registered'
+                "x"
+              when 'waiting'
+                "w"
+              else
+                "&nbsp;".html_safe
+              end
+            %>
+          </small>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+  <tbody>
+    <tr>
+      <th>&sum;: <%= @competitors.length %></th>
+      <th><%= @competitors.map{ |c| c.country }.uniq.length %></th>
+      <% if @competition.days.size > 1 %>
+        <% @competition.days.each do |day| %>
+          <th><%= @competitors.select{ |competitor| competitor.registered_on?(day) }.length %></th>
+        <% end %>
+      <% end %>
+      <% @competition.events.sort_by(&:handle).each do |event| %>
+        <th><%= @competitors.select{ |competitor| competitor.event_registration_status(event) != 'not_registered' }.size %></th>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
