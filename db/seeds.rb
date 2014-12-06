@@ -10,22 +10,22 @@ EVENTS = [
   {
     name_short: "3x3x3",
     name: "Rubik's Cube",
-    handle: "333"
+    handle: "3"
   },
   {
     name_short: "4x4x4",
     name: "Rubik's Revenge",
-    handle: "444"
+    handle: "4"
   },
   {
     name_short: "5x5x5",
     name: "Rubik's Professor",
-    handle: "555"
+    handle: "5"
   },
   {
     name_short: "3x3 bld",
     name: "Rubik's Cube blind",
-    handle: "333bld"
+    handle: "3b"
   }
 ]
 
@@ -50,18 +50,18 @@ def create_day(competition)
   )
 end
 
-def create_event(competition)
-  Event.create({
+def create_event(competition, event)
+  Event.create!({
     competition: competition,
-    day: competition.days.to_a.shuffle.first,
-    state: Event::STATES.keys.shuffle.first,
+    day: competition.days.to_a.sample,
+    state: 'open_for_registration',
     start_time: Time.new(2000, 1, 1, rand(24), rand(60)),
     length_in_minutes: 30 + rand(60),
     max_number_of_registrations: 10 + rand(100),
     round: "First round",
     timelimit: "10:00",
     format: "Average of 5"
-  }.merge(EVENTS.shuffle.first))
+  }.merge(event))
 end
 
 def create_competitor(competition)
@@ -71,8 +71,8 @@ def create_competitor(competition)
     last_name: Forgery::Name.last_name,
     email: Forgery(:internet).email_address,
     birthday: Date.today - 10.years - rand(50*365).days,
-    state: Competitor::STATES.shuffle.first,
-    country: Country.all.to_a.shuffle.first,
+    state: Competitor::STATES.sample,
+    country: Country.all.to_a.sample,
     male: rand(2) == 0,
     staff: rand < 0.1,
     local: rand < 0.2,
@@ -80,7 +80,7 @@ def create_competitor(competition)
   )
 
   if rand < 0.1
-    competitor.birthday = competition.days.to_a.shuffle.first.date - (10 + rand(10)).years
+    competitor.birthday = competition.days.to_a.sample.date - (10 + rand(10)).years
   end
 
   if rand < 0.5
@@ -105,30 +105,36 @@ def create_competitor(competition)
 
   competitor.save!
 
-  competition.events.where(state: 'open_for_registration').each do |event|
-    if rand < 0.3
+  events = 0
+  competition.events.where(state: 'open_for_registration').to_a.shuffle.each do |event|
+    if events == 0 || rand < 0.3
+      puts 'event'
       competitor.registration_service.register_for_event!(event)
+      events += 1
     end
   end
 
-  if competitor.event_registrations.count == 0
-    competitor.registration_service.register_as_guest!(competition.days.to_a.shuffle.first)
+  competition.days.each do |day|
+    if !competitor.competing_on?(day) && rand < 0.25
+      competitor.registration_service.register_as_guest!(day)
+    end
   end
 
   puts "Creating competitor #{competitor.name}"
-  competitor
+  competitor.reload
 end
 
 
 def create_associations(competition)
   create_day(competition)
   create_day(competition)
+  competition.reload
 
   competition.locales.create(handle: 'de')
   competition.locales.create(handle: 'en')
 
-  10.times do
-    create_event(competition)
+  EVENTS.each do |event|
+    create_event(competition, event)
   end
 
   50.times do
@@ -196,10 +202,11 @@ days = [Day.new(date: Date.new(2014, 2, 13), entrance_fee_guests: 0, entrance_fe
 
 competition = Competition.create!(
   name: "Aachen Open 2014",
-  handle: "aachen-open-2014",
+  handle: "ao14",
   staff_email: "foo@bar.com",
   staff_name: "Mister Staff",
   city_name: "Aachen",
+  city_name_short: "AC",
   country: germany,
   locales: locales,
   days: days
