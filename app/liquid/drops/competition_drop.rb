@@ -9,7 +9,6 @@ class CompetitionDrop < Liquid::Drop
     :staff_name,
     :city_name,
     :venue_address,
-    :delegate,
     to: :@competition
 
   def country

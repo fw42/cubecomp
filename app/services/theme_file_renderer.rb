@@ -27,6 +27,8 @@ class ThemeFileRenderer
 
   def assign_drops
     assigns[:competition] = @competition
+    assigns[:delegate] = @competition.delegate
+    assigns[:owner] = @competition.owner
     assigns[:staff] = @competition.users
   end
 end

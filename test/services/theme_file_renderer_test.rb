@@ -4,6 +4,12 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
   setup do
     @competition = competitions(:aachen_open)
     @theme_file = @competition.theme_files.new(filename: 'foobar')
+
+    @competition.update_attributes(
+      owner: users(:flo),
+      delegate: users(:delegate)
+    )
+
     @renderer = ThemeFileRenderer.new(@theme_file)
   end
 
@@ -12,12 +18,15 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
   end
 
   test '#render Liquid template with competition and staff' do
-    @competition.update_attributes(delegate: users(:delegate))
-
     template = <<-LIQUID
         Welcome to {{ competition.name }}
 
-        Delegate is: {{ competition.delegate.email }}
+        Delegate is: {{ delegate.email }}
+
+        Owner:
+          {{ owner.name }}
+          {{ owner.email }}
+          {{ owner.address }}
 
         Staff:{% for user in staff %}
           {{ user.name }}{% endfor %}
@@ -27,6 +36,11 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
         Welcome to Aachen Open 2014
 
         Delegate is: delegate@wca.com
+
+        Owner:
+          Florian Weingarten
+          flo@hackvalue.de
+          123 Fake Street, Ottawa, Canada
 
         Staff:
           Regular One

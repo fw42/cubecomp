@@ -3,5 +3,5 @@ class UserDrop < Liquid::Drop
     @user = user
   end
 
-  delegate :name, :email, to: :@user
+  delegate :name, :email, :address, to: :@user
 end

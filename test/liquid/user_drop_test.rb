@@ -4,6 +4,7 @@ class UserDropTest < ActiveSupport::TestCase
   DELEGATIONS = [
     :name,
     :email,
+    :address,
   ]
 
   setup do
