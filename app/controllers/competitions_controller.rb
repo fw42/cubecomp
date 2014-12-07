@@ -5,7 +5,7 @@ class CompetitionsController < ApplicationController
   before_action :load_theme_file
 
   def theme_file
-    renderer = ThemeFileRenderer.new(theme_file: @theme_file, controller: self)
+    renderer = ThemeFileRenderer.new(theme_file: @theme_file, locale: @locale, controller: self)
     render text: renderer.render
   end
 

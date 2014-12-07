@@ -1,8 +1,9 @@
 class ThemeFileRenderer
-  def initialize(theme_file:, controller:)
+  def initialize(theme_file:, locale:, controller:)
     @theme_file = theme_file
     @competition = @theme_file.competition
     @controller = controller
+    @locale = locale
 
     assign_drops
     assign_views
@@ -12,6 +13,7 @@ class ThemeFileRenderer
     parsed = Liquid::Template.parse(@theme_file.content)
     parsed.registers[:file_system] = self
     parsed.registers[:competition] = @competition
+    parsed.registers[:locale] = @locale
     parsed.render(assigns.stringify_keys)
   end
 

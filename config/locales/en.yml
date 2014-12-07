@@ -4,3 +4,5 @@ en:
       schedule: "%A, %B %d, %Y"
       day_only: "%A"
       news: "%B %d, %Y"
+
+  registration_success: "Registration successful. You will receive a confirmation mail soon."
