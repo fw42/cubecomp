@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  namespace :admin do
+  namespace :admin, format: false do
     root action: 'index'
 
     get 'login', to: 'sessions#new'
@@ -58,6 +58,10 @@ Rails.application.routes.draw do
       end
 
       resources :events, except: [:show] do
+        collection do
+          get 'print/(:day_id)', action: 'print', as: "print"
+        end
+
         resources :event_registrations, only: [:index, :destroy] do
           member do
             patch :update_waiting

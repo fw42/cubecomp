@@ -22,6 +22,12 @@ class Admin::EventsController < AdminController
     @events = current_competition.events.includes(:registrations)
   end
 
+  def print
+    day_id = params[:day_id].presence || current_competition.days.first.id
+    @day = current_competition.days.find(day_id)
+    render 'liquid/_schedule', layout: 'admin/schedule', locals: { day: @day }
+  end
+
   def new
     @event = current_competition.events.new
   end

@@ -9,6 +9,7 @@ Rails.application.config.assets.precompile += %w(
   admin.css
   admin/checklist.css
   admin/nametags.css
+  admin/schedule.css
   admin.js
   email_template_fetcher.js
 )
