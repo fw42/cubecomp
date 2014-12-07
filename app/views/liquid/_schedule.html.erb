@@ -1,0 +1,34 @@
+<% show_max_column = day.events.any?{ |event| event.max_number_of_registrations.present? } %>
+
+<table class="schedule">
+  <tr>
+    <th><%= t(:start) %></th>
+    <th><%= t(:stop) %></th>
+    <th><%= t(:event) %></th>
+    <th><%= t(:round) %></th>
+    <th><%= t(:timelimit) %></th>
+    <th><%= t(:format) %></th>
+    <% if show_max_column %>
+      <th><%= t(:max) %></th>
+    <% end %>
+  </tr>
+
+  <% day.events.each do |event| %>
+    <tr>
+      <td><%= event.start_time ? event.start_time.strftime("%H:%M") : "&nbsp;" %></td>
+      <td><%= event.end_time ? event.end_time.strftime("%H:%M") : "&nbsp;" %></td>
+      <td><%= event.name %></td>
+      <td><%= event.round %></td>
+      <td><%= event.timelimit %></td>
+      <td>
+        <%= event.format %>
+        <% if event.proceed %>
+          (<small><%= event.proceed %> proceed</small>)
+        <% end %>
+      </td>
+      <% if show_max_column %>
+        <td><%= event.max_number_of_registrations %>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

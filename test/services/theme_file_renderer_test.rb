@@ -4,7 +4,14 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
   setup do
     @competition = competitions(:aachen_open)
     @theme_file = @competition.theme_files.new(filename: 'foobar')
-    @renderer = ThemeFileRenderer.new(@theme_file)
+
+    @competition.update_attributes(
+      owner: users(:flo),
+      delegate: users(:delegate)
+    )
+
+    @controller = ActionController::Base.new
+    @renderer = ThemeFileRenderer.new(theme_file: @theme_file, controller: @controller)
   end
 
   test '#assigns contains competition' do
@@ -12,12 +19,15 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
   end
 
   test '#render Liquid template with competition and staff' do
-    @competition.update_attributes(delegate: users(:delegate))
-
     template = <<-LIQUID
         Welcome to {{ competition.name }}
 
-        Delegate is: {{ competition.delegate.email }}
+        Delegate is: {{ delegate.email }}
+
+        Owner:
+          {{ owner.name }}
+          {{ owner.email }}
+          {{ owner.address }}
 
         Staff:{% for user in staff %}
           {{ user.name }}{% endfor %}
@@ -28,6 +38,11 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
 
         Delegate is: delegate@wca.com
 
+        Owner:
+          Florian Weingarten
+          flo@hackvalue.de
+          123 Fake Street, Ottawa, Canada
+
         Staff:
           Regular One
           Florian Weingarten
@@ -36,6 +51,21 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
 
     @theme_file.content = template
     assert_equal expected, @renderer.render
+  end
+
+  test '#render Liquid template with competitors' do
+    @theme_file.content = "{{ competitors }}"
+    assert_match /<table class="competitors">/, @renderer.render
+  end
+
+  test '#render Liquid template with schedule' do
+    @theme_file.content = <<-LIQUID
+      {% for day in days %}
+        {{ day.schedule }}
+      {% endfor %}
+    LIQUID
+
+    assert_match /<table class="schedule">/, @renderer.render
   end
 
   test '#render renders included Liquid templates' do

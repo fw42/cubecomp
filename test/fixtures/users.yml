@@ -4,6 +4,7 @@ flo:
   last_name: Weingarten
   password_digest: "$2a$10$mr3btGrOKm/4fN66mxO53.VCFqbo2cXJG.fHX0tJPGYSrWEViI1SS"
   permission_level: <%= User::PERMISSION_LEVELS[:regular] %>
+  address: 123 Fake Street, Ottawa, Canada
 
 regular_user_with_no_competitions:
   email: no@regular.com

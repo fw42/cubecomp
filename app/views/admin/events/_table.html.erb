@@ -18,7 +18,7 @@
     <% @events.where(day: day).each do |event| %>
       <tr class="<%= "not_for_registration" if event.for_registration? %>">
         <td><%= event.start_time.strftime("%H:%M") %></td>
-        <td><%= event.end_time.strftime("%H:%M") %></td>
+        <td><%= event.end_time.try!(:strftime, "%H:%M") %></td>
         <td>
           <%= event.name %>
           <% if event.name_short && event.name_short != event.name %>

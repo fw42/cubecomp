@@ -153,7 +153,7 @@ class CompetitorTest < ActiveSupport::TestCase
     event = events(:aachen_open_rubiks_cube)
 
     @competitor.event_registrations.each(&:destroy!)
-    assert_equal 'not_registered', @competitor.event_registration_status(event)
+    assert_equal 'not_registered', @competitor.reload.event_registration_status(event)
 
     registration = @competitor.event_registrations.create!(
       event: event,
