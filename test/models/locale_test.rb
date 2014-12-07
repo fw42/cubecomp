@@ -54,4 +54,8 @@ class LocaleTest < ActiveSupport::TestCase
     @locale.destroy!
     assert_equal nil, competition.reload.default_locale_id
   end
+
+  test 'locales are a subset of available I18n locales' do
+    assert_equal [], Locale::ALL.keys - I18n.available_locales.map(&:to_s)
+  end
 end
