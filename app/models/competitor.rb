@@ -30,6 +30,7 @@ class Competitor < ActiveRecord::Base
 
   before_validation :set_default_state
   validate :validate_male_not_nil
+  validate :validate_at_least_one_day_registration
 
   auto_strip_attributes :first_name, :last_name, :wca, :email
 
@@ -121,5 +122,10 @@ class Competitor < ActiveRecord::Base
   def validate_male_not_nil
     return unless male.nil?
     errors.add(:male, 'must be either true or false')
+  end
+
+  def validate_at_least_one_day_registration
+    return if day_registrations.any?{ |registration| !registration.marked_for_destruction? }
+    errors.add(:base, 'must register for at least one day')
   end
 end

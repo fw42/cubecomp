@@ -5,6 +5,11 @@ class CompetitorTest < ActiveSupport::TestCase
     @competitor = competitors(:flo_aachen_open)
   end
 
+  test 'validates registered for at least one day' do
+    @competitor.day_registrations = []
+    assert_not_valid(@competitor, :base)
+  end
+
   test 'validates presence and integrity of competition' do
     @competitor.competition = nil
     assert_not_valid(@competitor, :competition)
@@ -26,6 +31,7 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_not_valid(new_competitor, :wca)
 
     new_competitor.competition = competitions(:german_open)
+    RegistrationService.new(new_competitor).register_for_day(new_competitor.competition.days.first.id)
     assert_valid new_competitor
   end
 
