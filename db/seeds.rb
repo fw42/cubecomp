@@ -108,15 +108,14 @@ def create_competitor(competition)
   events = 0
   competition.events.where(state: 'open_for_registration').to_a.shuffle.each do |event|
     if events == 0 || rand < 0.3
-      puts 'event'
-      competitor.registration_service.register_for_event!(event)
+      competitor.registration_service.register_for_event(event)
       events += 1
     end
   end
 
   competition.days.each do |day|
     if !competitor.competing_on?(day) && rand < 0.25
-      competitor.registration_service.register_as_guest!(day)
+      competitor.registration_service.register_as_guest(day)
     end
   end
 

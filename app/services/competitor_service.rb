@@ -4,15 +4,9 @@ class CompetitorService
   end
 
   def save(params)
-    Competitor.transaction do
-      @competitor.attributes = params.except(:days)
-      @competitor.save!
-      apply_registration_params(params[:days]) if params[:days]
-      @competitor
-    end
-  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
-    Rails.logger.info("[#{self.class.name}] #{e.class.name}: #{e.message}")
-    nil
+    @competitor.attributes = params.except(:days)
+    apply_registration_params(params[:days]) if params[:days]
+    @competitor.save
   end
 
   private
@@ -20,10 +14,10 @@ class CompetitorService
   def apply_registration_params(params)
     params.each do |day_id, day_attributes|
       if day_attributes[:status] == 'not_registered'
-        @competitor.registration_service.unregister_from_day!(day_id)
+        @competitor.registration_service.unregister_from_day(day_id.to_i)
         next
       elsif day_attributes[:status] == 'guest'
-        @competitor.registration_service.register_as_guest!(day_id)
+        @competitor.registration_service.register_as_guest(day_id.to_i)
         next
       end
 
@@ -34,10 +28,10 @@ class CompetitorService
   def apply_event_registration_params(attributes)
     attributes.each do |event_id, event_attributes|
       if event_attributes[:status] == 'not_registered'
-        @competitor.registration_service.unregister_from_event!(event_id)
+        @competitor.registration_service.unregister_from_event(event_id.to_i)
       else
-        @competitor.registration_service.register_for_event!(
-          Event.find(event_id),
+        @competitor.registration_service.register_for_event(
+          @competitor.competition.events.find(event_id),
           event_attributes[:status] == 'waiting'
         )
       end

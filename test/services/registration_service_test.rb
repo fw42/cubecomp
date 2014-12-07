@@ -8,70 +8,79 @@ class RegistrationServiceTest < ActiveSupport::TestCase
     @service = RegistrationService.new(@competitor)
   end
 
-  test '#register_for_day!' do
+  test '#register_for_day' do
     assert_difference '@competitor.day_registrations.count', 1 do
       assert_no_difference 'EventRegistration.count' do
-        @service.register_for_day!(@new_day)
+        @service.register_for_day(@new_day.id)
+        @competitor.save!
       end
     end
 
     assert_no_difference 'DayRegistration.count' do
-      @service.register_for_day!(@new_day)
+      @service.register_for_day(@new_day.id)
+      @competitor.save!
     end
   end
 
-  test '#unregister_from_day!' do
+  test '#unregister_from_day' do
     registration = day_registrations(:flo_aachen_open_day_one)
     competitor = registration.competitor
     event_count = competitor.events.select{ |event| event.day == registration.day }.count
 
     assert_difference 'competitor.day_registrations.count', -1 do
       assert_difference 'competitor.event_registrations.count', -1 * event_count do
-        RegistrationService.new(competitor).unregister_from_day!(registration.day)
+        RegistrationService.new(competitor).unregister_from_day(registration.day_id)
+        competitor.save!
       end
     end
 
     assert_no_difference 'competitor.day_registrations.count' do
       assert_no_difference 'competitor.event_registrations.count' do
-        RegistrationService.new(competitor).unregister_from_day!(registration.day)
+        RegistrationService.new(competitor).unregister_from_day(registration.day_id)
+        competitor.save!
       end
     end
   end
 
-  test '#register_for_event! if not already regsitered for day' do
+  test '#register_for_event if not already regsitered for day' do
     assert_difference '@competitor.day_registrations.count', 1 do
       assert_difference '@competitor.event_registrations.count', 1 do
-        @service.register_for_event!(events(:aachen_open_rubiks_revenge_day_two))
+        @service.register_for_event(events(:aachen_open_rubiks_revenge_day_two))
+        @competitor.save!
       end
     end
   end
 
-  test '#register_for_event! if already registered for day' do
+  test '#register_for_event if already registered for day' do
     event = @competition.events.first
-    @service.register_for_day!(event.day)
+    @service.register_for_day(event.day_id)
+    @competitor.save!
 
     assert_no_difference '@competitor.day_registrations.count' do
       assert_difference '@competitor.event_registrations.count', 1 do
-        @service.register_for_event!(event)
+        @service.register_for_event(event)
+        @competitor.save!
       end
     end
   end
 
-  test '#register_as_guest! if not already registered for day' do
+  test '#register_as_guest if not already registered for day' do
     day = days(:aachen_open_day_two)
     assert_difference '@competitor.day_registrations.count', +1 do
       assert_no_difference '@competitor.event_registrations.count' do
-        @service.register_for_day!(day)
+        @service.register_for_day(day.id)
+        @competitor.save!
       end
     end
     assert @competitor.guest_on?(day)
 
     assert_no_difference '@competitor.day_registrations.count' do
-      @service.register_for_day!(day)
+      @service.register_for_day(day.id)
+      @competitor.save!
     end
   end
 
-  test '#register_as_guest! if already registered for day as competitor' do
+  test '#register_as_guest if already registered for day as competitor' do
     event_registration = event_registrations(:aachen_open_flo_rubiks_cube)
     competitor = event_registration.competitor
     day = event_registration.event.day
@@ -80,29 +89,32 @@ class RegistrationServiceTest < ActiveSupport::TestCase
 
     assert_difference 'competitor.event_registrations.count', -1 * count do
       assert_no_difference 'DayRegistration.count' do
-        service.register_as_guest!(day)
+        service.register_as_guest(day.id)
+        competitor.save!
       end
     end
 
     assert competitor.guest_on?(day)
   end
 
-  test '#unregister_from_event!' do
+  test '#unregister_from_event' do
     event_registration = event_registrations(:aachen_open_flo_rubiks_cube)
     competitor = event_registration.competitor
     service = RegistrationService.new(competitor)
 
     assert_difference 'competitor.event_registrations.count', -1 do
       assert_no_difference 'DayRegistration.count' do
-        service.unregister_from_event!(event_registration.event)
+        service.unregister_from_event(event_registration.event_id)
+        competitor.save!
       end
     end
   end
 
-  test '#unregister_from_event! if not registered' do
+  test '#unregister_from_event if not registered' do
     assert_no_difference 'EventRegistration.count' do
       assert_no_difference 'DayRegistration.count' do
-        @service.unregister_from_event!(Event.first)
+        @service.unregister_from_event(Event.first)
+        @competitor.save!
       end
     end
   end
