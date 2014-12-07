@@ -4,6 +4,8 @@ class DayDrop < Liquid::Drop
     @day = day
   end
 
+  delegate :date, :entrance_fee_competitors, :entrance_fee_guests, to: :@day
+
   def schedule
     @schedule ||= ViewDrop.new(
       template: 'schedule',
