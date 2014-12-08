@@ -10,8 +10,11 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
       delegate: users(:delegate)
     )
 
-    @controller = ActionController::Base.new
-    @renderer = ThemeFileRenderer.new(theme_file: @theme_file, controller: @controller)
+    @renderer = ThemeFileRenderer.new(
+      theme_file: @theme_file,
+      controller: ActionController::Base.new,
+      locale: locales(:aachen_open_english)
+    )
   end
 
   test '#assigns contains competition' do
@@ -66,6 +69,18 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
     LIQUID
 
     assert_match /<table class="schedule">/, @renderer.render
+  end
+
+  test '#render Liquid template with filters' do
+    @theme_file.content = <<-LIQUID
+      {{ 'registration_success' | translate }}
+    LIQUID
+
+    expected = <<-LIQUID
+      Registration successful. You will receive a confirmation mail soon.
+    LIQUID
+
+    assert_equal expected, @renderer.render
   end
 
   test '#render renders included Liquid templates' do

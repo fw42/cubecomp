@@ -1,0 +1,8 @@
+de:
+  date:
+    formats:
+      schedule: "%A, %d. %B %Y"
+      day_only: "%A"
+      news: "%d.%m.%Y"
+
+  registration_success: "Anmeldung erfolgreich. Du wirst bald eine Bestätigung per E-Mail erhalten."
