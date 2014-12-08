@@ -1,4 +1,7 @@
+// Those two have to be loaded in this order
 //= require jquery
+//= require jquery.turbolinks
+
 //= require jquery_ujs
 //= require jquery.nested_attributes
 
@@ -18,3 +21,6 @@
 
 //= require typeahead.jquery
 //= require wca-autocomplete
+
+// This should be the last one to be loaded
+//= require turbolinks
