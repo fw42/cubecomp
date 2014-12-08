@@ -104,10 +104,6 @@ class Competitor < ActiveRecord::Base
     end
   end
 
-  def registration_service
-    @registration_service ||= RegistrationService.new(self)
-  end
-
   def checklist_service
     @checklist_service ||= ChecklistService.new(self)
   end
