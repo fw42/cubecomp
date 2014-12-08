@@ -22,10 +22,10 @@ class Competitor < ActiveRecord::Base
   belongs_to :country
   validates :country, presence: true
 
-  has_many :event_registrations, dependent: :destroy
+  has_many :event_registrations, dependent: :destroy, autosave: true
   has_many :events, through: :event_registrations
 
-  has_many :day_registrations, dependent: :destroy
+  has_many :day_registrations, dependent: :destroy, autosave: true
   has_many :days, through: :day_registrations
 
   before_validation :set_default_state
@@ -50,11 +50,11 @@ class Competitor < ActiveRecord::Base
 
   def competing_on?(day_id)
     day_id = day_id.id if day_id.is_a?(Day)
-    events.select{ |event| event.day_id == day_id }.size > 0
+    event_registrations.select{ |registration| registration.event.day_id == day_id }.size > 0
   end
 
-  def guest_on?(day)
-    registered_on?(day) && !competing_on?(day)
+  def guest_on?(day_id)
+    registered_on?(day_id) && !competing_on?(day_id)
   end
 
   def event_registrations_by_day(include_waiting = false)
@@ -102,10 +102,6 @@ class Competitor < ActiveRecord::Base
     else
       'registered'
     end
-  end
-
-  def registration_service
-    @registration_service ||= RegistrationService.new(self)
   end
 
   def checklist_service

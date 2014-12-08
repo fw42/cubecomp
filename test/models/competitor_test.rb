@@ -119,34 +119,33 @@ class CompetitorTest < ActiveSupport::TestCase
   end
 
   test 'registered_on?, competing_on?, and guest_on?' do
-    @competitor.day_registrations.each(&:destroy)
-    @competitor.event_registrations.each(&:destroy)
-    @competitor.reload
+    @competitor.day_registrations = []
+    @competitor.event_registrations = []
+
     day = @competitor.competition.days.first
+
     assert_equal false, @competitor.registered_on?(day)
     assert_equal false, @competitor.registered_on?(day.id)
-    assert_equal false, @competitor.guest_on?(day)
-    assert_equal false, @competitor.guest_on?(day.id)
     assert_equal false, @competitor.competing_on?(day)
     assert_equal false, @competitor.competing_on?(day.id)
+    assert_equal false, @competitor.guest_on?(day)
+    assert_equal false, @competitor.guest_on?(day.id)
 
-    RegistrationService.new(@competitor).register_for_day!(day)
-    @competitor.reload
+    RegistrationService.new(@competitor).register_for_day(day.id)
     assert_equal true, @competitor.registered_on?(day)
     assert_equal true, @competitor.registered_on?(day.id)
+    assert_equal false, @competitor.competing_on?(day)
+    assert_equal false, @competitor.competing_on?(day.id)
     assert_equal true, @competitor.guest_on?(day)
     assert_equal true, @competitor.guest_on?(day.id)
-    assert_equal false, @competitor.competing_on?(day)
-    assert_equal false, @competitor.competing_on?(day.id)
 
-    RegistrationService.new(@competitor).register_for_event!(@competitor.competition.events.first)
-    @competitor.reload
+    RegistrationService.new(@competitor).register_for_event(day.events.first)
     assert_equal true, @competitor.registered_on?(day)
     assert_equal true, @competitor.registered_on?(day.id)
-    assert_equal false, @competitor.guest_on?(day)
-    assert_equal false, @competitor.guest_on?(day.id)
     assert_equal true, @competitor.competing_on?(day)
     assert_equal true, @competitor.competing_on?(day.id)
+    assert_equal false, @competitor.guest_on?(day)
+    assert_equal false, @competitor.guest_on?(day.id)
   end
 
   test 'event_registration_status' do
