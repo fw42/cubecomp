@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= l(day.date, format: :schedule) %></title>
+    <%= stylesheet_link_tag 'admin/schedule', media: 'all' %>
+  </head>
+
+  <body>
+    <h1><%= current_competition.name %></h1>
+    <h2><%= l(day.date, format: :schedule) %></h2>
+    <%= yield %>
+  </body>
+</html>

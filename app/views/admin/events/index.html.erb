@@ -2,7 +2,11 @@
 
 <p>
   <%= link_to 'New event', new_admin_competition_event_path %><br/>
-  <%= link_to 'Waiting list overview', waiting_admin_competition_event_registrations_path(current_competition) %>
+  <%= link_to 'Waiting list overview', waiting_admin_competition_event_registrations_path(current_competition) %><br/>
+  Printable schedules:
+  <% current_competition.days.with_events.each do |day| %>
+    <%= link_to l(day.date, format: :day_only), print_admin_competition_events_path(current_competition, day.id) %>
+  <% end %>
 </p>
 
 <% current_competition.days.with_events.each do |day| %>

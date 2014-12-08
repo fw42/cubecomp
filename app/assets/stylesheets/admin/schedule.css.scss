@@ -1,0 +1,33 @@
+body {
+  font-family: "Trebuchet MS";
+  text-align: center;
+  padding-top: 10pt;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.25em;
+}
+
+table {
+  font-size: 90%;
+  border-collapse: collapse;
+  margin: auto;
+  margin-top: 3em;
+
+  th {
+    border: 1px solid black;
+    background: silver;
+    color: black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  td {
+    border: 1px black solid;
+    padding: 5px;
+  }
+}

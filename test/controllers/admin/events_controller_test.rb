@@ -18,6 +18,19 @@ class Admin::EventsControllerTest < ActionController::TestCase
     assert_response :not_found
   end
 
+  test '#print without parameter renders first day' do
+    get :print, competition_id: @competition.id
+    assert_response :ok
+    assert_equal @competition.days.first, assigns(:day)
+  end
+
+  test '#print with parameter renders that day' do
+    day = @competition.days.last
+    get :print, competition_id: @competition.id, day_id: day.id
+    assert_response :ok
+    assert_equal day, assigns(:day)
+  end
+
   test '#new' do
     get :new, competition_id: @competition.id
     assert_response :success
