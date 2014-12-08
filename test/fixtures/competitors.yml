@@ -17,6 +17,15 @@ aachen_open_day_one_guest:
   country: germany
   male: true
 
+aachen_open_both_days_guest:
+  competition: aachen_open
+  first_name: Alfred
+  last_name: Bobsen
+  email: alfred@bobsen.com
+  birthday: 2001-02-03
+  country: germany
+  male: true
+
 basti_aachen_open:
   competition: aachen_open
   wca: 2008AURO01

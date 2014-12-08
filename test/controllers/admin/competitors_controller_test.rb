@@ -206,7 +206,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       end
     end
 
-    assert competitor.guest_on?(event.day)
+    assert competitor.reload.guest_on?(event.day)
   end
 
   test '#update to change day registration from not_registered to registered' do
@@ -230,12 +230,12 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       end
     end
 
-    assert competitor.competing_on?(event.day)
-    assert competitor.events.include?(event)
+    assert competitor.reload.competing_on?(event.day)
+    assert competitor.reload.events.include?(event)
   end
 
   test '#update to change day registration from guest to not_registered' do
-    competitor = competitors(:aachen_open_day_one_guest)
+    competitor = competitors(:aachen_open_both_days_guest)
     day = days(:aachen_open_day_one)
     event = day.events.first
 
@@ -281,13 +281,17 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       end
     end
 
-    assert competitor.competing_on?(event.day)
-    assert competitor.events.include?(event)
+    assert competitor.reload.competing_on?(event.day)
+    assert competitor.reload.events.include?(event)
   end
 
   test '#update to change day registration from competitor to not_registered' do
     event = @competitor.events.first
     day = event.day
+
+    other_day = @competition.days.detect{ |d| d != day }
+    RegistrationService.new(@competitor).register_as_guest(other_day.id)
+    @competitor.save!
 
     events = {}
     @competitor.events.where(day: day).each do |e|
@@ -308,8 +312,8 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       end
     end
 
-    refute @competitor.registered_on?(event.day)
-    refute @competitor.events.include?(event)
+    refute @competitor.reload.registered_on?(event.day)
+    refute @competitor.reload.events.include?(event)
   end
 
   test '#update to change day registration from competitor to guest' do
@@ -335,7 +339,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       end
     end
 
-    assert @competitor.guest_on?(event.day)
+    assert @competitor.reload.guest_on?(event.day)
   end
 
   test '#update to change event registration from not_registered to waiting' do
@@ -360,8 +364,8 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       end
     end
 
-    assert competitor.competing_on?(event.day)
-    assert competitor.event_registrations.where(event: event).first.waiting
+    assert competitor.reload.competing_on?(event.day)
+    assert competitor.reload.event_registrations.where(event: event).first.waiting
   end
 
   test '#update to change all event registrations to not_registered changes day registration to guest' do
@@ -387,7 +391,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       end
     end
 
-    assert @competitor.guest_on?(event.day)
+    assert @competitor.reload.guest_on?(event.day)
   end
 
   test '#destroy' do
