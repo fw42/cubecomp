@@ -13,6 +13,30 @@ class CompetitionsControllerTest < ActionController::TestCase
     )
   end
 
+  test '#theme_file redirects to locale from cookie if none is specified in params' do
+    cookies[:locale] = 'en'
+    get :theme_file, competition_handle: @competition.handle
+    assert_redirected_to competition_area_path(
+      @competition.handle,
+      'en'
+    )
+  end
+
+  test '#theme_file with locale in params sets locale in cookie' do
+    get :theme_file, competition_handle: @competition.handle, locale: "en"
+    assert_response :ok
+    assert_equal 'en', response.cookies['locale']
+  end
+
+  test '#theme_file with invalid locale in cookie redirects to default locale' do
+    cookies[:locale] = 'foobar'
+    get :theme_file, competition_handle: @competition.handle
+    assert_redirected_to competition_area_path(
+      @competition.handle,
+      @competition.default_locale.handle
+    )
+  end
+
   test '#theme_file renders 404 if competition handle is invalid' do
     get :theme_file, competition_handle: 'invalid'
     assert_response :not_found
