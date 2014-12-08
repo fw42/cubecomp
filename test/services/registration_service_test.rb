@@ -25,6 +25,9 @@ class RegistrationServiceTest < ActiveSupport::TestCase
   test '#unregister_from_day' do
     registration = day_registrations(:flo_aachen_open_day_one)
     competitor = registration.competitor
+    RegistrationService.new(competitor).register_as_guest(days(:aachen_open_day_two).id)
+    competitor.save!
+
     event_count = competitor.events.select{ |event| event.day == registration.day }.count
 
     assert_difference 'competitor.day_registrations.count', -1 do
