@@ -51,11 +51,8 @@ class ThemeFile < ActiveRecord::Base
   scope :image_files, ->{ where.not(image_content_type: nil) }
 
   def image_file_name
-    if image?
-      filename
-    else
-      nil
-    end
+    return unless image?
+    filename
   end
 
   def image_file_name=(filename)
