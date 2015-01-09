@@ -34,10 +34,15 @@ class ThemeFile < ActiveRecord::Base
     less_than: 1.megabytes, message: "has to be smaller than 1 megabyte"
   }
 
-  scope :with_filename, lambda { |name, locale, extension|
+  scope :with_filename, lambda { |filename, locale|
+    file_extension_matcher = /\A(.*?)(\.(.*))?\z/
+    matches = file_extension_matcher.match(filename)
+    filename_base = matches[1]
+    filename_extension = matches[3]
+
     filenames = [
-      "#{name}.#{locale}.#{extension}",
-      "#{name}.#{extension}",
+      [ filename_base, locale, filename_extension ].join('.'),
+      [ filename_base, filename_extension ].join('.'),
     ]
 
     order_query_segments = filenames.map do |file|

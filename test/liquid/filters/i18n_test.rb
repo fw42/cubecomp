@@ -1,9 +1,9 @@
 require 'test_helper'
 
-class I18nFiltersTest < ActiveSupport::TestCase
+class Liquid::Filters::I18nTest < ActiveSupport::TestCase
   class Filters
     attr_writer :context
-    include I18nFilters
+    include Liquid::Filters::I18n
   end
 
   setup do
