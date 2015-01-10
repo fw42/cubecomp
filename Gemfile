@@ -35,7 +35,6 @@ group :development do
 end
 
 group :development, :test do
-  gem 'foreigner'
   gem 'immigrant'
   gem 'forgery'
 

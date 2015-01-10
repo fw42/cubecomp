@@ -7,7 +7,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     login_as(@competition.users.first)
 
     @new_competitor_params = {
-      wca: '2000BOB',
+      wca: '2000BOB01',
       first_name: 'bob',
       last_name: 'bobsen',
       email: 'bob@cubecomp.de',
@@ -57,7 +57,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       paid_comment: 'moneys!',
       staff: true,
       user_comment: 'hello',
-      wca: '2000BOB',
+      wca: '2000BOB01',
       state: 'confirmed',
       :"birthday(1i)" => '1980',
       :"birthday(2i)" => '02',
@@ -127,7 +127,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
 
     assert_response :redirect
     assert_redirected_to admin_competition_competitors_path(@competition.id)
-    bob = @competition.competitors.find_by(wca: '2000BOB')
+    bob = @competition.competitors.find_by(wca: '2000BOB01')
     expected = @new_competitor_params.except(:"birthday(1i)", :"birthday(2i)", :"birthday(3i)", :days)
     assert_attributes(expected, bob)
     assert_equal @new_competitor_params[:"birthday(1i)"].to_i, bob.birthday.year

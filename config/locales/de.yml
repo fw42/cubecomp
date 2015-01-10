@@ -5,4 +5,32 @@ de:
       day_only: "%A"
       news: "%d.%m.%Y"
 
+  activerecord:
+    attributes:
+      competitor:
+        wca: "WCA ID"
+        first_name: "Vorname"
+        last_name: "Nachname"
+        email: "E-Mail"
+        birthday: "Geburtsdatum"
+        country: "Land"
+        male: "Geschlecht"
+        user_comment: "Kommentar"
+    errors:
+      messages:
+        blank: "darf nicht leer sein"
+
   registration_success: "Anmeldung erfolgreich. Du wirst bald eine Bestätigung per E-Mail erhalten."
+
+  #### Schedule
+  start: "Beginn"
+  stop: "Ende"
+  event: "Event"
+  stage: "Bühne"
+  round: "Runde"
+  timelimit: "Zeitgrenze"
+  format: "Format"
+  max: "Max."
+
+  male: "männlich"
+  female: "weiblich"

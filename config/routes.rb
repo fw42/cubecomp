@@ -82,8 +82,12 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/wca_autocomplete', to: 'competitors#search', as: 'wca_autocomplete'
-  get '/:competition_handle/(:locale/(:theme_file))',
-    to: 'competitions#theme_file',
-    as: 'competition_area'
+  scope '/wca' do
+    get '/autocomplete', to: 'wca#autocomplete', as: 'wca_autocomplete' #, constraints: { format: 'json' }
+  end
+
+  scope '/:competition_handle' do
+    post '/:locale/register', to: 'competition_area/competitors#create', as: 'competition_area_competitor_create'
+    get '/(:locale/(:theme_file))', to: 'competition_area#render_theme_file', as: 'competition_area'
+  end
 end

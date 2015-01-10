@@ -2,17 +2,26 @@ aachen_open_rubiks_cube:
   competition: aachen_open
   name_short: 3x3x3
   name: Rubik's Cube
-  handle: 333
+  handle: 3
   start_time: 2000-01-01 09:00
   max_number_of_registrations: 42
   state: open_for_registration
+  day: aachen_open_day_one
+
+aachen_open_rubiks_cube_round_two:
+  competition: aachen_open
+  name_short: 3x3x3
+  name: Rubik's Cube
+  start_time: 2000-01-01 09:00
+  state: not_for_registration
+  round: 2
   day: aachen_open_day_one
 
 aachen_open_rubiks_professor:
   competition: aachen_open
   name_short: 5x5x5
   name: Rubik's Professor
-  handle: 555
+  handle: 5
   start_time: 2000-01-01 10:00
   max_number_of_registrations: 17
   state: open_for_registration
@@ -22,9 +31,8 @@ aachen_open_rubiks_revenge_day_two:
   competition: aachen_open
   name_short: 4x4x4
   name: Rubik's Revenge
-  handle: 444
+  handle: 4
   start_time: 2000-01-01 14:00
   max_number_of_registrations: 17
   state: open_for_registration
   day: aachen_open_day_two
-

@@ -11,24 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141109001509) do
+ActiveRecord::Schema.define(version: 20150111203813) do
 
-  create_table "competitions", force: true do |t|
-    t.string   "name",                              null: false
-    t.string   "handle",                            null: false
-    t.string   "staff_email",                       null: false
-    t.string   "staff_name"
-    t.string   "city_name",                         null: false
-    t.string   "city_name_short"
-    t.string   "venue_address"
-    t.integer  "country_id",                        null: false
-    t.boolean  "cc_orga",           default: false
-    t.boolean  "registration_open", default: false
+  create_table "competitions", force: :cascade do |t|
+    t.string   "name",              limit: 255,                 null: false
+    t.string   "handle",            limit: 255,                 null: false
+    t.string   "staff_email",       limit: 255,                 null: false
+    t.string   "staff_name",        limit: 255
+    t.string   "city_name",         limit: 255,                 null: false
+    t.string   "city_name_short",   limit: 255
+    t.string   "venue_address",     limit: 255
+    t.integer  "country_id",        limit: 4,                   null: false
+    t.boolean  "cc_orga",           limit: 1,   default: false
+    t.boolean  "registration_open", limit: 1,   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "delegate_user_id"
-    t.integer  "owner_user_id"
-    t.integer  "default_locale_id"
+    t.integer  "delegate_user_id",  limit: 4
+    t.integer  "owner_user_id",     limit: 4
+    t.integer  "default_locale_id", limit: 4
   end
 
   add_index "competitions", ["country_id"], name: "competitions_country_id_fk", using: :btree
@@ -38,46 +38,46 @@ ActiveRecord::Schema.define(version: 20141109001509) do
   add_index "competitions", ["name"], name: "index_competitions_on_name", unique: true, using: :btree
   add_index "competitions", ["owner_user_id"], name: "competitions_owner_user_id_fk", using: :btree
 
-  create_table "competitors", force: true do |t|
-    t.integer  "competition_id",                          null: false
-    t.string   "first_name",                              null: false
-    t.string   "last_name",                               null: false
-    t.string   "wca"
-    t.string   "email",                                   null: false
+  create_table "competitors", force: :cascade do |t|
+    t.integer  "competition_id",          limit: 4,                     null: false
+    t.string   "first_name",              limit: 255,                   null: false
+    t.string   "last_name",               limit: 255,                   null: false
+    t.string   "wca",                     limit: 255
+    t.string   "email",                   limit: 255,                   null: false
     t.date     "birthday"
-    t.integer  "country_id",                              null: false
-    t.boolean  "local",                   default: false
-    t.boolean  "staff",                   default: false
-    t.text     "user_comment"
-    t.text     "admin_comment"
-    t.boolean  "free_entrance",           default: false
-    t.string   "free_entrance_reason"
-    t.string   "state"
-    t.boolean  "confirmation_email_sent", default: false
-    t.boolean  "paid",                    default: false
-    t.string   "paid_comment"
+    t.integer  "country_id",              limit: 4,                     null: false
+    t.boolean  "local",                   limit: 1,     default: false
+    t.boolean  "staff",                   limit: 1,     default: false
+    t.text     "user_comment",            limit: 65535
+    t.text     "admin_comment",           limit: 65535
+    t.boolean  "free_entrance",           limit: 1,     default: false
+    t.string   "free_entrance_reason",    limit: 255
+    t.string   "state",                   limit: 255
+    t.boolean  "confirmation_email_sent", limit: 1,     default: false
+    t.boolean  "paid",                    limit: 1,     default: false
+    t.string   "paid_comment",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "male"
-    t.string   "nametag"
+    t.boolean  "male",                    limit: 1
+    t.string   "nametag",                 limit: 255
   end
 
   add_index "competitors", ["competition_id"], name: "index_competitors_on_competition_id", using: :btree
   add_index "competitors", ["country_id"], name: "competitors_country_id_fk", using: :btree
   add_index "competitors", ["wca", "competition_id"], name: "index_competitors_on_wca_and_competition_id", unique: true, using: :btree
 
-  create_table "countries", force: true do |t|
-    t.string   "name",       null: false
+  create_table "countries", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "countries", ["name"], name: "index_countries_on_name", unique: true, using: :btree
 
-  create_table "day_registrations", force: true do |t|
-    t.integer  "competition_id", null: false
-    t.integer  "competitor_id",  null: false
-    t.integer  "day_id",         null: false
+  create_table "day_registrations", force: :cascade do |t|
+    t.integer  "competition_id", limit: 4, null: false
+    t.integer  "competitor_id",  limit: 4, null: false
+    t.integer  "day_id",         limit: 4, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -86,56 +86,56 @@ ActiveRecord::Schema.define(version: 20141109001509) do
   add_index "day_registrations", ["competitor_id", "day_id"], name: "index_day_registrations_on_competitor_id_and_day_id", unique: true, using: :btree
   add_index "day_registrations", ["day_id"], name: "day_registrations_day_id_fk", using: :btree
 
-  create_table "days", force: true do |t|
-    t.integer  "competition_id",                                    null: false
-    t.date     "date",                                              null: false
+  create_table "days", force: :cascade do |t|
+    t.integer  "competition_id",           limit: 4,                          null: false
+    t.date     "date",                                                        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "entrance_fee_competitors", precision: 10, scale: 2, null: false
-    t.decimal  "entrance_fee_guests",      precision: 10, scale: 2, null: false
+    t.decimal  "entrance_fee_competitors",           precision: 10, scale: 2, null: false
+    t.decimal  "entrance_fee_guests",                precision: 10, scale: 2, null: false
   end
 
   add_index "days", ["competition_id"], name: "index_days_on_competition_id", using: :btree
   add_index "days", ["date", "competition_id"], name: "index_days_on_date_and_competition_id", unique: true, using: :btree
 
-  create_table "email_templates", force: true do |t|
-    t.integer  "competition_id", null: false
-    t.string   "name",           null: false
-    t.text     "content",        null: false
+  create_table "email_templates", force: :cascade do |t|
+    t.integer  "competition_id", limit: 4,     null: false
+    t.string   "name",           limit: 255,   null: false
+    t.text     "content",        limit: 65535, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "subject"
+    t.string   "subject",        limit: 255
   end
 
   add_index "email_templates", ["competition_id", "name"], name: "index_email_templates_on_competition_id_and_name", unique: true, using: :btree
 
-  create_table "event_registrations", force: true do |t|
-    t.integer  "competition_id",                 null: false
-    t.integer  "event_id",                       null: false
-    t.integer  "competitor_id",                  null: false
+  create_table "event_registrations", force: :cascade do |t|
+    t.integer  "competition_id", limit: 4,                 null: false
+    t.integer  "event_id",       limit: 4,                 null: false
+    t.integer  "competitor_id",  limit: 4,                 null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "waiting",        default: false, null: false
+    t.boolean  "waiting",        limit: 1, default: false, null: false
   end
 
   add_index "event_registrations", ["competition_id"], name: "index_event_registrations_on_competition_id", using: :btree
   add_index "event_registrations", ["competitor_id", "event_id"], name: "index_event_registrations_on_competitor_id_and_event_id", unique: true, using: :btree
   add_index "event_registrations", ["event_id"], name: "event_registrations_event_id_fk", using: :btree
 
-  create_table "events", force: true do |t|
-    t.integer  "competition_id",              null: false
-    t.integer  "day_id",                      null: false
-    t.string   "name_short",                  null: false
-    t.string   "name",                        null: false
-    t.string   "handle",                      null: false
-    t.string   "state",                       null: false
-    t.integer  "max_number_of_registrations"
-    t.time     "start_time",                  null: false
-    t.integer  "length_in_minutes"
-    t.string   "timelimit"
-    t.string   "format"
-    t.string   "round"
-    t.string   "proceed"
+  create_table "events", force: :cascade do |t|
+    t.integer  "competition_id",              limit: 4,   null: false
+    t.integer  "day_id",                      limit: 4,   null: false
+    t.string   "name_short",                  limit: 255, null: false
+    t.string   "name",                        limit: 255, null: false
+    t.string   "handle",                      limit: 255
+    t.string   "state",                       limit: 255, null: false
+    t.integer  "max_number_of_registrations", limit: 4
+    t.time     "start_time",                              null: false
+    t.integer  "length_in_minutes",           limit: 4
+    t.string   "timelimit",                   limit: 255
+    t.string   "format",                      limit: 255
+    t.string   "round",                       limit: 255
+    t.string   "proceed",                     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -144,31 +144,31 @@ ActiveRecord::Schema.define(version: 20141109001509) do
   add_index "events", ["day_id"], name: "events_day_id_fk", using: :btree
   add_index "events", ["handle", "competition_id"], name: "index_events_on_handle_and_competition_id", unique: true, using: :btree
 
-  create_table "locales", force: true do |t|
-    t.string   "handle",         null: false
+  create_table "locales", force: :cascade do |t|
+    t.string   "handle",         limit: 255, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "competition_id", null: false
+    t.integer  "competition_id", limit: 4,   null: false
   end
 
   add_index "locales", ["competition_id"], name: "index_locales_on_competition_id", using: :btree
   add_index "locales", ["handle", "competition_id"], name: "index_locales_on_handle_and_competition_id", unique: true, using: :btree
 
-  create_table "news", force: true do |t|
-    t.integer  "competition_id", null: false
-    t.datetime "time",           null: false
-    t.string   "text",           null: false
+  create_table "news", force: :cascade do |t|
+    t.integer  "competition_id", limit: 4,   null: false
+    t.datetime "time",                       null: false
+    t.string   "text",           limit: 255, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "locale_id",      null: false
+    t.integer  "locale_id",      limit: 4,   null: false
   end
 
   add_index "news", ["competition_id"], name: "index_news_on_competition_id", using: :btree
   add_index "news", ["locale_id"], name: "news_locale_id_fk", using: :btree
 
-  create_table "permissions", force: true do |t|
-    t.integer  "competition_id", null: false
-    t.integer  "user_id",        null: false
+  create_table "permissions", force: :cascade do |t|
+    t.integer  "competition_id", limit: 4, null: false
+    t.integer  "user_id",        limit: 4, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -176,76 +176,65 @@ ActiveRecord::Schema.define(version: 20141109001509) do
   add_index "permissions", ["competition_id", "user_id"], name: "index_permissions_on_competition_id_and_user_id", using: :btree
   add_index "permissions", ["user_id", "competition_id"], name: "index_permissions_on_user_id_and_competition_id", unique: true, using: :btree
 
-  create_table "theme_files", force: true do |t|
-    t.integer  "competition_id"
+  create_table "theme_files", force: :cascade do |t|
+    t.integer  "competition_id",     limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "content"
-    t.string   "filename",           null: false
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
+    t.text     "content",            limit: 65535
+    t.string   "filename",           limit: 255,   null: false
+    t.string   "image_content_type", limit: 255
+    t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
-    t.integer  "theme_id"
+    t.integer  "theme_id",           limit: 4
   end
 
   add_index "theme_files", ["competition_id"], name: "theme_files_competition_id_fk", using: :btree
   add_index "theme_files", ["filename", "competition_id"], name: "index_theme_files_on_filename_and_competition_id", unique: true, using: :btree
   add_index "theme_files", ["theme_id", "filename"], name: "index_theme_files_on_theme_id_and_filename", unique: true, using: :btree
 
-  create_table "themes", force: true do |t|
-    t.string   "name",       null: false
+  create_table "themes", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "themes", ["name"], name: "index_themes_on_name", unique: true, using: :btree
 
-  create_table "users", force: true do |t|
-    t.string   "email",                            null: false
+  create_table "users", force: :cascade do |t|
+    t.string   "email",            limit: 255,                   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "password_digest"
-    t.string   "first_name",                       null: false
-    t.string   "last_name",                        null: false
-    t.boolean  "delegate",         default: false
-    t.integer  "permission_level",                 null: false
-    t.text     "address"
+    t.string   "password_digest",  limit: 255
+    t.string   "first_name",       limit: 255,                   null: false
+    t.string   "last_name",        limit: 255,                   null: false
+    t.boolean  "delegate",         limit: 1,     default: false
+    t.integer  "permission_level", limit: 4,                     null: false
+    t.text     "address",          limit: 65535
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
   add_foreign_key "competitions", "countries", name: "competitions_country_id_fk"
-  add_foreign_key "competitions", "locales", name: "competitions_default_locale_id_fk", column: "default_locale_id"
-  add_foreign_key "competitions", "users", name: "competitions_delegate_user_id_fk", column: "delegate_user_id"
-  add_foreign_key "competitions", "users", name: "competitions_owner_user_id_fk", column: "owner_user_id"
-
+  add_foreign_key "competitions", "locales", column: "default_locale_id", name: "competitions_default_locale_id_fk"
+  add_foreign_key "competitions", "users", column: "delegate_user_id", name: "competitions_delegate_user_id_fk"
+  add_foreign_key "competitions", "users", column: "owner_user_id", name: "competitions_owner_user_id_fk"
   add_foreign_key "competitors", "competitions", name: "competitors_competition_id_fk"
   add_foreign_key "competitors", "countries", name: "competitors_country_id_fk"
-
   add_foreign_key "day_registrations", "competitions", name: "day_registrations_competition_id_fk"
   add_foreign_key "day_registrations", "competitors", name: "day_registrations_competitor_id_fk"
   add_foreign_key "day_registrations", "days", name: "day_registrations_day_id_fk"
-
   add_foreign_key "days", "competitions", name: "days_competition_id_fk"
-
   add_foreign_key "email_templates", "competitions", name: "email_templates_competition_id_fk"
-
   add_foreign_key "event_registrations", "competitions", name: "event_registrations_competition_id_fk"
   add_foreign_key "event_registrations", "competitors", name: "event_registrations_competitor_id_fk"
   add_foreign_key "event_registrations", "events", name: "event_registrations_event_id_fk"
-
   add_foreign_key "events", "competitions", name: "events_competition_id_fk"
   add_foreign_key "events", "days", name: "events_day_id_fk"
-
   add_foreign_key "locales", "competitions", name: "locales_competition_id_fk"
-
   add_foreign_key "news", "competitions", name: "news_competition_id_fk"
   add_foreign_key "news", "locales", name: "news_locale_id_fk"
-
   add_foreign_key "permissions", "competitions", name: "permissions_competition_id_fk"
   add_foreign_key "permissions", "users", name: "permissions_user_id_fk"
-
   add_foreign_key "theme_files", "competitions", name: "theme_files_competition_id_fk"
   add_foreign_key "theme_files", "themes", name: "theme_files_theme_id_fk"
-
 end

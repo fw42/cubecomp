@@ -125,14 +125,4 @@ class AdminControllerTest < ActionController::TestCase
       end
     end
   end
-
-  private
-
-  def with_csrf_protection
-    old_csrf_value = ActionController::Base.allow_forgery_protection
-    ActionController::Base.allow_forgery_protection = true
-    yield
-  ensure
-    ActionController::Base.allow_forgery_protection = old_csrf_value
-  end
 end

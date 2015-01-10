@@ -35,6 +35,11 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_valid new_competitor
   end
 
+  test 'validates format of wca id' do
+    @competitor.wca = 'bullshit'
+    assert_not_valid(@competitor, :wca)
+  end
+
   test 'validates presence of first name' do
     @competitor.first_name = ''
     assert_not_valid(@competitor, :first_name)

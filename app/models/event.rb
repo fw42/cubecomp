@@ -35,6 +35,8 @@ class Event < ActiveRecord::Base
   validates :state, presence: true
   validates :state, inclusion: { in: Event::STATES.keys }, allow_nil: true, allow_blank: true
 
+  scope :for_competitors_table, ->{ where.not(state: 'not_for_registration') }
+
   def for_registration?
     state != 'not_for_registration'
   end

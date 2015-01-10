@@ -29,10 +29,6 @@ class AdminController < ApplicationController
     render text: 'not found', status: :not_found
   end
 
-  def render_forbidden
-    render text: 'forbidden', status: :forbidden
-  end
-
   def current_user
     @current_user ||= begin
       if session[:user_id]

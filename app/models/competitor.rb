@@ -5,6 +5,8 @@ class Competitor < ActiveRecord::Base
   validates :competition, presence: true
 
   validates :wca, uniqueness: { scope: :competition_id }, allow_nil: true, allow_blank: true
+  validates :wca, format: { with: /\A2\d{3}\w+\d\d\Z/ }, allow_nil: true, allow_blank: true
+
   validates :first_name, presence: true
   validates :last_name, presence: true
 

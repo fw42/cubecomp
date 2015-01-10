@@ -88,7 +88,7 @@ class Admin::CompetitorsController < AdminController
   def create
     @competitor = current_competition.competitors.new
     @competitor.attributes = competitor_params.except(:days)
-    RegistrationService.new(@competitor).apply_registration_params(competitor_params[:days])
+    RegistrationService.new(@competitor, admin: true).apply_registration_params(competitor_params[:days])
 
     if @competitor.save
       redirect_to admin_competition_competitors_path(current_competition),
@@ -100,7 +100,7 @@ class Admin::CompetitorsController < AdminController
 
   def update
     @competitor.attributes = competitor_params.except(:days)
-    RegistrationService.new(@competitor).apply_registration_params(competitor_params[:days])
+    RegistrationService.new(@competitor, admin: true).apply_registration_params(competitor_params[:days])
 
     if @competitor.save
       redirect_to edit_admin_competition_competitor_path(current_competition, @competitor),
