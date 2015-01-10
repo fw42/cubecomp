@@ -3,6 +3,11 @@ aachen_open_index:
   filename: index.html
   content: Hello!
 
+aachen_open_disclaimer_german:
+  competition: aachen_open
+  filename: disclaimer.de.html
+  content: It's Flo's fault!
+
 aachen_open_logo:
   competition: aachen_open
   filename: "logo.jpg"

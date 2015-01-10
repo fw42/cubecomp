@@ -1,8 +1,8 @@
 Liquid::Template.error_mode = :strict
 
 filters = [
-  ImageFilters,
-  I18nFilters,
+  Liquid::Filters::Url,
+  Liquid::Filters::I18n,
 ]
 
 filters.each do |filter|

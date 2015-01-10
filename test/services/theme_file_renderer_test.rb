@@ -74,10 +74,12 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
   test '#render Liquid template with filters' do
     @theme_file.content = <<-LIQUID
       {{ 'registration_success' | translate }}
+      Click <a href="{{ 'foobar' | theme_file_url: locale: 'foo' }}">here</a> to go back to foobar
     LIQUID
 
     expected = <<-LIQUID
       Registration successful. You will receive a confirmation mail soon.
+      Click <a href="/ao14/foo/foobar">here</a> to go back to foobar
     LIQUID
 
     assert_equal expected, @renderer.render
@@ -89,9 +91,28 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
     assert_equal 'other file', @renderer.render
   end
 
+  test '#render renders included Liquid templates and uses filename with default locale if no other one exists' do
+    @competition.theme_files.create!(filename: 'other_file.en.html', content: 'other english file')
+    @theme_file.content = "{% include 'other_file.html' %}"
+    assert_equal 'other english file', @renderer.render
+  end
+
+  test '#render renders included templates but prefers filename with default locale even if exact filename exists' do
+    @competition.theme_files.create!(filename: 'other_file.html', content: 'other file')
+    @competition.theme_files.create!(filename: 'other_file.en.html', content: 'other english file')
+    @theme_file.content = "{% include 'other_file.html' %}"
+    assert_equal 'other english file', @renderer.render
+  end
+
+  test '#render doesnt render included template if filename doesnt exist, even if (non-current) localized one exists' do
+    @competition.theme_files.create!(filename: 'other_file.foobar.html', content: 'other foobar file')
+    @theme_file.content = "{% include 'other_file.html' %}"
+    assert_equal '', @renderer.render
+  end
+
   test "#render doesn't crash when including a file that doesn't exist" do
     @theme_file.content = "{% include 'doesnt.exist' %}"
-    assert_equal 'Liquid error: File does not exist', @renderer.render
+    assert_equal '', @renderer.render
   end
 
   test '#render with exceptions' do

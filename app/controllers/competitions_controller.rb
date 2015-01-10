@@ -25,9 +25,8 @@ class CompetitionsController < ApplicationController
     extension = params[:format] || 'html'
 
     @theme_file = @competition.theme_files.text_files.with_filename(
-      filename,
-      @locale.handle,
-      extension
+      "#{filename}.#{extension}",
+      @locale.handle
     ).first!
   end
 
