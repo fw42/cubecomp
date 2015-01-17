@@ -1,6 +1,4 @@
 class CompetitionArea::CompetitorsController < CompetitionAreaController
-  class InvalidReturnToPath < StandardError; end
-
   PERMITTED_PARAMS = [
     :first_name,
     :last_name,
@@ -28,7 +26,7 @@ class CompetitionArea::CompetitorsController < CompetitionAreaController
     RegistrationService.new(competitor).apply_registration_params(competitor_params[:days])
 
     if competitor.save
-      redirect_to return_to_path, notice: t(:registration_success)
+      redirect_to return_to_path, notice: t('registration.flash_success')
     else
       render_theme_file_with_errors(competitor)
     end
@@ -41,7 +39,7 @@ class CompetitionArea::CompetitorsController < CompetitionAreaController
     if path && path =~ /\A\//
       path
     else
-      raise InvalidReturnToPath
+      raise InvalidParametersError
     end
   end
 

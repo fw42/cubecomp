@@ -92,7 +92,7 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
 
   test '#render Liquid template with filters' do
     @theme_file.content = <<-LIQUID
-      {{ 'registration_success' | translate }}
+      {{ 'registration.flash_success' | translate }}
       Click <a href="{{ 'foobar' | theme_file_url: locale: 'foo' }}">here</a> to go back to foobar
     LIQUID
 
@@ -149,11 +149,11 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
 
   test '#render uses locale' do
     @locale = locales(:aachen_open_german)
-    @theme_file.content = "{{ 'registration_success' | translate }}"
+    @theme_file.content = "{{ 'registration.flash_success' | translate }}"
     assert_equal "Anmeldung erfolgreich. Du wirst bald eine Bestätigung per E-Mail erhalten.", renderer.render
 
     @locale = locales(:aachen_open_english)
-    @theme_file.content = "{{ 'registration_success' | translate }}"
+    @theme_file.content = "{{ 'registration.flash_success' | translate }}"
     assert_equal "Registration successful. You will receive a confirmation email soon.", renderer.render
   end
 

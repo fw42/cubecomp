@@ -4,6 +4,14 @@ de:
       schedule: "%A, %d. %B %Y"
       day_only: "%A"
       news: "%d.%m.%Y"
+    day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
+    abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
+    month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
+    abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
+    order:
+      - day
+      - month
+      - year
 
   activerecord:
     attributes:
@@ -19,19 +27,37 @@ de:
     errors:
       messages:
         blank: "darf nicht leer sein"
+      models:
+        competitor:
+          attributes:
+            wca_id:
+              taken: "wurde bereits bei der Anmeldung eines anderen Teilnehmers verwendet"
+              invalid: "ist nicht gültig"
+            birthday:
+              inclusion: "ist nicht vollständig bzw. ungültig"
+            mail:
+              invalid: "Adresse ist ungültig"
 
-  registration_success: "Anmeldung erfolgreich. Du wirst bald eine Bestätigung per E-Mail erhalten."
-  registration_closed: "Anmeldung ist momentan nicht möglich."
+  registration:
+    flash_success: "Anmeldung erfolgreich. Du wirst bald eine Bestätigung per E-Mail erhalten."
+    flash_closed: "Anmeldung ist momentan nicht möglich."
+    closed: 'geschlossen'
+    waiting_list: 'Warteliste'
+    submit: "Melde mich an!"
+    register_not_coming: "Ich komme nicht"
+    register_as_guest: "Ich möchte zuschauen (Gast)"
+    register_as_competitor: "Ich möchte teilnehmen"
+    wca_id_first_time: "Falls dies dein erstes Turnier ist, lasse dieses Feld leer."
 
-  #### Schedule
-  start: "Beginn"
-  stop: "Ende"
-  event: "Event"
-  stage: "Bühne"
-  round: "Runde"
-  timelimit: "Zeitgrenze"
-  format: "Format"
-  max: "Max."
+  schedule:
+    start: "Beginn"
+    stop: "Ende"
+    event: "Event"
+    stage: "Bühne"
+    round: "Runde"
+    timelimit: "Zeitgrenze"
+    format: "Format"
+    max: "Max."
 
   male: "männlich"
   female: "weiblich"
