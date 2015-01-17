@@ -20,10 +20,8 @@ en:
       messages:
         blank: "can't be blank"
 
-  registration_success: "Registration successful. You will receive a confirmation mail soon."
-  male: 'male'
-  female: 'female'
-
+  registration_success: "Registration successful. You will receive a confirmation email soon."
+  registration_closed: "Registration is not possbile at this moment."
 
   ##### Schedule table
   start: "Start"
@@ -34,3 +32,6 @@ en:
   timelimit: "Timelimit"
   format: "Format"
   max: "Max."
+
+  male: 'male'
+  female: 'female'

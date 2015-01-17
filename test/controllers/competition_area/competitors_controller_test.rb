@@ -39,10 +39,10 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
     assert_difference '@competition.competitors.count', +1 do
       assert_difference '@competition.event_registrations.count', +1 do
         assert_difference '@competition.day_registrations.count', +2 do
-          request.env["HTTP_REFERER"] = "/foo/"
           post :create,
             competition_handle: @competition.handle,
             theme_file: "foobar.html",
+            return_to_path: '/foo/',
             competitor: @new_competitor_params,
             locale: @locale.handle
         end
@@ -50,7 +50,7 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
     end
 
     assert_response :redirect
-    assert_redirected_to request.env["HTTP_REFERER"]
+    assert_redirected_to '/foo/'
     bob = @competition.competitors.find_by(wca: '2015BOB01')
     expected = @new_competitor_params.except(:"birthday(1i)", :"birthday(2i)", :"birthday(3i)", :days)
     assert_attributes(expected, bob)
@@ -80,12 +80,13 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
     post :create,
       competition_handle: @competition.handle,
       theme_file: "foobar.html",
+      return_to_path: '/foo/',
       competitor: @new_competitor_params,
       locale: @locale.handle
 
     assert_response :ok
     assert_match /#{Regexp.escape('<div class="field_with_errors">')}/, response.body
-    assert_match /#{Regexp.escape('<div class="registration-errors">')}/, response.body
+    assert_match /#{Regexp.escape('<div class="registration_errors">')}/, response.body
   end
 
   test '#create does not allow you to register for events that are not for registration' do
@@ -146,16 +147,16 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
 
     assert_difference '@competition.competitors.count', +1 do
       assert_difference '@competition.event_registrations.count', +1 do
-        request.env["HTTP_REFERER"] = "/foo/"
         post :create,
           competition_handle: @competition.handle,
           competitor: @new_competitor_params,
+          return_to_path: '/foo/',
           locale: @locale.handle
       end
     end
 
     assert_response :redirect
-    assert_redirected_to request.env["HTTP_REFERER"]
+    assert_redirected_to '/foo/'
     assert_equal true, @competition.competitors.last.event_registrations.first.waiting
   end
 end

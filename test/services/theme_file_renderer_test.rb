@@ -97,7 +97,7 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
     LIQUID
 
     expected = <<-LIQUID
-      Registration successful. You will receive a confirmation mail soon.
+      Registration successful. You will receive a confirmation email soon.
       Click <a href="/ao14/foo/foobar">here</a> to go back to foobar
     LIQUID
 
@@ -154,7 +154,7 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
 
     @locale = locales(:aachen_open_english)
     @theme_file.content = "{{ 'registration_success' | translate }}"
-    assert_equal "Registration successful. You will receive a confirmation mail soon.", renderer.render
+    assert_equal "Registration successful. You will receive a confirmation email soon.", renderer.render
   end
 
   private

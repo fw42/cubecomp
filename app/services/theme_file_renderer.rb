@@ -103,6 +103,7 @@ class ThemeFileRenderer
         locals: default_locals.reverse_merge({
           :@competitor => @competition.competitors.new,
           :@days => @competition.days.with_events.preload(:events),
+          :@return_to_path => @controller.request.fullpath
         })
       )
     end

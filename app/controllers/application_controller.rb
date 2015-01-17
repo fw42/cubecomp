@@ -3,11 +3,24 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  rescue_from ActiveRecord::RecordNotFound, ActionController::UnknownFormat, I18n::InvalidLocale do
+  not_found_exceptions = [
+    ActiveRecord::RecordNotFound,
+    ActionController::UnknownFormat,
+    I18n::InvalidLocale
+  ]
+
+  forbidden_exceptions = [
+    RegistrationService::PermissionError,
+    CompetitionArea::CompetitorsController::InvalidReturnToPath
+  ]
+
+  rescue_from(*not_found_exceptions) do |exception|
+    Rails.logger.error(exception)
     render_not_found
   end
 
-  rescue_from RegistrationService::PermissionError do
+  rescue_from(*forbidden_exceptions) do |exception|
+    Rails.logger.error(exception)
     render_forbidden
   end
 

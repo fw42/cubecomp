@@ -21,6 +21,7 @@ de:
         blank: "darf nicht leer sein"
 
   registration_success: "Anmeldung erfolgreich. Du wirst bald eine Bestätigung per E-Mail erhalten."
+  registration_closed: "Anmeldung ist momentan nicht möglich."
 
   #### Schedule
   start: "Beginn"

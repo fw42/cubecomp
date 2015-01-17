@@ -18,7 +18,7 @@ class Liquid::Filters::I18nTest < ActiveSupport::TestCase
       @filters.translate('registration_success')
 
     @context.registers[:locale] = locales(:aachen_open_english)
-    assert_equal 'Registration successful. You will receive a confirmation mail soon.',
+    assert_equal 'Registration successful. You will receive a confirmation email soon.',
       @filters.translate('registration_success')
 
     assert_equal 'Anmeldung erfolgreich. Du wirst bald eine Bestätigung per E-Mail erhalten.',
