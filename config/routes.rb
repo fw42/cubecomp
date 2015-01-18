@@ -46,7 +46,7 @@ Rails.application.routes.draw do
           get 'email(/:activate)', to: 'competitor_email#new', as: 'new_email'
           post 'email', to: 'competitor_email#create', as: 'create_email'
 
-          get 'email/render(/:email_template_id)',
+          get 'email/render(.:format)(/:email_template_id)',
             to: 'competitor_email#render_template',
             as: 'render_email',
             constraints: { format: 'json' }

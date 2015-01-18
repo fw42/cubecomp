@@ -21,9 +21,17 @@ module Admin::ThemeFiles
       assert_response :not_found
     end
 
+    test '#index requires permission' do
+      flunk
+    end
+
     test '#new' do
       get :new, competition_id: @competition.id
       assert_response :success
+    end
+
+    test '#new requires permission' do
+      flunk
     end
 
     test '#create' do
@@ -40,9 +48,17 @@ module Admin::ThemeFiles
       assert_attributes(params, @competition.theme_files.last)
     end
 
+    test '#create requires permission' do
+      flunk
+    end
+
     test '#new_image' do
       get :new_image, competition_id: @competition.id
       assert_response :success
+    end
+
+    test '#new_image requires permission' do
+      flunk
     end
 
     test '#create_image' do
@@ -59,16 +75,48 @@ module Admin::ThemeFiles
       assert_redirected_to admin_competition_theme_files_path(@competition)
     end
 
+    test '#create_image requires permission' do
+      flunk
+    end
+
     test '#new_from_existing' do
       get :new_from_existing, competition_id: @competition.id
       assert_response :success
     end
 
-    test '#create_from_existing from theme to competition' do
+    test '#new_from_existing requires permission' do
       flunk
     end
 
+    test '#create_from_existing from theme to competition' do
+      from_theme = themes(:fancy)
+
+      post :create_from_existing, competition_id: @competition.id, from: {
+        theme_id: from_theme.id,
+        competition_id: "does not matter, wont be used",
+        load_theme: "Load"
+      }
+
+      assert_redirected_to admin_competition_theme_files_path(@competition)
+      assert_theme_equals from_theme.files, @competition.reload.theme_files
+    end
+
     test '#create_from_existing from competition to competition' do
+      to_competition = competitions(:german_open)
+      login_as(to_competition.users.first)
+      from_competition = competitions(:aachen_open)
+
+      post :create_from_existing, competition_id: to_competition.id, from: {
+        theme_id: "does not matter, wont be used",
+        competition_id: from_competition.id,
+        load_competition: "Load"
+      }
+
+      assert_redirected_to admin_competition_theme_files_path(to_competition)
+      assert_theme_equals from_competition.theme_files, to_competition.reload.theme_files
+    end
+
+    test '#create_from_existing from theme to competition requires permission' do
       flunk
     end
 
