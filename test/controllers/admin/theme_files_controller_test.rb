@@ -92,7 +92,7 @@ class Admin::ThemeFilesControllerTest < ActionController::TestCase
     flunk
   end
 
-  tesit '#create_from_existing from theme to theme' do
+  test '#create_from_existing from theme to theme' do
     flunk
   end
 

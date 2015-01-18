@@ -6,6 +6,10 @@ class ThemeCopyServiceTest < ActiveSupport::TestCase
     @theme = themes(:default)
   end
 
+  test '#replace_theme!' do
+    flunk
+  end
+
   test '#replace_theme' do
     service(@theme.files).replace_theme
 
