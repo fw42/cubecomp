@@ -14,8 +14,8 @@
           <% end %>
         <% end %>
 
-        <% @competition.events.map{ |event| event.handle }.sort.each do |handle| %>
-          <th><small><%= handle %></small></th>
+        <% @events.each do |event| %>
+          <th><small><%= event.handle %></small></th>
         <% end %>
       </tr>
 
@@ -50,7 +50,7 @@
         <% end %>
       <% end %>
 
-      <% @competition.events.sort_by{ |event| event.handle }.each do |event| %>
+      <% @events.each do |event| %>
         <td>
           <small>
             <%=
@@ -78,7 +78,7 @@
           <th><%= @competitors.select{ |competitor| competitor.registered_on?(day) }.length %></th>
         <% end %>
       <% end %>
-      <% @competition.events.sort_by(&:handle).each do |event| %>
+      <% @events.each do |event| %>
         <th><%= @competitors.select{ |competitor| competitor.event_registration_status(event) != 'not_registered' }.size %></th>
       <% end %>
     </tr>

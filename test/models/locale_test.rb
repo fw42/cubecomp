@@ -58,4 +58,29 @@ class LocaleTest < ActiveSupport::TestCase
   test 'locales are a subset of available I18n locales' do
     assert_equal [], Locale::ALL.keys - I18n.available_locales.map(&:to_s)
   end
+
+  test 'all I18n locale files have the same keys' do
+    locales = Dir[Rails.root.join('config/locales/*.yml')]
+    locales = locales.map do |filename|
+      hash = YAML.load(File.read(filename))
+      strip_values(hash)
+    end
+
+    locales.each do |locale_1|
+      locales.each do |locale_2|
+        assert_equal locale_1.values, locale_2.values,
+          "Locale #{locale_1.keys} and #{locale_2.keys} don't have the same keys"
+      end
+    end
+  end
+
+  private
+
+  def strip_values(hash)
+    if hash.is_a?(Hash)
+      Hash[hash.map{ |k, v| [ k, strip_values(v) ] }]
+    elsif hash.is_a?(Array)
+      hash.map{ |value| strip_values(value) }
+    end
+  end
 end

@@ -67,6 +67,40 @@ class RegistrationServiceTest < ActiveSupport::TestCase
     end
   end
 
+  test '#register_for_event that is already closed requires admin flag' do
+    event = @competition.events.first
+    event.update_attributes(state: 'registration_closed')
+
+    assert_no_difference '@competitor.event_registrations.size' do
+      assert_raises RegistrationService::PermissionError do
+        @service.register_for_event(event)
+      end
+    end
+
+    assert_difference '@competitor.event_registrations.size', +1 do
+      assert_nothing_raised do
+        RegistrationService.new(@competitor, admin: true).register_for_event(event)
+      end
+    end
+  end
+
+  test '#register_for_event that is on waiting requires admin flag' do
+    event = @competition.events.first
+    event.update_attributes(state: 'open_with_waiting_list')
+
+    assert_no_difference '@competitor.event_registrations.size' do
+      assert_raises RegistrationService::PermissionError do
+        @service.register_for_event(event)
+      end
+    end
+
+    assert_difference '@competitor.event_registrations.size', +1 do
+      assert_nothing_raised do
+        RegistrationService.new(@competitor, admin: true).register_for_event(event)
+      end
+    end
+  end
+
   test '#register_as_guest if not already registered for day' do
     day = days(:aachen_open_day_two)
     assert_difference '@competitor.day_registrations.count', +1 do

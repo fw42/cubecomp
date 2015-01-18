@@ -1,3 +1,8 @@
+aachen_open_layout:
+  competition: aachen_open
+  filename: layout.html
+  content: Aachen Open -- {{ content_for_layout }}
+
 aachen_open_index:
   competition: aachen_open
   filename: index.html

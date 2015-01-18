@@ -16,6 +16,14 @@ require 'minitest/pride'
 require 'mocha/mini_test'
 require 'webmock/minitest'
 
+def with_csrf_protection
+  old_csrf_value = ActionController::Base.allow_forgery_protection
+  ActionController::Base.allow_forgery_protection = true
+  yield
+ensure
+  ActionController::Base.allow_forgery_protection = old_csrf_value
+end
+
 class ActiveSupport::TestCase
   fixtures :all
 

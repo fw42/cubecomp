@@ -12,4 +12,6 @@ Rails.application.config.assets.precompile += %w(
   admin/schedule.css
   admin.js
   email_template_fetcher.js
+  competition_area.js
+  competition_area.css
 )

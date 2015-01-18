@@ -1,4 +1,6 @@
 class WcaGateway
+  MIN_QUERY_LENGTH = 6
+
   class ConnectionError < StandardError
     def initialize(exception)
       @exception = exception
@@ -9,19 +11,19 @@ class WcaGateway
 
   def initialize(url)
     @conn = Faraday.new(url: url) do |faraday|
-      faraday.request :url_encoded
+      faraday.request(:url_encoded)
       faraday.response(:logger) unless Rails.env.test?
-      faraday.adapter Faraday.default_adapter
-      faraday.use Faraday::Response::RaiseError
+      faraday.adapter(Faraday.default_adapter)
+      faraday.use(Faraday::Response::RaiseError)
     end
   end
 
   def search_by_id(q)
-    response = @conn.get "/competitors?q=#{q}"
+    q = q.strip.upcase
+    response = @conn.get("/competitors?q=#{q}")
     JSON.parse(response.body)["competitors"].map do |c|
       Competitor.new(c["id"], c["name"], c["gender"], c["country"])
     end
-
   rescue Faraday::ConnectionFailed => e
     raise WcaGateway::ConnectionError.new(e)
   # ClientError is Faraday's most generic error

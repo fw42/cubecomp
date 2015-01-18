@@ -1,0 +1,78 @@
+table {
+  td {
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+table.registration_form {
+  input:not([type='radio']):not([type='checkbox']):not([type='submit']),
+  textarea, select
+  {
+    display: inline;
+    width: 300px;
+  }
+
+  select.date-select {
+    width: 98px;
+    display: inline;
+  }
+
+  td.register {
+    text-align: center;
+  }
+}
+
+div.field_with_errors {
+  display: inline;
+
+  input, select {
+    border: 1px solid red;
+  }
+}
+
+div.flash {
+  div {
+    border: 1px solid;
+
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    display: inline-block;
+
+    padding: 25px 25px 25px 65px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+  }
+
+  div.notice {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    background-image: url('<%= image_path 'flash_notice.png' %>');
+  }
+
+  div.error {
+    color: #D8000C;
+    background-color: #FFBABA;
+    background-image: url('<%= image_path 'flash_error.png' %>');
+  }
+
+  div.warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+    background-image: url('<%= image_path 'flash_warning.png' %>');
+  }
+}
+
+div.registration_errors {
+  border: 1px dashed red;
+  padding: 10px 10px 0px 10px;
+  margin: 5px;
+  display: inline-block;
+
+  div.registration_errors_heading {
+    font-size: 120%;
+    font-weight: bold;
+  }
+}

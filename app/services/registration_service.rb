@@ -1,6 +1,9 @@
 class RegistrationService
-  def initialize(competitor)
+  class PermissionError < StandardError; end
+
+  def initialize(competitor, admin: false)
     @competitor = competitor
+    @admin = admin
   end
 
   def register_for_day(day_id)
@@ -18,6 +21,8 @@ class RegistrationService
   end
 
   def register_for_event(event, waiting = false)
+    check_permission_to_register(event, waiting)
+
     register_for_day(event.day_id)
 
     registration = @competitor.event_registrations.build(
@@ -82,5 +87,12 @@ class RegistrationService
         )
       end
     end
+  end
+
+  def check_permission_to_register(event, waiting)
+    return if @admin
+    return if event.state == 'open_for_registration'
+    return if event.state == 'open_with_waiting_list' && waiting == true
+    raise PermissionError
   end
 end

@@ -5,4 +5,60 @@ en:
       day_only: "%A"
       news: "%B %d, %Y"
 
-  registration_success: "Registration successful. You will receive a confirmation mail soon."
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_day_names: [Su, Mo, Tue, We, Th, Fr, Sa]
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    order:
+      - day
+      - month
+      - year
+
+  activerecord:
+    attributes:
+      competitor:
+        wca: 'WCA ID'
+        first_name: 'First name'
+        last_name: 'Last name'
+        email: 'E-mail'
+        birthday: 'Birthday'
+        country: 'Country'
+        male: 'Gender'
+        user_comment: 'Comment'
+    errors:
+      messages:
+        blank: "can't be blank"
+      models:
+        competitor:
+          attributes:
+            wca_id:
+              taken: "was already used to register another competitor"
+              invalid: "is not valid"
+            birthday:
+              inclusion: "is incomplete or invalid"
+            mail:
+              invalid: "is not valid"
+
+  registration:
+    flash_success: "Registration successful. You will receive a confirmation email soon."
+    flash_closed: "Registration is not possbile at this moment."
+    closed: 'closed'
+    waiting_list: 'waiting list'
+    submit: "Register me!"
+    register_not_coming: "I won't come"
+    register_as_guest: "I am a guest"
+    register_as_competitor: "I want to compete"
+    wca_id_first_time: "If this is your first competition, leave this field empty."
+
+  schedule:
+    start: "Start"
+    stop: "Stop"
+    event: "Event"
+    stage: "Stage"
+    round: "Round"
+    timelimit: "Timelimit"
+    format: "Format"
+    max: "Max."
+
+  male: 'male'
+  female: 'female'
