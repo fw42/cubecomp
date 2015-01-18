@@ -19,6 +19,9 @@ Rails.application.routes.draw do
         collection do
           get :new_image
           post :create_image
+
+          get :new_from_existing
+          post :create_from_existing
         end
       end
     end
@@ -75,6 +78,9 @@ Rails.application.routes.draw do
         collection do
           get :new_image
           post :create_image
+
+          get :new_from_existing
+          post :create_from_existing
         end
       end
 

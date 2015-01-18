@@ -23,6 +23,22 @@ module Admin::ThemeFilesHelper
     end
   end
 
+  def new_from_existing_url
+    if @theme
+      new_from_existing_admin_theme_theme_files_path(@theme)
+    else
+      new_from_existing_admin_competition_theme_files_path(current_competition)
+    end
+  end
+
+  def create_from_existing_url
+    if @theme
+      create_from_existing_admin_theme_theme_files_path(@theme)
+    else
+      create_from_existing_admin_competition_theme_files_path(current_competition)
+    end
+  end
+
   def create_image_file_url
     if @theme
       create_image_admin_theme_theme_files_path(@theme)

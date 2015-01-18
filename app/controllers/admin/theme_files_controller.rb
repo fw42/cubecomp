@@ -1,5 +1,8 @@
 class Admin::ThemeFilesController < AdminController
-  before_action :set_theme_files, only: [:index, :new, :new_image, :create, :create_image]
+  before_action :set_theme_files, only: [
+    :index, :new, :new_image, :create, :create_image,
+    :new_from_existing, :create_from_existing
+  ]
   before_action :set_theme_file, only: [:edit, :show_image, :update, :destroy]
 
   def index
@@ -8,6 +11,34 @@ class Admin::ThemeFilesController < AdminController
 
   def new
     @theme_file = @theme_files.text_files.new
+  end
+
+  def new_from_existing
+    @themes = Theme.all
+    @competitions = current_user.policy.competitions
+
+    if @theme
+      @themes = @themes.where.not(id: @theme.id)
+    else
+      @competitions = @competitions.reject{ |competition| competition.id == current_competition.id }
+    end
+
+    @themes = @themes.pluck(:name, :id)
+    @competitions = @competitions.map{ |c| [ c.name, c.id ] }
+  end
+
+  def create_from_existing
+    unless from = existing_theme_files_to_load
+      render_not_found
+      return
+    end
+
+    model = @theme || current_competition
+    model.transaction do
+      ThemeCopyService.new(@theme_files, from).replace_theme!(model)
+    end
+
+    redirect_to index_url, notice: "Theme successfully loaded."
   end
 
   def create
@@ -57,6 +88,19 @@ class Admin::ThemeFilesController < AdminController
   end
 
   private
+
+  def existing_theme_files_to_load
+    from_params = params.require(:from).permit(:theme_id, :competition_id, :load_theme, :load_competition)
+
+    if from_params[:load_theme] && from_params[:theme_id]
+      theme = Theme.find_by!(id: from_params[:theme_id])
+      theme.files
+    elsif from_params[:load_competition] && from_params[:competition_id]
+      competition = Competition.find_by!(id: from_params[:competition_id])
+      return nil unless current_user.policy.login?(competition)
+      competition.theme_files
+    end
+  end
 
   def index_url
     if @theme

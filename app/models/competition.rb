@@ -29,10 +29,10 @@ class Competition < ActiveRecord::Base
   has_many :events, dependent: :destroy
   has_many :event_registrations
   has_many :locales, inverse_of: :competition, dependent: :destroy
-  has_many :theme_files, dependent: :destroy
   has_many :email_templates, dependent: :destroy
   has_many :permissions, dependent: :destroy
   has_many :users, through: :permissions
+  has_many :theme_files, dependent: :destroy, autosave: true
 
   accepts_nested_attributes_for :locales, allow_destroy: true
   accepts_nested_attributes_for :days, allow_destroy: true

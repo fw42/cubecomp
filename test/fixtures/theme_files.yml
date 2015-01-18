@@ -22,4 +22,4 @@ aachen_open_logo:
 template_index:
   theme: default
   filename: index.html
-  content: Hello!
+  content: Hello default!
