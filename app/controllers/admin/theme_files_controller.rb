@@ -2,8 +2,8 @@ class Admin::ThemeFilesController < AdminController
   include Admin::ThemeFilesHelper
 
   before_action :set_theme_files
+  before_action :ensure_user_has_permission_to_edit_theme
   before_action :set_theme_file, only: [:edit, :show_image, :update, :destroy]
-  before_action :ensure_user_has_permission_to_edit_themes
 
   def index
     @theme_files = @theme_files.order(:filename)
@@ -130,7 +130,7 @@ class Admin::ThemeFilesController < AdminController
     @theme_file = @theme_files.find_by!(id: params[:id])
   end
 
-  def ensure_user_has_permission_to_edit_themes
+  def ensure_user_has_permission_to_edit_theme
     return if @theme.nil?
     return if current_user.policy.admin_user_menu?
     render_forbidden

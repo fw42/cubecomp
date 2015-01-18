@@ -158,16 +158,14 @@ module Admin::ThemeFiles
     end
 
     test "#edit requires permission" do
-      flunk
-      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+      UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
       get :edit, theme_id: @theme.id, id: @theme_file.id
       assert_response :forbidden
     end
 
     test '#edit has back button to theme page' do
-      flunk
       get :edit, theme_id: @theme.id, id: @theme_file.id
-      url = admin_competition_theme_files_path(@competition)
+      url = admin_theme_theme_files_path(@theme)
       assert @response.body.include?(url)
     end
 
@@ -184,7 +182,14 @@ module Admin::ThemeFiles
     end
 
     test "#update requires permission" do
-      flunk
+      UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
+
+      patch :update, theme_id: @theme.id, id: @theme_file.id, theme_file: {
+        filename: 'foobar.html',
+        content: 'foobar!'
+      }
+
+      assert_response :forbidden
     end
 
     test '#destroy' do
@@ -196,18 +201,34 @@ module Admin::ThemeFiles
     end
 
     test "#destroy requires permission" do
-      flunk
+      UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
+
+      assert_no_difference 'ThemeFile.count' do
+        delete :destroy, theme_id: @theme.id, id: @theme_file.id
+      end
+
+      assert_response :forbidden
     end
 
     test '#show_image' do
-      flunk
       theme_file = theme_files(:aachen_open_logo)
-      get :show_image, competition_id: theme_file.competition.id, id: theme_file.id
+      theme_file.competition = nil
+      theme_file.theme = @theme
+      theme_file.save!
+
+      get :show_image, theme_id: @theme.id, id: theme_file.id
       assert_response :ok
     end
 
     test "#show_image requires permission" do
-      flunk
+      theme_file = theme_files(:aachen_open_logo)
+      theme_file.competition = nil
+      theme_file.theme = @theme
+      theme_file.save!
+
+      UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
+      get :show_image, theme_id: @theme.id, id: theme_file.id
+      assert_response :forbidden
     end
 
     test '#show_image on a theme file that is not an image returns 404' do

@@ -16,7 +16,7 @@ module Admin::ThemeFiles
       assert_not_nil assigns(:theme_files)
     end
 
-    test '#index renders 404 with invalid competition id' do
+    test '#index renders 404 with invalid competition_id' do
       get :index, competition_id: 17
       assert_response :not_found
     end
@@ -204,7 +204,15 @@ module Admin::ThemeFiles
     end
 
     test "#update requires permission" do
-      flunk
+      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+
+      params = {
+        filename: 'foobar.html',
+        content: 'foobar!'
+      }
+
+      patch :update, competition_id: @competition.id, id: @theme_file.id, theme_file: params
+      assert_response :forbidden
     end
 
     test '#destroy' do
@@ -216,7 +224,13 @@ module Admin::ThemeFiles
     end
 
     test "#destroy requires permission" do
-      flunk
+      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+
+      assert_no_difference 'ThemeFile.count' do
+        delete :destroy, competition_id: @competition.id, id: @theme_file.id
+      end
+
+      assert_response :forbidden
     end
 
     test '#show_image' do
@@ -226,7 +240,11 @@ module Admin::ThemeFiles
     end
 
     test "#show_image requires permission" do
-      flunk
+      theme_file = theme_files(:aachen_open_logo)
+      competition = theme_file.competition
+      UserPolicy.any_instance.expects(:login?).with{ |c| c.id == competition.id }.returns(false)
+      get :show_image, competition_id: competition.id, id: theme_file.id
+      assert_response :forbidden
     end
 
     test '#show_image on a theme file that is not an image returns 404' do
