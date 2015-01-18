@@ -83,7 +83,7 @@ Rails.application.routes.draw do
   end
 
   scope '/wca' do
-    get '/autocomplete', to: 'wca#autocomplete', as: 'wca_autocomplete' #, constraints: { format: 'json' }
+    get '/autocomplete/(:q.:format)', to: 'wca#autocomplete', as: 'wca_autocomplete', constraints: { format: 'json' }
   end
 
   scope '/:competition_handle' do

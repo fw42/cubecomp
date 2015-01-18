@@ -9,7 +9,7 @@ $(document).ready ->
     minLength: 6
   },{
     source: (q, callback) ->
-      $.getJSON(autocompleteURL + "?q=#{q}")
+      $.getJSON(autocompleteURL + "/#{q}.json")
         .done (result) ->
           callback(result)
     matcher: (item) ->
