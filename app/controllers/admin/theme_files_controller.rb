@@ -4,6 +4,7 @@ class Admin::ThemeFilesController < AdminController
     :new_from_existing, :create_from_existing
   ]
   before_action :set_theme_file, only: [:edit, :show_image, :update, :destroy]
+  before_action :ensure_user_has_permission_to_edit_themes
 
   def index
     @theme_files = @theme_files.order(:filename)
@@ -28,8 +29,12 @@ class Admin::ThemeFilesController < AdminController
   end
 
   def create_from_existing
-    unless from = existing_theme_files_to_load
+    from = existing_theme_files_to_load
+    if from.nil?
       render_not_found
+      return
+    elsif from == :forbidden
+      render_forbidden
       return
     end
 
@@ -92,14 +97,25 @@ class Admin::ThemeFilesController < AdminController
   def existing_theme_files_to_load
     from_params = params.require(:from).permit(:theme_id, :competition_id, :load_theme, :load_competition)
 
-    if from_params[:load_theme] && from_params[:theme_id]
-      theme = Theme.find_by!(id: from_params[:theme_id])
-      theme.files
-    elsif from_params[:load_competition] && from_params[:competition_id]
-      competition = Competition.find_by!(id: from_params[:competition_id])
-      return nil unless current_user.policy.login?(competition)
-      competition.theme_files
+    if from_params[:load_theme]
+      existing_theme_files_from_theme(from_params[:theme_id])
+    elsif from_params[:load_competition]
+      existing_theme_files_from_competition(from_params[:competition_id])
     end
+  end
+
+  def existing_theme_files_from_competition(competition_id)
+    return unless competition_id
+    competition = Competition.find_by!(id: competition_id)
+    return :forbidden unless current_user.policy.login?(competition)
+    competition.theme_files
+  end
+
+  def existing_theme_files_from_theme(theme_id)
+    return unless theme_id
+    return :forbidden unless current_user.policy.admin_user_menu?
+    theme = Theme.find_by!(id: theme_id)
+    theme.files
   end
 
   def index_url
@@ -123,6 +139,12 @@ class Admin::ThemeFilesController < AdminController
     @theme_files ||= ThemeFile.all
     @theme_file = @theme_files.find(params[:id])
     @theme ||= @theme_file.theme
+  end
+
+  def ensure_user_has_permission_to_edit_themes
+    return if @theme.nil?
+    return if current_user.policy.admin_user_menu?
+    render_forbidden
   end
 
   def theme_file_params

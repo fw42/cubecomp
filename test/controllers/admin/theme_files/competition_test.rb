@@ -22,7 +22,9 @@ module Admin::ThemeFiles
     end
 
     test '#index requires permission' do
-      flunk
+      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+      get :index, competition_id: @competition.id
+      assert_response :forbidden
     end
 
     test '#new' do
@@ -31,7 +33,9 @@ module Admin::ThemeFiles
     end
 
     test '#new requires permission' do
-      flunk
+      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+      get :new, competition_id: @competition.id
+      assert_response :forbidden
     end
 
     test '#create' do
@@ -49,7 +53,11 @@ module Admin::ThemeFiles
     end
 
     test '#create requires permission' do
-      flunk
+      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+      assert_no_difference 'ThemeFile.count' do
+        post :create, competition_id: @competition.id, theme_file: { filename: 'foo', content: 'bar' }
+      end
+      assert_response :forbidden
     end
 
     test '#new_image' do
@@ -58,7 +66,9 @@ module Admin::ThemeFiles
     end
 
     test '#new_image requires permission' do
-      flunk
+      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+      get :new_image, competition_id: @competition.id
+      assert_response :forbidden
     end
 
     test '#create_image' do
@@ -76,7 +86,17 @@ module Admin::ThemeFiles
     end
 
     test '#create_image requires permission' do
-      flunk
+      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+      image = fixture_file_upload('files/logo.png', 'image/jpeg')
+
+      assert_no_difference 'ThemeFile.count' do
+        post :create_image, competition_id: @competition.id, theme_file: {
+          filename: 'logo.png',
+          image: image
+        }
+      end
+
+      assert_response :forbidden
     end
 
     test '#new_from_existing' do
@@ -85,10 +105,13 @@ module Admin::ThemeFiles
     end
 
     test '#new_from_existing requires permission' do
-      flunk
+      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+      get :new_from_existing, competition_id: @competition.id
+      assert_response :forbidden
     end
 
     test '#create_from_existing from theme to competition' do
+      UserPolicy.any_instance.expects(:admin_user_menu?).returns(true)
       from_theme = themes(:fancy)
 
       post :create_from_existing, competition_id: @competition.id, from: {
@@ -116,12 +139,39 @@ module Admin::ThemeFiles
       assert_theme_equals from_competition.theme_files, to_competition.reload.theme_files
     end
 
-    test '#create_from_existing from theme to competition requires permission' do
-      flunk
+    test '#create_from_existing requires permission' do
+      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+      from_theme = themes(:fancy)
+
+      assert_no_difference 'ThemeFile.count' do
+        post :create_from_existing, competition_id: @competition.id, from: {
+          theme_id: from_theme.id,
+          competition_id: "does not matter, wont be used",
+          load_theme: "Load"
+        }
+      end
+
+      assert_response :forbidden
     end
 
     test '#create_from_existing does not allow to load from competition that user has no access to' do
-      flunk
+      to_competition = competitions(:german_open)
+      from_competition = competitions(:aachen_open)
+
+      UserPolicy.any_instance.expects(:login?)
+        .with{ |competition| competition.id == to_competition.id }.returns(true)
+      UserPolicy.any_instance.expects(:login?)
+        .with{ |competition| competition.id == from_competition.id }.returns(false)
+
+      assert_no_difference 'ThemeFile.count' do
+        post :create_from_existing, competition_id: to_competition.id, from: {
+          theme_id: "does not matter, wont be used",
+          competition_id: from_competition.id,
+          load_competition: "Load"
+        }
+      end
+
+      assert_response :forbidden
     end
   end
 end

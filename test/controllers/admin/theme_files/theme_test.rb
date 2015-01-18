@@ -22,7 +22,9 @@ module Admin::ThemeFiles
     end
 
     test '#index requires permission' do
-      flunk
+      UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
+      get :index, theme_id: @theme.id
+      assert_response :forbidden
     end
 
     test '#new' do
@@ -31,7 +33,9 @@ module Admin::ThemeFiles
     end
 
     test '#new requires permission' do
-      flunk
+      UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
+      get :new, theme_id: @theme.id
+      assert_response :forbidden
     end
 
     test '#create' do
@@ -49,7 +53,13 @@ module Admin::ThemeFiles
     end
 
     test '#create requires permission' do
-      flunk
+      UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
+
+      assert_no_difference 'ThemeFile.count' do
+        post :create, theme_id: @theme.id, theme_file: { filename: 'foo', content: 'bar' }
+      end
+
+      assert_response :forbidden
     end
 
     test '#new_image' do
@@ -58,7 +68,9 @@ module Admin::ThemeFiles
     end
 
     test '#new_image requires permission' do
-      flunk
+      UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
+      get :new_image, theme_id: @theme.id
+      assert_response :forbidden
     end
 
     test '#create_image' do
@@ -76,7 +88,15 @@ module Admin::ThemeFiles
     end
 
     test '#create_image requires permission' do
-      flunk
+      UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
+
+      image = fixture_file_upload('files/logo.png', 'image/jpeg')
+
+      assert_no_difference 'ThemeFile.count' do
+        post :create_image, theme_id: @theme.id, theme_file: { filename: 'logo.png', image: image }
+      end
+
+      assert_response :forbidden
     end
 
     test '#new_from_existing' do
@@ -85,7 +105,9 @@ module Admin::ThemeFiles
     end
 
     test '#new_from_existing requires permission' do
-      flunk
+      UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
+      get :new_from_existing, theme_id: @theme.id
+      assert_response :forbidden
     end
 
     test '#create_from_existing from theme to theme' do
@@ -115,11 +137,19 @@ module Admin::ThemeFiles
     end
 
     test '#create_from_existing from theme to theme requires permission' do
-      flunk
-    end
+      UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
 
-    test '#create_from_existing from competition to theme requires permission for both theme and competition' do
-      flunk
+      from_theme = themes(:fancy)
+
+      assert_no_difference 'ThemeFile.count' do
+        post :create_from_existing, theme_id: @theme.id, from: {
+          theme_id: from_theme.id,
+          competition_id: "does not matter, wont be used",
+          load_theme: "Load"
+        }
+      end
+
+      assert_response :forbidden
     end
   end
 end
