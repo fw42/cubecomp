@@ -173,5 +173,65 @@ module Admin::ThemeFiles
 
       assert_response :forbidden
     end
+
+    test '#edit' do
+      get :edit, competition_id: @competition.id, id: @theme_file.id
+      assert_response :success
+    end
+
+    test "#edit requires permission" do
+      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+      get :edit, competition_id: @competition.id, id: @theme_file.id
+      assert_response :forbidden
+    end
+
+    test '#edit has back button to competition' do
+      get :edit, competition_id: @competition.id, id: @theme_file.id
+      url = admin_competition_theme_files_path(@competition, @theme_file)
+      assert @response.body.include?(url)
+    end
+
+    test '#update' do
+      params = {
+        filename: 'foobar.html',
+        content: 'foobar!'
+      }
+
+      patch :update, competition_id: @competition.id, id: @theme_file.id, theme_file: params
+
+      assert_redirected_to edit_admin_competition_theme_file_path(@competition, @theme_file)
+      assert_attributes(params, @theme_file.reload)
+    end
+
+    test "#update requires permission" do
+      flunk
+    end
+
+    test '#destroy' do
+      assert_difference('ThemeFile.count', -1) do
+        delete :destroy, competition_id: @competition.id, id: @theme_file.id
+      end
+
+      assert_redirected_to admin_competition_theme_files_path(@competition)
+    end
+
+    test "#destroy requires permission" do
+      flunk
+    end
+
+    test '#show_image' do
+      theme_file = theme_files(:aachen_open_logo)
+      get :show_image, competition_id: theme_file.competition.id, id: theme_file.id
+      assert_response :ok
+    end
+
+    test "#show_image requires permission" do
+      flunk
+    end
+
+    test '#show_image on a theme file that is not an image returns 404' do
+      get :show_image, competition_id: @competition.id, id: @theme_file.id
+      assert_response :not_found
+    end
   end
 end

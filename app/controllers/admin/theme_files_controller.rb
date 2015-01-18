@@ -1,8 +1,7 @@
 class Admin::ThemeFilesController < AdminController
-  before_action :set_theme_files, only: [
-    :index, :new, :new_image, :create, :create_image,
-    :new_from_existing, :create_from_existing
-  ]
+  include Admin::ThemeFilesHelper
+
+  before_action :set_theme_files
   before_action :set_theme_file, only: [:edit, :show_image, :update, :destroy]
   before_action :ensure_user_has_permission_to_edit_themes
 
@@ -43,14 +42,14 @@ class Admin::ThemeFilesController < AdminController
       ThemeCopyService.new(@theme_files, from).replace_theme!(model)
     end
 
-    redirect_to index_url, notice: "Theme successfully loaded."
+    redirect_to admin_theme_files_path, notice: "Theme successfully loaded."
   end
 
   def create
     @theme_file = @theme_files.new(theme_file_params)
 
     if @theme_file.save
-      redirect_to index_url, notice: 'Theme file was successfully created.'
+      redirect_to admin_theme_files_path, notice: 'Theme file was successfully created.'
     else
       render :new
     end
@@ -64,7 +63,7 @@ class Admin::ThemeFilesController < AdminController
     @theme_file = @theme_files.new(theme_image_file_params)
 
     if @theme_file.save
-      redirect_to index_url, notice: 'Theme file was successfully created.'
+      redirect_to admin_theme_files_path, notice: 'Theme file was successfully created.'
     else
       @theme_file.errors.delete(:image)
       render :new_image
@@ -89,7 +88,7 @@ class Admin::ThemeFilesController < AdminController
 
   def destroy
     @theme_file.destroy
-    redirect_to index_url, notice: 'Theme file was successfully deleted.'
+    redirect_to admin_theme_files_path, notice: 'Theme file was successfully deleted.'
   end
 
   private
@@ -118,17 +117,9 @@ class Admin::ThemeFilesController < AdminController
     theme.files
   end
 
-  def index_url
-    if @theme
-      admin_theme_theme_files_path(@theme)
-    else
-      admin_competition_theme_files_path(current_competition)
-    end
-  end
-
   def set_theme_files
     if params[:theme_id]
-      @theme = Theme.find(params[:theme_id])
+      @theme = Theme.find_by!(id: params[:theme_id])
       @theme_files = @theme.files
     else
       @theme_files = current_competition.theme_files
@@ -136,9 +127,7 @@ class Admin::ThemeFilesController < AdminController
   end
 
   def set_theme_file
-    @theme_files ||= ThemeFile.all
-    @theme_file = @theme_files.find(params[:id])
-    @theme ||= @theme_file.theme
+    @theme_file = @theme_files.find_by!(id: params[:id])
   end
 
   def ensure_user_has_permission_to_edit_themes
