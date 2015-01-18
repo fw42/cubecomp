@@ -17,7 +17,10 @@ module AdminMenuHelper
         label: 'Themes',
         controller: [Admin::ThemesController, Admin::ThemeFilesController],
         url: admin_themes_path,
-        css: 'fa-files-o'
+        css: 'fa-files-o',
+        only_if: lambda do |controller|
+          controller.is_a?(Admin::ThemesController) || controller.request.params.key?(:theme_id)
+        end
       }
     ]
 
@@ -54,7 +57,8 @@ module AdminMenuHelper
         label: 'Theme',
         controller: Admin::ThemeFilesController,
         url: admin_competition_theme_files_path(current_competition),
-        css: 'fa-files-o'
+        css: 'fa-files-o',
+        only_if: ->(controller){ !controller.request.params.key?(:theme_id) }
       },
       {
         label: 'Email',

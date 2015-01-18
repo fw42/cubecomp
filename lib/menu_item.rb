@@ -15,6 +15,7 @@ class MenuItem
     @controller = Array(options[:controller])
     @actions = options[:actions]
     @current_controller_instance = options[:current_controller_instance]
+    @only_if = options[:only_if]
   end
 
   def active?
@@ -22,8 +23,14 @@ class MenuItem
       @current_controller_instance.is_a?(controller)
     end
 
-    return true unless @actions
+    if @actions
+      return false unless @actions.any? { |action| action == @current_controller_instance.action_name }
+    end
 
-    @actions.any? { |action| action == @current_controller_instance.action_name }
+    if @only_if
+      return false unless @only_if.call(@current_controller_instance)
+    end
+
+    true
   end
 end
