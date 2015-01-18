@@ -22,7 +22,7 @@ class ThemeFileTest < ActiveSupport::TestCase
   end
 
   test 'validates uniqueness of filename, scoped by theme' do
-    theme_file = theme_files(:template_index)
+    theme_file = theme_files(:default_index)
     new_file = theme_file.dup
     assert_not_valid(new_file, :filename)
 
@@ -31,7 +31,7 @@ class ThemeFileTest < ActiveSupport::TestCase
   end
 
   test 'theme_file for theme can have same filename as another theme_file of a competition' do
-    theme_file = theme_files(:template_index)
+    theme_file = theme_files(:default_index)
     theme_file.filename = @theme_file.filename
     assert_valid(theme_file)
   end

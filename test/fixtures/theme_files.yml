@@ -19,7 +19,17 @@ aachen_open_logo:
   image_content_type: "image/jpeg"
   image_file_size: 47603
 
-template_index:
+default_index:
   theme: default
   filename: index.html
   content: Hello default!
+
+fancy_fancy:
+  theme: fancy
+  filename: fancy.html
+  content: Fancy!
+
+fancy_schedule:
+  theme: fancy
+  filename: schedule.de.html
+  content: Yo this is the schedule
