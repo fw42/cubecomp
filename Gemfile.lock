@@ -117,7 +117,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
-    marginalia (1.1.5)
+    marginalia (1.2.0)
       actionpack (>= 2.3)
       activerecord (>= 2.3)
     metaclass (0.0.4)
