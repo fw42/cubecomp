@@ -21,6 +21,8 @@ Metrics/ClassLength:
 
 Metrics/AbcSize:
   Max: 20
+  Exclude:
+    - 'app/helpers/admin_menu_helper.rb'
 
 Lint/AmbiguousRegexpLiteral:
   Exclude:

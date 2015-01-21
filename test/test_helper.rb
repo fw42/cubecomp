@@ -40,6 +40,22 @@ class ActiveSupport::TestCase
     actual_attributes = object.attributes.symbolize_keys.slice(*expected_attributes.keys)
     assert_equal expected_attributes, actual_attributes
   end
+
+  def assert_theme_equals(expected_theme_files, actual_theme_files)
+    expected = expected_theme_files.map(&:attributes).sort_by{ |h| h['filename'] }
+    actual = actual_theme_files.map(&:attributes).sort_by{ |h| h['filename'] }
+
+    (expected + actual).each do |file|
+      file.delete('id')
+      file.delete('theme_id')
+      file.delete('competition_id')
+      file.delete('created_at')
+      file.delete('updated_at')
+      file.delete('image_updated_at')
+    end
+
+    assert_equal expected, actual
+  end
 end
 
 class ActionController::TestCase

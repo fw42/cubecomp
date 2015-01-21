@@ -22,7 +22,7 @@
         </div>
 
         <ul class="nav navbar-top-links navbar-right">
-          <% if (competitions_for_dropdown = current_user.policy.competitions).count > 1 %>
+          <% if (competitions_for_dropdown = current_user.policy.competitions).size > 1 %>
             <li>
               <select onchange="location = this.options[this.selectedIndex].value;">
                 <% competitions_for_dropdown.each do |competition| %>

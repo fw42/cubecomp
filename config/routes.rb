@@ -8,17 +8,18 @@ Rails.application.routes.draw do
 
     resources :users, except: [:show]
 
-    resources :theme_files, only: [:edit, :update, :destroy] do
-      member do
-        get :show_image
-      end
-    end
-
     resources :themes do
-      resources :theme_files, only: [:index, :new, :create] do
+      resources :theme_files, except: [:show] do
+        member do
+          get :show_image
+        end
+
         collection do
           get :new_image
           post :create_image
+
+          get :new_from_existing
+          post :create_from_existing
         end
       end
     end
@@ -43,7 +44,7 @@ Rails.application.routes.draw do
           get 'email(/:activate)', to: 'competitor_email#new', as: 'new_email'
           post 'email', to: 'competitor_email#create', as: 'create_email'
 
-          get 'email/render(/:email_template_id)',
+          get 'email/render(.:format)(/:email_template_id)',
             to: 'competitor_email#render_template',
             as: 'render_email',
             constraints: { format: 'json' }
@@ -71,10 +72,17 @@ Rails.application.routes.draw do
 
       resources :news, except: [:show]
 
-      resources :theme_files, only: [:index, :new, :create] do
+      resources :theme_files, except: [:show] do
+        member do
+          get :show_image
+        end
+
         collection do
           get :new_image
           post :create_image
+
+          get :new_from_existing
+          post :create_from_existing
         end
       end
 
