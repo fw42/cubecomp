@@ -85,7 +85,11 @@
       <tr>
         <td><label>Default language:</label></td>
         <td>
-          <%= f.select :default_locale_handle, @competition.locales.to_a.sort_by(&:handle).map{ |l| [ l.name, l.handle ] } %>
+          <% @competition.locales.to_a.sort_by(&:handle).each do |locale| %>
+            <%= f.radio_button :default_locale_handle, locale.handle %>
+            <%= f.label :default_locale_handle, locale.name, value: locale.handle, class: 'checkbox' %>
+            <br/>
+          <% end %>
         </td>
       </tr>
     </table>
