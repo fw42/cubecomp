@@ -1,1 +1,10 @@
-<%= 'foo' %>
+<div class='news'>
+  <ul>
+    <% @news.each do |item| %>
+      <li>
+        <span class='news-time'><%= I18n.l(item.time.to_date, format: :news) %></span>
+        <span class='news-text'><%= item.text %></span>
+      </li>
+    <% end %>
+  </ul>
+</div>

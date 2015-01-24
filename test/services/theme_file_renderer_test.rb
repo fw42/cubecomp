@@ -90,6 +90,15 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
     assert_match /<table class="schedule">/, renderer.render
   end
 
+  test '#render Liquid template with news' do
+    @theme_file.content = <<-LIQUID
+      {{ news }}
+    LIQUID
+
+    news = @competition.news.first
+    assert_match /#{Regexp.escape(news.text)}/, renderer.render
+  end
+
   test '#render Liquid template with filters' do
     @theme_file.content = <<-LIQUID
       {{ 'registration.flash_success' | translate }}
