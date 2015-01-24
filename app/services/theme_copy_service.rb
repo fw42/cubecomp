@@ -16,7 +16,8 @@ class ThemeCopyService
     # This doesn't actually work yet. Try again once
     # https://github.com/rails/rails/issues/18573 is
     # resolved. Can probably be used to simplify the
-    # controller logic.
+    # controller logic (get rid of the explicit
+    # transaction and the double 'save!').
     remove_existing_theme_files_from_competition
     copy_theme_to_competition
   end

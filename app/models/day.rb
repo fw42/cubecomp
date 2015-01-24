@@ -17,7 +17,7 @@ class Day < ActiveRecord::Base
     greater_than_or_equal_to: 0
   }, allow_nil: true
 
-  has_many :events, dependent: :destroy
+  has_many :events, dependent: :destroy, autosave: true
   has_many :registrations, class_name: 'DayRegistration', dependent: :destroy
   has_many :competitors, through: :registrations
 

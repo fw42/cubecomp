@@ -52,7 +52,7 @@ class Admin::EventsControllerTest < ActionController::TestCase
       post :create, competition_id: @competition.id, event: params
     end
 
-    assert_redirected_to admin_competition_event_path(@competition.id, assigns(:event))
+    assert_redirected_to admin_competition_events_path(@competition.id)
     event = @competition.events.last
     assert_attributes(params.except(:start_time), event)
   end
@@ -88,5 +88,36 @@ class Admin::EventsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to admin_competition_events_path(@competition)
+  end
+
+  test '#load_day_form' do
+    get :load_day_form, competition_id: @competition.id
+    assert_response :success
+  end
+
+  test '#load_day' do
+    to_day = days(:german_open_day_one)
+    from_day = days(:aachen_open_day_two)
+
+    competition = to_day.competition
+    login_as(competition.users.first)
+
+    assert_difference 'competition.reload.events.count', -to_day.events.count + from_day.events.count do
+      post :load_day, competition_id: competition.id, from_day_id: from_day.id, to_day_id: to_day.id
+    end
+
+    assert_events_equal from_day.reload.events, to_day.reload.events
+    assert_redirected_to admin_competition_events_path(competition)
+  end
+
+  test '#load_day does not allow to overwrite another competitions day' do
+    assert_no_difference '@competition.reload.events.count' do
+      post :load_day,
+        competition_id: @competition.id,
+        from_day_id: @competition.days.first.id,
+        to_day_id: days(:german_open_day_one).id
+    end
+
+    assert_response :not_found
   end
 end
