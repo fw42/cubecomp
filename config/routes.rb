@@ -8,20 +8,22 @@ Rails.application.routes.draw do
 
     resources :users, except: [:show]
 
-    resources :themes do
-      resources :theme_files, except: [:show] do
-        member do
-          get :show_image
-        end
-
-        collection do
-          get :new_image
-          post :create_image
-
-          get :new_from_existing
-          post :create_from_existing
-        end
+    theme_files_resources = lambda do
+      member do
+        get :show_image
       end
+
+      collection do
+        get :new_image
+        post :create_image
+
+        get :load_files_form
+        post :load_files
+      end
+    end
+
+    resources :themes do
+      resources :theme_files, except: [:show], &theme_files_resources
     end
 
     resources :competitions, except: [:show] do
@@ -71,31 +73,25 @@ Rails.application.routes.draw do
       end
 
       resources :news, except: [:show]
-
-      resources :theme_files, except: [:show] do
-        member do
-          get :show_image
-        end
-
-        collection do
-          get :new_image
-          post :create_image
-
-          get :new_from_existing
-          post :create_from_existing
-        end
-      end
-
+      resources :theme_files, except: [:show], &theme_files_resources
       resources :email_templates, except: [:show]
     end
   end
 
   scope '/wca' do
-    get '/autocomplete/(:q.:format)', to: 'wca#autocomplete', as: 'wca_autocomplete', constraints: { format: 'json' }
+    get '/autocomplete/(:q.:format)',
+      to: 'wca#autocomplete',
+      as: 'wca_autocomplete',
+      constraints: { format: 'json' }
   end
 
   scope '/:competition_handle' do
-    post '/:locale/register', to: 'competition_area/competitors#create', as: 'competition_area_competitor_create'
-    get '/(:locale/(:theme_file))', to: 'competition_area#render_theme_file', as: 'competition_area'
+    post '/:locale/register',
+      to: 'competition_area/competitors#create',
+      as: 'competition_area_competitor_create'
+
+    get '/(:locale/(:theme_file))',
+      to: 'competition_area#render_theme_file',
+      as: 'competition_area'
   end
 end

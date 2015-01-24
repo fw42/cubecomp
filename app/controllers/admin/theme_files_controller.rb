@@ -13,7 +13,7 @@ class Admin::ThemeFilesController < AdminController
     @theme_file = @theme_files.text_files.new
   end
 
-  def new_from_existing
+  def load_files_form
     @themes = Theme.all
     @competitions = current_user.policy.competitions
 
@@ -27,7 +27,7 @@ class Admin::ThemeFilesController < AdminController
     @competitions = @competitions.map{ |c| [ c.name, c.id ] }
   end
 
-  def create_from_existing
+  def load_files
     from = existing_theme_files_to_load
     if from.nil?
       render_not_found

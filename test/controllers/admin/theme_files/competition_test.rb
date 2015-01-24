@@ -99,22 +99,22 @@ module Admin::ThemeFiles
       assert_response :forbidden
     end
 
-    test '#new_from_existing' do
-      get :new_from_existing, competition_id: @competition.id
+    test '#load_files_form' do
+      get :load_files_form, competition_id: @competition.id
       assert_response :success
     end
 
-    test '#new_from_existing requires permission' do
+    test '#load_files_form requires permission' do
       UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
-      get :new_from_existing, competition_id: @competition.id
+      get :load_files_form, competition_id: @competition.id
       assert_response :forbidden
     end
 
-    test '#create_from_existing from theme to competition' do
+    test '#load_files from theme to competition' do
       UserPolicy.any_instance.expects(:admin_user_menu?).returns(true)
       from_theme = themes(:fancy)
 
-      post :create_from_existing, competition_id: @competition.id, from: {
+      post :load_files, competition_id: @competition.id, from: {
         theme_id: from_theme.id,
         competition_id: "does not matter, wont be used",
         load_theme: "Load"
@@ -124,12 +124,12 @@ module Admin::ThemeFiles
       assert_theme_equals from_theme.files, @competition.reload.theme_files
     end
 
-    test '#create_from_existing from competition to competition' do
+    test '#load_files from competition to competition' do
       to_competition = competitions(:german_open)
       login_as(to_competition.users.first)
       from_competition = competitions(:aachen_open)
 
-      post :create_from_existing, competition_id: to_competition.id, from: {
+      post :load_files, competition_id: to_competition.id, from: {
         theme_id: "does not matter, wont be used",
         competition_id: from_competition.id,
         load_competition: "Load"
@@ -139,12 +139,12 @@ module Admin::ThemeFiles
       assert_theme_equals from_competition.theme_files, to_competition.reload.theme_files
     end
 
-    test '#create_from_existing requires permission' do
+    test '#load_files requires permission' do
       UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
       from_theme = themes(:fancy)
 
       assert_no_difference 'ThemeFile.count' do
-        post :create_from_existing, competition_id: @competition.id, from: {
+        post :load_files, competition_id: @competition.id, from: {
           theme_id: from_theme.id,
           competition_id: "does not matter, wont be used",
           load_theme: "Load"
@@ -154,7 +154,7 @@ module Admin::ThemeFiles
       assert_response :forbidden
     end
 
-    test '#create_from_existing does not allow to load from competition that user has no access to' do
+    test '#load_files does not allow to load from competition that user has no access to' do
       to_competition = competitions(:german_open)
       from_competition = competitions(:aachen_open)
 
@@ -164,7 +164,7 @@ module Admin::ThemeFiles
         .with{ |competition| competition.id == from_competition.id }.returns(false)
 
       assert_no_difference 'ThemeFile.count' do
-        post :create_from_existing, competition_id: to_competition.id, from: {
+        post :load_files, competition_id: to_competition.id, from: {
           theme_id: "does not matter, wont be used",
           competition_id: from_competition.id,
           load_competition: "Load"

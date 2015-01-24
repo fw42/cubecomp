@@ -55,19 +55,19 @@ module Admin::ThemeFilesHelper
     end
   end
 
-  def new_from_existing_admin_theme_files_path
+  def load_files_form_admin_theme_files_path
     if @theme
-      new_from_existing_admin_theme_theme_files_path(@theme)
+      load_files_form_admin_theme_theme_files_path(@theme)
     else
-      new_from_existing_admin_competition_theme_files_path(current_competition)
+      load_files_form_admin_competition_theme_files_path(current_competition)
     end
   end
 
-  def create_from_existing_admin_theme_files_path
+  def load_files_admin_theme_files_path
     if @theme
-      create_from_existing_admin_theme_theme_files_path(@theme)
+      load_files_admin_theme_theme_files_path(@theme)
     else
-      create_from_existing_admin_competition_theme_files_path(current_competition)
+      load_files_admin_competition_theme_files_path(current_competition)
     end
   end
 

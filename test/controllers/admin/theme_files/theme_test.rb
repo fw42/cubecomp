@@ -99,21 +99,21 @@ module Admin::ThemeFiles
       assert_response :forbidden
     end
 
-    test '#new_from_existing' do
-      get :new_from_existing, theme_id: @theme.id
+    test '#load_files_form' do
+      get :load_files_form, theme_id: @theme.id
       assert_response :success
     end
 
-    test '#new_from_existing requires permission' do
+    test '#load_files_form requires permission' do
       UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
-      get :new_from_existing, theme_id: @theme.id
+      get :load_files_form, theme_id: @theme.id
       assert_response :forbidden
     end
 
-    test '#create_from_existing from theme to theme' do
+    test '#load_files from theme to theme' do
       from_theme = themes(:fancy)
 
-      post :create_from_existing, theme_id: @theme.id, from: {
+      post :load_files, theme_id: @theme.id, from: {
         theme_id: from_theme.id,
         competition_id: "does not matter, wont be used",
         load_theme: "Load"
@@ -123,10 +123,10 @@ module Admin::ThemeFiles
       assert_theme_equals from_theme.files, @theme.reload.files
     end
 
-    test '#create_from_existing from competition to theme' do
+    test '#load_files from competition to theme' do
       from_competition = competitions(:aachen_open)
 
-      post :create_from_existing, theme_id: @theme.id, from: {
+      post :load_files, theme_id: @theme.id, from: {
         theme_id: "does not matter, wont be used",
         competition_id: from_competition.id,
         load_competition: "Load"
@@ -136,13 +136,13 @@ module Admin::ThemeFiles
       assert_theme_equals from_competition.theme_files, @theme.reload.files
     end
 
-    test '#create_from_existing from theme to theme requires permission' do
+    test '#load_files from theme to theme requires permission' do
       UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
 
       from_theme = themes(:fancy)
 
       assert_no_difference 'ThemeFile.count' do
-        post :create_from_existing, theme_id: @theme.id, from: {
+        post :load_files, theme_id: @theme.id, from: {
           theme_id: from_theme.id,
           competition_id: "does not matter, wont be used",
           load_theme: "Load"
