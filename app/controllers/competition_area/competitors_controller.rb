@@ -18,6 +18,7 @@ class CompetitionArea::CompetitorsController < CompetitionAreaController
   ]
 
   skip_before_action :load_theme_file
+  before_action :ensure_registration_is_open, only: [:create]
 
   def create
     competitor = @competition.competitors.new
@@ -56,5 +57,10 @@ class CompetitionArea::CompetitorsController < CompetitionAreaController
 
   def competitor_params
     @competitor_params ||= params.require(:competitor).permit(PERMITTED_PARAMS)
+  end
+
+  def ensure_registration_is_open
+    return if @competition.registration_open
+    render_forbidden
   end
 end
