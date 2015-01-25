@@ -8,6 +8,7 @@ class RegistrationService
 
   def register_for_day(day_id)
     return if @competitor.registered_on?(day_id)
+
     @competitor.day_registrations.build(
       competition_id: @competitor.competition.id,
       day_id: day_id,
@@ -25,7 +26,7 @@ class RegistrationService
 
     register_for_day(event.day_id)
 
-    registration = @competitor.event_registrations.build(
+    registration = @competitor.event_registrations.find_or_initialize_by(
       competition_id: @competitor.competition.id,
       event_id: event.id,
     )

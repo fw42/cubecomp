@@ -114,20 +114,22 @@ class Admin::CompetitorsController < AdminController
     if @competitor.update_attributes(state: 'confirmed')
       notice = { notice: 'Competitor was successfully confirmed.' }
     else
+      Rails.logger.info("Failed to update: #{@competitor.errors.full_messages.inspect}")
       notice = { error: 'Failed to confirm competitor.' }
     end
 
-    redirect_to admin_competition_competitors_path(current_competition), notice
+    redirect_to admin_competition_competitors_path(current_competition), flash: notice
   end
 
   def disable
     if @competitor.update_attributes(state: 'disabled')
       notice = { notice: 'Competitor was successfully disabled.' }
     else
+      Rails.logger.info("Failed to update: #{@competitor.errors.full_messages.inspect}")
       notice = { error: 'Failed to disable competitor.' }
     end
 
-    redirect_to admin_competition_competitors_path(current_competition), notice
+    redirect_to admin_competition_competitors_path(current_competition), flash: notice
   end
 
   def destroy
