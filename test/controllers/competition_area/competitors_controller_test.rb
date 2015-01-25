@@ -59,6 +59,21 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
     assert_equal @new_competitor_params[:"birthday(3i)"].to_i, bob.birthday.day
   end
 
+  test "#create renders forbidden if competition registration is closed" do
+    @competition.update_attributes(registration_open: false)
+
+    assert_no_difference '@competition.competitors.count' do
+      post :create,
+        competition_handle: @competition.handle,
+        theme_file: "foobar.html",
+        return_to_path: '/foo/',
+        competitor: @new_competitor_params,
+        locale: @locale.handle
+    end
+
+    assert_response :forbidden
+  end
+
   test "#create can't set admin fields" do
     @new_competitor_params[:paid] = true
 
