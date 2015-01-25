@@ -21,7 +21,7 @@ class Admin::CompetitorEmailController < AdminController
       { notice: "Email to #{@email.to_email} sent." }
     end
 
-    redirect_to admin_competition_competitors_path(current_competition), flashes
+    redirect_to admin_competition_competitors_path(current_competition), flash: flashes
   end
 
   def render_template
