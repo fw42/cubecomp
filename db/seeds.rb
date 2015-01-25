@@ -65,7 +65,7 @@ def create_event(competition, event)
 end
 
 def create_competitor(competition)
-  competitor = Competitor.create!(
+  competitor = Competitor.new(
     competition: competition,
     first_name: Forgery::Name.first_name,
     last_name: Forgery::Name.last_name,
@@ -84,7 +84,7 @@ def create_competitor(competition)
   end
 
   if rand < 0.5
-    competitor.wca = "#{2000 + rand(14)}#{competitor.last_name.upcase}#{rand(10)}"
+    competitor.wca = "#{2000 + rand(14)}#{competitor.last_name.upcase}#{"%02d" % rand(10)}"
   end
 
   if rand < 0.2
@@ -103,24 +103,22 @@ def create_competitor(competition)
     end
   end
 
-  competitor.save!
-
-  events = 0
-  competition.events.where(state: 'open_for_registration').to_a.shuffle.each do |event|
-    if events == 0 || rand < 0.3
+  competition.events.where(state: 'open_for_registration').to_a.shuffle.each_with_index do |event, index|
+    if index == 0 || rand < 0.3
       RegistrationService.new(competitor).register_for_event(event)
-      events += 1
     end
   end
 
   competition.days.each do |day|
-    if !competitor.competing_on?(day) && rand < 0.25
-      RegistrationService.new(competitor).register_as_guest(day)
+    next if competitor.competing_on?(day)
+    if competitor.events.count == 0 || rand < 0.25
+      RegistrationService.new(competitor).register_as_guest(day.id)
     end
   end
 
   puts "Creating competitor #{competitor.name}"
-  competitor.reload
+  competitor.save!
+  competitor
 end
 
 
