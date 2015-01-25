@@ -37,6 +37,9 @@ Lint/UnusedBlockArgument:
 Lint/EndAlignment:
   AlignWith: variable
 
+Style/StringLiteralsInInterpolation:
+  Enabled: false
+
 Style/SignalException:
   Enabled: false
 
