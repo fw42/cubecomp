@@ -1,0 +1,22 @@
+<% page_title 'Import theme' %>
+
+<% if (@themes.size + @competitions.size) > 0 %>
+  <p><b>Note:</b> Importing a theme will delete all of the existing theme files of this <%= @theme ? "theme" : "competition" %>.</p>
+
+  <%= form_tag(import_files_admin_theme_files_path) do %>
+    <table class='form-table'>
+      <tr>
+        <td style="width:17em">Import default theme:</td>
+        <td><%= select_tag 'from[theme_id]', options_for_select(@themes), disabled: @themes.size == 0, class: 'inline' %></td>
+        <td><%= submit_button(nil, "Import", disabled: @themes.size == 0, name: 'from[import_theme]') %></td>
+      </tr>
+      <tr>
+        <td style="width: 17em; ">Import from other competition:</td>
+        <td><%= select_tag 'from[competition_id]', options_for_select(@competitions), disabled: @competitions.size == 0, class: 'inline' %></td>
+        <td><%= submit_button(nil, "Import", disabled: @competitions.size == 0, name: 'from[import_competition]') %></td>
+      </tr>
+    </table>
+  <% end %>
+<% else %>
+  There are no themes available to import right now.
+<% end %>

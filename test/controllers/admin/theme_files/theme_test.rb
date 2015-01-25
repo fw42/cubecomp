@@ -99,53 +99,53 @@ module Admin::ThemeFiles
       assert_response :forbidden
     end
 
-    test '#load_files_form' do
-      get :load_files_form, theme_id: @theme.id
+    test '#import_files_form' do
+      get :import_files_form, theme_id: @theme.id
       assert_response :success
     end
 
-    test '#load_files_form requires permission' do
+    test '#import_files_form requires permission' do
       UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
-      get :load_files_form, theme_id: @theme.id
+      get :import_files_form, theme_id: @theme.id
       assert_response :forbidden
     end
 
-    test '#load_files from theme to theme' do
+    test '#import_files from theme to theme' do
       from_theme = themes(:fancy)
 
-      post :load_files, theme_id: @theme.id, from: {
+      post :import_files, theme_id: @theme.id, from: {
         theme_id: from_theme.id,
         competition_id: "does not matter, wont be used",
-        load_theme: "Load"
+        import_theme: "Import"
       }
 
       assert_redirected_to admin_theme_theme_files_path(@theme.id)
       assert_theme_equals from_theme.files, @theme.reload.files
     end
 
-    test '#load_files from competition to theme' do
+    test '#import_files from competition to theme' do
       from_competition = competitions(:aachen_open)
 
-      post :load_files, theme_id: @theme.id, from: {
+      post :import_files, theme_id: @theme.id, from: {
         theme_id: "does not matter, wont be used",
         competition_id: from_competition.id,
-        load_competition: "Load"
+        import_competition: "Import"
       }
 
       assert_redirected_to admin_theme_theme_files_path(@theme.id)
       assert_theme_equals from_competition.theme_files, @theme.reload.files
     end
 
-    test '#load_files from theme to theme requires permission' do
+    test '#import_files from theme to theme requires permission' do
       UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
 
       from_theme = themes(:fancy)
 
       assert_no_difference 'ThemeFile.count' do
-        post :load_files, theme_id: @theme.id, from: {
+        post :import_files, theme_id: @theme.id, from: {
           theme_id: from_theme.id,
           competition_id: "does not matter, wont be used",
-          load_theme: "Load"
+          import_theme: "Import"
         }
       end
 

@@ -29,10 +29,10 @@ class Admin::EventsController < AdminController
     render 'liquid/_schedule', layout: 'admin/schedule', locals: { day: @day }
   end
 
-  def load_day_form
+  def import_day_form
     format_date = ->(date) { I18n.l(date, format: :schedule) }
 
-    @from_options = from_options_for_load_day_form
+    @from_options = from_options_for_import_day_form
       .map{ |name, day_id, date, count| [ "#{name}, #{format_date.call(date)} (#{count} events)", day_id ] }
 
     @to_options = current_competition.days.map do |day|
@@ -40,10 +40,14 @@ class Admin::EventsController < AdminController
     end
   end
 
-  def load_day
+  def import_day
     @day_to = current_competition.days.find_by!(id: params[:to_day_id])
     @day_from = Day.find_by!(id: params[:from_day_id])
-    DayCopyService.new(@day_to, @day_from).replace_events!
+
+    @day_to.transaction do
+      DayEventsImportService.new(@day_from, @day_to).replace!
+    end
+
     redirect_to admin_competition_events_path(current_competition), notice: 'Events successfully loaded.'
   end
 
@@ -90,7 +94,7 @@ class Admin::EventsController < AdminController
     params.require(:event).permit(PERMITTED_PARAMS)
   end
 
-  def from_options_for_load_day_form
+  def from_options_for_import_day_form
     Competition
       .joins(days: :events)
       .where.not('competitions.id' => current_competition.id)

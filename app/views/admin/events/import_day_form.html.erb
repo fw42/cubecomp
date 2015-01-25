@@ -1,12 +1,12 @@
-<% page_title 'Load day' %>
+<% page_title 'Import day' %>
 
 <% if (@from_options.size + @to_options.size) > 0 %>
-  <p><b>Note:</b> Loading a day from another competition will delete all of the existing events for the day of this competition.</p>
+  <p><b>Note:</b> Importing a day from another competition will delete all of the existing events for the day of this competition.</p>
 
-  <%= form_tag(load_day_admin_competition_events_path) do %>
+  <%= form_tag(import_day_admin_competition_events_path) do %>
     <table class='form-table'>
       <tr>
-        <td>Load from:</td>
+        <td>Import from:</td>
         <td><%= select_tag 'from_day_id', options_for_select(@from_options), class: 'inline' %></td>
       </tr>
       <tr>
@@ -14,7 +14,10 @@
         <td><%= select_tag 'to_day_id', options_for_select(@to_options), class: 'inline' %></td>
       </tr>
       <tr>
-        <td colspan="2"><%= submit_tag "Load", class: 'small', name: 'from[load_competition]' %></td>
+        <td colspan="2" style="text-align: right">
+          <%= submit_button(nil, "Import") %>
+          <%= back_button(admin_competition_events_path) %>
+        </td>
       </tr>
     </table>
   <% end %>

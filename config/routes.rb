@@ -17,8 +17,8 @@ Rails.application.routes.draw do
         get :new_image
         post :create_image
 
-        get :load_files_form
-        post :load_files
+        get :import_files, action: 'import_files_form'
+        post :import_files
       end
     end
 
@@ -64,8 +64,8 @@ Rails.application.routes.draw do
         collection do
           get 'print/(:day_id)', action: 'print', as: "print"
 
-          get :load_day_form
-          post :load_day
+          get :import_day, action: 'import_day_form'
+          post :import_day
         end
 
         resources :event_registrations, only: [:index, :destroy] do

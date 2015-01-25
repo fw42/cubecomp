@@ -1,6 +1,12 @@
 module AdminHelper
-  def submit_button(form, title = 'Save')
-    form.button title, type: 'submit'
+  def submit_button(form, title = 'Save', options = {})
+    options[:type] ||= 'submit'
+
+    if form
+      form.button title, options
+    else
+      button_tag title, options
+    end
   end
 
   def back_button(link_target)

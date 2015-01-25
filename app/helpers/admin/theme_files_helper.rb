@@ -55,19 +55,11 @@ module Admin::ThemeFilesHelper
     end
   end
 
-  def load_files_form_admin_theme_files_path
+  def import_files_admin_theme_files_path
     if @theme
-      load_files_form_admin_theme_theme_files_path(@theme)
+      import_files_admin_theme_theme_files_path(@theme)
     else
-      load_files_form_admin_competition_theme_files_path(current_competition)
-    end
-  end
-
-  def load_files_admin_theme_files_path
-    if @theme
-      load_files_admin_theme_theme_files_path(@theme)
-    else
-      load_files_admin_competition_theme_files_path(current_competition)
+      import_files_admin_competition_theme_files_path(current_competition)
     end
   end
 

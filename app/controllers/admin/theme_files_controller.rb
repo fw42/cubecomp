@@ -13,7 +13,7 @@ class Admin::ThemeFilesController < AdminController
     @theme_file = @theme_files.text_files.new
   end
 
-  def load_files_form
+  def import_files_form
     @themes = Theme.all
     @competitions = current_user.policy.competitions
 
@@ -27,8 +27,8 @@ class Admin::ThemeFilesController < AdminController
     @competitions = @competitions.map{ |c| [ c.name, c.id ] }
   end
 
-  def load_files
-    from = existing_theme_files_to_load
+  def import_files
+    from = record_to_import_theme_files_from
     if from.nil?
       render_not_found
       return
@@ -37,9 +37,9 @@ class Admin::ThemeFilesController < AdminController
       return
     end
 
-    model = @theme || current_competition
-    model.transaction do
-      ThemeCopyService.new(@theme_files, from).replace_theme!(model)
+    to = @theme || current_competition
+    to.transaction do
+      ThemeFilesImportService.new(from, to).replace!
     end
 
     redirect_to admin_theme_files_path, notice: "Theme successfully loaded."
@@ -93,28 +93,27 @@ class Admin::ThemeFilesController < AdminController
 
   private
 
-  def existing_theme_files_to_load
-    from_params = params.require(:from).permit(:theme_id, :competition_id, :load_theme, :load_competition)
+  def record_to_import_theme_files_from
+    from_params = params.require(:from).permit(:theme_id, :competition_id, :import_theme, :import_competition)
 
-    if from_params[:load_theme]
-      existing_theme_files_from_theme(from_params[:theme_id])
-    elsif from_params[:load_competition]
-      existing_theme_files_from_competition(from_params[:competition_id])
+    if from_params[:import_theme]
+      theme_to_import_theme_files_from(from_params[:theme_id])
+    elsif from_params[:import_competition]
+      competition_to_import_theme_files_from(from_params[:competition_id])
     end
   end
 
-  def existing_theme_files_from_competition(competition_id)
+  def competition_to_import_theme_files_from(competition_id)
     return unless competition_id
     competition = Competition.find_by!(id: competition_id)
     return :forbidden unless current_user.policy.login?(competition)
-    competition.theme_files
+    competition
   end
 
-  def existing_theme_files_from_theme(theme_id)
+  def theme_to_import_theme_files_from(theme_id)
     return unless theme_id
     return :forbidden unless current_user.policy.admin_user_menu?
-    theme = Theme.find_by!(id: theme_id)
-    theme.files
+    Theme.find_by!(id: theme_id)
   end
 
   def set_theme_files

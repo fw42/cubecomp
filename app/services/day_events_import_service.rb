@@ -1,20 +1,20 @@
-class DayCopyService
-  def initialize(day_to, day_from = nil)
-    @day_to = day_to
+class DayEventsImportService
+  def initialize(day_from, day_to)
     @day_from = day_from
+    @day_to = day_to
   end
 
-  def replace_events!
-    @day_to.transaction do
-      remove_existing_events_from_day
-      @day_to.save!
+  def replace!
+    remove_existing_events
+    @day_to.save!
 
-      copy_events_to_day
-      @day_to.save!
-    end
+    copy_events
+    @day_to.save!
   end
 
-  def copy_events_to_day
+  private
+
+  def copy_events
     @day_from.events.each do |event|
       new_event = event.dup
       new_event.day_id = @day_to.id
@@ -23,7 +23,7 @@ class DayCopyService
     end
   end
 
-  def remove_existing_events_from_day
+  def remove_existing_events
     @day_to.events.each(&:mark_for_destruction)
   end
 end

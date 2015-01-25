@@ -90,12 +90,12 @@ class Admin::EventsControllerTest < ActionController::TestCase
     assert_redirected_to admin_competition_events_path(@competition)
   end
 
-  test '#load_day_form' do
-    get :load_day_form, competition_id: @competition.id
+  test '#import_day_form' do
+    get :import_day_form, competition_id: @competition.id
     assert_response :success
   end
 
-  test '#load_day' do
+  test '#import_day' do
     to_day = days(:german_open_day_one)
     from_day = days(:aachen_open_day_two)
 
@@ -103,16 +103,16 @@ class Admin::EventsControllerTest < ActionController::TestCase
     login_as(competition.users.first)
 
     assert_difference 'competition.reload.events.count', -to_day.events.count + from_day.events.count do
-      post :load_day, competition_id: competition.id, from_day_id: from_day.id, to_day_id: to_day.id
+      post :import_day, competition_id: competition.id, from_day_id: from_day.id, to_day_id: to_day.id
     end
 
     assert_events_equal from_day.reload.events, to_day.reload.events
     assert_redirected_to admin_competition_events_path(competition)
   end
 
-  test '#load_day does not allow to overwrite another competitions day' do
+  test '#import_day does not allow to overwrite another competitions day' do
     assert_no_difference '@competition.reload.events.count' do
-      post :load_day,
+      post :import_day,
         competition_id: @competition.id,
         from_day_id: @competition.days.first.id,
         to_day_id: days(:german_open_day_one).id
