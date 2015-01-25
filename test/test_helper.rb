@@ -71,6 +71,20 @@ class ActiveSupport::TestCase
 
     assert_equal expected, actual
   end
+
+  def assert_email_templates_equal(expected_templates, actual_templates)
+    expected = expected_templates.map(&:attributes).sort_by{ |h| h['name'] }
+    actual = actual_templates.map(&:attributes).sort_by{ |h| h['name'] }
+
+    (expected + actual).each do |template|
+      template.delete('id')
+      template.delete('updated_at')
+      template.delete('created_at')
+      template.delete('competition_id')
+    end
+
+    assert_equal expected, actual
+  end
 end
 
 class ActionController::TestCase

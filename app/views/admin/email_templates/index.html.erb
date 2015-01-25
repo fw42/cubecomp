@@ -1,6 +1,9 @@
 <% page_title 'Email templates' %>
 
-<p><%= link_to 'New template', new_admin_competition_email_template_path %></p>
+<p>
+  <%= link_to 'Import templates from other competition', import_templates_admin_competition_email_templates_path(current_competition) %><br/>
+  <%= link_to 'New template', new_admin_competition_email_template_path %>
+</p>
 
 <table class='default-table'>
   <thead>
