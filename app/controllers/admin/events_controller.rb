@@ -48,7 +48,7 @@ class Admin::EventsController < AdminController
       DayEventsImportService.new(@day_from, @day_to).replace!
     end
 
-    redirect_to admin_competition_events_path(current_competition), notice: 'Events successfully loaded.'
+    redirect_to admin_competition_events_path(current_competition), notice: 'Events successfully imported.'
   end
 
   def new

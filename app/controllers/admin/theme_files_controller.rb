@@ -42,7 +42,7 @@ class Admin::ThemeFilesController < AdminController
       ThemeFilesImportService.new(from, to).replace!
     end
 
-    redirect_to admin_theme_files_path, notice: "Theme successfully loaded."
+    redirect_to admin_theme_files_path, notice: "Theme successfully imported."
   end
 
   def create
