@@ -63,6 +63,9 @@ Rails.application.routes.draw do
       resources :events, except: [:show] do
         collection do
           get 'print/(:day_id)', action: 'print', as: "print"
+
+          get :load_day_form
+          post :load_day
         end
 
         resources :event_registrations, only: [:index, :destroy] do

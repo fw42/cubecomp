@@ -1,14 +1,17 @@
 <% page_title 'Events' %>
 
 <p>
+  <%= link_to 'Load day from other competition', load_day_form_admin_competition_events_path(current_competition) %><br/>
   <%= link_to 'New event', new_admin_competition_event_path %><br/>
   <%= link_to 'Waiting list overview', waiting_admin_competition_event_registrations_path(current_competition) %><br/>
-  Printable schedules:
-  <% current_competition.days.with_events.each do |day| %>
-    <%= link_to l(day.date, format: :day_only), print_admin_competition_events_path(current_competition, day.id) %>
+  <% if @days.any? %>
+    Printable schedules:
+    <% @days.each do |day| %>
+      <%= link_to l(day.date, format: :day_only), print_admin_competition_events_path(current_competition, day.id) %>
+    <% end %>
   <% end %>
 </p>
 
-<% current_competition.days.with_events.each do |day| %>
+<% @days.each do |day| %>
   <%= render 'table', day: day %>
 <% end %>

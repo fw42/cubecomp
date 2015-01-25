@@ -56,6 +56,21 @@ class ActiveSupport::TestCase
 
     assert_equal expected, actual
   end
+
+  def assert_events_equal(expected_events, actual_events)
+    expected = expected_events.map(&:attributes).sort_by{ |h| h['start'] }
+    actual = actual_events.map(&:attributes).sort_by{ |h| h['start'] }
+
+    (expected + actual).each do |event|
+      event.delete('id')
+      event.delete('day_id')
+      event.delete('competition_id')
+      event.delete('created_at')
+      event.delete('updated_at')
+    end
+
+    assert_equal expected, actual
+  end
 end
 
 class ActionController::TestCase
