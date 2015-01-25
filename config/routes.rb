@@ -77,7 +77,13 @@ Rails.application.routes.draw do
 
       resources :news, except: [:show]
       resources :theme_files, except: [:show], &theme_files_resources
-      resources :email_templates, except: [:show]
+
+      resources :email_templates, except: [:show] do
+        collection do
+          get :import_templates, action: 'import_templates_form'
+          post :import_templates
+        end
+      end
     end
   end
 
