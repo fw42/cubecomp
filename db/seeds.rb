@@ -111,7 +111,7 @@ def create_competitor(competition)
 
   competition.days.each do |day|
     next if competitor.competing_on?(day)
-    if competitor.events.count == 0 || rand < 0.25
+    if rand < 0.25
       RegistrationService.new(competitor).register_as_guest(day.id)
     end
   end
