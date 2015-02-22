@@ -31,9 +31,25 @@ class Admin::CompetitorEmailControllerTest < ActionController::TestCase
     assert_equal 1, emails.size
     email = emails.first
     assert_equal [@competitor.email], email.to
-    assert_equal [@competition.staff_email], email.from
+    assert_equal [Cubecomp::Application.config.email_from], email.from
+    assert_equal [@competition.staff_email], email.reply_to
     assert_equal params['subject'], email.subject
     assert_equal params['content'], email.body.to_s
+  end
+
+  test '#create sends an email and cc the orga team' do
+    params = {
+      "subject" => "[Aachen Open 2014] Welcome!",
+      "content" => "Hello!"
+    }
+
+    @competition.update_attributes(cc_orga: true)
+    post :create, competition_id: @competition.id, id: @competitor.id, competitor_email: params
+
+    emails = ActionMailer::Base.deliveries
+    assert_equal 1, emails.size
+    email = emails.first
+    assert_equal [@competition.staff_email], email.cc
   end
 
   test '#create with activate confirms the competitor and sets confirmation_email_sent to true' do

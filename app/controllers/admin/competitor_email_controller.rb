@@ -13,15 +13,14 @@ class Admin::CompetitorEmailController < AdminController
       return
     end
 
-    CompetitorMailer.competitor_email(@email).deliver_now
-
-    flashes = if @activate
+    success = if @activate
       activate_competitor
     else
-      { notice: "Email to #{@email.to_email} sent." }
+      true
     end
 
-    redirect_to admin_competition_competitors_path(current_competition), flash: flashes
+    send_email if success
+    redirect_to admin_competition_competitors_path(current_competition), flash: flashes(@activate, success)
   end
 
   def render_template
@@ -52,11 +51,20 @@ class Admin::CompetitorEmailController < AdminController
   def activate_competitor
     @competitor.state = 'confirmed'
     @competitor.confirmation_email_sent = true
+    @competitor.save
+  end
 
-    if @competitor.save
+  def send_email
+    CompetitorMailer.competitor_email(@email).deliver_now
+  end
+
+  def flashes(activate, success)
+    if activate && success
       { notice: "Email to #{@email.to_email} sent and competitor successfully confirmed." }
+    elsif activate && !success
+      { error: "Failed to confirm competitor." }
     else
-      { error: "Email to #{@email.to_email} sent, but failed to confirm competitor." }
+      { notice: "Email to #{@email.to_email} sent." }
     end
   end
 end

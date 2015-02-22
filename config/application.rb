@@ -21,6 +21,7 @@ module Cubecomp
 
     config.active_record.raise_in_transactional_callbacks = true
 
-    config.wca_api_url = ENV["WCA_API_URL"]
+    config.email_from = ENV["CUBECOMP_EMAIL_FROM"] || "cubecomp@cubecomp.de"
+    config.wca_api_url = ENV["CUBECOMP_WCA_API_URL"]
   end
 end
