@@ -47,6 +47,7 @@ class Admin::UsersController < AdminController
 
   def update
     if @user.update(user_params)
+      session[:user] = @user.session_data
       redirect_to edit_admin_user_path(@user), notice: 'User was successfully updated.'
     else
       edit

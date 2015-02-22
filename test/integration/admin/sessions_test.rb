@@ -3,36 +3,80 @@ require 'test_helper'
 class SessionsTest < ActionDispatch::IntegrationTest
   SESSION_KEY = '_cubecomp_session'
 
-  test 'Session fixation - login resets session' do
-    session_ids = []
-
-    get '/admin'
-    assert_response :redirect
-    session_ids << cookies[SESSION_KEY]
-
-    user = users(:regular_user_with_no_competitions)
-    post '/admin/login', user: { email: user.email, password: 'test' }
-    assert_response :redirect
-    session_ids << cookies[SESSION_KEY]
-
-    other_user = users(:flo)
-    post '/admin/login', user: { email: other_user.email, password: 'test' }
-    assert_response :redirect
-    session_ids << cookies[SESSION_KEY]
-
-    assert_equal session_ids, session_ids.uniq, 'session ids should be different each time'
+  setup do
+    @user = users(:regular_user_with_no_competitions)
   end
 
-  test 'Session fixation - logout resets session' do
-    user = users(:regular_user_with_no_competitions)
-    post '/admin/login', user: { email: user.email, password: 'test' }
-    assert_response :redirect
+  test 'Session fixation - login resets session' do
+    assert_not_logged_in
     old_session_id = cookies[SESSION_KEY]
 
-    delete '/admin/logout'
-    assert_response :redirect
+    login
+    assert_logged_in
     new_session_id = cookies[SESSION_KEY]
 
     assert_not_equal old_session_id, new_session_id, 'session ids should be different'
+  end
+
+  test 'Session fixation - logout resets session' do
+    login
+    assert_logged_in
+    old_session_id = cookies[SESSION_KEY]
+
+    logout
+    new_session_id = cookies[SESSION_KEY]
+
+    assert_not_equal old_session_id, new_session_id, 'session ids should be different'
+  end
+
+  test 'Updating user password invalidates other user sessions' do
+    login
+    assert_logged_in
+    old_session_id = cookies[SESSION_KEY]
+
+    @user.password = 'blablabla'
+    @user.password_confirmation = 'blablabla'
+    @user.save!
+
+    assert_not_logged_in
+    new_session_id = cookies[SESSION_KEY]
+
+    assert_not_equal old_session_id, new_session_id
+  end
+
+  test 'Updating user email invalidates other user sessions' do
+    login
+    assert_logged_in
+    old_session_id = cookies[SESSION_KEY]
+
+    @user.email = 'new@email.com'
+    @user.save!
+
+    assert_not_logged_in
+    new_session_id = cookies[SESSION_KEY]
+
+    assert_not_equal old_session_id, new_session_id
+  end
+
+  private
+
+  def logout
+    delete '/admin/logout'
+    assert_redirected_to admin_login_path
+  end
+
+  def login(user = @user)
+    post '/admin/login', user: { email: user.email, password: 'test' }
+    assert_redirected_to admin_root_path
+  end
+
+  def assert_logged_in(user = @user)
+    get edit_admin_user_path(user.id)
+    assert_response :success
+  end
+
+  def assert_not_logged_in(user = @user)
+    get edit_admin_user_path(user.id)
+    assert_redirected_to admin_login_path
   end
 end

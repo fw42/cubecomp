@@ -28,7 +28,8 @@ class Admin::SessionsControllerTest < ActionController::TestCase
   test '#create with valid credentials logs user in and redirects to admin' do
     user = users(:regular_user_with_no_competitions)
     post :create, user: { email: user.email, password: 'test' }
-    assert_equal user.id, session[:user_id]
+    assert_equal user.id, session[:user]['id']
+    assert_equal user.version, session[:user]['version']
     assert_redirected_to admin_root_path
   end
 

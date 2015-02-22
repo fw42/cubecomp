@@ -58,6 +58,10 @@ class User < ActiveRecord::Base
     @liquid_drop ||= UserDrop.new(self)
   end
 
+  def session_data
+    { 'id' => id, 'version' => version }
+  end
+
   private
 
   def nullify_competition_delegate_user_ids
@@ -68,8 +72,7 @@ class User < ActiveRecord::Base
   end
 
   def increment_version
-    if password_digest_changed? || email_changed?
-      self.version = version + 1
-    end
+    return unless password_digest_changed? || email_changed?
+    self.version = version + 1
   end
 end

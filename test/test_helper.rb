@@ -89,7 +89,7 @@ end
 
 class ActionController::TestCase
   def login_as(user)
-    session[:user_id] = user.id
+    session[:user] = user.session_data
   end
 
   def logout
