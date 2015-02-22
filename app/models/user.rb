@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   scope :delegates, ->{ where(delegate: true) }
 
   after_update :nullify_competition_delegate_user_ids
+  before_save :increment_version
 
   def name
     "#{first_name} #{last_name}"
@@ -63,6 +64,12 @@ class User < ActiveRecord::Base
     return unless changed_attributes[:delegate] && !delegate
     delegating_competitions.each do |competition|
       competition.update_attributes(delegate_user_id: nil)
+    end
+  end
+
+  def increment_version
+    if password_digest_changed? || email_changed?
+      self.version = version + 1
     end
   end
 end

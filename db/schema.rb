@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150111203813) do
+ActiveRecord::Schema.define(version: 20150222212513) do
 
   create_table "competitions", force: :cascade do |t|
     t.string   "name",              limit: 255,                 null: false
@@ -210,6 +210,7 @@ ActiveRecord::Schema.define(version: 20150111203813) do
     t.boolean  "delegate",         limit: 1,     default: false
     t.integer  "permission_level", limit: 4,                     null: false
     t.text     "address",          limit: 65535
+    t.integer  "version",          limit: 4,     default: 0,     null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
