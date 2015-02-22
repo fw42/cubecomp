@@ -28,7 +28,7 @@ class Admin::SessionsController < ApplicationController
 
   def successful_login(user)
     reset_session
-    session[:user_id] = user.id
+    session[:user] = user.session_data
     redirect_to admin_root_path
   end
 
