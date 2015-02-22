@@ -94,4 +94,21 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal nil, competition.reload.delegate_user_id
   end
+
+  test 'user version is incremented when password or email is changed' do
+    assert_equal 0, @user.version
+
+    @user.password = 'blablabla'
+    @user.password_confirmation = 'blablabla'
+    @user.save!
+    assert_equal 1, @user.version
+
+    @user.email = 'foo@bar.com'
+    @user.save!
+    assert_equal 2, @user.version
+
+    @user.first_name = 'Bla'
+    @user.save!
+    assert_equal 2, @user.version
+  end
 end
