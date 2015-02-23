@@ -32,4 +32,14 @@ class ChecklistServiceTest < ActiveSupport::TestCase
     @competitor.wca = nil
     assert_match /newcomer.*check identification/i, @service.comments.join("\n")
   end
+
+  test '#comments includes paid already' do
+    @competitor.paid = true
+    assert_match /Paid already/i, @service.comments.join("\n")
+  end
+
+  test '#entrance_fee is 0 if paid already' do
+    @competitor.paid = true
+    assert_equal 0, @service.entrance_fee
+  end
 end
