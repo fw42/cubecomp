@@ -23,7 +23,7 @@
         <td><%= [competitor.last_name, competitor.first_name].join(", ") %></td>
         <td><%= competitor.wca %></td>
         <td><%= competitor.birthday %> (<%= competitor.age %>)</td>
-        <td><%= competitor.days.order(:date).map{ |day| day.date.strftime("%a") }.join(", ") %></td>
+        <td><%= competitor.days.sort_by(&:date).map{ |day| day.date.strftime("%a") }.join(", ") %></td>
         <td><%= competitor.event_registration_counts.join("+") %></td>
         <td><%= competitor.checklist_service.entrance_fee %></td>
         <td class='comment'>

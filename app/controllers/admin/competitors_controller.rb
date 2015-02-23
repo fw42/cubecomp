@@ -52,9 +52,10 @@ class Admin::CompetitorsController < AdminController
     @competitors = current_competition
       .competitors
       .confirmed
+      .preload(:days)
+      .preload(:day_registrations)
+      .preload(event_registrations: :event)
       .includes(:country)
-      .includes(:events)
-      .includes(:days)
       .order('countries.name', :last_name, :first_name)
 
     render layout: 'admin/checklist'
