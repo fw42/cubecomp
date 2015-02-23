@@ -60,13 +60,25 @@ class Competitor < ActiveRecord::Base
     registered_on?(day_id) && !competing_on?(day_id)
   end
 
+  def entrance_fee(day)
+    if free_entrance?
+      0
+    elsif competing_on?(day.id)
+      day.entrance_fee_competitors
+    elsif guest_on?(day.id)
+      day.entrance_fee_guests
+    else
+      0
+    end
+  end
+
   def event_registrations_by_day(include_waiting = false)
-    rel = event_registrations
-    rel = rel.where(waiting: false) unless include_waiting
+    registrations = event_registrations
+    registrations = registrations.reject(&:waiting) unless include_waiting
 
     grouped = {}
     competition.days.each do |day|
-      grouped[day] = rel.select{ |registration| registration.event.day == day }
+      grouped[day] = registrations.select{ |registration| registration.event.day_id == day.id }
     end
     grouped
   end
@@ -92,7 +104,7 @@ class Competitor < ActiveRecord::Base
   end
 
   def birthday_on_competition?
-    competition.days.any?{ |day| birthday_on?(day.date) }
+    days.any?{ |day| birthday_on?(day.date) }
   end
 
   def event_registration_status(event)

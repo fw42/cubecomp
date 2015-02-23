@@ -5,6 +5,7 @@ class ChecklistService
     :free_entrance?,
     :free_entrance_reason,
     :birthday_on_competition?,
+    :paid?,
     to: :competitor
 
   attr_reader :competitor
@@ -14,17 +15,19 @@ class ChecklistService
   end
 
   def entrance_fee
-    # TODO
-    0
+    if paid?
+      0
+    else
+      competitor.days.reduce(0) { |total, day| total + competitor.entrance_fee(day) }
+    end
   end
 
   def comments
     comments = []
     comments << 'Newcomer (Check identification!)' if wca.blank?
-    comments << "User comment: #{user_comment}" if user_comment.present?
-    comments << "Admin comment: #{admin_comment}" if admin_comment.present?
-    comments << free_entrance_comment if free_entrance?
+    comments += comment_comments
     comments << 'Birthday!' if birthday_on_competition?
+    comments << 'Paid already' if paid?
 
     ## TODO
     # if number_of_wca_competitions % 10 == 0
@@ -35,6 +38,14 @@ class ChecklistService
   end
 
   private
+
+  def comment_comments
+    comments = []
+    comments << "User comment: #{user_comment}" if user_comment.present?
+    comments << "Admin comment: #{admin_comment}" if admin_comment.present?
+    comments << free_entrance_comment if free_entrance?
+    comments
+  end
 
   def free_entrance_comment
     line = 'Free entrance'
