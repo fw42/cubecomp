@@ -28,12 +28,6 @@ class ChecklistService
     comments += comment_comments
     comments << 'Birthday!' if birthday_on_competition?
     comments << 'Paid already' if paid?
-
-    ## TODO
-    # if number_of_wca_competitions % 10 == 0
-    #   comments << "Competition #{number_of_wca_competitions}"
-    # end
-
     comments
   end
 

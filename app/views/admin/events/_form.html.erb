@@ -106,7 +106,20 @@
         <td>
           <%= f.select :state, Event::STATES.to_a.map(&:reverse) %>
           <%= help_tooltip %q{
-            TODO
+            <p>
+              Use the status <b>Not for registration</b> for events for which people should
+              never be able to register for, like final rounds, lunch breaks, winners' ceremonies,
+              etc.
+            </p>
+            <p>
+              If an event has status <b>waiting list</b>, people will still be able to register
+              for that event, but they will have a special flag set, which marks them as "waiting"
+              (and you can compare who registered first for an waiting list event).
+            </p>
+            <p>
+              If an event is <b>closed</b>, people will not be able to register anymore. Admins
+              however will still be able to register people, regardless of the events status.
+            </p>
           } %>
         </td>
       </tr>
