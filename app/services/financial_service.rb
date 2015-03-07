@@ -3,12 +3,20 @@ class FinancialService
     @competition = competition
   end
 
+  def guest_count(day)
+    guests(day).size
+  end
+
   def entrance_fee_from_guests(day)
-    entrance_fee(competitors.select{ |competitor| competitor.guest_on?(day.id) }, day)
+    entrance_fee(guests(day), day)
+  end
+
+  def competing_competitors_count(day)
+    competing_competitors(day).size
   end
 
   def entrance_fee_from_competing_competitors(day)
-    entrance_fee(competitors.select{ |competitor| competitor.competing_on?(day.id) }, day)
+    entrance_fee(competing_competitors(day), day)
   end
 
   private
@@ -19,8 +27,16 @@ class FinancialService
     end
   end
 
+  def guests(day)
+    competitors.select{ |competitor| competitor.guest_on?(day.id) }
+  end
+
+  def competing_competitors(day)
+    competitors.select{ |competitor| competitor.competing_on?(day.id) }
+  end
+
   def competitors
-    @competition
+    @competitors ||= @competition
       .competitors
       .confirmed
       .preload(:events)
