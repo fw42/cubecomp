@@ -26,9 +26,10 @@ de:
         user_comment: "Kommentar"
     errors:
       messages:
-        blank: "darf nicht leer sein"
+        blank: "ist nicht angegeben"
       models:
         competitor:
+          at_least_one_day: 'Es muss mindestens ein Tag zur Anmeldung ausgewählt werden'
           attributes:
             wca_id:
               taken: "wurde bereits bei der Anmeldung eines anderen Teilnehmers verwendet"
@@ -37,6 +38,8 @@ de:
               inclusion: "ist nicht vollständig bzw. ungültig"
             mail:
               invalid: "Adresse ist ungültig"
+            male:
+              inclusion: "ist nicht angegeben"
 
   registration:
     error_count_failed_to_save:

@@ -27,9 +27,10 @@ en:
         user_comment: 'Comment'
     errors:
       messages:
-        blank: "can't be blank"
+        blank: "is missing"
       models:
         competitor:
+          at_least_one_day: "You have to register for at least one day"
           attributes:
             wca_id:
               taken: "was already used to register another competitor"
@@ -38,6 +39,8 @@ en:
               inclusion: "is incomplete or invalid"
             mail:
               invalid: "is not valid"
+            male:
+              inclusion: "is missing"
 
   registration:
     error_count_failed_to_save:

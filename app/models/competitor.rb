@@ -21,6 +21,8 @@ class Competitor < ActiveRecord::Base
   validates :state, presence: true
   validates :state, inclusion: { in: STATES }, allow_nil: true, allow_blank: true
 
+  validates :male, inclusion: { in: [ true, false ] }, allow_nil: false, allow_blank: false
+
   belongs_to :country
   validates :country, presence: true
 
@@ -31,7 +33,6 @@ class Competitor < ActiveRecord::Base
   has_many :days, through: :day_registrations
 
   before_validation :set_default_state
-  validate :validate_male_not_nil
   validate :validate_at_least_one_day_registration
 
   auto_strip_attributes :first_name, :last_name, :wca, :email
@@ -133,13 +134,8 @@ class Competitor < ActiveRecord::Base
     self.state ||= STATES.first
   end
 
-  def validate_male_not_nil
-    return unless male.nil?
-    errors.add(:male, 'must be either true or false')
-  end
-
   def validate_at_least_one_day_registration
     return if day_registrations.any?{ |registration| !registration.marked_for_destruction? }
-    errors.add(:base, 'must register for at least one day')
+    errors.add(:base, I18n.t('activerecord.errors.models.competitor.at_least_one_day'))
   end
 end
