@@ -39,6 +39,9 @@ de:
               invalid: "Adresse ist ungültig"
 
   registration:
+    error_count_failed_to_save:
+      one: "Es ist ein Fehler bei der Anmeldung aufgetreten"
+      other: "Es sind %{count} Fehler bei der Anmeldung aufgetreten"
     flash_success: "Anmeldung erfolgreich. Du wirst bald eine Bestätigung per E-Mail erhalten."
     flash_closed: "Anmeldung ist momentan nicht möglich."
     closed: 'geschlossen'

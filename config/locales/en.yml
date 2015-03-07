@@ -40,6 +40,9 @@ en:
               invalid: "is not valid"
 
   registration:
+    error_count_failed_to_save:
+      one: "There was a problem with your registration"
+      other: "There were %{count} problems with your registration"
     flash_success: "Registration successful. You will receive a confirmation email soon."
     flash_closed: "Registration is not possbile at this moment."
     closed: 'closed'

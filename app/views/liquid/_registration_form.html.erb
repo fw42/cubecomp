@@ -25,8 +25,7 @@
 <% if @competitor.errors.any? %>
   <div class="registration_errors">
     <div class="registration_errors_heading">
-      <% # TODO: I18n %>
-      <%= pluralize(@competitor.errors.count, "error") %> prohibited this registration from being saved
+      <%= t('registration.error_count_failed_to_save', count: @competitor.errors.count) %>
     </div>
 
     <div class="registration_errors_body">
