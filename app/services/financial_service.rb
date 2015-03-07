@@ -28,7 +28,7 @@ class FinancialService
   private
 
   def entrance_fee(competitors, day)
-    competitors.reduce(0) do |total, competitor|
+    competitors.reduce(BigDecimal.new(0)) do |total, competitor|
       total + competitor.entrance_fee(day)
     end
   end

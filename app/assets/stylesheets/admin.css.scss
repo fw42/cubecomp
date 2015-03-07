@@ -18,6 +18,19 @@ div.row h2 {
   margin-bottom: 15px;
 }
 
+div.dashboard {
+  display: inline-block;
+
+  div.panel {
+    display: inline-block;
+    margin: 5px;
+
+    div.panel-body {
+      margin-bottom: -15px;
+    }
+  }
+}
+
 div.panel-body div.text-editor {
   margin: -15px;
 }
@@ -149,6 +162,12 @@ table.progress {
     div.progress {
       margin-bottom: 0px !important;
     }
+  }
+}
+
+table.financial-overview {
+  td {
+    text-align: right;
   }
 }
 

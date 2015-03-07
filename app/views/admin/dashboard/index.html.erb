@@ -1,9 +1,11 @@
 <% page_title 'Dashboard' %>
 
-<% if @financials.total_count > 0 %>
-  <%= render 'financial_overview' %>
-<% end %>
+<div class="dashboard">
+  <% if @financials.total_count > 0 %>
+    <%= render 'financial_overview' %>
+  <% end %>
 
-<% if @events_with_limits.size > 0 %>
-  <%= render 'events_with_limits' %>
-<% end %>
+  <% if @events_with_limits.size > 0 %>
+    <%= render 'events_with_limits' %>
+  <% end %>
+</div>
