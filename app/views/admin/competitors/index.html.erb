@@ -104,7 +104,7 @@
             <%= tooltip(icon_image_tag('local.png'), "#{competitor.name} lives in #{current_competition.city_name}") %>
           <% end %>
         </td>
-        <td><%= competitor.wca && link_to(competitor.wca, wca_url(competitor.wca)) %></td>
+        <td><%= competitor.wca && link_to(competitor.wca, competitor.wca_url) %></td>
         <td><%= competitor.country.name %></td>
         <td><%= mail_to(competitor.email) %></td>
         <td><%= competitor.birthday %> (<%= competitor.age %>)</td>

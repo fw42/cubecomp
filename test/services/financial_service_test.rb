@@ -19,11 +19,11 @@ class FinancialServiceTest < ActiveSupport::TestCase
   end
 
   test "#entrance_fee_from_competing_competitors only considers confirmed competitors" do
+    @competitor.update_attributes(state: 'new')
     assert_equal 0, service.entrance_fee_from_competing_competitors(@day)
     assert_equal 0, service.competing_competitors_count(@day)
 
     @competitor.update_attributes(state: 'confirmed')
-
     assert_equal @day.entrance_fee_competitors, service.entrance_fee_from_competing_competitors(@day)
     assert_equal 1, service.competing_competitors_count(@day)
   end

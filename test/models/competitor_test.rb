@@ -240,4 +240,8 @@ class CompetitorTest < ActiveSupport::TestCase
     @competitor.free_entrance = true
     assert_equal 0, @competitor.entrance_fee(day)
   end
+
+  test '#wca_url' do
+    assert_equal "http://www.worldcubeassociation.org/results/p.php?i=#{@competitor.wca}", @competitor.wca_url
+  end
 end
