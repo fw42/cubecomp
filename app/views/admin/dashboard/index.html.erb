@@ -1,6 +1,8 @@
 <% page_title 'Dashboard' %>
 
-<%= render 'financial_overview' %>
+<% if @financials.total_count > 0 %>
+  <%= render 'financial_overview' %>
+<% end %>
 
 <% if @events_with_limits.size > 0 %>
   <%= render 'events_with_limits' %>

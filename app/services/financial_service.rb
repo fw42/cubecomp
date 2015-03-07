@@ -3,6 +3,12 @@ class FinancialService
     @competition = competition
   end
 
+  def total_count
+    @competition.days.reduce(0) do |total, day|
+      guest_count(day) + competing_competitors_count(day)
+    end
+  end
+
   def guest_count(day)
     guests(day).size
   end
