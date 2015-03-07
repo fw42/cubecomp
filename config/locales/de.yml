@@ -17,6 +17,7 @@ de:
     attributes:
       competitor:
         wca: "WCA ID"
+        name: "Name"
         first_name: "Vorname"
         last_name: "Nachname"
         email: "E-Mail"

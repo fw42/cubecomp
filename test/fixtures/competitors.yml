@@ -7,6 +7,7 @@ flo_aachen_open:
   birthday: 1985-12-18
   country: germany
   male: true
+  state: confirmed
 
 aachen_open_day_one_guest:
   competition: aachen_open

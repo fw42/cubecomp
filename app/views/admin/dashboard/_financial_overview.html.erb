@@ -22,7 +22,7 @@
   <% sum_money_competitors = 0 %>
   <% current_competition.days.each do |day| %>
     <tr>
-      <th><%= l(day.date, format: :schedule) %></th>
+      <th><%= l(day.date, format: :day_only) %></th>
       <td><%= num_guests = @financials.guest_count(day) %></td>
       <td><%= money_guests = @financials.entrance_fee_from_guests(day) %></td>
       <td><%= num_competitors = @financials.competing_competitors_count(day) %></td>

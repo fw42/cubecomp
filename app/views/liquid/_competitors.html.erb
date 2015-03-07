@@ -6,8 +6,8 @@
       <% end %>
 
       <tr>
-        <th><%= t(:name) %></th>
-        <th><%= t(:country) %></th>
+        <th><%= t('activerecord.attributes.competitor.name') %></th>
+        <th><%= t('activerecord.attributes.competitor.country') %></th>
         <% if @competition.days.size > 1 %>
           <% @competition.days.each do |day| %>
             <th><small><%= day.date %></small></th>
@@ -28,7 +28,7 @@
     <tr>
       <td>
         <% if competitor.wca %>
-          <%= link_to competitor.name, wca_url(competitor.wca) %>
+          <%= link_to competitor.name, competitor.wca_url %>
         <% else %>
           <%= competitor.name %>
         <% end %>

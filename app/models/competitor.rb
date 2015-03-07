@@ -128,6 +128,10 @@ class Competitor < ActiveRecord::Base
     @liquid_drop ||= CompetitorDrop.new(self)
   end
 
+  def wca_url
+    "http://www.worldcubeassociation.org/results/p.php?i=#{wca}"
+  end
+
   private
 
   def set_default_state

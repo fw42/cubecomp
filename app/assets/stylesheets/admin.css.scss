@@ -143,6 +143,15 @@ table.default-table {
   }
 }
 
+table.progress {
+  td {
+    background-color: white;
+    div.progress {
+      margin-bottom: 0px !important;
+    }
+  }
+}
+
 $table-highlight: #ffff99;
 
 table.competitors {

@@ -1,0 +1,39 @@
+<h2>Events with registration limits</h2>
+
+<table class='default-table progress'>
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>Event</th>
+      <th>Status</th>
+      <th>Registrations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @events_with_limits.each do |event| %>
+      <tr>
+        <td><%= l(event.day.date, format: :day_only) %></td>
+        <td><%= event.name %></td>
+        <td style="width: 300px">
+          <div class="progress">
+            <% progress = 100.0 * (event.number_of_confirmed_registrations.to_f / event.max_number_of_registrations.to_f) %>
+            <%
+              style = if progress < 50
+                'success'
+              elsif progress >= 80 && progress <= 95
+                'warning'
+              else
+                'danger'
+              end
+            %>
+            <div class="progress-bar progress-bar-<%= style %>" style="width: <%= [100, progress].min %>%">
+            </div>
+          </div>
+        </td>
+        <td>
+          <%= event.number_of_confirmed_registrations %> / <%= event.max_number_of_registrations %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
