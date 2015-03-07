@@ -123,4 +123,13 @@ class EventTest < ActiveSupport::TestCase
     @event.length_in_minutes = nil
     assert_equal nil, @event.end_time
   end
+
+  test '.with_max_number_of_registrations' do
+    competition = competitions(:aachen_open)
+    events = competition.events.with_max_number_of_registrations.to_a
+
+    assert_not_equal 0, events.size
+    assert events.all?{ |event| event.max_number_of_registrations >= 0 }
+    assert_not_nil events.first.number_of_confirmed_registrations
+  end
 end

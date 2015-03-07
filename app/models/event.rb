@@ -37,6 +37,17 @@ class Event < ActiveRecord::Base
 
   scope :for_competitors_table, ->{ where.not(state: 'not_for_registration') }
 
+  scope :with_max_number_of_registrations, lambda {
+    select('events.*, COUNT(DISTINCT(competitors.id)) AS number_of_confirmed_registrations')
+      .where('max_number_of_registrations IS NOT NULL')
+      .where('max_number_of_registrations >= 0')
+      .joins(:competitors)
+      .where('competitors.state' => 'confirmed')
+      .joins(:day)
+      .order('days.date ASC')
+      .group('events.id')
+  }
+
   def for_registration?
     state != 'not_for_registration'
   end

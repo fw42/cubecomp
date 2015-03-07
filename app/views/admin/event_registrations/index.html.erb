@@ -1,19 +1,23 @@
 <% page_title "Registrations for #{@event.name}" %>
 
-<table class='default-table events'>
+<table class='default-table events competitors'>
   <thead>
     <tr>
       <th>Competitor</th>
       <th>Registered at</th>
+      <th>State</th>
       <th>Actions</th>
     </tr>
   </thead>
 
   <tbody>
     <% @registrations.each do |registration| %>
-      <tr>
+      <tr class="<%= registration.competitor.state %>">
         <td><%= link_to registration.competitor.name, edit_admin_competition_competitor_path(current_competition, registration.competitor) %></td>
         <td><%= registration.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+        <td>
+          <%= [ registration.competitor.state, registration.waiting ? 'waiting' : nil ].compact.join(', ') %>
+        </td>
         <td class='actions'>
           <%=
             delete_button(
