@@ -132,6 +132,15 @@ table.default-table {
     font-weight: bold;
     text-align: center;
   }
+
+  tr.sum {
+    border-top: 2px solid black;
+  }
+
+  td.total-money {
+    font-weight: bold;
+    color: darkgreen;
+  }
 }
 
 $table-highlight: #ffff99;
