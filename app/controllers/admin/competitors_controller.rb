@@ -33,6 +33,7 @@ class Admin::CompetitorsController < AdminController
       .competitors
       .includes(:country)
       .includes(:day_registrations)
+      .preload(:days)
       .includes(:event_registrations)
       .includes(:events)
       .order(created_at: :desc)
