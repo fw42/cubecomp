@@ -1,6 +1,12 @@
 <% page_title 'Dashboard' %>
 
 <div class="dashboard">
+  <% if @getting_started.present? %>
+    <%= render 'getting_started' %>
+  <% end %>
+
+  <br/>
+
   <% if @financials.total_count > 0 %>
     <%= render 'financial_overview' %>
   <% end %>

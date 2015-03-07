@@ -21,9 +21,15 @@ div.row h2 {
 div.dashboard {
   display: inline-block;
 
+  div.panel-getting-started {
+    li {
+      margin-left: -25px;
+    }
+  }
+
   div.panel {
     display: inline-block;
-    margin: 5px;
+    margin: 5px 10px 15px 0px;
 
     div.panel-body {
       margin-bottom: -15px;

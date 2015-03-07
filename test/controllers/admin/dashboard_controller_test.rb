@@ -49,4 +49,28 @@ class Admin::DashboardControllerTest < ActionController::TestCase
     refute_match /<select/, response.body
     refute_match /<option/, response.body
   end
+
+  test "#index shows events with registration limits iff there are such" do
+    flunk
+  end
+
+  test "#index shows financial overview iff there are confirmed competitors" do
+    flunk
+  end
+
+  test "#index shows getting started users tip iff the competition has no users" do
+    flunk
+  end
+
+  test "#index shows getting started owner tip iff the competition has no owner" do
+    flunk
+  end
+
+  test "#index shows getting started theme tip iff the competition has no theme files" do
+    flunk
+  end
+
+  test "#index shows getting started events tip iff the competition has no events that are for registration" do
+    flunk
+  end
 end

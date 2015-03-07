@@ -1,0 +1,44 @@
+<div class="panel panel-green panel-getting-started">
+  <div class="panel-heading">
+    Getting started
+  </div>
+
+  <div class="panel-body">
+    <ul>
+      <% if @getting_started.include?(:users) && current_user.policy.admin_user_menu? %>
+        <li>
+          <b>Users:</b>
+          There are no users with permission to organize this competition.
+          Please go to <%= link_to "Users", admin_users_path %> to add some.
+        </li>
+      <% end %>
+
+      <% if @getting_started.include?(:owner) %>
+        <li>
+          <b>Owner:</b>
+          You haven't specified the owner of this competition yet. Please go to
+          <%= link_to "Settings", edit_admin_competition_path(current_competition) %>
+          and do so.
+        </li>
+      <% end %>
+
+      <% if @getting_started.include?(:events) %>
+        <li>
+          <b>Events:</b>
+          You haven't created any events yet that competitors can register for.
+          Please go to <%= link_to "Events", admin_competition_events_path(current_competition) %>
+          to create or import some.
+        </li>
+      <% end %>
+
+      <% if @getting_started.include?(:theme) %>
+        <li>
+          <b>Theme:</b>
+          Your website has no theme yet. Please go to
+          <%= link_to "Theme", admin_competition_theme_files_path(current_competition) %>
+          to set one up.
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
