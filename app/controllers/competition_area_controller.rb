@@ -51,7 +51,7 @@ class CompetitionAreaController < ApplicationController
   def redirect_if_no_locale
     return if params[:locale]
 
-    locale_from_cookie = if cookies[:locale]
+    locale_from_cookie = if cookies[:locale] && Locale::ALL.keys.include?(cookies[:locale])
       @competition.locales.find_by(handle: cookies[:locale])
     end
 

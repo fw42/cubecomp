@@ -3,8 +3,15 @@ require 'test_helper'
 class AdminControllerTest < ActionController::TestCase
   test '#index redirects to login page if user is not logged in' do
     logout
+    use_https
     get :index
     assert_redirected_to admin_login_path
+  end
+
+  test '#index requires https' do
+    use_https(false)
+    get :index
+    assert_redirected_to admin_root_url(protocol: 'https')
   end
 
   test "#index redirects to login page if old user session exists but user doesn't exist anymore" do

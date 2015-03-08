@@ -1,6 +1,7 @@
 class Admin::SessionsController < ApplicationController
   layout 'admin/empty'
   protect_from_forgery with: :null_session
+  force_ssl
 
   def new
   end

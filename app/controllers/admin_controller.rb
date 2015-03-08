@@ -1,4 +1,5 @@
 class AdminController < ApplicationController
+  force_ssl
   layout 'admin'
   helper AdminMenuHelper
   before_action :ensure_authenticated
