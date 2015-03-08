@@ -4,7 +4,17 @@ class SessionsTest < ActionDispatch::IntegrationTest
   SESSION_KEY = '_cubecomp_session'
 
   setup do
+    https!
     @user = users(:regular_user_with_no_competitions)
+  end
+
+  test 'login requires https' do
+    https!(false)
+    get '/admin/login'
+    assert_redirected_to 'https://www.example.com/admin/login'
+
+    post '/admin/login', user: { email: @user.email, password: 'test' }
+    assert_redirected_to 'https://www.example.com/admin/login'
   end
 
   test 'Session fixation - login resets session' do
@@ -66,6 +76,9 @@ class SessionsTest < ActionDispatch::IntegrationTest
   end
 
   def login(user = @user)
+    get "/admin/login"
+    assert_response :success
+
     post '/admin/login', user: { email: user.email, password: 'test' }
     assert_redirected_to admin_root_path
   end

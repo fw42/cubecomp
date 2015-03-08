@@ -88,7 +88,12 @@ class ActiveSupport::TestCase
 end
 
 class ActionController::TestCase
+  def use_https(flag = true)
+    @request.env['HTTPS'] = flag ? 'on' : nil
+  end
+
   def login_as(user)
+    use_https
     session[:user] = user.session_data
   end
 
