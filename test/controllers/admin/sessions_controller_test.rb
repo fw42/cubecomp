@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class Admin::SessionsControllerTest < ActionController::TestCase
+  setup do
+    use_https
+  end
+
   test '#new page' do
     get :new
     assert_template 'admin/empty'
