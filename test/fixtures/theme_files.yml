@@ -19,6 +19,11 @@ aachen_open_logo:
   image_content_type: "image/jpeg"
   image_file_size: 47603
 
+aachen_open_style:
+  competition: aachen_open
+  filename: "style.css"
+  content: "body { background-color: blue }"
+
 default_index:
   theme: default
   filename: index.html

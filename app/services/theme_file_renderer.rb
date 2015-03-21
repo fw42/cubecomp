@@ -6,15 +6,20 @@ class ThemeFileRenderer
     @controller = controller
     @locale = locale
 
+    assign_strings
     assign_drops
     assign_views
   end
 
   def render
     render_with_locale do
-      parsed_layout_file = Liquid::Template.parse(@layout_theme_file.content)
-      assigns[:content_for_layout] = ->{ render_theme_file }
-      render_with_registers(parsed_layout_file)
+      if @layout_theme_file
+        parsed_layout_file = Liquid::Template.parse(@layout_theme_file.content)
+        assigns[:content_for_layout] = ->{ render_theme_file }
+        render_with_registers(parsed_layout_file)
+      else
+        render_theme_file
+      end
     end
   end
 
@@ -60,9 +65,13 @@ class ThemeFileRenderer
     parsed_template.render(assigns.stringify_keys)
   end
 
+  def assign_strings
+    assigns[:filename] = @theme_file.basename
+  end
+
   def assign_drops
     assigns[:competition] = @competition
-
+    assigns[:locale] = @locale
     assigns[:delegate] = ->{ @competition.delegate }
     assigns[:owner] = ->{ @competition.owner }
     assigns[:staff] = ->{ @competition.users }

@@ -1,6 +1,7 @@
 en:
   date:
     formats:
+      default: "%Y-%m-%d"
       schedule: "%A, %B %d, %Y"
       day_only: "%A"
       news: "%B %d, %Y"
@@ -43,7 +44,14 @@ en:
             male:
               inclusion: "is missing"
 
+  information:
+    title: "Information"
+
+  competitors:
+    title: "Competitors"
+
   registration:
+    title: "Registration"
     error_count_failed_to_save:
       one: "There was a problem with your registration"
       other: "There were %{count} problems with your registration"
@@ -58,6 +66,7 @@ en:
     wca_id_first_time: "If this is your first competition, leave this field empty."
 
   schedule:
+    title: "Schedule"
     start: "Start"
     stop: "Stop"
     event: "Event"
@@ -67,5 +76,10 @@ en:
     format: "Format"
     max: "Max."
 
-  male: 'male'
-  female: 'female'
+  disclaimer:
+    title: "Disclaimer"
+
+  misc:
+    male: 'male'
+    female: 'female'
+    designed_by: "Design by"

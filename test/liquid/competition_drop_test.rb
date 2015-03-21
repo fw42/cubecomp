@@ -8,6 +8,7 @@ class CompetitionDropTest < ActiveSupport::TestCase
     :staff_name,
     :city_name,
     :venue_address,
+    :locales
   ]
 
   setup do

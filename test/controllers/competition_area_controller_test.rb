@@ -103,4 +103,32 @@ class CompetitionAreaControllerTest < ActionController::TestCase
       assert_match /#{Regexp.escape('<input type="hidden" name="authenticity_token" value=')}/, response.body
     end
   end
+
+  test '#render_theme_file renders html files in layout' do
+    layout = theme_files(:aachen_open_layout)
+    layout.update_attributes(content: "FOOBAR {{ content_for_layout }} TEST")
+    theme_file = theme_files(:aachen_open_index)
+    theme_file.update_attributes(content: 'BLABLA')
+
+    get :render_theme_file,
+      competition_handle: @competition.handle,
+      locale: 'de',
+      theme_file: 'index'
+
+    assert_equal 'FOOBAR BLABLA TEST', response.body
+  end
+
+  test '#render_theme_file renders css files without layout' do
+    layout = theme_files(:aachen_open_layout)
+    layout.update_attributes(content: "FOOBAR {{ content_for_layout }} TEST")
+
+    get :render_theme_file,
+      competition_handle: @competition.handle,
+      locale: 'de',
+      theme_file: 'style',
+      format: 'css'
+
+    assert_no_match /FOOBAR/, response.body
+    assert_match /body {/, response.body
+  end
 end
