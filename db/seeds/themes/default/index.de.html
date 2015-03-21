@@ -1,0 +1,59 @@
+<img src="{{ "logo.png" | image_url }}" class="logo" />
+
+{{ news }}
+
+<h2>Was ist {{ competition.name }}?</h2>
+
+<p>
+  {{ competition.name }} ist eine sogenannte
+  <i><a href="http://de.wikipedia.org/wiki/Speedcubing">Speedcubing</a> Competition</i>.
+  Speedcubing bezeichnet dabei die Fähigkeit, einen
+  <a href="http://de.wikipedia.org/wiki/Zauberw%C3%BCrfel">3x3x3 Zauberwürfel</a>
+  und ähnliche Puzzle in möglichst kurzer Zeit zu lösen.
+</p>
+
+<h2>Wann und wo?</h2>
+
+<p>
+  {% if days.size == 1 %}
+    <b>{{ days.first.date | translate_date: "%d. %B %Y" }}</b><br/>
+  {% else %}
+    <b>{{ days.first.date | translate_date: "%d."}}-{{ days.last.date | translate_date: "%d. %B %Y"}}</b><br/>
+  {% endif %}
+  {{ competition.venue_address | to_html }}<br/>
+  {{ competition.country }}
+</p>
+
+<h2>Was kostet mich der Spaß?</h2>
+
+<p>
+  Der reguläre Eintrittspreis wird voraussichtlich (!)
+  <b>5 Euro pro Tag pro Teilnehmer</b> betragen. Dieser Preis gilt
+  ausdrücklich für alle Besucher (außer Presse), egal ob Teilnehmer,
+  Zuschauer, Eltern von Teilnehmern oder sonstigen Personen! Wir
+  bitten sehr darum, dass sich alle Besucher vorher
+  <a href="{{ "registration" | theme_file_url }}">anmelden</a>, da dadurch die
+  Planung deutlich vereinfacht wird. Danke.
+</p>
+
+<h2>Für Anfänger...</h2>
+
+<p>
+  Während und vor der Competition wird jeder Anfänger die Gelegenheit
+  bekommen sich mit dem offiziellen Equipment (Stackmat-Timer) vertraut
+  zu machen. Bei Bedarf werden natürlich auch genug Leute vor Ort sein,
+  die die Regeln erklären können. Trotzdem sollte jeder Teilnehmer
+  bereits vor der Meisterschaft mindestens einmal die
+  <a href="http://www.worldcubeassociation.org/regulations/">offiziellen Regeln der WCA</a>
+  gelesen haben. Auch ein Blick in unsere
+  <a href="http://cube.hackvalue.de/tutorials/">Teilnehmer Anleitung</a>
+  ist mehr als ratsam für alle Neulinge!
+</p>
+
+<h2>Fragen</h2>
+
+<p>
+  Du hast weitere Fragen? Dann melde dich einfach per E-Mail direkt beim
+  Organisationsteam unter der Adresse
+  <a href="mailto:{{ competition.staff_email }}">{{ competition.staff_email }}</a>.
+</p>

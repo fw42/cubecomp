@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>{{ competition.name }}</title>
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" media="all" href="{{ "style.css" | theme_file_url }}" />
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="index" />
+    <meta name="revisit-after" content="5 days" />
+    <meta http-equiv="content-language" content="{{ locale.name }}" />
+
+    {{ default_headers }}
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="localeselect">
+        {% for l in competition.locales %}
+          {% if l.handle == locale.handle %}
+            {% assign locale_img = l.handle | append: "_active.png" %}
+          {% else %}
+            {% assign locale_img = l.handle | append: "_inactive.png" %}
+          {% endif %}
+        
+          <a href="{{ filename | theme_file_url: locale: l.handle }}"><img src="{{ locale_img | image_url }}" alt="{{ l.name }}" /></a>
+        {% endfor %}
+      </div>
+
+      <div id="wcalogo">
+        <a href="http://www.worldcubeassociation.org/">{{ "wca_small.png" | image_tag }}</a>
+      </div>
+
+      <div id="header">
+        <div id="logo">
+          <h1>{{ competition.name }}</h1>
+          <h2>Speedcubing Competition</h2>
+        </div>
+        
+        <div id="menu">
+          <ul>
+            <li {% if filename == "index" %}class="active"{% endif %}>
+              <a href="{{ "index" | theme_file_url }}">{{ "information.title" | translate }}</a>
+            </li>
+            
+            <li {% if filename == "competitors" %}class="active"{% endif %}>
+              <a href="{{ "competitors" | theme_file_url }}">{{ "competitors.title" | translate }}</a>
+            </li>
+
+            <li {% if filename == "registration" %}class="active"{% endif %}>
+              <a href="{{ "registration" | theme_file_url }}">{{ "registration.title" | translate }}</a>
+            </li>
+            
+            <li {% if filename == "schedule" %}class="active"{% endif %}>
+              <a href="{{ "schedule" | theme_file_url }}">{{ "schedule.title" | translate }}</a>
+            </li>
+
+            <li {% if filename == "disclaimer" %}class="active"{% endif %}>
+              <a href="{{ "disclaimer" | theme_file_url }}">{{ "disclaimer.title" | translate }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="page">
+        <div id="content">
+          {{ content_for_layout }}
+        </div>
+      </div>
+
+      <div id="footer">
+        <p id="legal">
+          {{ "misc.designed_by" | translate }} <a href="http://www.nodethirtythree.com/">NodeThirtyThree</a> &amp;
+          <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

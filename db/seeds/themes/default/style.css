@@ -1,0 +1,178 @@
+body, html {
+  height: 100%;
+}
+
+body {
+  margin: 0 0 0 0;
+  padding: 0;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  font-size: 13px;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  font-weight: normal;
+}
+
+h3 {
+  padding-top: 15px;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 23px;
+}
+
+p, ul {
+  line-height: 14pt;
+  font-size: 10pt;
+}
+
+p#legal {
+  margin: 0 0 2em 0;
+  font-size: 10px;
+}
+
+a:hover, a:active {
+  text-decoration: none;
+}
+
+img {
+  border: none;
+}
+
+.center {
+  text-align: center;
+}
+
+/********************************* Table ********************************/
+
+table {
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 5px;
+}
+
+table.schedule td,
+table.schedule th {
+  text-align: center;
+}
+
+/********************************* Form ********************************/
+
+input, textarea, select {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  padding: 1px;
+  border: 1px solid silver;
+}
+
+label {
+  cursor: pointer;
+}
+
+/******************************** Header and logo ********************************/
+
+#header {
+  padding-top: 100px;
+  width: 850px;
+  height: 82px;
+  margin: 0 auto 40px auto;
+}
+
+#localeselect {
+  position: absolute;
+  left: 5px;
+  top: 25px;
+}
+
+#wcalogo {
+  position: absolute;
+  top: 25px;
+  right: 5px;
+}
+
+#logo {
+  float: left;
+}
+
+img.logo {
+  float: right;
+  max-width: 300px;
+}
+
+#logo h1 {
+  font-size: 38px;
+}
+
+#logo h2 {
+  margin-top: 0px;
+  font-size: 17px;
+}
+
+/******************************** Menu ********************************/
+
+#menu {
+  float: right;
+}
+
+#menu ul {
+  margin: 0;
+  padding: 10px 0 0 0;
+  list-style: none;
+}
+
+#menu li {
+  display: inline;
+}
+
+#menu a {
+  display: block;
+  float: left;
+  margin-left: 20px;
+  padding: 7px;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+/********************************* Page ********************************/
+
+#page {
+  width: 850px;
+  margin: 0 auto;
+  padding-bottom: 100px;
+}
+
+#container {
+  min-height: 100%;
+  position: relative;
+}
+
+#page p, #page h1, #page h2, #page h3 {
+  margin-bottom: 20px;
+  margin-top: 5px;
+  padding-bottom: 5px;
+}
+
+#page h1, #page h2, #page h3 {
+  margin-top: 10px;
+}
+
+/********************************* Footer ********************************/
+
+#footer {
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+#legal {
+  padding-top: 45px;
+  text-align: right;
+}

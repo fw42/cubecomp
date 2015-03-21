@@ -1,0 +1,14 @@
+<script src="{{ "jquery_columnhover_pack.js" | theme_file_url }}" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+$(document).ready(function() {
+  $('table.competitors').columnHover({ eachCell: true, hoverClass: 'competitors_hover', ignoreCols: [1,2] });
+});
+-->
+</script>
+
+<h2>
+{{ "competitors.title" | translate }}
+</h2>
+
+{{ competitors }}
