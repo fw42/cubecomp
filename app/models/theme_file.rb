@@ -34,6 +34,8 @@ class ThemeFile < ActiveRecord::Base
     less_than: 1.megabytes, message: "has to be smaller than 1 megabyte"
   }
 
+  auto_strip_attributes :filename
+
   scope :with_filename, lambda { |filename, locale|
     file_extension_matcher = /\A(.*?)(\.(.*))?\z/
     matches = file_extension_matcher.match(filename)
