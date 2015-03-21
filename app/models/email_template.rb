@@ -7,4 +7,6 @@ class EmailTemplate < ActiveRecord::Base
 
   validates :subject, liquid: true, allow_nil: true, allow_blank: true
   validates :content, liquid: true, allow_nil: true, allow_blank: true
+
+  auto_strip_attributes :name, :subject
 end

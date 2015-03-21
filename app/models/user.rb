@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   validates :permission_level, presence: true
   validates :permission_level, inclusion: { in: PERMISSION_LEVELS.values }, allow_nil: true, allow_blank: true
 
+  auto_strip_attributes :email, :first_name, :last_name, :address
+
   has_many :permissions, inverse_of: :user, dependent: :destroy
   has_many :competitions, through: :permissions
 

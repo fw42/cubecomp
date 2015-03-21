@@ -35,6 +35,8 @@ class Event < ActiveRecord::Base
   validates :state, presence: true
   validates :state, inclusion: { in: Event::STATES.keys }, allow_nil: true, allow_blank: true
 
+  auto_strip_attributes :name_short, :name, :handle, :timelimit, :format, :round, :proceed
+
   scope :for_competitors_table, ->{ where.not(state: 'not_for_registration') }
 
   scope :with_max_number_of_registrations, lambda {

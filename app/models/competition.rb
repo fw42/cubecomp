@@ -40,6 +40,15 @@ class Competition < ActiveRecord::Base
   validate :validate_has_at_least_one_locale
   validate :validate_has_at_least_one_day
 
+  auto_strip_attributes :name,
+    :handle,
+    :staff_email,
+    :staff_name,
+    :city_name,
+    :city_name_short,
+    :venue_address,
+    :currency
+
   def default_locale
     super || locales.first
   end

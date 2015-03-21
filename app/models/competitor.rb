@@ -35,7 +35,7 @@ class Competitor < ActiveRecord::Base
   before_validation :set_default_state
   validate :validate_at_least_one_day_registration
 
-  auto_strip_attributes :first_name, :last_name, :wca, :email
+  auto_strip_attributes :first_name, :last_name, :wca, :email, :free_entrance_reason, :paid_comment, :nametag
 
   before_validation do
     self.wca = wca.upcase if wca
