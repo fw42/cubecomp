@@ -165,6 +165,13 @@
           <%= help_tooltip 'The country of the venue will also be used as the default registration country' %>
         </td>
       </tr>
+      <tr>
+        <td><%= f.label :country, 'Currency:' %></td>
+        <td>
+          <%= f.text_field :currency %>
+          <%= help_tooltip 'The currency you will be collecting payments in, for example $, €, £.' %>
+        </td>
+      </tr>
     </table>
   <% end %>
 
