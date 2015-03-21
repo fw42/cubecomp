@@ -4,6 +4,7 @@ class CompetitionAreaController < ApplicationController
   before_action :load_locale_from_params
   before_action :load_theme_file
   before_action :load_layout_theme_file
+  skip_before_filter :verify_authenticity_token
 
   def render_theme_file
     render text: theme_file_renderer.render
@@ -28,7 +29,7 @@ class CompetitionAreaController < ApplicationController
 
   def load_locale_from_params
     @locale = @competition.locales.find_by!(handle: params[:locale])
-    cookies[:locale] = @locale.handle
+    cookies.permanent[:locale] = @locale.handle
   end
 
   def load_layout_theme_file

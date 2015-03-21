@@ -90,20 +90,6 @@ class CompetitionAreaControllerTest < ActionController::TestCase
     assert_equal 'Aachen Open -- german', @response.body
   end
 
-  test '#render_theme_file with registration_form renders hidden theme_file input field and csrf token' do
-    theme_file = theme_files(:aachen_open_index)
-    theme_file.update_attributes(content: '{{ registration_form }}')
-
-    with_csrf_protection do
-      get :render_theme_file, competition_handle: @competition.handle, locale: 'de'
-
-      assert_match /#{Regexp.escape('<input type="hidden" name="theme_file" id="theme_file" value="index.html" />')}/,
-        response.body
-
-      assert_match /#{Regexp.escape('<input type="hidden" name="authenticity_token" value=')}/, response.body
-    end
-  end
-
   test '#render_theme_file renders html files in layout' do
     layout = theme_files(:aachen_open_layout)
     layout.update_attributes(content: "FOOBAR {{ content_for_layout }} TEST")
