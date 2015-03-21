@@ -95,7 +95,7 @@ Rails.application.routes.draw do
   end
 
   scope '/:competition_handle' do
-    post '/:locale/register',
+    post '/:locale/registration',
       to: 'competition_area/competitors#create',
       as: 'competition_area_competitor_create'
 
