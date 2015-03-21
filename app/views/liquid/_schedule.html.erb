@@ -1,5 +1,7 @@
 <% show_max_column = day.events.any?{ |event| event.max_number_of_registrations.present? } %>
 
+<h3><%= l(day.date, format: :schedule) %></h3>
+
 <table class="schedule">
   <tr>
     <th><%= t('schedule.start') %></th>
