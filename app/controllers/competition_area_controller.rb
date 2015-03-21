@@ -2,8 +2,8 @@ class CompetitionAreaController < ApplicationController
   before_action :load_competition
   before_action :redirect_if_no_locale
   before_action :load_locale_from_params
-  before_action :load_layout_theme_file
   before_action :load_theme_file
+  before_action :load_layout_theme_file
 
   def render_theme_file
     render text: theme_file_renderer.render
@@ -32,6 +32,8 @@ class CompetitionAreaController < ApplicationController
   end
 
   def load_layout_theme_file
+    return if @theme_file && !@theme_file.html?
+
     @layout_theme_file = @competition.theme_files.text_files.with_filename(
       'layout.html',
       @locale.handle

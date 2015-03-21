@@ -76,6 +76,23 @@ class ThemeFile < ActiveRecord::Base
     image_content_type.present?
   end
 
+  def basename
+    filename.split(".").first
+  end
+
+  def extension
+    parts = filename.split(".")
+    return nil if parts.size == 1
+    parts.last
+  end
+
+  def html?
+    ext = extension
+    return false unless ext
+    ext = ext.downcase
+    ext == 'htm' || ext == 'html'
+  end
+
   private
 
   def validate_has_content_or_is_image

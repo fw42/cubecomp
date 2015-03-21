@@ -22,4 +22,8 @@ class Locale < ActiveRecord::Base
   def name
     Locale::ALL[handle]
   end
+
+  def to_liquid
+    @liquid_drop ||= LocaleDrop.new(self)
+  end
 end

@@ -1,6 +1,7 @@
 de:
   date:
     formats:
+      default: "%d.%m.%Y"
       schedule: "%A, %d. %B %Y"
       day_only: "%A"
       news: "%d. %B %Y"
@@ -42,7 +43,14 @@ de:
             male:
               inclusion: "ist nicht angegeben"
 
+  information:
+    title: "Informationen"
+
+  competitors:
+    title: "Teilnehmer"
+
   registration:
+    title: "Anmeldung"
     error_count_failed_to_save:
       one: "Es ist ein Fehler bei der Anmeldung aufgetreten"
       other: "Es sind %{count} Fehler bei der Anmeldung aufgetreten"
@@ -57,6 +65,7 @@ de:
     wca_id_first_time: "Falls dies dein erstes Turnier ist, lasse dieses Feld leer."
 
   schedule:
+    title: "Zeitplan"
     start: "Beginn"
     stop: "Ende"
     event: "Event"
@@ -66,5 +75,10 @@ de:
     format: "Format"
     max: "Max."
 
-  male: "männlich"
-  female: "weiblich"
+  disclaimer:
+    title: "Impressum"
+
+  misc:
+    male: "männlich"
+    female: "weiblich"
+    designed_by: "Design von"

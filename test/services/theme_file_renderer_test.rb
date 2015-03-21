@@ -99,6 +99,16 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
     assert_match /#{Regexp.escape(news.text)}/, renderer.render
   end
 
+  test '#render Liquid template with filename' do
+    @theme_file.content = "{{ filename }}"
+    assert_equal @theme_file.basename, renderer.render
+  end
+
+  test '#render Liquid template with locale' do
+    @theme_file.content = "{{ locale.name }} {{ locale.handle }}"
+    assert_equal "English en", renderer.render
+  end
+
   test '#render Liquid template with filters' do
     @theme_file.content = <<-LIQUID
       {{ 'registration.flash_success' | translate }}

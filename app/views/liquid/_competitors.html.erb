@@ -10,7 +10,7 @@
         <th><%= t('activerecord.attributes.competitor.country') %></th>
         <% if @competition.days.size > 1 %>
           <% @competition.days.each do |day| %>
-            <th><small><%= day.date %></small></th>
+            <th><small><%= l(day.date, format: "%a") %></small></th>
           <% end %>
         <% end %>
 

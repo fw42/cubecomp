@@ -4,6 +4,9 @@
   <script type='text/javascript'>
     var textEditor = CodeMirror.fromTextArea(document.getElementById(<%= raw id.to_json %>), {
       lineNumbers: true,
+      smartIndent: false,
+      electricChars: false,
+      tabSize: 2,
       mode: { name: "htmlmixed" }
     });
   </script>

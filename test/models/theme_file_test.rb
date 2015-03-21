@@ -76,4 +76,25 @@ class ThemeFileTest < ActiveSupport::TestCase
     file = theme_files(:aachen_open_logo)
     assert_match /logo\.jpg\z/, file.image.url
   end
+
+  test '#basename' do
+    assert_equal 'foobar', ThemeFile.new(filename: 'foobar.en.html').basename
+    assert_equal 'foobar', ThemeFile.new(filename: 'foobar.html').basename
+    assert_equal 'foobar', ThemeFile.new(filename: 'foobar').basename
+  end
+
+  test '#html?' do
+    assert_equal true, ThemeFile.new(filename: 'foobar.html').html?
+    assert_equal false, ThemeFile.new(filename: 'foobar.css').html?
+    assert_equal true, ThemeFile.new(filename: 'foobar.en.html').html?
+    assert_equal false, ThemeFile.new(filename: 'foobar.en.css').html?
+  end
+
+  test '#extension' do
+    assert_equal 'html', ThemeFile.new(filename: 'foobar.html').extension
+    assert_equal 'css', ThemeFile.new(filename: 'foobar.css').extension
+    assert_equal 'html', ThemeFile.new(filename: 'foobar.en.html').extension
+    assert_equal 'css', ThemeFile.new(filename: 'foobar.en.css').extension
+    assert_equal nil, ThemeFile.new(filename: 'foobar').extension
+  end
 end
