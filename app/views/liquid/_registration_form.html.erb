@@ -132,14 +132,14 @@
               radio_button "#{f.object_name}[days][#{day.id}]", :status, 'guest',
                 onclick: 'jQuery("#day_' + day.id.to_s + '").slideUp("slow");'
             %>
-            <%= label "#{f.object_name}[days][#{day.id}]", 'status_guest', t('registration.register_as_guest') %>
+            <%= label "#{f.object_name}[days][#{day.id}]", 'status_guest', "#{t('registration.register_as_guest')} (#{amount_with_currency(day.entrance_fee_guests, @competition.currency)})" %>
             <br/>
 
             <%=
               radio_button "#{f.object_name}[days][#{day.id}]", :status, 'competitor',
                 onclick: 'jQuery("#day_' + day.id.to_s + '").slideDown("slow");'
             %>
-            <%= label "#{f.object_name}[days][#{day.id}]", 'status_competitor', t('registration.register_as_competitor') %>
+            <%= label "#{f.object_name}[days][#{day.id}]", 'status_competitor', "#{t('registration.register_as_competitor')} (#{amount_with_currency(day.entrance_fee_competitors, @competition.currency)})" %>
             <br/>
           </p>
 
