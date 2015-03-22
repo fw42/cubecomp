@@ -103,6 +103,20 @@ class Admin::DashboardControllerTest < ActionController::TestCase
     assert_no_match regexp, response.body
   end
 
+  test "#index shows getting started owner address tip iff the competition's owner has no address" do
+    regexp = /The owner of this competition did not specify a personal address/
+
+    Competition.any_instance.expects(:owner).at_least_once.returns(@user)
+
+    @user.address = ''
+    get :index, competition_id: @competition.id
+    assert_match regexp, response.body
+
+    @user.address = 'foobar'
+    get :index, competition_id: @competition.id
+    assert_no_match regexp, response.body
+  end
+
   test "#index shows getting started events tip iff the competition has no events that are for registration" do
     regexp = /You haven't created any events yet/
 
