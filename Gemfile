@@ -22,6 +22,8 @@ gem 'marginalia'
 gem 'liquid'
 gem 'paperclip'
 
+gem 'dotenv-rails'
+
 group :test do
   gem 'mocha'
   gem 'timecop'
@@ -44,7 +46,6 @@ group :development, :test do
   gem 'spring'
   gem 'rubocop'
   gem 'bundler-audit'
-  gem 'dotenv-rails'
 end
 
 group :deploy do
