@@ -20,7 +20,7 @@ Metrics/ClassLength:
     - 'test/**/*'
 
 Metrics/AbcSize:
-  Max: 22
+  Max: 23
   Exclude:
     - 'app/helpers/admin_menu_helper.rb'
 

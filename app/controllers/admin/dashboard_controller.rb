@@ -10,8 +10,13 @@ class Admin::DashboardController < AdminController
   def getting_started
     tips = []
     tips << :events if current_competition.events.for_competitors_table.empty?
-    tips << :owner if current_competition.owner.blank?
-    tips << :owner_without_address if current_competition.owner.present? && current_competition.owner.address.blank?
+
+    if current_competition.owner.blank?
+      tips << :owner
+    elsif current_competition.owner.address.blank?
+      tips << :owner_without_address
+    end
+
     tips << :theme if current_competition.theme_files.empty?
     tips << :users if current_competition.users.empty?
     tips
