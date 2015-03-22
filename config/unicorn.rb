@@ -7,7 +7,7 @@ app_path = File.expand_path(File.dirname(__FILE__) + '/..')
 worker_processes (ENV['RAILS_ENV'] == 'production' ? 4 : 1)
 
 # Listen on port 50000
-listen(50000, backlog: 64)
+listen("127.0.0.1:50000", backlog: 64)
 
 # After the timeout is exhausted, the unicorn worker will be killed and a new
 # one brought up in its place. Adjust this to your application's needs. The
