@@ -22,6 +22,15 @@
         </li>
       <% end %>
 
+      <% if @getting_started.include?(:owner_without_address) %>
+        <li>
+          <b>Owner:</b>
+          The owner of this competition did not specify a personal address for the
+          disclaimer page yet. Please ask him to do so.
+        </li>
+      <% end %>
+
+
       <% if @getting_started.include?(:events) %>
         <li>
           <b>Events:</b>
