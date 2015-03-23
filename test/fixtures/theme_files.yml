@@ -15,9 +15,9 @@ aachen_open_disclaimer_german:
 
 aachen_open_logo:
   competition: aachen_open
-  filename: "logo.jpg"
-  image_content_type: "image/jpeg"
-  image_file_size: 47603
+  filename: "logo.png"
+  image_content_type: "image/png"
+  image_file_size: 24121
 
 aachen_open_style:
   competition: aachen_open

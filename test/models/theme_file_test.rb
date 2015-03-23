@@ -74,7 +74,7 @@ class ThemeFileTest < ActiveSupport::TestCase
 
   test 'image url' do
     file = theme_files(:aachen_open_logo)
-    assert_match /logo\.jpg\z/, file.image.url
+    assert_match /logo\.png\z/, file.image.url
   end
 
   test '#basename' do

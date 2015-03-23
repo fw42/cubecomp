@@ -17,38 +17,38 @@ class Liquid::Filters::UrlTest < ActiveSupport::TestCase
   end
 
   test '#image_tag' do
-    assert_match /<img src="#{Regexp.escape(@file.image.url)}".*>/, @filters.image_tag('logo.jpg')
+    assert_match /<img src="#{Regexp.escape(@file.image.url)}".*>/, @filters.image_tag('logo.png')
   end
 
   test '#image_tag for filename that does not exist returns nil' do
-    assert_equal nil, @filters.image_tag('does_not_exist.jpg')
+    assert_equal nil, @filters.image_tag('does_not_exist.png')
   end
 
   test '#image_url' do
-    assert_equal @file.image.url, @filters.image_url('logo.jpg')
+    assert_equal @file.image.url, @filters.image_url('logo.png')
   end
 
   test '#image_url uses localized filename if exact filename doesnt exist' do
-    @file.filename = 'logo.de.jpg'
+    @file.filename = 'logo.de.png'
     @file.save!
 
-    assert_equal @file.image.url, @filters.image_url('logo.jpg')
+    assert_equal @file.image.url, @filters.image_url('logo.png')
   end
 
   test '#image_url returns nil if locale doesnt exist, even if non-localized filename exists' do
-    assert_equal nil, @filters.image_url('logo.en.jpg')
+    assert_equal nil, @filters.image_url('logo.en.png')
   end
 
   test '#image_url prefers localized filename over exact filename' do
     german_file = @file.dup
-    german_file.filename = 'logo.de.jpg'
+    german_file.filename = 'logo.de.png'
     german_file.save!
 
-    assert_equal german_file.image.url, @filters.image_url('logo.jpg')
+    assert_equal german_file.image.url, @filters.image_url('logo.png')
   end
 
   test '#image_url for filename that does not exist returns nil' do
-    assert_equal nil, @filters.image_url('does_not_exist.jpg')
+    assert_equal nil, @filters.image_url('does_not_exist.png')
   end
 
   test '#theme_file_url strips index.html' do

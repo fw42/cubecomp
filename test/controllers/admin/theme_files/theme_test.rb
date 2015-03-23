@@ -74,7 +74,7 @@ module Admin::ThemeFiles
     end
 
     test '#create_image' do
-      image = fixture_file_upload('files/logo.png', 'image/jpeg')
+      image = fixture_file_upload('files/logo.png', 'image/png')
       params = {
         filename: 'logo.png',
         image: image
@@ -90,7 +90,7 @@ module Admin::ThemeFiles
     test '#create_image requires permission' do
       UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
 
-      image = fixture_file_upload('files/logo.png', 'image/jpeg')
+      image = fixture_file_upload('files/logo.png', 'image/png')
 
       assert_no_difference 'ThemeFile.count' do
         post :create_image, theme_id: @theme.id, theme_file: { filename: 'logo.png', image: image }

@@ -72,7 +72,10 @@ module Admin::ThemeFiles
     end
 
     test '#create_image' do
-      image = fixture_file_upload('files/logo.png', 'image/jpeg')
+      @competition.theme_files.each(&:destroy!)
+
+      image = fixture_file_upload('files/logo.png', 'image/png')
+
       params = {
         filename: 'logo.png',
         image: image
@@ -87,7 +90,7 @@ module Admin::ThemeFiles
 
     test '#create_image requires permission' do
       UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
-      image = fixture_file_upload('files/logo.png', 'image/jpeg')
+      image = fixture_file_upload('files/logo.png', 'image/png')
 
       assert_no_difference 'ThemeFile.count' do
         post :create_image, competition_id: @competition.id, theme_file: {
