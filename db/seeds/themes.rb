@@ -28,8 +28,7 @@ end
 def new_theme_file(path)
   filename = path.split('/').last
 
-  theme_file = ThemeFile.new
-  theme_file.filename = filename
+  theme_file = ThemeFile.where(filename: filename).first_or_initialize
 
   if filename =~ /(\.jpg|\.png|\.gif)\z/
     theme_file.image = File.open(path)
@@ -46,8 +45,8 @@ subdirectories(path).each do |theme_path|
   variants = [''] if variants.empty?
 
   variants.each do |variant|
-    theme = Theme.new
-    theme.name = variant.present? ? "#{theme_name} #{variant}" : "#{theme_name}"
+    theme = Theme.where(name: variant.present? ? "#{theme_name} #{variant}" : "#{theme_name}")
+    theme = theme.first_or_initialize
 
     files_in_directory(theme_path).each do |file_path|
       theme.files << new_theme_file(file_path)
