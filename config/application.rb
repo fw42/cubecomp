@@ -21,7 +21,13 @@ module Cubecomp
 
     config.active_record.raise_in_transactional_callbacks = true
 
+    # For security reasons, the admin area should be on a different
+    # (sub)domain than the competition area, otherwise competition area
+    # themes could potentially read admin session cookies.
+    config.admin_domain = ENV["CUBECOMP_ADMIN_DOMAIN"]
+
     config.email_from = ENV["CUBECOMP_EMAIL_FROM"] || "cubecomp@cubecomp.de"
+
     config.wca_api_url = ENV["CUBECOMP_WCA_API_URL"]
   end
 end
