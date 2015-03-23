@@ -47,7 +47,7 @@ case $action in
   # Start the process by testing if it's there (sig 0), failing if it is,
   # otherwise running the command as specified above.
   start)
-    sig 0 && echo >&2 "$DESC is already running" && exit 0
+    sig 0 && echo "$DESC is already running" && exit 0
     eval $CMD
     ;;
 
