@@ -6,7 +6,8 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" media="all" href="{{ "style.css" | theme_file_url }}" />
-    
+    <link rel="stylesheet" media="all" href="{{ "colors.css" | theme_file_url }}" />
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="robots" content="index" />
     <meta name="revisit-after" content="5 days" />
@@ -24,7 +25,7 @@
           {% else %}
             {% assign locale_img = l.handle | append: "_inactive.png" %}
           {% endif %}
-        
+
           <a href="{{ filename | theme_file_url: locale: l.handle }}"><img src="{{ locale_img | image_url }}" alt="{{ l.name }}" /></a>
         {% endfor %}
       </div>
@@ -38,13 +39,13 @@
           <h1>{{ competition.name }}</h1>
           <h2>Speedcubing Competition</h2>
         </div>
-        
+
         <div id="menu">
           <ul>
             <li {% if filename == "index" %}class="active"{% endif %}>
               <a href="{{ "index" | theme_file_url }}">{{ "information.title" | translate }}</a>
             </li>
-            
+
             <li {% if filename == "competitors" %}class="active"{% endif %}>
               <a href="{{ "competitors" | theme_file_url }}">{{ "competitors.title" | translate }}</a>
             </li>
@@ -52,7 +53,7 @@
             <li {% if filename == "registration" %}class="active"{% endif %}>
               <a href="{{ "registration" | theme_file_url }}">{{ "registration.title" | translate }}</a>
             </li>
-            
+
             <li {% if filename == "schedule" %}class="active"{% endif %}>
               <a href="{{ "schedule" | theme_file_url }}">{{ "schedule.title" | translate }}</a>
             </li>
