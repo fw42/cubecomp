@@ -7,3 +7,4 @@ TODO.*
 /tmp
 /public/system
 coverage
+config/deploy/production.rb
