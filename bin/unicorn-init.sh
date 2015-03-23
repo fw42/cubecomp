@@ -7,8 +7,7 @@ PID=$APP_ROOT/tmp/unicorn.pid
 DESC="Cubecomp unicorn webserver ($RAILS_ENV)"
 
 RBENV_ROOT="$HOME/.rbenv"
-
-PATH="$RBENV_ROOT/bin:$PATH"
+PATH="$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH"
 
 SET_PATH="cd $APP_ROOT && rbenv rehash && rbenv local $RBENV_RUBY_VERSION"
 UNICORN="bundle exec unicorn"
