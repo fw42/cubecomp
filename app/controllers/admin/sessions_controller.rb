@@ -1,7 +1,7 @@
 class Admin::SessionsController < ApplicationController
+  force_ssl unless Rails.env.development?
   layout 'admin/empty'
   protect_from_forgery with: :null_session
-  force_ssl
 
   def new
   end
