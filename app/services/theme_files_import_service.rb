@@ -21,7 +21,8 @@ class ThemeFilesImportService
       new_theme_file = theme_file.dup
       new_theme_file.theme = nil
       new_theme_file.competition = nil
-      to_theme_files.build(new_theme_file.attributes)
+      new_theme_file = to_theme_files.build(new_theme_file.attributes)
+      new_theme_file.image = theme_file.image if theme_file.image?
     end
   end
 
