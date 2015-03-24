@@ -26,6 +26,10 @@ module Cubecomp
     # themes could potentially read admin session cookies.
     config.admin_domain = ENV["CUBECOMP_ADMIN_DOMAIN"]
 
+    # All requests seen by this application, which are neither for the
+    # main nor for the admin domain, will be redirected to the main domain
+    config.main_domain = ENV["CUBECOMP_MAIN_DOMAIN"]
+
     config.email_from = ENV["CUBECOMP_EMAIL_FROM"] || "cubecomp@cubecomp.de"
 
     config.wca_api_url = ENV["CUBECOMP_WCA_API_URL"]

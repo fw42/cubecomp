@@ -91,7 +91,7 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints HostRouteConstraint.new(admin_domain, negate: true) do
+  constraints HostRouteConstraint.new(Cubecomp::Application.config.main_domain) do
     scope '/wca' do
       get '/autocomplete/(:q.:format)',
         to: 'wca#autocomplete',
@@ -108,5 +108,11 @@ Rails.application.routes.draw do
         to: 'competition_area#render_theme_file',
         as: 'competition_area'
     end
+  end
+
+  constraints HostRouteConstraint.new(Cubecomp::Application.config.main_domain, negate: true) do
+    match "/(*path)" => redirect { |params, req|
+      "//#{Cubecomp::Application.config.main_domain}#{req.fullpath}"
+    }, via: [:get, :post]
   end
 end
