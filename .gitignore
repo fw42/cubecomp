@@ -6,6 +6,7 @@ TODO.*
 /log/*.log
 /tmp
 /public/system
+/db/backup
 log
 coverage
 config/deploy/production.rb
