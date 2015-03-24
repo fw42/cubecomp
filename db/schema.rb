@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150321233113) do
+ActiveRecord::Schema.define(version: 20150324025543) do
 
   create_table "competitions", force: :cascade do |t|
     t.string   "name",              limit: 255,                 null: false
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20150321233113) do
     t.integer  "owner_user_id",     limit: 4
     t.integer  "default_locale_id", limit: 4
     t.string   "currency",          limit: 255
+    t.boolean  "published",         limit: 1,   default: false
   end
 
   add_index "competitions", ["country_id"], name: "competitions_country_id_fk", using: :btree

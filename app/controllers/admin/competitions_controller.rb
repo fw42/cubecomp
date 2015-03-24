@@ -16,6 +16,7 @@ class Admin::CompetitionsController < AdminController
     :city_name_short,
     :venue_address,
     :currency,
+    :published,
     :country_id,
     :cc_orga,
     :registration_open,
