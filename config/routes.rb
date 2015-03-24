@@ -99,6 +99,8 @@ Rails.application.routes.draw do
         constraints: { format: 'json' }
     end
 
+    get '/', to: "front_page#index"
+
     scope '/:competition_handle' do
       post '/:locale/registration',
         to: 'competition_area/competitors#create',

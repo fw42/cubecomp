@@ -175,16 +175,25 @@
     </table>
   <% end %>
 
-  <%= form_section 'Registration settings' do %>
+  <%= form_section 'Registration and publication settings' do %>
     <table class="form-table">
       <tr>
         <td><%= f.label :registration_open, 'Registration status:' %></td>
         <td>
           <%= f.radio_button :registration_open, true %>
           <%= f.label :registration_open, 'open', value: true, class: 'checkbox' %>
-          <br/>
           <%= f.radio_button :registration_open, false %>
           <%= f.label :registration_open, 'closed', value: false, class: 'checkbox' %>
+        </td>
+      </tr>
+      <tr>
+        <td><%= f.label :registration_open, 'Publication status:' %></td>
+        <td>
+          <%= f.radio_button :published, true %>
+          <%= f.label :published, 'public', value: true, class: 'checkbox' %>
+          <%= f.radio_button :published, false %>
+          <%= f.label :published, 'private', value: false, class: 'checkbox' %>
+          <%= help_tooltip "Setting this to \"public\" will make the competition visible on the frontpage of Cubecomp" %>
         </td>
       </tr>
     </table>

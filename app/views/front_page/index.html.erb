@@ -1,0 +1,5 @@
+<ul>
+  <% @competitions.each do |competition| %>
+    <li><%= link_to competition.name, competition_area_path(competition.handle) %></li>
+  <% end %>
+</ul>
