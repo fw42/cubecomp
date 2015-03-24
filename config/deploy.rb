@@ -2,7 +2,7 @@ set :application, 'cubecomp'
 set :repo_url, 'git@github.com:fw42/cubecomp.git'
 
 set :linked_files, %w{config/database.yml .env}
-set :linked_dirs, %w{log public/system tmp}
+set :linked_dirs, %w{log public/system tmp db/backup}
 
 namespace :deploy do
   desc 'Restart application'
