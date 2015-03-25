@@ -7,20 +7,25 @@ $(document).ready ->
 
   auto = $wcaIdField.typeahead {
     minLength: 6
-  },{
+  }, {
     source: (q, callback) ->
       $.getJSON(autocompleteURL + "/#{q}.json")
         .done (result) ->
           callback(result)
+
     matcher: (item) ->
       true
+
     name: 'wca-competitors'
+
     displayKey: (object) ->
       object.id
+
     templates:
       suggestion: (item) ->
-        '<li role="presentation"><a role="menuitem" tabindex="-1" href="#"><strong>' + item.id + '</strong></a> <small>(' + item.name + ')</small></li>'
+        '<li><a tabindex="-1" href="javascript:void(0)"><strong>' + item.id + '</strong></a> <small>(' + item.name + ')</small></li>'
   }
+
   auto.bind "typeahead:selected", (event, object) ->
     names = object.name.split(" ")
     firstName = names[0]
