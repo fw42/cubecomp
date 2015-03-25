@@ -35,5 +35,8 @@ module Cubecomp
     config.github = "https://github.com/fw42/cubecomp"
 
     config.wca_api_url = ENV["CUBECOMP_WCA_API_URL"]
+
+    # Sends exception emails to this address in the production environment
+    config.exceptions_email = ENV["CUBECOMP_EXCEPTIONS_EMAIL"]
   end
 end
