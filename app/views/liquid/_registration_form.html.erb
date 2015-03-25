@@ -14,7 +14,7 @@
   </div>
 <% end %>
 
-<% unless @competition.registration_open? %>
+<% if !@competition.registration_open? || @competition.already_over? %>
   <div class="flash">
     <div class="warning">
       <%= t('registration.flash_closed') %>

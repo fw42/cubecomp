@@ -19,6 +19,7 @@ class CompetitionArea::CompetitorsController < CompetitionAreaController
 
   skip_before_action :load_theme_file
   before_action :ensure_registration_is_open, only: [:create]
+  before_action :ensure_competition_isnt_over_yet, only: [:create]
 
   def create
     competitor = @competition.competitors.new
@@ -60,7 +61,12 @@ class CompetitionArea::CompetitorsController < CompetitionAreaController
   end
 
   def ensure_registration_is_open
-    return if @competition.registration_open
+    return if @competition.registration_open?
+    render_forbidden
+  end
+
+  def ensure_competition_isnt_over_yet
+    return unless @competition.already_over?
     render_forbidden
   end
 end

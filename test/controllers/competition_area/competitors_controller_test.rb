@@ -74,6 +74,23 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
     assert_response :forbidden
   end
 
+  test "#create renders forbidden if competition is already over" do
+    last_day = @competition.days.map(&:date).max
+
+    Timecop.freeze(last_day + 1.day) do
+      assert_no_difference '@competition.competitors.count' do
+        post :create,
+          competition_handle: @competition.handle,
+          theme_file: "foobar.html",
+          return_to_path: '/foo/',
+          competitor: @new_competitor_params,
+          locale: @locale.handle
+      end
+    end
+
+    assert_response :forbidden
+  end
+
   test "#create can't set admin fields" do
     @new_competitor_params[:paid] = true
 

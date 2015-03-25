@@ -31,9 +31,9 @@ class EmailTemplateRendererTest < ActiveSupport::TestCase
 
       you are now registered for #{@competition.name} for the following events:
       
-      - Rubik's Cube (2014-01-01)
+      - Rubik's Cube (#{events(:aachen_open_rubiks_cube).day.date.strftime("%Y-%m-%d")})
       
-      - Rubik's Professor (2014-01-01)
+      - Rubik's Professor (#{events(:aachen_open_rubiks_professor).day.date.strftime("%Y-%m-%d")})
       
 
       See you,
