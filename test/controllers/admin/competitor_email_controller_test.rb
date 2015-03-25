@@ -31,7 +31,7 @@ class Admin::CompetitorEmailControllerTest < ActionController::TestCase
     assert_equal 1, emails.size
     email = emails.first
     assert_equal [@competitor.email], email.to
-    assert_equal [Cubecomp::Application.config.email_from], email.from
+    assert_equal [Cubecomp::Application.config.email_address], email.from
     assert_equal [@competition.staff_email], email.reply_to
     assert_equal params['subject'], email.subject
     assert_equal params['content'], email.body.to_s

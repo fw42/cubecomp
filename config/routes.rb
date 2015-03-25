@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
       resources :users, except: [:show]
 
+      get :help, to: "help#index"
+
       theme_files_resources = lambda do
         member do
           get :show_image

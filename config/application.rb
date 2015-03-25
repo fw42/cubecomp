@@ -30,7 +30,9 @@ module Cubecomp
     # main nor for the admin domain, will be redirected to the main domain
     config.main_domain = ENV["CUBECOMP_MAIN_DOMAIN"]
 
-    config.email_from = ENV["CUBECOMP_EMAIL_FROM"] || "cubecomp@cubecomp.de"
+    config.email_address = ENV["CUBECOMP_EMAIL"] || "cubecomp@cubecomp.de"
+
+    config.github = "https://github.com/fw42/cubecomp"
 
     config.wca_api_url = ENV["CUBECOMP_WCA_API_URL"]
   end

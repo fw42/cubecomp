@@ -81,6 +81,12 @@
                   </ul>
                 </li>
               <% end %>
+
+              <li>
+                <a href="<%= admin_help_path %>" <%= controller_name == "help" ? 'class="active"'.html_safe : "" %>>
+                  <i class="fa fa-question-circle fa-fw"></i> Help
+                </a>
+              </li>
             </ul>
           </div>
         </div>

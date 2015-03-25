@@ -1,7 +1,7 @@
 class CompetitorMailer < ActionMailer::Base
   def competitor_email(email)
     options = {
-      from: "#{email.from_name} <#{Cubecomp::Application.config.email_from}>",
+      from: "#{email.from_name} <#{Cubecomp::Application.config.email_address}>",
       reply_to: "#{email.from_name} <#{email.from_email}>",
       to: "#{email.to_name} <#{email.to_email}>",
       subject: email.subject,
