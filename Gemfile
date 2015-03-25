@@ -58,4 +58,5 @@ end
 group :production do
   gem 'unicorn'
   gem 'therubyracer'
+  gem 'exception_notification'
 end

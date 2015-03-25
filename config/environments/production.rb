@@ -79,4 +79,12 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  if Cubecomp::Application.config.exceptions_email
+    Cubecomp::Application.config.middleware.use ExceptionNotification::Rack, email: {
+      email_prefix: "[Cubecomp] ",
+      sender_address: %{"Cubecomp" <#{Cubecomp::Application.config.email_address}>},
+      exception_recipients: Cubecomp::Application.config.exceptions_email
+    }
+  end
 end
