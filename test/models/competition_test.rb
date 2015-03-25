@@ -166,4 +166,20 @@ class CompetitionTest < ActiveSupport::TestCase
     @competition.default_locale = locales(:german_open_german)
     assert_not_valid(@competition, :default_locale)
   end
+
+  test '#already_over?' do
+    last_day = @competition.days.map(&:date).max
+
+    Timecop.freeze(last_day - 1.week) do
+      assert_equal false, @competition.already_over?
+    end
+
+    Timecop.freeze(last_day) do
+      assert_equal false, @competition.already_over?
+    end
+
+    Timecop.freeze(last_day + 1.day) do
+      assert_equal true, @competition.already_over?
+    end
+  end
 end

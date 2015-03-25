@@ -61,6 +61,10 @@ class Competition < ActiveRecord::Base
     self.default_locale = locales.detect{ |locale| locale.handle == handle }
   end
 
+  def already_over?
+    Date.today > days.map(&:date).max
+  end
+
   def to_liquid
     @liquid_drop ||= CompetitionDrop.new(self)
   end
