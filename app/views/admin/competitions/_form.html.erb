@@ -134,10 +134,14 @@
     <script>
       $("#date-table").nestedAttributes({
         bindAddTo: $("#add_new_day"),
+        deepClone: false,
         beforeDestroy: function() {
           return confirm("Are you sure?");
-        }
+        },
+        afterAdd: setAllTooltips
       });
+    </script>
+
     </script>
   <% end %>
 

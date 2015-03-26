@@ -24,3 +24,11 @@
 
 // This should be the last one to be loaded
 //= require turbolinks
+
+function setAllTooltips() {
+  $('.with-tooltip').tooltip({
+    selector: "[data-toggle=tooltip]",
+    container: "body",
+    html: true
+  })
+}
