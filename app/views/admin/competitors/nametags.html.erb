@@ -25,6 +25,12 @@
                 <%= competitor.nametag.html_safe %>
               </span>
             <% end %>
+
+            <span class="wca-info">
+              <% if competitor.competition_count > 0 %>
+                <%= competitor.competition_count.ordinalize %> competition
+              <% end %>
+            </span>
           </td>
         <% end %>
       </tr>

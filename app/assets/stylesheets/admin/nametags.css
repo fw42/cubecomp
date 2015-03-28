@@ -62,7 +62,7 @@ span.name {
   font-size: 20pt;
 }
 
-span.extra {
+span.extra, span.wca-info {
   font-size: 9pt;
   margin-top: 15px;
 }

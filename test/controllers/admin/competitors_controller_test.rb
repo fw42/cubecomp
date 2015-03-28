@@ -84,6 +84,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
   end
 
   test '#nametags' do
+    WcaGateway.any_instance.expects(:find_by_id).returns(nil)
     get :nametags, competition_id: @competition.id
     assert_response :success
     assert_not_nil assigns(:competitors)

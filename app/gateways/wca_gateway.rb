@@ -7,7 +7,7 @@ class WcaGateway
     end
   end
 
-  Competitor = Struct.new(:id, :name, :gender, :country)
+  Competitor = Struct.new(:id, :name, :gender, :country, :competition_count)
 
   def initialize(url)
     @conn = Faraday.new(url: url) do |faraday|
@@ -32,6 +32,14 @@ class WcaGateway
     raise WcaGateway::ConnectionError.new(e)
   rescue JSON::ParserError => e
     raise WcaGateway::ConnectionError.new(e)
+  end
+
+  def find_by_id(id)
+    response = get("/competitors/#{id}")
+    c = JSON.parse(response.body)["competitor"]
+    Competitor.new(c["id"], c["name"], c["gender"], c["country"], c["competition_count"])
+  rescue Faraday::ResourceNotFound
+    nil
   end
 
   private

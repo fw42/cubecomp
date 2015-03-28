@@ -57,4 +57,31 @@ class WcaGatewayTest < ActiveSupport::TestCase
       @wca_api.search_by_id('2009UR')
     end
   end
+
+  test '#find_by_id with result' do
+    body = <<-eos
+      {
+        "competitor":
+          {"id":"2003POCH01","name":"Micky Urban","gender":"m","country":"Germany", "competition_count": 43}
+      }
+    eos
+
+    stub_request(:get, "http://some-wca-api-url/competitors/2003POCH01")
+      .to_return(status: 200, body: body)
+
+    assert_equal @wca_api.find_by_id('2003POCH01').competition_count, 43
+  end
+
+  test '#find_by_id with 404' do
+    body = <<-eos
+      {
+        "error": "not found"
+      }
+    eos
+
+    stub_request(:get, "http://some-wca-api-url/competitors/2003POCH01")
+      .to_return(status: 404, body: body)
+
+    assert_equal @wca_api.find_by_id('2003POCH01'), nil
+  end
 end
