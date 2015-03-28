@@ -6,6 +6,9 @@ class CompetitorDrop < Liquid::Drop
   delegate :name, :first_name, :last_name, :email, to: :@competitor
 
   def registrations
-    @competitor.event_registrations.joins(event: :day).order('days.date ASC, events.start_time')
+    @competitor
+      .event_registrations
+      .preload(event: :day)
+      .sort_by{ |registration| [ registration.event.day.date, registration.event.start_time ] }
   end
 end
