@@ -25,10 +25,9 @@ def files_in_directory(path)
   files
 end
 
-def new_theme_file(path)
+def new_theme_file(theme, path)
   filename = path.split('/').last
-
-  theme_file = ThemeFile.where(filename: filename).first_or_initialize
+  theme_file = theme.files.where(filename: filename).first_or_initialize
 
   if filename =~ /(\.jpg|\.png|\.gif)\z/
     theme_file.image = File.open(path)
@@ -49,12 +48,12 @@ subdirectories(path).each do |theme_path|
     theme = theme.first_or_initialize
 
     files_in_directory(theme_path).each do |file_path|
-      theme.files << new_theme_file(file_path)
+      theme.files << new_theme_file(theme, file_path)
     end
 
     if variant != ''
       files_in_directory("#{theme_path}/#{variant}").each do |file_path|
-        theme.files << new_theme_file(file_path)
+        theme.files << new_theme_file(theme, file_path)
       end
     end
 
