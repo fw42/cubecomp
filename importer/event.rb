@@ -19,11 +19,14 @@ class Importer::Event < Importer
         :format => :format,
         :round => :round,
         :handle => :code,
-        :max_number_of_registrations => :max_competitors,
       })
 
       if legacy.respond_to?(:proceed)
         new_event.proceed = legacy.proceed
+      end
+
+      if legacy.respond_to?(:max_competitors)
+        new_event.max_number_of_registrations = legacy.max_competitors
       end
 
       new_event.day = days[legacy.day]
