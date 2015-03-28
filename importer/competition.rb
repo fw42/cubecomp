@@ -28,6 +28,18 @@ class Importer::Competition < Importer
       :city_name_short => :local_short,
     })
 
+    if @competition.city_name.blank?
+      if @competition.handle == 'an13'
+        @competition.city_name = 'Vienna'
+      elsif @competition.handle == 'gn10'
+        @competition.city_name = 'Bottrop-Kirchhellen'
+      elsif @competition.handle == 'mcd12'
+        @competition.city_name = 'Barsbüttel'
+      elsif @competition.handle == 'vc10'
+        @competition.city_name = 'Essen'
+      end
+    end
+
     if @legacy_configuration.respond_to?(:registration_open)
       @competition.registration_open = @legacy_configuration.registration_open
     else
@@ -59,6 +71,16 @@ class Importer::Competition < Importer
   def import_days
     legacy_fees = parse_fees(@legacy_configuration.entrance_fees)
     legacy_guest_fees = parse_fees(@legacy_configuration.entrance_fee_guests)
+
+    if @legacy_configuration.days > 1
+      if legacy_fees.size == 1
+        legacy_fees = [ legacy_fees.first / @legacy_configuration.days.to_f ] * @legacy_configuration.days
+      end
+
+      if legacy_guest_fees.size == 1
+        legacy_guest_fees = [ legacy_guest_fees.first / @legacy_configuration.days.to_f ] * @legacy_configuration.days
+      end
+    end
 
     @legacy_configuration.days.times do |i|
       @competition.days.build(

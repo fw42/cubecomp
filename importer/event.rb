@@ -35,11 +35,21 @@ class Importer::Event < Importer
         ((legacy.stop - legacy.start) / 60).to_i
       end
 
-      if new_event.length_in_minutes == 0
+      if new_event.length_in_minutes && new_event.length_in_minutes <= 0
         new_event.length_in_minutes = nil
       end
 
       new_event.state = ::Event::STATES.keys[legacy.status]
+
+      if new_event.name_short == "Team Solve (Registration on location)"
+        new_event.name_short = 'Team Solve'
+        new_event.state = 'open_for_registration'
+      end
+
+      if !new_event.for_registration? && new_event.handle.present?
+        new_event.handle = nil
+      end
+
       new_event.save!
       MAPPING[legacy.id] = new_event.id
     end

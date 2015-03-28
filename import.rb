@@ -22,5 +22,10 @@ Competition.transaction do
   Importer::Event.new(competition).import
 
   Importer::Competitor.new(competition).import
-  competition.save!
+
+  begin
+    competition.save!
+  rescue
+    byebug
+  end
 end
