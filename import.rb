@@ -9,9 +9,13 @@ raise "Missing LEGACY_DB" unless ENV['LEGACY_DB'].present?
 raise "Missing HANDLE" unless ENV['HANDLE'].present?
 
 Competition.transaction do
-  Competition.where(handle: ENV['HANDLE']).first.try!(:destroy!)
+  if existing = Competition.where(handle: ENV['HANDLE']).first
+    old_id = existing.id
+    existing.destroy!
+  end
 
   competition = Importer::Competition.new(ENV['HANDLE']).import
+  competition.id = old_id
   competition.save!
 
   Importer::News.new(competition).import
