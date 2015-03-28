@@ -11,26 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150328024931) do
+ActiveRecord::Schema.define(version: 20150328165952) do
 
   create_table "competitions", force: :cascade do |t|
-    t.string   "name",              limit: 255,                 null: false
-    t.string   "handle",            limit: 255,                 null: false
-    t.string   "staff_email",       limit: 255,                 null: false
+    t.string   "name",              limit: 255,                   null: false
+    t.string   "handle",            limit: 255,                   null: false
+    t.string   "staff_email",       limit: 255,                   null: false
     t.string   "staff_name",        limit: 255
-    t.string   "city_name",         limit: 255,                 null: false
+    t.string   "city_name",         limit: 255,                   null: false
     t.string   "city_name_short",   limit: 255
-    t.string   "venue_address",     limit: 255
-    t.integer  "country_id",        limit: 4,                   null: false
-    t.boolean  "cc_orga",           limit: 1,   default: false
-    t.boolean  "registration_open", limit: 1,   default: false
+    t.text     "venue_address",     limit: 65535
+    t.integer  "country_id",        limit: 4,                     null: false
+    t.boolean  "cc_orga",           limit: 1,     default: false
+    t.boolean  "registration_open", limit: 1,     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "delegate_user_id",  limit: 4
     t.integer  "owner_user_id",     limit: 4
     t.integer  "default_locale_id", limit: 4
     t.string   "currency",          limit: 255
-    t.boolean  "published",         limit: 1,   default: false
+    t.boolean  "published",         limit: 1,     default: false
   end
 
   add_index "competitions", ["country_id"], name: "competitions_country_id_fk", using: :btree
@@ -53,15 +53,15 @@ ActiveRecord::Schema.define(version: 20150328024931) do
     t.text     "user_comment",            limit: 65535
     t.text     "admin_comment",           limit: 65535
     t.boolean  "free_entrance",           limit: 1,     default: false
-    t.string   "free_entrance_reason",    limit: 255
+    t.text     "free_entrance_reason",    limit: 65535
     t.string   "state",                   limit: 255
     t.boolean  "confirmation_email_sent", limit: 1,     default: false
     t.boolean  "paid",                    limit: 1,     default: false
-    t.string   "paid_comment",            limit: 255
+    t.text     "paid_comment",            limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "male",                    limit: 1
-    t.string   "nametag",                 limit: 255
+    t.text     "nametag",                 limit: 65535
   end
 
   add_index "competitors", ["competition_id"], name: "index_competitors_on_competition_id", using: :btree
@@ -157,12 +157,12 @@ ActiveRecord::Schema.define(version: 20150328024931) do
   add_index "locales", ["handle", "competition_id"], name: "index_locales_on_handle_and_competition_id", unique: true, using: :btree
 
   create_table "news", force: :cascade do |t|
-    t.integer  "competition_id", limit: 4,   null: false
-    t.datetime "time",                       null: false
-    t.string   "text",           limit: 255, null: false
+    t.integer  "competition_id", limit: 4,     null: false
+    t.datetime "time",                         null: false
+    t.text     "text",           limit: 65535, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "locale_id",      limit: 4,   null: false
+    t.integer  "locale_id",      limit: 4,     null: false
   end
 
   add_index "news", ["competition_id"], name: "index_news_on_competition_id", using: :btree
