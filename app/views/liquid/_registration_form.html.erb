@@ -169,7 +169,7 @@
     </tr>
     <tr>
       <td colspan="2" class="register">
-        <%= f.submit t('registration.submit'), disabled: !@competition.registration_open? %>
+        <%= f.submit t('registration.submit'), disabled: (!@competition.registration_open? || @competition.already_over?) %>
       </td>
     </tr>
   </table>
