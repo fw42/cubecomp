@@ -10,7 +10,6 @@ class Importer::Competitor < Importer
         :first_name => :first_name,
         :last_name => :last_name,
         :wca => :wca_id,
-        :email => :mail,
         :birthday => :birthday,
         :local => :local,
         :staff => :orga,
@@ -20,9 +19,16 @@ class Importer::Competitor < Importer
         :free_entrance_reason => :free_entrance_reason,
         :nametag => :nametag_extra,
         :male => :male,
-        :paid => :paid,
         :confirmation_email_sent => :mail_sent,
       })
+
+      competitor.email = legacy.mail.gsub(/\s/, '')
+
+      if legacy.respond_to?(:paid)
+        competitor.paid = legacy.paid
+      else
+        competitor.paid = false
+      end
 
       if legacy.active
         competitor.state = 'confirmed'
@@ -49,6 +55,20 @@ class Importer::Competitor < Importer
           created_at: legacy_registration.created_at
         )
         registration.event_id = Importer::Event::MAPPING[legacy_registration.event_id]
+      end
+
+      if !competitor.valid?
+        if competitor.errors[:email] && competitor.email == 'EineEmail@NocheineEmail!.de'
+          @competition.competitors.delete(competitor)
+          next
+        end
+
+        if competitor.state == 'new' && competitor.errors[:wca]
+          @competition.competitors.delete(competitor)
+          next
+        end
+
+        p competitor
       end
 
       competitor.save!

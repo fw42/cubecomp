@@ -26,9 +26,19 @@ class Importer::Competition < Importer
       :staff_name => :orga_email_name,
       :city_name => :local,
       :city_name_short => :local_short,
-      :registration_open => :registration_open,
-      :cc_orga => :use_mail_cc
     })
+
+    if @legacy_configuration.respond_to?(:registration_open)
+      @competition.registration_open = @legacy_configuration.registration_open
+    else
+      @competition.registration_open = false
+    end
+
+    if @legacy_configuration.respond_to?(:use_mail_cc)
+      @competition.cc_orga = @legacy_configuration.use_mail_cc
+    else
+      @competition.cc_orga = false
+    end
 
     @competition.published = true
   end
@@ -68,7 +78,7 @@ class Importer::Competition < Importer
       )
     end
 
-    if @legacy_configuration.mail_text_guests.present?
+    if @legacy_configuration.respond_to?(:mail_text_guests) && @legacy_configuration.mail_text_guests.present?
       @competition.email_templates.build(
         name: "Confirmation email (guests)",
         subject: "[{{ competition.name }}] {{ competitor.name }}",
