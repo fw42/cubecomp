@@ -15,7 +15,7 @@
   <% end %>
 
   <%= form_section 'Text' do %>
-    <%= text_editor(f, :content) %>
+    <%= text_editor(f, :content, { lineWrapping: true }) %>
   <% end %>
 
   <%= submit_button(f) %>

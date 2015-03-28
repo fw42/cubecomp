@@ -7,7 +7,10 @@
       smartIndent: false,
       electricChars: false,
       tabSize: 2,
-      mode: { name: "htmlmixed" }
+      mode: { name: "htmlmixed" },
+      <% options.each do |key, value| %>
+        <%= key %>: <%= raw value.to_json %>,
+      <% end %>
     });
   </script>
 </div>

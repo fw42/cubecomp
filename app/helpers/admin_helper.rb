@@ -17,8 +17,8 @@ module AdminHelper
     render layout: 'form_section', locals: { title: title }, &block
   end
 
-  def text_editor(form, field)
-    render 'text_editor', form: form, field: field, id: "#{form.object_name}_#{field}"
+  def text_editor(form, field, options = {})
+    render 'text_editor', form: form, field: field, id: "#{form.object_name}_#{field}", options: options
   end
 
   def tooltip(link, text)

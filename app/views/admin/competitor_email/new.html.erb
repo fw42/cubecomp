@@ -55,10 +55,47 @@
   <% end %>
 
   <%= form_section 'Text' do %>
-    <%= text_editor(f, :content) %>
+    <%= text_editor(f, :content, { lineWrapping: true }) %>
     <script>
       templateFetcher.setEditor(textEditor);
     </script>
+  <% end %>
+
+  <%= form_section 'Competitor' do %>
+    <table class="form-table">
+      <tr>
+        <td><label>Birthday:</label></td>
+        <td><%= @competitor.birthday %> (<%= @competitor.age %>)</td>
+      </tr>
+      <tr>
+        <td><label>WCA ID:</label></td>
+        <td><%= @competitor.wca %></td>
+      </tr>
+      <tr>
+        <td><label>Country:</label></td>
+        <td><%= @competitor.country.name %> <% if @competitor.local %>(<%= @competition.city_name %>)<% end %></td>
+      </tr>
+      <tr>
+        <td><label>Gender:</label></td>
+        <td><%= @competitor.male? ? "male" : "female" %></td>
+      </tr>
+      <tr>
+        <td><label>Comment:</label></td>
+        <td><%= @competitor.user_comment %></td>
+      </tr>
+      <tr>
+        <td><label>Events:</label></td>
+        <td>
+          <% counts = @competitor.event_registration_counts(true) %>
+          <%=
+            tooltip(
+              "#{counts.join("+")}=#{counts.reduce(:+)}",
+              events_by_day_list(@competitor)
+            )
+          %>
+        </td>
+      </tr>
+    </table>
   <% end %>
 
   <% if @activate %>
