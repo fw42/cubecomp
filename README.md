@@ -42,12 +42,12 @@ The default database is MySQL. If you want to use SQLite, please edit
 
 Generate the database:
 ```
-bundle exec db:setup db:seed:countries db:seed:themes
+bundle exec rake db:setup db:seed:countries db:seed:themes
 ```
 
 Generate an example competition and some example users:
 ```
-bundle exec db:seed:example_competition
+bundle exec rake db:seed:example_competition
 ```
 
 Start a local webserver:
