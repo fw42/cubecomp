@@ -15,11 +15,11 @@
     <% end %>
   </tr>
 
-  <% day.events.each do |event| %>
+  <% day.events.sort_by(&:start_time).each do |event| %>
     <tr>
       <td><%= event.start_time ? event.start_time.strftime("%H:%M") : "&nbsp;".html_safe %></td>
       <td><%= event.end_time ? event.end_time.strftime("%H:%M") : "&nbsp;".html_safe %></td>
-      <td><%= event.name %></td>
+      <td><%= event.name || event.name_short %></td>
       <td><%= event.round %></td>
       <td><%= event.timelimit %></td>
       <td>

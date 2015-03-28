@@ -58,7 +58,7 @@
     <table class="form-table">
       <tr>
         <td><%= f.label :day, 'Day:' %></td>
-        <td><%= f.select :day_id, current_competition.days.order(:date).map{ |day| [ day.date.to_s(:long), day.id ] } %></td>
+        <td><%= f.select :day_id, current_competition.days.order(:date).map{ |day| [ l(day.date, format: :schedule), day.id ] } %></td>
       </tr>
       <tr>
         <td><%= f.label :start_time, "Start:" %></td>

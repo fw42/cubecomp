@@ -28,7 +28,13 @@
         </td>
         <td><%= event.round %></td>
         <td><%= event.timelimit %></td>
-        <td><%= event.format %></td>
+        <td>
+          <%= event.format %>
+          <% if event.proceed.present? %>
+            <br/>
+            <small><%= event.proceed %> proceed</small>
+          <% end %>
+        </td>
         <td>
           <% if event.for_registration? %>
             <%= event.registrations.size %> (<%= event.registrations.select(&:waiting).size %> waiting)
