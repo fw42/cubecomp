@@ -29,14 +29,6 @@ class EventTest < ActiveSupport::TestCase
     assert_not_valid(@event, :name_short)
   end
 
-  test 'validates presence of name' do
-    @event.name = nil
-    assert_not_valid(@event, :name)
-
-    @event.name = ''
-    assert_not_valid(@event, :name)
-  end
-
   test 'validates presence of handle unless not_for_registration' do
     @event.state = 'open_for_registration'
 

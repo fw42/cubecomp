@@ -15,21 +15,25 @@
   </thead>
 
   <tbody>
-    <% @events.where(day: day).each do |event| %>
-      <tr class="<%= "not_for_registration" if event.for_registration? %>">
+    <% @events.select{ |event| event.day_id == day.id }.sort_by(&:start_time).each do |event| %>
+      <tr class="<%= "not_for_registration" unless event.for_registration? %>">
         <td><%= event.start_time.strftime("%H:%M") %></td>
         <td><%= event.end_time.try!(:strftime, "%H:%M") %></td>
         <td>
-          <%= event.name %>
-          <% if event.name_short && event.name_short != event.name %>
+          <%= event.name_short %>
+          <% if event.name && event.name_short != event.name %>
             <br/>
-            <small><%= event.name_short %></small>
+            <small><%= event.name %></small>
           <% end %>
         </td>
         <td><%= event.round %></td>
         <td><%= event.timelimit %></td>
         <td><%= event.format %></td>
-        <td><%= event.registrations.size %> (<%= event.registrations.select(&:waiting).size %> waiting)</td>
+        <td>
+          <% if event.for_registration? %>
+            <%= event.registrations.size %> (<%= event.registrations.select(&:waiting).size %> waiting)
+          <% end %>
+        </td>
         <td>
           <%= edit_button(edit_admin_competition_event_path(current_competition, event)) %>
           <%=
@@ -39,7 +43,9 @@
               data: { confirm: 'Are you sure?' }
             )
           %>
-          <%= show_button('Show registrations', admin_competition_event_event_registrations_path(current_competition, event)) %>
+          <% if event.for_registration? %>
+            <%= show_button('Show registrations', admin_competition_event_event_registrations_path(current_competition, event)) %>
+          <% end %>
         </td>
       </tr>
     <% end %>

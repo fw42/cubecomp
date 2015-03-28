@@ -7,7 +7,7 @@ module Admin::CompetitorsHelper
       str << "<br>\n" unless str.blank?
       str << "<b>#{day.date.strftime('%A')}</b><br>\n"
       by_day[day].each do |registration|
-        str << registration.event.name
+        str << registration.event.name_short
         str << ' (waiting)' if registration.waiting
         str << "<br>\n"
       end
