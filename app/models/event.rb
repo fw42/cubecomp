@@ -16,7 +16,6 @@ class Event < ActiveRecord::Base
   has_many :competitors, through: :registrations
 
   validates :name_short, presence: true
-  validates :name, presence: true
 
   validates :handle, presence: true, if: :for_registration?
   validates :handle, uniqueness: { scope: :competition_id }, allow_nil: true, allow_blank: true

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324025543) do
+ActiveRecord::Schema.define(version: 20150328024931) do
 
   create_table "competitions", force: :cascade do |t|
     t.string   "name",              limit: 255,                 null: false
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 20150324025543) do
     t.integer  "competition_id",              limit: 4,   null: false
     t.integer  "day_id",                      limit: 4,   null: false
     t.string   "name_short",                  limit: 255, null: false
-    t.string   "name",                        limit: 255, null: false
+    t.string   "name",                        limit: 255
     t.string   "handle",                      limit: 255
     t.string   "state",                       limit: 255, null: false
     t.integer  "max_number_of_registrations", limit: 4
