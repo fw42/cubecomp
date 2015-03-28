@@ -17,7 +17,6 @@ class Importer::Competitor < Importer
         :admin_comment => :admin_comment,
         :free_entrance => :free_entrance,
         :free_entrance_reason => :free_entrance_reason,
-        :nametag => :nametag_extra,
         :male => :male,
         :confirmation_email_sent => :mail_sent,
       })
@@ -28,6 +27,10 @@ class Importer::Competitor < Importer
         competitor.paid = legacy.paid
       else
         competitor.paid = false
+      end
+
+      if legacy.respond_to?(:nametag_extra)
+        competitor.nametag = legacy.nametag_extra
       end
 
       if legacy.active
