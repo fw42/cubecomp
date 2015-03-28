@@ -64,6 +64,7 @@ en:
     register_as_guest: "I am a guest"
     register_as_competitor: "I want to compete"
     wca_id_first_time: "If this is your first competition, leave this field empty."
+    i_live_in: "I live in %{city}"
 
   schedule:
     title: "Schedule"

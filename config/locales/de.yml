@@ -63,6 +63,7 @@ de:
     register_as_guest: "Ich möchte zuschauen (Gast)"
     register_as_competitor: "Ich möchte teilnehmen"
     wca_id_first_time: "Falls dies dein erstes Turnier ist, lasse dieses Feld leer."
+    i_live_in: "Ich wohne in %{city}"
 
   schedule:
     title: "Zeitplan"
