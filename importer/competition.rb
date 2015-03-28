@@ -30,7 +30,6 @@ class Importer::Competition < Importer
       :cc_orga => :use_mail_cc
     })
 
-    @competition.currency = "Euro"
     @competition.published = true
   end
 
