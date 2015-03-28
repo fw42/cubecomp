@@ -1,0 +1,95 @@
+body {
+  background: #FFFFFF url("{{ "img01.gif" | image_url }}") repeat-x;
+  color: #333333;
+}
+
+h1, h2, h3 {
+  color: #3E3E3E;
+}
+
+a {
+  color: #116600;
+}
+
+a:hover, a:active {
+  color: darkred;
+}
+
+/********************************* Table ********************************/
+
+table.competitors tr:nth-child(even) {
+  background-color: white;
+}
+
+table.competitors tr:nth-child(odd) {
+  background-color: #eeeeee;
+}
+
+td.competitors_hover, table.competitors tbody tr:hover {
+  background: silver;
+}
+
+table.schedule td,
+table.schedule th {
+  border: 1px solid #E0E0E0;
+}
+
+table.competitors td,
+table.competitors th {
+  border: 1px solid #E0E0E0;
+}
+
+th {
+  background-color: darkred;
+  color: white;
+}
+
+/********************************* Form ********************************/
+
+input, textarea, select {
+  color: #333333;
+}
+
+/******************************** Header and logo ********************************/
+
+#header {
+  background: url("{{ "img03.gif" | image_url }}") repeat-x left bottom;
+}
+
+#logo h1 {
+  color: #494949;
+}
+
+#logo h2 {
+  color: #A0A0A0;
+}
+
+/******************************** Menu ********************************/
+
+#menu a {
+  color: #000000;
+}
+
+#menu .active a {
+  background: url("{{ "img02.gif" | image_url }}") repeat-x left bottom;
+}
+
+/********************************* Page ********************************/
+
+#page h1, #page h2, #page h3 {
+  background: url("{{ "img03.gif" | image_url }}") repeat-x left bottom;
+}
+
+/********************************* Footer ********************************/
+
+#footer {
+  background: #003448 url("{{ "img09.gif" | image_url }}") repeat-x;
+}
+
+#legal {
+  color: silver;
+}
+
+#legal a {
+  color: silver;
+}
