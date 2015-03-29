@@ -12,7 +12,7 @@ class NametagPresenter
   end
 
   def competition_count
-    if competitor.wca
+    if competitor.wca_account?
       wca_competitor = @wca_gateway.find_by_id(competitor.wca)
       if wca_competitor
         wca_competitor.competition_count

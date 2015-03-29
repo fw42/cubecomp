@@ -132,6 +132,10 @@ class Competitor < ActiveRecord::Base
     "http://www.worldcubeassociation.org/results/p.php?i=#{wca}"
   end
 
+  def wca_account?
+    wca.present?
+  end
+
   private
 
   def set_default_state
