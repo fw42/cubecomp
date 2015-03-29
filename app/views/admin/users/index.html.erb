@@ -9,7 +9,8 @@
     <tr>
       <th>Name</th>
       <th>Email</th>
-      <th>Admin</th>
+      <th>Competitions</th>
+      <th>Level</th>
       <th>Delegate</th>
       <th>Actions</th>
     </tr>
@@ -26,6 +27,7 @@
           <% end %>
         </td>
         <td><%= user.email %></td>
+        <td style="text-align: right"><%= user.competition_count %></td>
         <td>
           <%=
             if user.permission_level > 0
