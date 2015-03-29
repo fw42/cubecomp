@@ -4,7 +4,10 @@ class UserPolicy
   end
 
   def competitions
-    Competition.all.select{ |c| login?(c) }
+    Competition
+      .preload(:days)
+      .sort_by{ |competition| competition.days.first.date }
+      .select{ |c| login?(c) }
   end
 
   def login?(competition)
