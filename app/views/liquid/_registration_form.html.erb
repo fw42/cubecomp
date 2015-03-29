@@ -106,7 +106,7 @@
       </td>
     </tr>
     <tr>
-      <td><%= f.label :user_comment %><br/>
+      <td><%= f.label :user_comment %></td>
       <td>
         <p>
           <%= f.text_area :user_comment %>
@@ -114,10 +114,10 @@
       </td>
     </tr>
     <tr>
-      <td>Events</td>
+      <td><%= f.label :events %></td>
       <td>
         <% @days.each do |day| %>
-          <b><%= day.date.to_s(:long) %></b>
+          <b><%= l(day.date, format: :schedule) %></b>
 
           <p>
             <%=
