@@ -25,7 +25,7 @@
         <td><%= competition.handle %></td>
         <td><%= competition.country.name %></td>
         <td><%= competition.registration_open ? 'open' : 'closed' %></td>
-        <td><%= competition.competitors.count %></td>
+        <td><%= competition.competitor_count %></td>
         <td>
           <% if competition.owner %>
             <%= link_to competition.owner.name, edit_admin_user_path(competition.owner) %>

@@ -33,7 +33,11 @@ class Admin::CompetitionsController < AdminController
   ]
 
   def index
-    @competitions = Competition.all
+    @competitions = Competition
+      .select('competitions.*, COUNT(competitors.id) AS competitor_count')
+      .joins('LEFT JOIN competitors ON competitors.competition_id = competitions.id')
+      .group('competitions.id')
+      .preload(:country)
   end
 
   def new
