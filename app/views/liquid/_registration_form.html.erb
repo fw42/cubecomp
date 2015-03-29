@@ -140,10 +140,9 @@
                 onclick: 'jQuery("#day_' + day.id.to_s + '").slideDown("slow");'
             %>
             <%= label "#{f.object_name}[days][#{day.id}]", 'status_competitor', "#{t('registration.register_as_competitor')}" + (@competition.currency.present? ? " (#{amount_with_currency(day.entrance_fee_competitors, @competition.currency)})" : "") %>
-            <br/>
           </p>
 
-          <div id='day_<%= day.id %>' style="display: none">
+          <div id='day_<%= day.id %>' style="display: none" class="event-selection">
             <% day.events.select(&:for_registration?).each do |event| %>
               <% checked_value = event.state == 'open_with_waiting_list' ? 'waiting' : 'registered' %>
               <%= check_box "#{f.object_name}[days][#{day.id}][events][#{event.id}]", :status, { disabled: event.state == 'registration_closed' }, checked_value, 'not_registered' %>
@@ -152,7 +151,7 @@
                 event_label =
                   case event.state
                   when 'open_for_registration'
-                    event.name
+                    event.name || event.name_short
                   when 'open_with_waiting_list'
                     "#{event.name} (#{t('registration.waiting_list')})"
                   else
