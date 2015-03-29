@@ -38,7 +38,7 @@ class AdminControllerTest < ActionController::TestCase
     login_as(user)
 
     get :index
-    competition = user.competitions.last
+    competition = user.policy.competitions.last
     assert_redirected_to admin_competition_dashboard_index_path(competition.id)
   end
 
@@ -106,7 +106,7 @@ class AdminControllerTest < ActionController::TestCase
     login_as(user)
     user.permissions.each(&:destroy!)
     get :index
-    assert_redirected_to admin_competition_dashboard_index_path(Competition.last.id)
+    assert_redirected_to admin_competition_dashboard_index_path(user.policy.competitions.last.id)
   end
 
   test 'forms contain CSRF tokens' do
