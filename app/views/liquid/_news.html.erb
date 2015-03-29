@@ -1,9 +1,13 @@
-<div class='news'>
-  <ul>
-    <% @news.each do |item| %>
-      <li>
-        <b><%= I18n.l(item.time.to_date, format: :news) %></b>: <%= item.text.html_safe %>
-      </li>
-    <% end %>
-  </ul>
-</div>
+<% if @news.size > 0 %>
+  <h2><%= I18n.t('news.title') %></h2>
+
+  <div class='news'>
+    <ul>
+      <% @news.each do |item| %>
+        <li>
+          <b><%= I18n.l(item.time.to_date, format: :news) %></b>: <%= item.text.html_safe %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

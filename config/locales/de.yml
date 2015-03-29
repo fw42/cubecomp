@@ -49,6 +49,9 @@ de:
   competitors:
     title: "Teilnehmer"
 
+  news:
+    title: "Neuigkeiten"
+
   registration:
     title: "Anmeldung"
     error_count_failed_to_save:
