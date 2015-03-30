@@ -1,0 +1,5 @@
+DEPENDENCIES = {}
+
+if ENV["CUBECOMP_WCA_API_URL"]
+  DEPENDENCIES[:wca_gateway] = WcaGateway.new(ENV["CUBECOMP_WCA_API_URL"])
+end

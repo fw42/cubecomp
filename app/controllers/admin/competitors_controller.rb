@@ -45,7 +45,7 @@ class Admin::CompetitorsController < AdminController
       .confirmed
       .includes(:country)
       .order(:last_name, :first_name).map do |c|
-        NametagPresenter.new(c, WcaGateway.new(Cubecomp::Application.config.wca_api_url))
+        NametagPresenter.new(c, DEPENDENCIES.fetch(:wca_gateway))
       end
 
     render layout: 'admin/nametags'

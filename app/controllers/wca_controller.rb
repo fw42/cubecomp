@@ -12,7 +12,7 @@ class WcaController < ApplicationController
       return
     end
 
-    competitors = WcaGateway.new(Cubecomp::Application.config.wca_api_url).search_by_id(query)
+    competitors = DEPENDENCIES.fetch(:wca_gateway).search_by_id(query)
     render json: competitors
   end
 end
