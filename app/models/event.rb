@@ -13,6 +13,7 @@ class Event < ActiveRecord::Base
   validates :day, presence: true
 
   has_many :registrations, class_name: 'EventRegistration', dependent: :destroy
+
   has_many :competitors, through: :registrations
 
   validates :name_short, presence: true
@@ -52,12 +53,26 @@ class Event < ActiveRecord::Base
       .group('events.id')
   }
 
+  validate :validate_cant_be_not_for_registration_if_registrations_exist
+
   def for_registration?
     state != 'not_for_registration'
+  end
+
+  def registrations?
+    registrations.reject(&:marked_for_destruction?).size > 0
   end
 
   def end_time
     return unless length_in_minutes
     start_time + length_in_minutes.minutes
+  end
+
+  private
+
+  def validate_cant_be_not_for_registration_if_registrations_exist
+    return if for_registration?
+    return unless registrations?
+    errors.add(:state, "state can't be \"#{STATES['not_for_registration']}\" if event already has registrations")
   end
 end

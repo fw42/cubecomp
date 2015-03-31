@@ -38,6 +38,8 @@ class EventTest < ActiveSupport::TestCase
     @event.handle = ''
     assert_not_valid(@event, :handle)
 
+    @event.registrations.each(&:destroy!)
+    @event.reload
     @event.state = 'not_for_registration'
 
     @event.handle = nil
