@@ -18,7 +18,10 @@ class Event < ActiveRecord::Base
   validates :name_short, presence: true
 
   validates :handle, presence: true, if: :for_registration?
-  validates :handle, uniqueness: { scope: :competition_id }, allow_nil: true, allow_blank: true
+  validates :handle,
+    uniqueness: { scope: :competition_id },
+    allow_nil: true, allow_blank: true,
+    if: :for_registration?
 
   validates :start_time, presence: true
   validates :length_in_minutes, numericality: {

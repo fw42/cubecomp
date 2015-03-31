@@ -47,11 +47,22 @@ class EventTest < ActiveSupport::TestCase
     assert_valid @event
   end
 
-  test 'validates uniqueness of handle, scoped to competition' do
+  test 'validates uniqueness of handle, scoped to competition, if event is for registration' do
+    @event.state = 'open_for_registration'
+
     new_event = @event.dup
     assert_not_valid(new_event, :handle)
 
     new_event.competition = competitions(:german_open)
+    assert_valid new_event
+  end
+
+  test 'does not validate uniqueness of handle if event is not for registration' do
+    @event.state = 'open_for_registration'
+    new_event = @event.dup
+    assert_not_valid(new_event, :handle)
+
+    new_event.state = 'not_for_registration'
     assert_valid new_event
   end
 
