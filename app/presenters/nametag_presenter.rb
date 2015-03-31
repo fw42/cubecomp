@@ -12,16 +12,7 @@ class NametagPresenter
   end
 
   def competition_count
-    if competitor.wca_account?
-      wca_competitor = @wca_gateway.find_by_id(competitor.wca)
-      if wca_competitor
-        wca_competitor.competition_count
-      else
-        0
-      end
-    else
-      0
-    end
+    wca_competitor.try(:competition_count) || 0
   end
 
   def best_333_result
@@ -31,4 +22,10 @@ class NametagPresenter
   private
 
   attr_reader :competitor
+
+  def wca_competitor
+    return nil unless competitor.wca_account?
+
+    @wca_competitor ||= @wca_gateway.find_by_id(competitor.wca)
+  end
 end
