@@ -28,6 +28,8 @@ class Admin::CompetitorsController < AdminController
 
   before_action :set_competitor, only: [:edit, :update, :confirm, :disable, :destroy, :mark_as_paid]
 
+  helper WcaResultsHelpers
+
   def index
     @competitors = current_competition
       .competitors

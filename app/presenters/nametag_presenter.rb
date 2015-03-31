@@ -24,6 +24,10 @@ class NametagPresenter
     end
   end
 
+  def best_333_result
+    @wca_gateway.find_records_for(competitor.wca, "333") if competitor.wca_account?
+  end
+
   private
 
   attr_reader :competitor
