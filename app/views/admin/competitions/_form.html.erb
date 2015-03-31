@@ -28,13 +28,13 @@
         <td><%= f.text_field :staff_email %></td>
       </tr>
       <tr>
-        <td><%= f.label :cc_orga, 'Send copy of all emails to team:' %></td>
+        <td><%= f.label :cc_staff, 'Send copy of all emails to team:' %></td>
         <td>
-          <%= f.radio_button :cc_orga, true %>
-          <%= f.label :cc_orga, 'yes', value: true, class: 'checkbox' %>
+          <%= f.radio_button :cc_staff, true %>
+          <%= f.label :cc_staff, 'yes', value: true, class: 'checkbox' %>
           &nbsp;
-          <%= f.radio_button :cc_orga, false %>
-          <%= f.label :cc_orga, 'no', value: false, class: 'checkbox' %>
+          <%= f.radio_button :cc_staff, false %>
+          <%= f.label :cc_staff, 'no', value: false, class: 'checkbox' %>
         </td>
       </tr>
       <tr>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150328165952) do
+ActiveRecord::Schema.define(version: 20150331021610) do
 
   create_table "competitions", force: :cascade do |t|
     t.string   "name",              limit: 255,                   null: false
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20150328165952) do
     t.string   "city_name_short",   limit: 255
     t.text     "venue_address",     limit: 65535
     t.integer  "country_id",        limit: 4,                     null: false
-    t.boolean  "cc_orga",           limit: 1,     default: false
+    t.boolean  "cc_staff",          limit: 1,     default: false
     t.boolean  "registration_open", limit: 1,     default: false
     t.datetime "created_at"
     t.datetime "updated_at"

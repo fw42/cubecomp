@@ -43,7 +43,7 @@ class Admin::CompetitorEmailControllerTest < ActionController::TestCase
       "content" => "Hello!"
     }
 
-    @competition.update_attributes(cc_orga: true)
+    @competition.update_attributes(cc_staff: true)
     post :create, competition_id: @competition.id, id: @competitor.id, competitor_email: params
 
     emails = ActionMailer::Base.deliveries

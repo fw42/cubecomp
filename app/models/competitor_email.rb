@@ -26,7 +26,7 @@ class CompetitorEmail
       to_email: competitor.email,
     }
 
-    if competition.cc_orga?
+    if competition.cc_staff?
       attributes[:cc_name] = competition.staff_name
       attributes[:cc_email] = competition.staff_email
     end

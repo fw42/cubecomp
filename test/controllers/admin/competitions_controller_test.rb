@@ -32,7 +32,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     }
 
     @update_params = {
-      cc_orga: true,
+      cc_staff: true,
       city_name: 'Aix la chapelle',
       city_name_short: 'AAC',
       country_id: countries(:germany).id,
