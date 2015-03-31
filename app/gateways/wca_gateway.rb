@@ -14,7 +14,7 @@ class WcaGateway
     end
 
     def average?
-      single.is_a?(Fixnum)
+      average.is_a?(Fixnum)
     end
   end
 

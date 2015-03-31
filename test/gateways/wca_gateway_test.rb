@@ -150,4 +150,39 @@ class WcaGatewayTest < ActiveSupport::TestCase
     assert_equal @wca_api.find_records_for('2003POCH01', '777').single, nil
     assert_equal @wca_api.find_records_for('2003POCH01', '777').average, nil
   end
+
+  test '#find_records_for with just single record' do
+    body = <<-eos
+    {
+      "666":{
+        "single":{
+          "time":27509
+        },
+        "average":{
+          "time":32728
+        }
+      },
+      "444bf":{
+        "single":{
+          "time":40100
+        },
+        "average":null
+      },
+      "555bf":{
+        "single":{
+          "time":78000
+        },
+        "average":null
+      }
+    }
+    eos
+
+    stub_request(:get, "http://some-wca-api-url/competitors/2003POCH01/records")
+      .to_return(status: 200, body: body)
+
+    assert_equal @wca_api.find_records_for('2003POCH01', '444bf').single, 40100
+    assert_equal @wca_api.find_records_for('2003POCH01', '444bf').single?, true
+    assert_equal @wca_api.find_records_for('2003POCH01', '444bf').average, nil
+    assert_equal @wca_api.find_records_for('2003POCH01', '444bf').average?, false
+  end
 end
