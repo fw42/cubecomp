@@ -8,7 +8,8 @@ module Liquid
       end
 
       def image_url(filename)
-        theme_file = competition.theme_files.image_files.with_filename(filename, locale.handle).first
+        loader = ThemeFileLoader.new(competition.theme_files.image_files)
+        theme_file = loader.find_by(filename: filename, locale: locale.handle)
         return unless theme_file
         theme_file.image.url
       end
