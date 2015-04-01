@@ -4,21 +4,31 @@ class FinancialService
   end
 
   def total_count
-    @competition.days.reduce(0) do |total, day|
-      guest_count(day) + competing_competitors_count(day)
-    end
+    competitors.size
+  end
+
+  def total_entrance_fee
+    total_entrance_fee_from_guests + total_entrance_fee_from_competing_competitors
+  end
+
+  def total_entrance_fee_from_guests
+    @competition.days.map{ |day| entrance_fee_from_guests(day) }.sum
+  end
+
+  def total_entrance_fee_from_competing_competitors
+    @competition.days.map{ |day| entrance_fee_from_competing_competitors(day) }.sum
   end
 
   def guest_count(day)
     guests(day).size
   end
 
-  def entrance_fee_from_guests(day)
-    entrance_fee(guests(day), day)
-  end
-
   def competing_competitors_count(day)
     competing_competitors(day).size
+  end
+
+  def entrance_fee_from_guests(day)
+    entrance_fee(guests(day), day)
   end
 
   def entrance_fee_from_competing_competitors(day)

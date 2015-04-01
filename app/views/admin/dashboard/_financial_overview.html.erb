@@ -20,33 +20,25 @@
         <th>#</th>
         <th>$</th>
       </tr>
-      <% sum_num_guests = 0 %>
-      <% sum_money_guests = BigDecimal.new(0) %>
-      <% sum_num_competitors = 0 %>
-      <% sum_money_competitors = BigDecimal.new(0) %>
       <% current_competition.days.each do |day| %>
         <tr>
           <th><%= l(day.date, format: :day_only) %></th>
-          <td><%= num_guests = @financials.guest_count(day) %></td>
-          <td><%= money_guests = @financials.entrance_fee_from_guests(day) %></td>
           <td><%= num_competitors = @financials.competing_competitors_count(day) %></td>
           <td><%= money_competitors = @financials.entrance_fee_from_competing_competitors(day) %></td>
+          <td><%= num_guests = @financials.guest_count(day) %></td>
+          <td><%= money_guests = @financials.entrance_fee_from_guests(day) %></td>
           <td><%= num_guests + num_competitors %></td>
           <td><%= money_guests + money_competitors %></td>
         </tr>
-        <% sum_num_guests += num_guests %>
-        <% sum_money_guests += money_guests %>
-        <% sum_num_competitors += num_competitors %>
-        <% sum_money_competitors += money_competitors %>
       <% end %>
       <tr class="sum">
         <th>&sum;</th>
-        <td><%= sum_num_guests %></td>
-        <td><%= sum_money_guests %></td>
-        <td><%= sum_num_competitors %></td>
-        <td><%= sum_money_competitors %></td>
-        <td><%= sum_num_guests + sum_num_competitors %></td>
-        <td class="total-money"><%= sum_money_guests + sum_money_competitors %></td>
+        <td></td>
+        <td><%= @financials.total_entrance_fee_from_competing_competitors %></td>
+        <td></td>
+        <td><%= @financials.total_entrance_fee_from_guests %></td>
+        <td><%= @financials.total_count %></td>
+        <td class="total-money"><%= @financials.total_entrance_fee %></td>
       </tr>
     </table>
   </div>

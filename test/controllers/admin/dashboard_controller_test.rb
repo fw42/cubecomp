@@ -54,11 +54,11 @@ class Admin::DashboardControllerTest < ActionController::TestCase
   test "#index shows financial overview" do
     regexp = /<table class='default-table financial-overview'>/
 
-    FinancialService.any_instance.expects(:total_count).returns(17)
+    FinancialService.any_instance.expects(:total_count).returns(17).at_least_once
     get :index, competition_id: @competition.id
     assert_match regexp, response.body
 
-    FinancialService.any_instance.expects(:total_count).returns(0)
+    FinancialService.any_instance.expects(:total_count).returns(0).at_least_once
     get :index, competition_id: @competition.id
     assert_no_match regexp, response.body
   end
