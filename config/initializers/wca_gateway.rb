@@ -1,5 +1,5 @@
 DEPENDENCIES = {}
 
-if ENV["CUBECOMP_WCA_API_URL"]
-  DEPENDENCIES[:wca_gateway] = WcaGateway.new(ENV["CUBECOMP_WCA_API_URL"])
+if Rails.application.config.wca_api_url
+  DEPENDENCIES[:wca_gateway] = WcaGateway.new(Rails.application.config.wca_api_url)
 end
