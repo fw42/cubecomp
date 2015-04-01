@@ -18,6 +18,7 @@ default: &default
   pool: 5
   port: 3306
   username: root
+  strict: true
 
 development:
   <<: *default
