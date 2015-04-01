@@ -1,5 +1,7 @@
-<ul>
-  <% @competitions.each do |competition| %>
-    <li><%= link_to competition.name, competition_area_path(competition.handle) %></li>
-  <% end %>
-</ul>
+<% [ @future_competitions, @past_competitions ].each do |competitions| %>
+  <ul>
+    <% competitions.each do |competition| %>
+      <li><%= link_to competition.name, competition_area_path(competition.handle) %></li>
+    <% end %>
+  </ul>
+<% end %>
