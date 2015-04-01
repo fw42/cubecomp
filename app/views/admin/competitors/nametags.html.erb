@@ -22,7 +22,7 @@
 
             <% if competitor.nametag %>
               <span class="extra">
-                <%= competitor.nametag %>
+                <%= competitor.nametag.html_safe %>
               </span>
             <% end %>
           </td>
