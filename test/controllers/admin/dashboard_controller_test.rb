@@ -138,4 +138,15 @@ class Admin::DashboardControllerTest < ActionController::TestCase
     get :index, competition_id: @competition.id
     assert_match regexp, response.body
   end
+
+  test "#index shows getting started email tip iff the competition has no email templates" do
+    regexp = /You haven't set up any email templates yet/
+
+    get :index, competition_id: @competition.id
+    assert_no_match regexp, response.body
+
+    @competition.email_templates.each(&:destroy!)
+    get :index, competition_id: @competition.id
+    assert_match regexp, response.body
+  end
 end
