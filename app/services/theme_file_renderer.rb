@@ -35,15 +35,15 @@ class ThemeFileRenderer
   end
 
   def read_template_file(filename)
-    file = @competition.theme_files.text_files.with_filename(
-      filename,
-      @locale.handle,
-    ).first
-
+    file = theme_file_loader.find_by(filename: filename, locale: @locale.handle)
     file.try!(:content)
   end
 
   private
+
+  def theme_file_loader
+    @theme_file_loader ||= ThemeFileLoader.new(@competition.theme_files.text_files)
+  end
 
   def render_with_locale
     old_locale = I18n.locale

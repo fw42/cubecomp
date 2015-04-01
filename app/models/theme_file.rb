@@ -36,24 +36,6 @@ class ThemeFile < ActiveRecord::Base
 
   auto_strip_attributes :filename
 
-  scope :with_filename, lambda { |filename, locale|
-    file_extension_matcher = /\A(.*?)(\.(.*))?\z/
-    matches = file_extension_matcher.match(filename)
-    filename_base = matches[1]
-    filename_extension = matches[3]
-
-    filenames = [
-      [ filename_base, locale, filename_extension ].join('.'),
-      [ filename_base, filename_extension ].join('.'),
-    ]
-
-    order_query_segments = filenames.map do |file|
-      "filename = \"#{ThemeFile.connection.quote_string(file)}\" DESC"
-    end
-
-    where(filename: filenames).order(order_query_segments.join(', '))
-  }
-
   scope :text_files, ->{ where(image_content_type: nil) }
   scope :image_files, ->{ where.not(image_content_type: nil) }
 

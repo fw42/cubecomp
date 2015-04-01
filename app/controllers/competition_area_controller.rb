@@ -34,21 +34,15 @@ class CompetitionAreaController < ApplicationController
 
   def load_layout_theme_file
     return if @theme_file && !@theme_file.html?
-
-    @layout_theme_file = @competition.theme_files.text_files.with_filename(
-      'layout.html',
-      @locale.handle
-    ).first!
+    @layout_theme_file = theme_file_loader.find_by!(filename: 'layout.html', locale: @locale.handle)
   end
 
   def load_theme_file
     filename = params[:theme_file] || 'index'
     extension = params[:format] || 'html'
+    filename_with_extension = [ filename, extension ].join('.')
 
-    @theme_file = @competition.theme_files.text_files.with_filename(
-      "#{filename}.#{extension}",
-      @locale.handle
-    ).first!
+    @theme_file = theme_file_loader.find_by!(filename: filename_with_extension, locale: @locale.handle)
   end
 
   def redirect_if_no_locale
@@ -62,5 +56,9 @@ class CompetitionAreaController < ApplicationController
       @competition.handle,
       (locale_from_cookie || @competition.default_locale).handle
     )
+  end
+
+  def theme_file_loader
+    @theme_file_loader ||= ThemeFileLoader.new(@competition.theme_files.text_files)
   end
 end
