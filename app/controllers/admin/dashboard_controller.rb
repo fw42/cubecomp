@@ -17,6 +17,7 @@ class Admin::DashboardController < AdminController
       tips << :owner_without_address
     end
 
+    tips << :email if current_competition.email_templates.empty?
     tips << :theme if current_competition.theme_files.empty?
     tips << :users if current_competition.users.empty?
     tips

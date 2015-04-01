@@ -48,6 +48,15 @@
           to set one up.
         </li>
       <% end %>
+
+      <% if @getting_started.include?(:email) %>
+        <li>
+          <b>Email:</b>
+          You haven't set up any email templates yet. Please go to
+          <%= link_to "Email", admin_competition_email_templates_path(current_competition) %>
+          to set some up.
+        </li>
+      <% end %>
     </ul>
   </div>
 </div>
