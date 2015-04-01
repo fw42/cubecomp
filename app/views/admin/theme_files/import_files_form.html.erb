@@ -8,12 +8,14 @@
       <tr>
         <td style="width:17em">Import default theme:</td>
         <td><%= select_tag 'from[theme_id]', options_for_select(@themes), disabled: @themes.size == 0, class: 'inline' %></td>
-        <td><%= submit_button(nil, "Import", disabled: @themes.size == 0, name: 'from[import_theme]') %></td>
+        <td><%= submit_button(nil, "Import", disabled: @themes.size == 0, name: 'from[import_theme]', data: { confirm: 'Are you sure? This will delete your current files!' }
+) %></td>
       </tr>
       <tr>
         <td style="width: 17em; ">Import from other competition:</td>
         <td><%= select_tag 'from[competition_id]', options_for_select(@competitions), disabled: @competitions.size == 0, class: 'inline' %></td>
-        <td><%= submit_button(nil, "Import", disabled: @competitions.size == 0, name: 'from[import_competition]') %></td>
+        <td><%= submit_button(nil, "Import", disabled: @competitions.size == 0, name: 'from[import_competition]', data: { confirm: 'Are you sure? This will delete your current files!' }
+) %></td>
       </tr>
     </table>
   <% end %>

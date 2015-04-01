@@ -15,7 +15,7 @@
       </tr>
       <tr>
         <td colspan="2" style="text-align: right">
-          <%= submit_button(nil, "Import") %>
+          <%= submit_button(nil, "Import", data: { confirm: 'Are you sure? This will delete your existing events for this day!' }) %>
           <%= back_button(admin_competition_events_path) %>
         </td>
       </tr>

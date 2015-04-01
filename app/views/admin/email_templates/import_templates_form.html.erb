@@ -11,7 +11,7 @@
       </tr>
       <tr>
         <td style="text-align: right" colspan='2'>
-          <%= submit_button(nil, 'Import') %>
+          <%= submit_button(nil, 'Import', data: { confirm: 'Are you sure? This will delete your existing templates!' }) %>
           <%= back_button(admin_competition_email_templates_path) %>
         </td>
       </tr>
