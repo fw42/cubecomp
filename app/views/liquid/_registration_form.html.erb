@@ -143,7 +143,7 @@
           </p>
 
           <div id='day_<%= day.id %>' style="display: none" class="event-selection">
-            <% day.events.select(&:for_registration?).each do |event| %>
+            <% day.events.select(&:for_registration?).sort_by(&:start_time).each do |event| %>
               <% checked_value = event.state == 'open_with_waiting_list' ? 'waiting' : 'registered' %>
               <%= check_box "#{f.object_name}[days][#{day.id}][events][#{event.id}]", :status, { disabled: event.state == 'registration_closed' }, checked_value, 'not_registered' %>
 
