@@ -30,6 +30,7 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
 
     expected = <<-END
       <link rel="stylesheet" media="all" href="/assets/competition_area.css" />
+<link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico" />
 <script src="/assets/competition_area.js"></script>
 
       Aachen Open!!
