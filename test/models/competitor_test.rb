@@ -234,6 +234,9 @@ class CompetitorTest < ActiveSupport::TestCase
     service.register_as_guest(day.id)
     assert_equal day.entrance_fee_guests, @competitor.entrance_fee(day)
 
+    @competitor.paid = true
+    assert_equal day.entrance_fee_guests, @competitor.entrance_fee(day)
+
     service.register_for_event(day.events.first)
     assert_equal day.entrance_fee_competitors, @competitor.entrance_fee(day)
 
