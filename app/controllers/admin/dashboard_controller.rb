@@ -9,7 +9,16 @@ class Admin::DashboardController < AdminController
 
   def getting_started
     tips = []
+    tips << :email if current_competition.email_templates.empty?
     tips << :events if current_competition.events.for_competitors_table.empty?
+    tips << :theme if current_competition.theme_files.empty?
+    tips << :users if current_competition.users.empty?
+    tips += getting_started_owner_tips
+    tips
+  end
+
+  def getting_started_owner_tips
+    tips = []
 
     if current_competition.owner.blank?
       tips << :owner
@@ -17,9 +26,6 @@ class Admin::DashboardController < AdminController
       tips << :owner_without_address
     end
 
-    tips << :email if current_competition.email_templates.empty?
-    tips << :theme if current_competition.theme_files.empty?
-    tips << :users if current_competition.users.empty?
     tips
   end
 end
