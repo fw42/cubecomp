@@ -17,7 +17,7 @@
         <% @events_with_limits.each do |event| %>
           <tr>
             <td><%= l(event.day.date, format: :day_only) %></td>
-            <td><%= link_to(event.name, edit_admin_competition_event_path(current_competition, event)) %></td>
+            <td><%= link_to(event.name_short || event.name, edit_admin_competition_event_path(current_competition, event)) %></td>
             <td style="width: 300px">
               <div class="progress">
                 <% progress = 100.0 * (event.number_of_confirmed_registrations.to_f / event.max_number_of_registrations.to_f) %>
