@@ -15,7 +15,7 @@ class Admin::ThemeFilesController < AdminController
 
   def import_files_form
     @themes = Theme.all
-    @competitions = current_user.policy.competitions
+    @competitions = current_user.policy.competitions.sort_by(&:name)
 
     if @theme
       @themes = @themes.where.not(id: @theme.id)
