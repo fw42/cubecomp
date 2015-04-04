@@ -75,6 +75,14 @@ class AdminControllerTest < ActionController::TestCase
     assert_response :forbidden
   end
 
+  test '#index redirects back to login if user is inactive' do
+    user = users(:admin)
+    user.update_attributes(active: false)
+    login_as(user)
+    get :index, competition_id: Competition.first
+    assert_redirected_to admin_login_path
+  end
+
   test "#index redirects to last competition if user session has old competition that doesn't exist anymore" do
     user = users(:regular_user_with_two_competitions)
     login_as(user)

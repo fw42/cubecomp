@@ -22,7 +22,7 @@ class Admin::SessionsController < ApplicationController
   private
 
   def authenticate_user(user_params)
-    return unless user = User.find_by(email: user_params[:email])
+    return unless user = User.active.find_by(email: user_params[:email])
     return unless user.authenticate(user_params[:password])
     user
   end

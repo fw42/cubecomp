@@ -33,7 +33,7 @@ class AdminController < ApplicationController
   def current_user
     @current_user ||= begin
       if session[:user] && session[:user]['id'] && session[:user]['version']
-        user = User.find_by(id: session[:user]['id'], version: session[:user]['version'])
+        user = User.active.find_by(id: session[:user]['id'], version: session[:user]['version'])
         reset_session if user.nil?
         user
       end

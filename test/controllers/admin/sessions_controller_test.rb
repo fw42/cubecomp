@@ -23,7 +23,7 @@ class Admin::SessionsControllerTest < ActionController::TestCase
     assert_login_failed
   end
 
-  test "#create with valid email but invalid password doesn't log user" do
+  test "#create with valid email but invalid password doesn't log user in" do
     user = users(:regular_user_with_no_competitions)
     post :create, user: { email: user.email, password: 'foobar' }
     assert_login_failed
@@ -35,6 +35,13 @@ class Admin::SessionsControllerTest < ActionController::TestCase
     assert_equal user.id, session[:user]['id']
     assert_equal user.version, session[:user]['version']
     assert_redirected_to admin_root_path
+  end
+
+  test '#create with valid credentials doesnt log user in if the account is inactive' do
+    user = users(:regular_user_with_no_competitions)
+    user.update_attributes(active: false)
+    post :create, user: { email: user.email, password: 'test' }
+    assert_login_failed
   end
 
   private

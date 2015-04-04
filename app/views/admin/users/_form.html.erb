@@ -27,6 +27,16 @@
         <td><%= f.label :address, 'Address:' %></td>
         <td><%= f.text_area :address %></td>
       </tr>
+      <tr>
+        <td><%= f.label :active, 'Allowed to log in:' %></td>
+        <td>
+          <%= f.radio_button :active, true%>
+          <%= f.label :active, 'yes', value: true, class: 'checkbox' %>
+          &nbsp;
+          <%= f.radio_button :active, false %>
+          <%= f.label :active, 'no', value: false, class: 'checkbox' %>
+        </td>
+      </tr>
     </table>
   <% end %>
 
