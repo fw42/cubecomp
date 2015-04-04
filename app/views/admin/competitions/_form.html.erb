@@ -61,7 +61,10 @@
               <% else %>
                 <%= user.name %>
               <% end %>
-              (<%= user.email %>)<br/>
+              <% if user.email.present? %>
+                (<%= user.email %>)
+              <% end %>
+              <br/>
             <% end %>
           </td>
         </tr>
