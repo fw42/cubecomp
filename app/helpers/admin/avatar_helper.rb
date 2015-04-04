@@ -1,6 +1,6 @@
 module Admin::AvatarHelper
   def avatar_url(user, size)
-    gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+    gravatar_id = Digest::MD5.hexdigest(user.email.try!(:downcase) || '')
     "https://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
   end
 
