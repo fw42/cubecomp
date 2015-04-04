@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_secure_password
   validates :password, presence: { on: :create }, length: { minimum: 8 }, if: :password_digest_changed?
 
-  validates :email, presence: true
+  validates :email, presence: true, if: :active?
   validates :email, email: true, allow_nil: true, allow_blank: true
   validates :email, uniqueness: true, allow_nil: true, allow_blank: true
 
@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
     foreign_key: 'delegate_user_id',
     dependent: :nullify
 
+  scope :active, -> { where(active: true) }
   scope :delegates, ->{ where(delegate: true) }
 
   after_update :nullify_competition_delegate_user_ids

@@ -19,6 +19,7 @@ class Admin::UsersController < AdminController
     :permission_level,
     :delegate,
     :address,
+    :active,
     permissions_attributes: [:id, :_destroy, :competition_id]
   ]
 

@@ -19,6 +19,12 @@ class UserTest < ActiveSupport::TestCase
     assert_valid @user
   end
 
+  test "inactive users are allowed to not have an email address" do
+    @user.email = ''
+    @user.active = false
+    assert_valid @user
+  end
+
   test 'validates uniqueness of email' do
     new_user = @user.dup
     assert_not_valid(new_user, :email)
