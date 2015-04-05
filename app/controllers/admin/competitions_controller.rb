@@ -39,6 +39,7 @@ class Admin::CompetitionsController < AdminController
       .joins('LEFT JOIN competitors ON competitors.competition_id = competitions.id')
       .group('competitions.id')
       .preload(:country)
+      .preload(:owner, :delegate)
   end
 
   def new
