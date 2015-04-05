@@ -4,6 +4,7 @@
 
 //= require jquery_ujs
 //= require jquery.nested_attributes
+//= require jquery.ba-throttle-debounce
 
 // require sb-admin-2/jquery-1.11.0
 //= require sb-admin-2/bootstrap.min
