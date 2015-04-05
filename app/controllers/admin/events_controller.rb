@@ -71,7 +71,7 @@ class Admin::EventsController < AdminController
 
   def update
     if @event.update(event_params)
-      redirect_to edit_admin_competition_event_path(current_competition, @event),
+      redirect_to admin_competition_events_path(current_competition),
         notice: 'Event was successfully updated.'
     else
       render :edit

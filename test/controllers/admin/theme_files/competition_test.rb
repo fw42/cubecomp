@@ -202,7 +202,7 @@ module Admin::ThemeFiles
 
       patch :update, competition_id: @competition.id, id: @theme_file.id, theme_file: params
 
-      assert_redirected_to edit_admin_competition_theme_file_path(@competition, @theme_file)
+      assert_redirected_to admin_competition_theme_files_path(@competition)
       assert_attributes(params, @theme_file.reload)
     end
 
