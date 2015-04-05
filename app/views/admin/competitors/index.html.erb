@@ -176,7 +176,7 @@
             %>
           <% end %>
 
-          <% unless competitor.paid? %>
+          <% unless competitor.paid? || competitor.free_entrance? %>
             <%=
               tooltip(
                 link_to(
