@@ -55,6 +55,10 @@ class Event < ActiveRecord::Base
 
   validate :validate_cant_be_not_for_registration_if_registrations_exist
 
+  def display_name
+    name || name_short
+  end
+
   def for_registration?
     state != 'not_for_registration'
   end
