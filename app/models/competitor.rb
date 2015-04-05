@@ -41,6 +41,7 @@ class Competitor < ActiveRecord::Base
     self.wca = wca.upcase if wca
   end
 
+  scope :awaiting_payment, ->{ where(state: 'new', paid: false, free_entrance: false) }
   scope :confirmed, ->{ where(state: 'confirmed') }
 
   def name
