@@ -1,3 +1,5 @@
+[![security](https://hakiri.io/github/fw42/cubecomp/master.svg)](https://hakiri.io/github/fw42/cubecomp/master)
+
 # Cubecomp
 
 Cubecomp is a web application written in Ruby on Rails which is used by
@@ -9,7 +11,7 @@ for competition organizers, such as creating a public website with a registratio
 form, creating event schedules, confirming competitor registrations, generating
 printable nametags, and much more.
 
-As of early 2015, cubecomp (or earlier versions of it) has been used to host
+Since early 2009, cubecomp (or earlier versions of it) has been used to host
 over 85 different competitions in at least 5 different countries around the
 world.
 
