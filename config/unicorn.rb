@@ -4,7 +4,7 @@ app_path = File.expand_path(File.dirname(__FILE__) + '/..')
 
 # The number of worker processes you have here should equal the number of CPU
 # cores your server has.
-worker_processes (ENV['RAILS_ENV'] == 'production' ? 4 : 1)
+worker_processes 4
 
 # Listen on port 50000
 listen("127.0.0.1:50000", backlog: 64)
