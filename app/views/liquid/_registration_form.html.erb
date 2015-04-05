@@ -150,7 +150,7 @@
                 event_label =
                   case event.state
                   when 'open_for_registration'
-                    event.name || event.name_short
+                    event.display_name
                   when 'open_with_waiting_list'
                     "#{event.name} (#{t('registration.waiting_list')})"
                   else

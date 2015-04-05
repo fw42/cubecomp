@@ -141,10 +141,10 @@
             </tr>
           </thead>
           <tbody>
-            <% current_competition.events.where(day: day).each do |event| %>
+            <% current_competition.events.select{ |event| event.for_registration? && event.day_id == day.id }.each do |event| %>
               <tr>
                 <td>
-                  <%= event.name %>
+                  <%= event.display_name %>
                 </td>
                 <td <% if @competitor.event_registration_status(event) == 'not_registered' %>class='highlight'<% end %>>
                   <%=
