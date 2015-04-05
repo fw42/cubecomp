@@ -41,7 +41,7 @@ Rails.application.configure do
   config.action_controller.action_on_unpermitted_parameters = :raise
 
   Paperclip::Attachment.default_options.merge!({
-    :path => "tmp/cubecomp/test/uploads/:style/:filename"
+    :path => Rails.root.join("tmp/cubecomp/test/uploads/:style/:filename").to_s
   })
 
   config.active_support.test_order = :random
