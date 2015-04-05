@@ -7,7 +7,7 @@ gem 'coffee-rails'
 
 # Make sure that sb-admin-2 and jquery-nested-attributes still
 # work before version-bumping jQuery
-gem 'jquery-rails', '= 4.0.0'
+gem 'jquery-rails', '~> 4.0.0'
 gem 'jquery-turbolinks'
 
 gem 'faraday'
