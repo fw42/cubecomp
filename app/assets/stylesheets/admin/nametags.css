@@ -1,3 +1,14 @@
+@media print {
+  @page {
+    margin-left: 25mm;
+    margin-right: 25mm;
+  }
+
+  body {
+    width: 160mm;
+  }
+}
+
 body {
   font-family: "Trebuchet MS";
   padding: 0px;
@@ -23,9 +34,9 @@ td {
   width: 8cm;
   max-width: 8cm;
   min-width: 8cm;
-  height: 5.5cm;
-  max-height: 5.5cm;
-  min-height: 5.5cm;
+  height: 5.3cm;
+  max-height: 5.3cm;
+  min-height: 5.3cm;
   font-size: 12pt;
   vertical-align: middle;
 }
