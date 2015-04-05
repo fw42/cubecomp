@@ -41,6 +41,12 @@ before_fork do |server, worker|
   end
 end
 
+# Fix stupid bug
+# http://blog.willj.net/2011/08/02/fixing-the-gemfile-not-found-bundlergemfilenotfound-error/
+before_exec do |server|
+  ENV['BUNDLE_GEMFILE'] = app_path + "/Gemfile"
+end
+
 # After forking, restore your ActiveRecord connection.
 after_fork do |server, worker|
   if defined?(ActiveRecord::Base)
