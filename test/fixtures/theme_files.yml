@@ -14,6 +14,7 @@ aachen_open_disclaimer_german:
   content: It's Flo's fault!
 
 aachen_open_logo:
+  id: 623173363
   competition: aachen_open
   filename: "logo.png"
   image_content_type: "image/png"
