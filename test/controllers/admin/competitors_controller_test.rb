@@ -179,6 +179,12 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     assert_equal 'disabled', @competitor.reload.state
   end
 
+  test '#mark_as_paid' do
+    @competitor.update_attributes(paid: false)
+    patch :mark_as_paid, competition_id: @competition.id, id: @competitor.id
+    assert_equal true, @competitor.reload.paid
+  end
+
   test '#update without login permission renders 401' do
     mock_login_not_allowed(@competition)
     patch :update, competition_id: @competition.id, id: @competitor.id, competitor: @update_params

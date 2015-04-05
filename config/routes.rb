@@ -45,6 +45,7 @@ Rails.application.routes.draw do
           member do
             patch :confirm
             patch :disable
+            patch :mark_as_paid
           end
 
           member do
