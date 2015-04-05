@@ -1,4 +1,5 @@
 [![security](https://hakiri.io/github/fw42/cubecomp/master.svg)](https://hakiri.io/github/fw42/cubecomp/master)
+[![Dependency Status](https://gemnasium.com/fw42/cubecomp.svg)](https://gemnasium.com/fw42/cubecomp)
 
 # Cubecomp
 
