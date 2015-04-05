@@ -98,8 +98,7 @@ class ThemeFileRenderer
         template: 'competitors',
         controller: @controller,
         locals: default_locals.reverse_merge({
-          :@competitors => @competition.competitors.confirmed
-            .includes(:country, :day_registrations, :event_registrations, :events),
+          :@competitors => competitors_for_view,
           :@events => @competition.events.for_competitors_table.order(:handle)
         })
       )
@@ -118,5 +117,13 @@ class ThemeFileRenderer
         })
       )
     end
+  end
+
+  def competitors_for_view
+    @competition
+      .competitors
+      .confirmed
+      .includes(:country, :day_registrations, :event_registrations, :events)
+      .select{ |competitors| competitors.event_registrations.size > 0 }
   end
 end
