@@ -80,7 +80,7 @@
           <%= f.fields_for :locales, @competition.locales.to_a.sort_by(&:handle) do |ff| %>
             <%= ff.hidden_field :competition_id %>
             <%= ff.hidden_field :handle %>
-            <%= ff.check_box :_destroy, { checked: !ff.object.marked_for_destruction? && ff.object.persisted? }, '0', '1' %>
+            <%= ff.check_box :_destroy, { checked: !ff.object.marked_for_destruction? }, '0', '1' %>
             <%= ff.label :_destroy, ff.object.name, class: 'checkbox' %><br/>
           <% end %>
         </td>
@@ -141,7 +141,9 @@
         beforeDestroy: function() {
           return confirm("Are you sure?");
         },
-        afterAdd: setAllTooltips
+        afterAdd: setAllTooltips,
+        afterDestroy: hideAllTooltips,
+        preserveInputValues: true
       });
     </script>
 
