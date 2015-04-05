@@ -24,11 +24,15 @@ class Admin::UsersController < AdminController
   ]
 
   def index
-    @users = User
+    all_users = User
       .select('users.*, COUNT(permissions.competition_id) AS competition_count')
       .joins('LEFT JOIN permissions ON users.id = permissions.user_id')
       .group('users.id')
       .order(:last_name, :first_name)
+
+    @active_users = all_users.select(&:active?)
+    @inactive_delegates = all_users.reject(&:active?).select(&:delegate?)
+    @inactive_others = all_users - @active_users - @inactive_delegates
   end
 
   def new

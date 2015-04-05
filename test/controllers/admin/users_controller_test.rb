@@ -9,7 +9,6 @@ class Admin::UsersControllerTest < ActionController::TestCase
   test '#index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:users)
   end
 
   test '#index without admin menu permission renders forbidden' do

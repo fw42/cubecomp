@@ -1,0 +1,43 @@
+<table class='default-table'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Competitions</th>
+      <th>Level</th>
+      <th>Delegate</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% users.each do |user| %>
+      <tr>
+        <td>
+          <%= small_avatar_image(user) %>
+          <% if current_user.policy.edit_user?(user) %>
+            <%= link_to user.name, edit_admin_user_path(user) %>
+          <% else %>
+            <%= user.name %>
+          <% end %>
+        </td>
+        <td><%= user.email %></td>
+        <td style="text-align: right"><%= user.competition_count %></td>
+        <td>
+          <%=
+            if user.permission_level > 0
+              User::PERMISSION_LEVELS.to_a.detect do |name, level|
+                break name if level == user.permission_level
+              end
+            end
+          %>
+        </td>
+        <td><%= user.delegate ? 'yes' : '' %></td>
+        <td class='actions'>
+          <% if current_user.policy.destroy_user?(user) %>
+            <%= delete_button([:admin, user], method: :delete, data: { confirm: 'Are you sure?' }) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
