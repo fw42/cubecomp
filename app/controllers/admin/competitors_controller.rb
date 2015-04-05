@@ -26,7 +26,7 @@ class Admin::CompetitorsController < AdminController
     ]
   ]
 
-  before_action :set_competitor, only: [:edit, :update, :confirm, :disable, :destroy]
+  before_action :set_competitor, only: [:edit, :update, :confirm, :disable, :destroy, :mark_as_paid]
 
   def index
     @competitors = current_competition
@@ -118,6 +118,17 @@ class Admin::CompetitorsController < AdminController
     else
       Rails.logger.info("Failed to update: #{@competitor.errors.full_messages.inspect}")
       notice = { error: 'Failed to confirm competitor.' }
+    end
+
+    redirect_to admin_competition_competitors_path(current_competition), flash: notice
+  end
+
+  def mark_as_paid
+    if @competitor.update_attributes(paid: true)
+      notice = { notice: 'Competitor was successfully marked as paid.' }
+    else
+      Rails.logger.info("Failed to update: #{@competitor.errors.full_messages.inspect}")
+      notice = { error: 'Failed to mark competitor as paid.' }
     end
 
     redirect_to admin_competition_competitors_path(current_competition), flash: notice
