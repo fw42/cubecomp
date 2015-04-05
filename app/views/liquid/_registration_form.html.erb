@@ -79,7 +79,6 @@
           f.date_select :birthday, {
             start_year: Competitor.valid_birthday_range.first.year,
             end_year: Competitor.valid_birthday_range.last.year,
-            order: [:month, :day, :year ],
             include_blank: true
           },
           {
@@ -91,7 +90,7 @@
     <tr>
       <td><%= f.label :country %></td>
       <td>
-        <%= f.select :country_id, [["", nil]] + Country.all.map{ |c| [ c.name, c.id ] } %><br/>
+        <%= f.select :country_id, [["", nil]] + Country.all.map{ |c| [ c.name, c.id ] }, selected: @competition.country_id %><br/>
         <%= f.check_box :local %>
         <%= f.label :local, "#{t('registration.i_live_in', city: @competition.city_name)}", class: 'checkbox' %>
       </td>
