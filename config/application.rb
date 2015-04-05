@@ -38,7 +38,5 @@ module Cubecomp
 
     # Sends exception emails to this address in the production environment
     config.exceptions_email = ENV["CUBECOMP_EXCEPTIONS_EMAIL"]
-
-    config.newrelic_key = ENV["CUBECOMP_NEWRELIC_KEY"]
   end
 end
