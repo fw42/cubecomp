@@ -28,7 +28,8 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
           _destroy: 0
         }
       },
-      days_attributes: @days_attributes
+      days_attributes: @days_attributes,
+      owner_user_id: users(:flo).id,
     }
 
     @update_params = {
@@ -74,7 +75,9 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     assert_difference 'Competition.count' do
       assert_difference 'Day.count' do
         assert_difference 'Locale.count' do
-          post :create, competition: @new_competition_params
+          assert_difference 'Permission.count' do
+            post :create, competition: @new_competition_params
+          end
         end
       end
     end
@@ -82,6 +85,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     competition = Competition.find_by(handle: @new_competition_params[:handle])
 
     assert_redirected_to admin_competitions_path
+
     assert_attributes(@new_competition_params.except(:locales_attributes, :days_attributes), competition)
     assert_equal @new_competition_params[:locales_attributes]['0'][:handle], competition.locales.first.handle
 
@@ -89,6 +93,8 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     assert_equal Date.parse('2019-01-02'), day.date
     assert_equal 5.0, day.entrance_fee_competitors
     assert_equal 6.7, day.entrance_fee_guests
+
+    assert_equal true, competition.owner.policy.login?(competition)
   end
 
   test '#create without permission renders forbidden' do

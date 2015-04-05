@@ -40,7 +40,7 @@
       <tr>
         <td><%= f.label :owner, 'Owner / official contact:' %></td>
         <td>
-          <%= f.select :owner_user_id, [["", nil]] + @competition.users.map{ |user| [ user.name, user.id ] } %>
+          <%= f.select :owner_user_id, [["", nil]] + @competition.potential_owners.map{ |user| [ user.name, user.id ] } %>
           <%= help_tooltip "This user's address will be shown in the disclaimer section of this competition's theme" %>
         </td>
       </tr>

@@ -13,8 +13,8 @@ class Competition < ActiveRecord::Base
   belongs_to :country
   validates :country, presence: true
 
-  belongs_to :owner, class_name: 'User', foreign_key: 'owner_user_id'
-  validate :validate_owner_has_permission
+  belongs_to :owner, class_name: 'User', foreign_key: 'owner_user_id', autosave: true
+  validate :validate_owner_has_permission, on: :update
 
   belongs_to :default_locale, class_name: 'Locale', inverse_of: :competition, foreign_key: 'default_locale_id'
   validate :validate_default_locale_belongs_to_competition
@@ -67,6 +67,11 @@ class Competition < ActiveRecord::Base
 
   def to_liquid
     @liquid_drop ||= CompetitionDrop.new(self)
+  end
+
+  def potential_owners
+    owners = new_record? ? User.all : users
+    owners.sort_by{ |user| [ user.last_name, user.first_name ] }
   end
 
   private
