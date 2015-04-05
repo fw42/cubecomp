@@ -14,6 +14,8 @@ class Importer::Competitor < Importer
         legacy_country.name = 'Russia'
       elsif legacy_country.name == "Korea, Republic Of"
         legacy_country.name = 'Korea'
+      elsif legacy_country.name == 'United States'
+        legacy_country.name = 'USA'
       end
 
       begin

@@ -47,9 +47,9 @@ class Importer::Competition < Importer
     end
 
     if @legacy_configuration.respond_to?(:use_mail_cc)
-      @competition.cc_orga = @legacy_configuration.use_mail_cc
+      @competition.cc_staff = @legacy_configuration.use_mail_cc
     else
-      @competition.cc_orga = false
+      @competition.cc_staff = false
     end
 
     @competition.published = true
