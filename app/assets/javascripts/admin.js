@@ -32,3 +32,7 @@ function setAllTooltips() {
     html: true
   })
 }
+
+function hideAllTooltips() {
+  $('.tooltip').hide();
+}
