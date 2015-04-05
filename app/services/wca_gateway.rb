@@ -20,7 +20,8 @@ class WcaGateway
 
   def search_by_id(q)
     q = q.strip.upcase
-    response = @conn.get("/competitors?q=#{q}")
+    response = get("/competitors?q=#{q}")
+
     JSON.parse(response.body)["competitors"].map do |c|
       Competitor.new(c["id"], c["name"], c["gender"], c["country"])
     end
@@ -31,5 +32,14 @@ class WcaGateway
     raise WcaGateway::ConnectionError.new(e)
   rescue JSON::ParserError => e
     raise WcaGateway::ConnectionError.new(e)
+  end
+
+  private
+
+  def get(url)
+    @conn.get do |req|
+      req.url(url)
+      req.options = { timeout: 1, open_timeout: 1 }
+    end
   end
 end
