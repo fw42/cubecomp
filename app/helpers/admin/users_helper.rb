@@ -3,7 +3,7 @@ module Admin::UsersHelper
     missing_competition_ids(user).each do |competition|
       if current_user.policy.change_competition_permissions?(competition)
         permission = user.permissions.build(competition: competition)
-        permission.mark_for_destruction unless user.persisted? && user.errors.any?
+        permission.mark_for_destruction
       end
     end
 
