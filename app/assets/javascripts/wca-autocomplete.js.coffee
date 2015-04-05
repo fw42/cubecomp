@@ -5,13 +5,15 @@ $(document).ready ->
 
   autocompleteURL = $wcaIdField.attr("data-url")
 
+  fetchData = (q, callback) ->
+    $.getJSON(autocompleteURL + "/#{q}.json")
+      .done (result) ->
+        callback(result)
+
   auto = $wcaIdField.typeahead {
     minLength: 6
   }, {
-    source: (q, callback) ->
-      $.getJSON(autocompleteURL + "/#{q}.json")
-        .done (result) ->
-          callback(result)
+    source: $.debounce(250, fetchData)
 
     matcher: (item) ->
       true
