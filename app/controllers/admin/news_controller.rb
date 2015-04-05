@@ -2,7 +2,7 @@ class Admin::NewsController < AdminController
   before_action :set_news, only: [:edit, :update, :destroy]
 
   def index
-    @news = current_competition.news.all
+    @news = current_competition.news.preload(:locale)
   end
 
   def new
