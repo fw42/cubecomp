@@ -48,7 +48,7 @@ class Admin::UsersController < AdminController
     return render_forbidden unless current_user.policy.create_user?(@user)
 
     if @user.save
-      redirect_to edit_admin_user_path(@user), notice: 'User was successfully created.'
+      redirect_to admin_users_path, notice: 'User was successfully created.'
     else
       render :new
     end
@@ -57,7 +57,12 @@ class Admin::UsersController < AdminController
   def update
     if @user.update(user_params)
       session[:user] = @user.session_data if current_user.id == @user.id
-      redirect_to edit_admin_user_path(@user), notice: 'User was successfully updated.'
+
+      if @user.id == current_user.id
+        redirect_to edit_admin_user_path(@user), notice: 'Your user account was successfully updated.'
+      else
+        redirect_to admin_users_path, notice: 'User was successfully updated.'
+      end
     else
       edit
       render :edit

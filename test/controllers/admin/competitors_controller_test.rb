@@ -159,7 +159,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
   test '#update' do
     patch :update, competition_id: @competition.id, id: @competitor.id, competitor: @update_params
 
-    assert_redirected_to edit_admin_competition_competitor_path(@competition.id, assigns(:competitor))
+    assert_redirected_to admin_competition_competitors_path(@competition.id)
     @competitor.reload
     assert_attributes(@update_params.except(:"birthday(1i)", :"birthday(2i)", :"birthday(3i)"), @competitor)
     assert_equal @update_params[:"birthday(1i)"].to_i, @competitor.birthday.year

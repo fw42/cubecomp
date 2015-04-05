@@ -76,7 +76,7 @@ class Admin::EventsControllerTest < ActionController::TestCase
 
     patch :update, competition_id: @competition.id, id: @event.id, event: params
 
-    assert_redirected_to edit_admin_competition_event_path(@competition.id, assigns(:event))
+    assert_redirected_to admin_competition_events_path(@competition.id)
     @event.reload
     assert_attributes(params.except(:start_time), @event)
     assert_equal Time.zone.parse(params[:start_time]).strftime('%H:%M'), @event.start_time.strftime('%H:%M')

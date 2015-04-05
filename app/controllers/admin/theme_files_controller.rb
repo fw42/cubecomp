@@ -79,8 +79,7 @@ class Admin::ThemeFilesController < AdminController
 
   def update
     if @theme_file.update(theme_file_params)
-      redirect_to edit_admin_theme_file_path(@theme_file),
-        notice: 'Theme file was successfully updated.'
+      redirect_to admin_theme_files_path, notice: 'Theme file was successfully updated.'
     else
       render :edit
     end

@@ -106,7 +106,7 @@ class Admin::CompetitorsController < AdminController
     RegistrationService.new(@competitor, admin: true).apply_registration_params(competitor_params[:days])
 
     if @competitor.save
-      redirect_to edit_admin_competition_competitor_path(current_competition, @competitor),
+      redirect_to admin_competition_competitors_path(current_competition),
         notice: 'Competitor was successfully updated.'
     else
       render :edit

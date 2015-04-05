@@ -65,7 +65,7 @@ class Admin::CompetitionsController < AdminController
 
   def update
     if @competition.update(competition_params)
-      redirect_to edit_admin_competition_path(@competition), notice: 'Competition was successfully updated.'
+      redirect_to admin_competitions_path, notice: 'Competition was successfully updated.'
     else
       render :edit
     end
@@ -73,7 +73,7 @@ class Admin::CompetitionsController < AdminController
 
   def destroy
     @competition.destroy
-    redirect_to admin_competitions_url, notice: 'Competition was successfully deleted.'
+    redirect_to admin_competitions_path, notice: 'Competition was successfully deleted.'
   end
 
   private

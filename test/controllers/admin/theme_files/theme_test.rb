@@ -177,7 +177,7 @@ module Admin::ThemeFiles
 
       patch :update, theme_id: @theme.id, id: @theme_file.id, theme_file: params
 
-      assert_redirected_to edit_admin_theme_theme_file_path(@theme, @theme_file)
+      assert_redirected_to admin_theme_theme_files_path(@theme)
       assert_attributes(params, @theme_file.reload)
     end
 

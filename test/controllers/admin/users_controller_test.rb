@@ -43,7 +43,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
       post :create, user: params
     end
 
-    assert_redirected_to edit_admin_user_path(assigns(:user))
+    assert_redirected_to admin_users_path
     user = User.find_by(email: 'bob@cubecomp.de')
     assert_attributes(params.except(:password, :password_confirmation), user)
     assert user.authenticate(params[:password])
@@ -116,7 +116,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
     patch :update, id: @user.id, user: params
 
     assert assigns(:user)
-    assert_redirected_to edit_admin_user_path(assigns(:user))
+    assert_redirected_to admin_users_path
     user = User.find_by(email: 'bob@cubecomp.de')
     assert_attributes(params.except(:password, :password_confirmation), user)
     assert user.authenticate(params[:password])
