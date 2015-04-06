@@ -12,6 +12,7 @@ class Competitor < ActiveRecord::Base
 
   validates :email, presence: true
   validates :email, email: true, allow_nil: true, allow_blank: true
+  validates :email, email_dns: true, allow_nil: true, allow_blank: true
 
   def self.valid_birthday_range
     Date.new(1900)..(Time.now.utc - 1.years).to_date
