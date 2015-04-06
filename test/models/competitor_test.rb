@@ -66,8 +66,27 @@ class CompetitorTest < ActiveSupport::TestCase
     @competitor.email = 'foobar'
     assert_not_valid(@competitor, :email)
 
-    @competitor.email = 'foo@bar.com'
+    @competitor.email = 'foobar@google.com'
     assert_valid @competitor
+  end
+
+  test 'validates on create that email domain has valid DNS MX record' do
+    competitor = Competitor.new
+    competitor.email = 'email@invalid-domain.foo'
+    assert_not_valid(competitor, :email)
+  end
+
+  test 'validates on update that email domain has valid DNS MX record, but only if email was changed' do
+    @competitor.email = 'email@invalid-domain.foo'
+    @competitor.save!(validate: false)
+    assert_valid(@competitor)
+
+    @competitor.first_name = 'some other unrelated change'
+    @competitor.email = 'email@invalid-domain.foo'
+    assert_valid(@competitor)
+
+    @competitor.email = 'bla@invalid-domain.foo'
+    assert_not_valid(@competitor, :email)
   end
 
   test 'validates presence and sanity of birthday' do
