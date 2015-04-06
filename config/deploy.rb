@@ -1,6 +1,9 @@
 set :application, 'cubecomp'
 set :repo_url, 'git@github.com:fw42/cubecomp.git'
 
+set :format, :pretty
+set :log_level, :info
+
 set :linked_files, %w{config/database.yml .env}
 set :linked_dirs, %w{log public/system tmp db/backup public/assets}
 
