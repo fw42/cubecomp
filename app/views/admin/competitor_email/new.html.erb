@@ -73,7 +73,7 @@
       </tr>
       <tr>
         <td><label>Country:</label></td>
-        <td><%= @competitor.country.name %> <% if @competitor.local %>(<%= @competition.city_name %>)<% end %></td>
+        <td><%= @competitor.country.name %> <% if @competitor.local %>(<%= current_competition.city_name %>)<% end %></td>
       </tr>
       <tr>
         <td><label>Gender:</label></td>

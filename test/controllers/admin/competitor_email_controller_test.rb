@@ -18,6 +18,12 @@ class Admin::CompetitorEmailControllerTest < ActionController::TestCase
     assert_not_nil assigns(:email)
   end
 
+  test '#new for locals' do
+    @competitor.update_attributes(local: true)
+    get :new, competition_id: @competition.id, id: @competitor.id
+    assert_response :success
+  end
+
   test '#create sends an email' do
     params = {
       "subject" => "[Aachen Open 2014] Welcome!",
