@@ -160,16 +160,15 @@ class NestedAttributes
 
       @bindDestroy($record) if @options.$clone or !@options.deepClone
 
-      if !@options.preserveInputValues
-        # Empty out the values of text inputs and selects
-        $record.find(':text, textarea, select').val('')
+      # Empty out the values of text inputs and selects
+      $record.find(':text, textarea, select').val('')
 
-        # Reset checkboxes and radios
-        $record.find(':checkbox, :radio').attr("checked", false)
+      # Reset checkboxes and radios
+      $record.find(':checkbox, :radio').attr("checked", false)
 
-        # Empty out any hidden [id] or [_destroy] fields
-        $record.find('input[name$="\\[id\\]"]').remove()
-        $record.find('input[name$="\\[_destroy\\]"]').remove()
+      # Empty out any hidden [id] or [_destroy] fields
+      $record.find('input[name$="\\[id\\]"]').remove()
+      $record.find('input[name$="\\[_destroy\\]"]').remove()
 
     # Make sure it's not hidden as we return.
     # It would be hidden in the case where we're duplicating an
