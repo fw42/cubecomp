@@ -12,6 +12,8 @@
 
 @import "../../../vendor/assets/stylesheets/sb-admin-2/bootstrap.scss";
 
+$table-highlight: #ffff99;
+
 div.row h2 {
   font-size: 22px;
   margin-top: 20px;
@@ -152,13 +154,16 @@ table.default-table {
     text-align: center;
   }
 
-  tr.sum {
-    border-top: 2px solid black;
+  tr.line-below {
+    border-bottom: 2px solid black;
   }
 
-  td.total-money {
-    font-weight: bold;
-    color: darkgreen;
+  td.line-to-the-left {
+    border-left: 2px solid black;
+  }
+
+  tr.current-model {
+    background-color: $table-highlight;
   }
 }
 
@@ -176,8 +181,6 @@ table.financial-overview {
     text-align: right;
   }
 }
-
-$table-highlight: #ffff99;
 
 table.competitors {
   tr.new {

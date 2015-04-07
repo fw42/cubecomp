@@ -6,6 +6,7 @@ aachen_open:
   country: germany
   default_locale: aachen_open_german
   registration_open: true
+  pricing_model: per_day
 
 german_open:
   name: German Open 2014
@@ -14,3 +15,4 @@ german_open:
   city_name: Gütersloh
   country: germany
   default_locale: german_open_german
+  pricing_model: per_day

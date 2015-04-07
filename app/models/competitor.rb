@@ -63,18 +63,6 @@ class Competitor < ActiveRecord::Base
     registered_on?(day_id) && !competing_on?(day_id)
   end
 
-  def entrance_fee(day)
-    if free_entrance?
-      0
-    elsif competing_on?(day.id)
-      day.entrance_fee_competitors
-    elsif guest_on?(day.id)
-      day.entrance_fee_guests
-    else
-      0
-    end
-  end
-
   def event_registrations_by_day(include_waiting = false)
     registrations = event_registrations
     registrations = registrations.reject(&:waiting) unless include_waiting

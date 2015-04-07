@@ -7,39 +7,37 @@
     <table class='default-table financial-overview'>
       <tr>
         <th></th>
-        <th colspan="2">Competitors</th>
-        <th colspan="2">Guests</th>
-        <th colspan="2">Total</th>
-      </tr>
-      <tr>
-        <th></th>
-        <th>#</th>
-        <th>$</th>
-        <th>#</th>
-        <th>$</th>
-        <th>#</th>
-        <th>$</th>
-      </tr>
-      <% current_competition.days.each do |day| %>
-        <tr>
+        <% current_competition.days.each do |day| %>
           <th><%= l(day.date, format: :day_only) %></th>
-          <td><%= num_competitors = @financials.competing_competitors_count(day) %></td>
-          <td><%= money_competitors = @financials.entrance_fee_from_competing_competitors(day) %></td>
-          <td><%= num_guests = @financials.guest_count(day) %></td>
-          <td><%= money_guests = @financials.entrance_fee_from_guests(day) %></td>
-          <td><%= num_guests + num_competitors %></td>
-          <td><%= money_guests + money_competitors %></td>
+        <% end %>
+        <th>&sum;</th>
+      </tr>
+
+      <tr>
+        <th>Number of competitors</th>
+        <% current_competition.days.each do |day| %>
+          <td><%= @counter.competing_competitors_count(day) %></td>
+        <% end %>
+        <td class="line-to-the-left"><%= @counter.competing_competitors_count(*current_competition.days) %></td>
+      </tr>
+
+      <tr class="line-below">
+        <th>Number of guests</th>
+        <% current_competition.days.each do |day| %>
+          <td><%= @counter.guest_count(day) %></td>
+        <% end %>
+        <td class="line-to-the-left"><%= @counter.guest_count(*current_competition.days) %></td>
+      </tr>
+
+      <% @financials.each do |pricing_model_handle, service| %>
+        <tr <%= pricing_model_handle == current_competition.pricing_model ? "class=\"current-model\"".html_safe : "" %>>
+          <th><%= Competition::PRICING_MODELS[pricing_model_handle] %></th>
+          <% current_competition.days.each do |day| %>
+            <td><%= amount = service.entrance_fee(day); amount && amount_with_currency(amount, current_competition.currency) %></td>
+          <% end %>
+          <td class="line-to-the-left"><%= amount_with_currency(service.entrance_fee_sum, current_competition.currency) %></td>
         </tr>
       <% end %>
-      <tr class="sum">
-        <th>&sum;</th>
-        <td></td>
-        <td><%= @financials.total_entrance_fee_from_competing_competitors %></td>
-        <td></td>
-        <td><%= @financials.total_entrance_fee_from_guests %></td>
-        <td><%= @financials.total_count %></td>
-        <td class="total-money"><%= @financials.total_entrance_fee %></td>
-      </tr>
     </table>
   </div>
 </div>

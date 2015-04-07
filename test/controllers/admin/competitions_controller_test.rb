@@ -21,6 +21,9 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
       handle: 'go15',
       name: 'German Open 2015',
       staff_email: 'german-open@cubecomp.de',
+      pricing_model: 'per_day',
+      entrance_fee_competitors: 12.34,
+      entrance_fee_guests: 56.78,
       locales_attributes: {
         "0" => {
           competition_id: "",

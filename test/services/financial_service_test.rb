@@ -8,23 +8,19 @@ class FinancialServiceTest < ActiveSupport::TestCase
     @competitor = competitors(:flo_aachen_open)
   end
 
-  test "#entrance_fee_from_guests and #guest_count only considers confirmed guests" do
-    assert_equal 0, service.entrance_fee_from_guests(@day)
+  test "#guest_count only considers confirmed guests" do
+    @competitor.update_attributes(state: 'new')
     assert_equal 0, service.guest_count(@day)
 
     @guest.update_attributes(state: 'confirmed')
-
-    assert_equal @day.entrance_fee_guests, service.entrance_fee_from_guests(@day)
     assert_equal 1, service.guest_count(@day)
   end
 
-  test "#entrance_fee_from_competing_competitors only considers confirmed competitors" do
+  test "#competing_competitors_count only considers confirmed competitors" do
     @competitor.update_attributes(state: 'new')
-    assert_equal 0, service.entrance_fee_from_competing_competitors(@day)
     assert_equal 0, service.competing_competitors_count(@day)
 
     @competitor.update_attributes(state: 'confirmed')
-    assert_equal @day.entrance_fee_competitors, service.entrance_fee_from_competing_competitors(@day)
     assert_equal 1, service.competing_competitors_count(@day)
   end
 

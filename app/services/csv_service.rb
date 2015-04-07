@@ -35,9 +35,7 @@ class CsvService
       'WCA ID',
       'Gender',
       'Birthdate',
-      '',
-      '',
-      '',
+      '', '', ''
     ]
 
     header << handles if with_handles
@@ -51,9 +49,7 @@ class CsvService
       competitor.wca,
       competitor.male? ? 'm' : 'f',
       competitor.birthday.strftime('%Y-%m-%d'),
-      '',
-      '',
-      '',
+      '', '',  ''
     ]
 
     if with_handles

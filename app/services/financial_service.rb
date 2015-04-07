@@ -1,31 +1,36 @@
 class FinancialService
-  def initialize(competition)
+  def initialize(competition, pricing_model_class = nil)
     @competition = competition
+    @pricing_model_class = pricing_model_class
   end
 
   def total_count
     competitors.size
   end
 
-  def total_entrance_fee
-    total_entrance_fee_from_guests + total_entrance_fee_from_competing_competitors
+  def guest_count(*days)
+    days.map{ |day| guests(day) }.flatten.uniq.size
   end
 
-  def total_entrance_fee_from_guests
-    @competition.days.map{ |day| entrance_fee_from_guests(day) }.sum
+  def competing_competitors_count(*days)
+    days.map{ |day| competing_competitors(day) }.flatten.uniq.size
   end
 
-  def total_entrance_fee_from_competing_competitors
-    @competition.days.map{ |day| entrance_fee_from_competing_competitors(day) }.sum
+  def entrance_fee(day)
+    fees = competitors.map{ |competitor| @pricing_model_class.new(competitor).entrance_fee(day) }.compact
+
+    if fees.size == 0
+      nil
+    else
+      fees.sum
+    end
   end
 
-  def guest_count(day)
-    guests(day).size
+  def entrance_fee_sum
+    competitors.map{ |competitor| @pricing_model_class.new(competitor).entrance_fee_total }.sum
   end
 
-  def competing_competitors_count(day)
-    competing_competitors(day).size
-  end
+  private
 
   def entrance_fee_from_guests(day)
     entrance_fee(guests(day), day)
@@ -33,14 +38,6 @@ class FinancialService
 
   def entrance_fee_from_competing_competitors(day)
     entrance_fee(competing_competitors(day), day)
-  end
-
-  private
-
-  def entrance_fee(competitors, day)
-    competitors.reduce(BigDecimal.new(0)) do |total, competitor|
-      total + competitor.entrance_fee(day)
-    end
   end
 
   def guests(day)
@@ -57,5 +54,6 @@ class FinancialService
       .confirmed
       .preload(:events)
       .preload(:day_registrations)
+      .preload(:days)
   end
 end

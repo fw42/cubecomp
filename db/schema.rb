@@ -11,26 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150407194302) do
+ActiveRecord::Schema.define(version: 20150418215400) do
 
   create_table "competitions", force: :cascade do |t|
-    t.string   "name",              limit: 255,                   null: false
-    t.string   "handle",            limit: 255,                   null: false
-    t.string   "staff_email",       limit: 255,                   null: false
-    t.string   "staff_name",        limit: 255
-    t.string   "city_name",         limit: 255,                   null: false
-    t.string   "city_name_short",   limit: 255
-    t.text     "venue_address",     limit: 65535
-    t.integer  "country_id",        limit: 4,                     null: false
-    t.boolean  "cc_staff",          limit: 1,     default: false
-    t.boolean  "registration_open", limit: 1,     default: false
+    t.string   "name",                     limit: 255,                                            null: false
+    t.string   "handle",                   limit: 255,                                            null: false
+    t.string   "staff_email",              limit: 255,                                            null: false
+    t.string   "staff_name",               limit: 255
+    t.string   "city_name",                limit: 255,                                            null: false
+    t.string   "city_name_short",          limit: 255
+    t.text     "venue_address",            limit: 65535
+    t.integer  "country_id",               limit: 4,                                              null: false
+    t.boolean  "cc_staff",                 limit: 1,                              default: false
+    t.boolean  "registration_open",        limit: 1,                              default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "delegate_user_id",  limit: 4
-    t.integer  "owner_user_id",     limit: 4
-    t.integer  "default_locale_id", limit: 4
-    t.string   "currency",          limit: 255
-    t.boolean  "published",         limit: 1,     default: false
+    t.integer  "delegate_user_id",         limit: 4
+    t.integer  "owner_user_id",            limit: 4
+    t.integer  "default_locale_id",        limit: 4
+    t.string   "currency",                 limit: 255
+    t.boolean  "published",                limit: 1,                              default: false
+    t.decimal  "entrance_fee_competitors",               precision: 10, scale: 2, default: 0.0,   null: false
+    t.decimal  "entrance_fee_guests",                    precision: 10, scale: 2, default: 0.0,   null: false
+    t.string   "pricing_model",            limit: 255,                                            null: false
   end
 
   add_index "competitions", ["country_id"], name: "competitions_country_id_fk", using: :btree

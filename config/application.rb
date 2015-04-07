@@ -18,6 +18,7 @@ module Cubecomp
     config.autoload_paths << Rails.root.join('lib')
     config.autoload_paths << Rails.root.join('app')
     config.autoload_paths << Rails.root.join('app/liquid/drops')
+    config.autoload_paths << Rails.root.join('app/models/concerns')
 
     config.active_record.raise_in_transactional_callbacks = true
 
