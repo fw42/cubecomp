@@ -95,3 +95,12 @@ Style/IfUnlessModifier:
 
 Style/RaiseArgs:
   Enabled: false
+
+Style/HashSyntax:
+  Enabled: false
+
+Style/RegexpLiteral:
+  Enabled: false
+
+Style/SymbolLiteral:
+  Enabled: false
