@@ -61,6 +61,11 @@
     </table>
   <% end %>
 
+  <%= form_section 'Other' do %>
+    <%= f.label :created_at, 'Registered on:' %>
+    <%= @competitor.created_at %>
+  <% end %>
+
   <%= form_section 'Options' do %>
     <p>
       <%= f.label :state, 'State:' %>
