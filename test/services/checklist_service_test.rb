@@ -7,10 +7,8 @@ class ChecklistServiceTest < ActiveSupport::TestCase
   end
 
   test '#comments includes user_comment and admin_comment' do
-    @competitor.user_comment = 'can I bring my mom?'
     @competitor.admin_comment = 'haha'
 
-    assert_match /User comment.*#{@competitor.user_comment}/i, @service.comments.join("\n")
     assert_match /Admin comment.*#{@competitor.admin_comment}/i, @service.comments.join("\n")
   end
 

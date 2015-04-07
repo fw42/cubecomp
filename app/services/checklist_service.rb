@@ -35,7 +35,6 @@ class ChecklistService
 
   def comment_comments
     comments = []
-    comments << "User comment: #{user_comment}" if user_comment.present?
     comments << "Admin comment: #{admin_comment}" if admin_comment.present?
     comments << free_entrance_comment if free_entrance?
     comments
