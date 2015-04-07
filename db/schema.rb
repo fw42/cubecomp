@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150404010332) do
+ActiveRecord::Schema.define(version: 20150407194302) do
 
   create_table "competitions", force: :cascade do |t|
     t.string   "name",              limit: 255,                   null: false
@@ -144,7 +144,6 @@ ActiveRecord::Schema.define(version: 20150404010332) do
 
   add_index "events", ["competition_id"], name: "index_events_on_competition_id", using: :btree
   add_index "events", ["day_id"], name: "events_day_id_fk", using: :btree
-  add_index "events", ["handle", "competition_id"], name: "index_events_on_handle_and_competition_id", unique: true, using: :btree
 
   create_table "locales", force: :cascade do |t|
     t.string   "handle",         limit: 255, null: false
