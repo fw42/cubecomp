@@ -63,14 +63,15 @@ class Admin::CompetitorsController < AdminController
   end
 
   def email_addresses
-    @active = current_competition
+    active = current_competition
       .competitors
       .confirmed
       .includes(:event_registrations)
 
-    @guests = @active.select{ |competitor| competitor.event_registrations.size == 0 }
+    @competitors = active.select{ |competitor| competitor.event_registrations.size > 0 }
+    @guests = active.select{ |competitor| competitor.event_registrations.size == 0 }
     @awaiting_payment = current_competition.competitors.awaiting_payment
-    @locals = @active.select(&:local)
+    @locals = active.select(&:local)
   end
 
   def csv

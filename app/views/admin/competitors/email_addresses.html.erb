@@ -1,8 +1,8 @@
 <% page_title 'Email addresses' %>
 
-<% if @active.size > 0 %>
-  <h2>Confirmed competitors and guests</h2>
-  <p><b>BCC:</b> <%= @active.map(&:email).join(', ') %></p>
+<% if @competitors.size > 0 %>
+  <h2>Confirmed competitors</h2>
+  <p><b>BCC:</b> <%= @competitors.map(&:email).join(', ') %></p>
 <% end %>
 
 <% if @guests.size > 0 %>
