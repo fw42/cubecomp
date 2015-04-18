@@ -70,7 +70,10 @@
     </tr>
     <tr>
       <td><%= f.label :email %></td>
-      <td><%= f.text_field :email %></td>
+      <td>
+        <%= f.text_field :email %>
+        <span id="email_suggestion"><%= t('registration.did_you_mean', suggestion: '<a id="email_suggestion"></a>').html_safe %></span>
+      </td>
     </tr>
     <tr>
       <td><%= f.label :birthday %></td>
@@ -172,3 +175,7 @@
     </tr>
   </table>
 <% end %>
+
+<script type='text/javascript'>
+  competitorEmailSuggestion();
+</script>
