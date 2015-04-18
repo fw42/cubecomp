@@ -149,6 +149,19 @@ class Admin::UsersControllerTest < ActionController::TestCase
     assert_equal false, @user.reload.delegate
   end
 
+  test '#update active with permission' do
+    UserPolicy.any_instance.expects(:disable_user?).returns(true)
+    patch :update, id: @user.id, user: { active: false }
+    assert_equal false, @user.reload.active
+  end
+
+  test '#update active without permission' do
+    UserPolicy.any_instance.expects(:disable_user?).returns(false)
+    patch :update, id: @user.id, user: { active: false }
+    assert_response :forbidden
+    assert_equal true, @user.reload.active
+  end
+
   test "#update when passwords don't match fails" do
     patch :update, id: @user.id, user: { password: 'foofoofoo', password_confirmation: 'barbarbar' }
     assert_response 200
