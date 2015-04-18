@@ -125,7 +125,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
 
   test '#update' do
     patch :update, id: @competition.id, competition: @update_params
-    assert_redirected_to admin_competitions_path
+    assert_redirected_to edit_admin_competition_path(@competition)
     assert_attributes(@update_params, @competition.reload)
   end
 

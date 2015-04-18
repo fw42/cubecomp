@@ -65,7 +65,7 @@ class Admin::CompetitionsController < AdminController
 
   def update
     if @competition.update(competition_params)
-      redirect_to admin_competitions_path, notice: 'Competition was successfully updated.'
+      redirect_to edit_admin_competition_path(@competition), notice: 'Competition was successfully updated.'
     else
       render :edit
     end
