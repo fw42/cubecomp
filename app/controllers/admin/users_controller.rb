@@ -7,6 +7,7 @@ class Admin::UsersController < AdminController
   before_action :ensure_user_can_edit_permissions, only: [:update, :create]
   before_action :ensure_user_can_edit_permission_level, only: [:update, :create]
   before_action :ensure_user_can_edit_delegate_flag, only: [:update, :create]
+  before_action :ensure_user_can_change_active_flag, only: [:update]
 
   skip_before_action :ensure_current_competition
 
@@ -91,6 +92,11 @@ class Admin::UsersController < AdminController
 
   def ensure_user_can_edit_user
     return render_forbidden unless current_user.policy.edit_user?(@user)
+  end
+
+  def ensure_user_can_change_active_flag
+    return unless user_params.key?(:active)
+    render_forbidden unless current_user.policy.disable_user?(@user)
   end
 
   def ensure_user_can_edit_permissions
