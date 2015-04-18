@@ -1,4 +1,12 @@
 class Competition < ActiveRecord::Base
+  PRICING_MODELS = {
+    'per_day' => 'Pay per day',
+    'per_competition' => 'Pay per competition',
+    'per_day_discounted' => 'Pay per competition if registered for all days'
+  }
+
+  include EntranceFeeValidation
+
   validates :name, presence: true
   validates :name, uniqueness: true, allow_nil: true, allow_blank: true
 
@@ -21,6 +29,9 @@ class Competition < ActiveRecord::Base
 
   belongs_to :delegate, class_name: 'User', foreign_key: 'delegate_user_id'
   validate :validate_delegate_user_is_a_delegate
+
+  validates :pricing_model, presence: true
+  validates :pricing_model, inclusion: { in: PRICING_MODELS.keys }, allow_nil: true, allow_blank: true
 
   has_many :news, dependent: :destroy
   has_many :competitors, dependent: :destroy
@@ -72,6 +83,10 @@ class Competition < ActiveRecord::Base
   def potential_owners
     owners = new_record? ? User.all : users
     owners.sort_by{ |user| [ user.last_name, user.first_name ] }
+  end
+
+  def pricing_model_class
+    PricingModel.for_handle(pricing_model)
   end
 
   private

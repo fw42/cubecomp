@@ -12,13 +12,14 @@ class ChecklistService
 
   def initialize(competitor)
     @competitor = competitor
+    @competition = competitor.competition
   end
 
   def entrance_fee
     if paid?
       0
     else
-      competitor.days.reduce(0) { |total, day| total + competitor.entrance_fee(day) }
+      pricing_model.entrance_fee_total
     end
   end
 
@@ -32,6 +33,10 @@ class ChecklistService
   end
 
   private
+
+  def pricing_model
+    @competition.pricing_model_class.new(@competitor)
+  end
 
   def comment_comments
     comments = []

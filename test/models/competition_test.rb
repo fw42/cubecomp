@@ -182,4 +182,36 @@ class CompetitionTest < ActiveSupport::TestCase
       assert_equal true, @competition.already_over?
     end
   end
+
+  [ :entrance_fee_competitors, :entrance_fee_guests ].each do |fee|
+    test "validates presence of #{fee}" do
+      @competition.send("#{fee}=", nil)
+      assert_not_valid(@competition, fee)
+    end
+
+    test "validates numericality of #{fee}" do
+      @competition.send("#{fee}=", 'foobar')
+      assert_not_valid(@competition, fee)
+
+      @competition.send("#{fee}=", 17)
+      assert_valid(@competition)
+
+      @competition.send("#{fee}=", 42.17)
+      assert_valid(@competition)
+
+      @competition.send("#{fee}=", 0)
+      assert_valid(@competition)
+
+      @competition.send("#{fee}=", -10)
+      assert_not_valid(@competition, fee)
+    end
+  end
+
+  test "validates pricing_model is in list" do
+    @competition.pricing_model = 'foobar'
+    assert_not_valid(@competition, :pricing_model)
+
+    @competition.pricing_model = Competition::PRICING_MODELS.keys.first
+    assert_valid(@competition)
+  end
 end

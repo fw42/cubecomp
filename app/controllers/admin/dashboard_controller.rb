@@ -1,6 +1,12 @@
 class Admin::DashboardController < AdminController
   def index
-    @financials = FinancialService.new(current_competition)
+    @financials = {}
+    Competition::PRICING_MODELS.each_key do |handle|
+      @financials[handle] = FinancialService.new(current_competition, PricingModel.for_handle(handle))
+    end
+
+    @counter = FinancialService.new(current_competition)
+
     @events_with_limits = current_competition.events.with_max_number_of_registrations.to_a
     @getting_started = getting_started
   end

@@ -238,31 +238,6 @@ class CompetitorTest < ActiveSupport::TestCase
     assert @competitor.birthday_on?(date)
   end
 
-  test '#entrance_fee' do
-    day = @competitor.competition.days.first
-    day2 = @competitor.competition.days.last
-    service = RegistrationService.new(@competitor)
-
-    service.register_as_guest(day2.id)
-    service.unregister_from_day(day.id)
-    @competitor.save!
-    @competitor.reload
-
-    assert_equal 0, @competitor.entrance_fee(day)
-
-    service.register_as_guest(day.id)
-    assert_equal day.entrance_fee_guests, @competitor.entrance_fee(day)
-
-    @competitor.paid = true
-    assert_equal day.entrance_fee_guests, @competitor.entrance_fee(day)
-
-    service.register_for_event(day.events.first)
-    assert_equal day.entrance_fee_competitors, @competitor.entrance_fee(day)
-
-    @competitor.free_entrance = true
-    assert_equal 0, @competitor.entrance_fee(day)
-  end
-
   test '#wca_url' do
     assert_equal "http://www.worldcubeassociation.org/results/p.php?i=#{@competitor.wca}", @competitor.wca_url
   end

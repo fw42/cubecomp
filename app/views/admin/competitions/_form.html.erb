@@ -99,6 +99,23 @@
   <% end %>
 
   <%= form_section 'Date and financial settings' do %>
+    <table class="form-table">
+      <tr>
+        <td><%= f.label :pricing_model, 'Pricing model:' %></td>
+        <td><%= f.select :pricing_model, Competition::PRICING_MODELS.to_a.map(&:reverse) %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :entrance_fee_competitors, 'Entrance fee for competitors (all days combined):' %></td>
+        <td><%= f.text_field :entrance_fee_competitors, { class: 'small' } %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :entrance_fee_competitors, 'Entrance fee for guests (all days combined):' %></td>
+        <td><%= f.text_field :entrance_fee_guests, { class: 'small' } %></td>
+      </tr>
+    </table>
+
+    <br/>
+
     <table class='default-table'>
       <thead>
         <tr>
