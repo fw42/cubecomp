@@ -60,7 +60,7 @@ def create_competitor(competition)
     competition: competition,
     first_name: Forgery::Name.first_name,
     last_name: Forgery::Name.last_name,
-    email: Forgery(:internet).email_address,
+    email: Forgery(:internet).user_name + "@cubecomp.de",
     birthday: Date.today - 10.years - rand(50*365).days,
     state: Competitor::STATES.sample,
     country: Country.all.to_a.sample,
@@ -188,16 +188,21 @@ create_user(
 locales = [Locale.new(handle: "de"), Locale.new(handle: "en")]
 days = [Day.new(date: Date.new(2014, 2, 13), entrance_fee_guests: 0, entrance_fee_competitors: 12)]
 
-competition = Competition.create!(
-  name: "Aachen Open 2014",
-  handle: "ao14",
-  staff_email: "foo@bar.com",
-  staff_name: "Mister Staff",
-  city_name: "Aachen",
-  city_name_short: "AC",
-  country: germany,
-  locales: locales,
-  days: days
-)
+Competition.transaction do
+  competition = Competition.create!(
+    name: "Example Open 2015",
+    handle: "ex15",
+    staff_email: "foo@bar.com",
+    staff_name: "Mister Staff",
+    city_name: "Aachen",
+    city_name_short: "AC",
+    country: germany,
+    locales: locales,
+    days: days,
+    pricing_model: 'per_day',
+    entrance_fee_competitors: Forgery(:monetary).money,
+    entrance_fee_guests: Forgery(:monetary).money
+  )
 
-create_associations(competition)
+  create_associations(competition)
+end
