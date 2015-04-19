@@ -117,4 +117,36 @@ class UserTest < ActiveSupport::TestCase
     @user.save!
     assert_equal 2, @user.version
   end
+
+  test "user requires old password when changing current password" do
+    @user.password = @user.password_confirmation = 'old_old_old'
+    @user.save!
+
+    @user.validate_old_password = true
+
+    @user.password = @user.password_confirmation = 'new_new_new'
+    assert_not_valid(@user, :old_password)
+
+    @user.old_password = 'wrong_wrong_wrong'
+    assert_not_valid(@user, :old_password)
+
+    @user.old_password = 'old_old_old'
+    assert_valid(@user)
+  end
+
+  test "user requires old password when changing email" do
+    @user.password = @user.password_confirmation = 'old_old_old'
+    @user.save!
+
+    @user.validate_old_password = true
+
+    @user.email = 'new@foobar.com'
+    assert_not_valid(@user, :old_password)
+
+    @user.old_password = 'wrong_wrong_wrong'
+    assert_not_valid(@user, :old_password)
+
+    @user.old_password = 'old_old_old'
+    assert_valid(@user)
+  end
 end

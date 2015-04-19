@@ -46,6 +46,10 @@ class UserPolicy
     higher_permission_level_than?(other_user)
   end
 
+  def change_user_password_without_old_password?(other_user)
+    higher_permission_level_than?(other_user)
+  end
+
   def edit_user?(other_user)
     same_user?(other_user) || higher_permission_level_than?(other_user)
   end

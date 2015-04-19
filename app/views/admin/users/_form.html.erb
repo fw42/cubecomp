@@ -23,6 +23,12 @@
         <td><%= f.label :password_confirmation, 'Password confirmation:' %></td>
         <td><%= f.password_field :password_confirmation, placeholder: 'Enter new password again' %></td>
       </tr>
+      <% unless current_user.policy.change_user_password_without_old_password?(@user) %>
+        <tr>
+          <td><%= f.label :old_password, 'Old password:' %></td>
+          <td><%= f.password_field :old_password, placeholder: 'Required for changing password or email' %></td>
+        </tr>
+      <% end %>
       <tr>
         <td><%= f.label :address, 'Address:' %></td>
         <td><%= f.text_area :address %></td>

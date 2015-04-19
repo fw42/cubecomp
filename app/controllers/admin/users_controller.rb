@@ -8,6 +8,7 @@ class Admin::UsersController < AdminController
   before_action :ensure_user_can_edit_permission_level, only: [:update, :create]
   before_action :ensure_user_can_edit_delegate_flag, only: [:update, :create]
   before_action :ensure_user_can_change_active_flag, only: [:update]
+  before_action :set_user_old_password_validation, only: [:update]
 
   skip_before_action :ensure_current_competition
 
@@ -15,6 +16,7 @@ class Admin::UsersController < AdminController
     :email,
     :first_name,
     :last_name,
+    :old_password,
     :password,
     :password_confirmation,
     :permission_level,
@@ -84,6 +86,10 @@ class Admin::UsersController < AdminController
     else
       @user = User.find(params[:id])
     end
+  end
+
+  def set_user_old_password_validation
+    @user.validate_old_password = !current_user.policy.change_user_password_without_old_password?(@user)
   end
 
   def user_params
