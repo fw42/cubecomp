@@ -83,6 +83,16 @@ de:
   disclaimer:
     title: "Impressum"
 
+  stats:
+    title: "Statistiken"
+    events: "Events"
+    registrations: "Anmeldungen"
+    registrations_count: "Anzahl Anmeldungen"
+    competitors: "Teilnehmer"
+    guests: "Gäste"
+    countries: "Länder"
+    days: "Tage"
+
   misc:
     male: "männlich"
     female: "weiblich"

@@ -85,9 +85,15 @@ class ThemeFileRenderer
 
   def assign_views
     assigns[:default_headers] = ViewDrop.new(template: 'default_headers', controller: @controller)
+
+    assigns[:stats] = ViewDrop.new(template: 'stats', controller: @controller, locals: {
+      :@stats => Highcharts.new(@competition)
+    })
+
     assigns[:news] = ViewDrop.new(template: 'news', controller: @controller, locals: {
       :@news => @locale.news.order("time DESC")
     })
+
     assign_competitors_view
     assign_registration_form_view
   end
