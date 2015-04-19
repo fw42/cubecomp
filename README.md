@@ -20,6 +20,10 @@ world.
 Cubecomp is free and open source, published under the
 [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
+## Screenshots
+
+![Screenshots](https://cloud.githubusercontent.com/assets/2072686/7221699/d0707a2c-e6c3-11e4-97f3-ed1ee295a399.gif)
+
 ## Getting started
 
 ### Requirements
