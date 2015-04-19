@@ -1,0 +1,54 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Competitor statistics
+  </div>
+
+  <div class="panel-body">
+    <table class='default-table progress'>
+      <thead>
+        <tr>
+          <th colspan="2">Top 10</th>
+          <th>Average</th>
+        </tr>
+        <tr>
+          <th>Oldest</th>
+          <th>Youngest</th>
+          <th>Age</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <% @statistics.oldest.each do |competitor| %>
+              <%= competitor.name %> (<%= competitor.age %>)<br/>
+            <% end %>
+          </td>
+          <td>
+            <% @statistics.youngest.each do |competitor| %>
+              <%= competitor.name %> (<%= competitor.age %>)<br/>
+            <% end %>
+          </td>
+          <td><%= "%.1f" % @statistics.average_age %></td>
+        </tr>
+        <tr>
+          <th>Countries</th>
+          <th>Events</th>
+          <th>Events</th>
+        </tr>
+        <tr>
+          <td>
+            <% @statistics.countries.each do |country, competitors| %>
+              <%= country.name %> (<%= competitors.size %>)<br/>
+            <% end %>
+          </td>
+          <td>
+            <% @statistics.events.each do |competitor| %>
+              <%= competitor.name %> (<%= competitor.event_registrations.size %>)<br/>
+            <% end %>
+          </td>
+          <td><%= "%.1f" % @statistics.average_events %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -9,6 +9,8 @@ class Admin::DashboardController < AdminController
 
     @events_with_limits = current_competition.events.with_max_number_of_registrations.to_a
     @getting_started = getting_started
+
+    @statistics = CompetitorStatistics.new(current_competition)
   end
 
   private

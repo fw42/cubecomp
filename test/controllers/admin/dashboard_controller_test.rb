@@ -51,7 +51,7 @@ class Admin::DashboardControllerTest < ActionController::TestCase
     refute_match /<option/, response.body
   end
 
-  test "#index shows financial overview" do
+  test "#index shows financial overview if there are competitors" do
     regexp = /<table class='default-table financial-overview'>/
 
     FinancialService.any_instance.expects(:total_count).returns(17).at_least_once
@@ -59,6 +59,18 @@ class Admin::DashboardControllerTest < ActionController::TestCase
     assert_match regexp, response.body
 
     FinancialService.any_instance.expects(:total_count).returns(0).at_least_once
+    get :index, competition_id: @competition.id
+    assert_no_match regexp, response.body
+  end
+
+  test "#index shows competitor statistics if there are enough competitors" do
+    regexp = /Competitor statistics/
+
+    FinancialService.any_instance.expects(:total_count).returns(10).at_least_once
+    get :index, competition_id: @competition.id
+    assert_match regexp, response.body
+
+    FinancialService.any_instance.expects(:total_count).returns(9).at_least_once
     get :index, competition_id: @competition.id
     assert_no_match regexp, response.body
   end
