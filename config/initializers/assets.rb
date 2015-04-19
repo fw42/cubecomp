@@ -11,6 +11,8 @@ Rails.application.config.assets.precompile += %w(
   admin/nametags.css
   admin/schedule.css
   admin.js
+  admin/user.js
+  strength.css
   email_template_fetcher.js
   competition_area.js
   competition_area.css

@@ -1,0 +1,30 @@
+.strength_meter {
+  height: 34px;
+  width: 150px;
+  float: right;
+  color: white;
+  margin-left: 1em;
+
+  div {
+    height: 34px;
+    vertical-align: middle;
+    font-weight: bold;
+    line-height: 34px;
+  }
+
+  .veryweak {
+    color: red;
+  }
+
+  .weak {
+    color: darkred;
+  }
+
+  .medium {
+    color: orange;
+  }
+
+  .strong {
+    color: darkgreen
+  }
+}
