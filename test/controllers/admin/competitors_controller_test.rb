@@ -370,7 +370,6 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
       end
     end
 
-    assert competitor.reload.competing_on?(event.day)
     assert competitor.reload.event_registrations.where(event: event).first.waiting
   end
 

@@ -56,11 +56,16 @@ class Competitor < ActiveRecord::Base
 
   def competing_on?(day_id)
     day_id = day_id.id if day_id.is_a?(Day)
-    event_registrations.select{ |registration| registration.event.day_id == day_id }.size > 0
+    registrations_for_day = event_registrations.select{ |registration| registration.event.day_id == day_id }
+    registrations_for_day.reject(&:waiting?).size > 0
   end
 
   def guest_on?(day_id)
     registered_on?(day_id) && !competing_on?(day_id)
+  end
+
+  def competing?
+    event_registrations.reject(&:waiting).size > 0
   end
 
   def event_registrations_by_day(include_waiting = false)

@@ -160,6 +160,7 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_equal false, @competitor.competing_on?(day.id)
     assert_equal false, @competitor.guest_on?(day)
     assert_equal false, @competitor.guest_on?(day.id)
+    assert_equal false, @competitor.competing?
 
     RegistrationService.new(@competitor).register_for_day(day.id)
     assert_equal true, @competitor.registered_on?(day)
@@ -168,14 +169,25 @@ class CompetitorTest < ActiveSupport::TestCase
     assert_equal false, @competitor.competing_on?(day.id)
     assert_equal true, @competitor.guest_on?(day)
     assert_equal true, @competitor.guest_on?(day.id)
+    assert_equal false, @competitor.competing?
 
-    RegistrationService.new(@competitor).register_for_event(day.events.first)
+    RegistrationService.new(@competitor).register_for_event(day.events.first, true)
+    assert_equal true, @competitor.registered_on?(day)
+    assert_equal true, @competitor.registered_on?(day.id)
+    assert_equal false, @competitor.competing_on?(day)
+    assert_equal false, @competitor.competing_on?(day.id)
+    assert_equal true, @competitor.guest_on?(day)
+    assert_equal true, @competitor.guest_on?(day.id)
+    assert_equal false, @competitor.competing?
+
+    RegistrationService.new(@competitor).register_for_event(day.events.first, false)
     assert_equal true, @competitor.registered_on?(day)
     assert_equal true, @competitor.registered_on?(day.id)
     assert_equal true, @competitor.competing_on?(day)
     assert_equal true, @competitor.competing_on?(day.id)
     assert_equal false, @competitor.guest_on?(day)
     assert_equal false, @competitor.guest_on?(day.id)
+    assert_equal true, @competitor.competing?
   end
 
   test 'event_registration_status' do
