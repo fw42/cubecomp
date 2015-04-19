@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   validates :permission_level, presence: true
   validates :permission_level, inclusion: { in: PERMISSION_LEVELS.values }, allow_nil: true, allow_blank: true
 
+  validate :old_password_is_correct_when_changing_current_password_or_email
+
   auto_strip_attributes :email, :first_name, :last_name, :address
 
   has_many :permissions, inverse_of: :user, dependent: :destroy
@@ -40,6 +42,8 @@ class User < ActiveRecord::Base
 
   after_update :nullify_competition_delegate_user_ids
   before_save :increment_version
+
+  attr_accessor :validate_old_password, :old_password
 
   def name
     "#{first_name} #{last_name}"
@@ -77,5 +81,12 @@ class User < ActiveRecord::Base
   def increment_version
     return unless password_digest_changed? || email_changed?
     self.version = version + 1
+  end
+
+  def old_password_is_correct_when_changing_current_password_or_email
+    return unless validate_old_password
+    return unless password_digest_changed? || email_changed?
+    return if old_password.present? && BCrypt::Password.new(password_digest_was) == old_password
+    errors.add(:old_password, "is not correct")
   end
 end

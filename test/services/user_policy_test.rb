@@ -85,6 +85,10 @@ class UserPolicyTest < ActiveSupport::TestCase
     end
   end
 
+  test 'change_user_password_without_old_password? is true iff higher permission' do
+    assert_true_iff_permission_level_higher(:change_user_password_without_old_password?)
+  end
+
   test 'edit_user? is true for users other than self iff permission level is higher' do
     assert_true_iff_permission_level_higher(:edit_user?)
   end

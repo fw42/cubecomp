@@ -122,6 +122,30 @@ class Admin::UsersControllerTest < ActionController::TestCase
     assert user.authenticate(params[:password])
   end
 
+  test '#update own password without old password fails' do
+    UserPolicy.any_instance.expects(:change_user_password_without_old_password?).at_least_once.returns(false)
+
+    @user.password = @user.password_confirmation = 'old_old_old'
+    @user.save!
+
+    patch :update, id: @user.id, user: { password: "new_new_new", password_confirmation: "new_new_new" }
+    refute @user.reload.authenticate('new_new_new')
+
+    patch :update, id: @user.id, user: {
+      old_password: "wrong_wrong_wrong",
+      password: "new_new_new",
+      password_confirmation: "new_new_new"
+    }
+    refute @user.reload.authenticate('new_new_new')
+
+    patch :update, id: @user.id, user: {
+      old_password: "old_old_old",
+      password: "new_new_new",
+      password_confirmation: "new_new_new"
+    }
+    assert @user.reload.authenticate('new_new_new')
+  end
+
   test '#update permission level renders forbidden if UserPolicy#change_permission_level_to? is false' do
     UserPolicy.any_instance.expects(:change_permission_level_to?)
       .with{ |user, level| user.id == @user.id && level.to_i == 1 }
