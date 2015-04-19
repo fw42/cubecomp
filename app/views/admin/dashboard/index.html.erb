@@ -14,4 +14,8 @@
   <% if @events_with_limits.size > 0 %>
     <%= render 'events_with_limits' %>
   <% end %>
+
+  <% if @counter.total_count >= 10 %>
+    <%= render 'competitor_statistics' %>
+  <% end %>
 </div>
