@@ -1,0 +1,176 @@
+<h3><%= t('stats.events') %></h3>
+<div id="highcharts_container_events" style="height: 400px"></div>
+
+<h3><%= t('stats.registrations') %></h3>
+<div id="highcharts_container_registration_process" style="height: 400px"></div>
+
+<div style="float: left">
+  <h3><%= t('stats.countries') %></h3>
+  <div id="highcharts_container_countries" style="width: 25%; height: 400px; display: inline"></div>
+</div>
+
+<h3><%= t('stats.days') %></h3>
+<div id="highcharts_container_days" style="width: 25%; height: 400px; display: inline"></div>
+
+<script type="text/javascript">
+<!--
+$(document).ready(function() {
+
+  var chart1 = new Highcharts.Chart({
+    credits: { enabled: false },
+    chart: { type: 'spline', renderTo: 'highcharts_container_registration_process' },
+    title: { text: "" },
+    xAxis: {
+      type: 'datetime',
+      dateTimeLabelFormats: {
+        month: '%e. %b',
+        year: '%b'
+      },
+    },
+    yAxis: { title: { text: "<%= t('stats.registrations_count') %>" }, min: 0 },
+    series: [
+      {
+        name: '<%= t("stats.competitors") %>',
+        data: [
+          <% @stats.competing_competitors_by_date.each do |date, number| %>
+            [ Date.UTC(<%= date.year %>, <%= date.month %>, <%= date.day %>), <%= number %> ],
+          <% end %>
+        ],
+      },
+      {
+        name: '<%= t("stats.guests") %>',
+        data: [
+          <% @stats.guests_by_date.each do |date, number| %>
+            [ Date.UTC(<%= date.year %>, <%= date.month %>, <%= date.day %>), <%= number %> ],
+          <% end %>
+        ]
+      }
+    ]
+  });
+
+  var chart2 = new Highcharts.Chart({
+      credits: { enabled: false },
+      chart: {
+         renderTo: "highcharts_container_events",
+         defaultSeriesType: 'column'
+      },
+      title: { text: '' },
+      xAxis: { categories: [
+        <% @stats.events_by_code.each do |code, _| %>
+          "<%= code %>",
+        <% end %>
+      ] },
+      yAxis: {
+         min: 0,
+         title: {
+            text: '<%= t("stats.registrations") %>'
+         }
+      },
+      tooltip: {
+         formatter: function() {
+            return '<b>'+ this.x +'</b><br/>'+
+                this.series.name +': '+ this.y +'<br/>'+
+                'Total: '+ this.point.stackTotal;
+         }
+      },
+      plotOptions: {
+         column: {
+            stacking: 'normal'
+         }
+      },
+      series: [
+        {
+          name: 'Non-newcomer',
+          data: [
+            <% @stats.events_by_code.each do |code, stats| %>
+              <%= stats[:non_newcomer] || 0 %>,
+            <% end %>
+          ]
+        },
+        {
+          name: 'Newcomer',
+          data: [
+            <% @stats.events_by_code.each do |code, stats| %>
+              <%= stats[:newcomer] || 0 %>,
+            <% end %>
+          ]
+        }
+      ],
+   });
+
+   var chart3 = new Highcharts.Chart({
+      credits: { enabled: false },
+      chart: { renderTo: 'highcharts_container_countries' },
+      title: { text: '' },
+      legend: { enabled: false },
+      tooltip: { formatter: function() { return '<b>'+ this.point.name +'</b>: '+ this.y; } },
+      plotOptions: {
+         pie: {
+           allowPointSelect: true,
+           cursor: 'pointer',
+           dataLabels: { enabled: false  }
+         }
+      },
+       series: [{
+         type: 'pie',
+         name: '',
+         data: [
+           <% @stats.countries.each do |country, number| %>
+             [ "<%= country %>", <%= number %> ],
+           <% end %>
+         ]
+      }]
+   });
+
+  var chart4 = new Highcharts.Chart({
+      credits: { enabled: false },
+      chart: {
+         renderTo: "highcharts_container_days",
+         defaultSeriesType: 'column'
+      },
+      title: { text: '' },
+      xAxis: { categories: [
+        <% @stats.days.map{ |day| l(day.first.date, format: :day_only) }.each do |day| %>
+          "<%= day %>",
+        <% end %>
+      ]},
+      yAxis: {
+         min: 0,
+         title: {
+            text: '<%= t("stats.registrations") %>'
+         }
+      },
+      tooltip: {
+         formatter: function() {
+            return '<b>'+ this.x +'</b><br/>'+
+                this.series.name +': '+ this.y +'<br/>'+
+                'Total: '+ this.point.stackTotal;
+         }
+      },
+      plotOptions: {
+         column: {
+            stacking: 'normal'
+         }
+      },
+      series: [
+        {
+          name: '<%= t("stats.competitors") %>',
+          data: [
+            <% @stats.days.each do |_, stats| %>
+              <%= stats[:competitors] || 0 %>,
+            <% end %>
+          ]
+        },
+        {
+          name: '<%= t("stats.guests") %>',
+          data: [
+            <% @stats.days.each do |_, stats| %>
+              <%= stats[:guests] || 0 %>,
+            <% end %>
+          ]
+        }
+      ],
+   });
+});
+-->
+</script>

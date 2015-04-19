@@ -81,6 +81,16 @@ en:
     format: "Format"
     max: "Max."
 
+  stats:
+    title: 'Statistics'
+    events: "Events"
+    registrations: "Registrations"
+    registrations_count: "Number of registrations"
+    competitors: "Competitors"
+    guests: "Guests"
+    countries: "Countries"
+    days: "Days"
+
   disclaimer:
     title: "Disclaimer"
 
