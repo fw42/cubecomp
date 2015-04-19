@@ -12,6 +12,11 @@
     <%= javascript_include_tag 'admin', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'email_template_fetcher', 'data-turbolinks-track' => true %>
 
+    <% if controller_name == 'users' %>
+      <%= javascript_include_tag 'admin/user', 'data-turbolinks-track' => true %>
+      <%= stylesheet_link_tag 'strength', media: 'all', 'data-turbolinks-track' => true %>
+    <% end %>
+
     <%= csrf_meta_tags %>
   </head>
 
