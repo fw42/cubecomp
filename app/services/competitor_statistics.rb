@@ -31,6 +31,9 @@ class CompetitorStatistics
   private
 
   def competitors
-    @competitors ||= @competition.competitors.confirmed.preload(:event_registrations)
+    @competitors ||= @competition.competitors
+      .confirmed
+      .preload(:event_registrations)
+      .preload(:country)
   end
 end
