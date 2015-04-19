@@ -20,6 +20,10 @@ world.
 Cubecomp is free and open source, published under the
 [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
+## How do I use cubecomp?
+
+If you are a competition organizer and want to use cubecomp to host your website, you can either run it on your own server or you can use our hosted version on https://cubecomp.de. Please send an email to cubecomp@cubecomp.de if you would like us to create an account for you.
+
 ## Screenshots
 
 ![Screenshots](https://cloud.githubusercontent.com/assets/2072686/7221699/d0707a2c-e6c3-11e4-97f3-ed1ee295a399.gif)
