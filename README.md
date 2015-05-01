@@ -22,7 +22,20 @@ Cubecomp is free and open source, published under the
 
 ## How do I use cubecomp?
 
-If you are a competition organizer and want to use cubecomp to host your website, you can either run it on your own server or you can use our hosted version on https://cubecomp.de. Please send an email to cubecomp@cubecomp.de if you would like us to create an account for you.
+If you are a competition organizer and want to use cubecomp to host your website,
+you can either run it on your own server or you can use our hosted version on
+https://cubecomp.de. Please send an email to cubecomp@cubecomp.de if you would
+like us to create an account for you.
+
+### Can I use your hosted version of cubecomp, but use a different domain?
+
+We can make this work. Send an email to cubecomp@cubecomp.de.
+
+### Cubecomp doesn't support my country's native language
+
+I'm happy to add more languages. Send an email to cubecomp@cubecomp.de
+and we can work on a translation (or take a look at config/locales/en.yml
+and send me a translated version of that for your language).
 
 ## Screenshots
 
