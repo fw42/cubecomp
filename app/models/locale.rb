@@ -1,7 +1,8 @@
 class Locale < ActiveRecord::Base
   ALL = {
-    'de' => 'Deutsch',
-    'en' => 'English'
+    'de' => 'German',
+    'en' => 'English',
+    'pt' => 'Portuguese'
   }
 
   belongs_to :competition, inverse_of: :locales
