@@ -13,14 +13,17 @@ class Admin::EmailTemplatesController < AdminController
   end
 
   def import_templates_form
-    @options = Competition
+    competitions = Competition
       .joins(:email_templates)
       .select('competitions.id, competitions.name, COUNT(email_templates.id)')
       .where.not('competitions.id' => current_competition.id)
       .group('competitions.id, competitions.name')
-      .pluck('competitions.id, competitions.name, COUNT(email_templates.id)')
-      .map{ |id, name, count| [ "#{name} (#{count} #{"template".pluralize(count)})", id ] }
+      .select('competitions.*, COUNT(email_templates.id) AS count')
       .select{ |competition| current_user.policy.login?(competition) }
+
+    @options = competitions.map do |comp|
+      [ "#{comp.name} (#{comp.count} #{"template".pluralize(comp.count)})", comp.id ]
+    end
   end
 
   def import_templates
