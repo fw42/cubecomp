@@ -111,7 +111,6 @@ class Admin::ThemeFilesController < AdminController
 
   def theme_to_import_theme_files_from(theme_id)
     return unless theme_id
-    return :forbidden unless current_user.policy.admin_user_menu?
     Theme.find_by!(id: theme_id)
   end
 
