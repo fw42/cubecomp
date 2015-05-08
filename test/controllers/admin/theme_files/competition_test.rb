@@ -114,7 +114,6 @@ module Admin::ThemeFiles
     end
 
     test '#import_files from theme to competition' do
-      UserPolicy.any_instance.expects(:admin_user_menu?).returns(true)
       from_theme = themes(:fancy)
 
       post :import_files, competition_id: @competition.id, from: {
