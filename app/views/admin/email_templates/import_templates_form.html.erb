@@ -1,7 +1,7 @@
 <% page_title 'Import email templates' %>
 
 <% if @options.size == 0 %>
-  There are no email templates available to import right now.
+  There are no email templates available for you to import right now.
 <% else %>
   <%= form_tag(import_templates_admin_competition_email_templates_path) do %>
     <table class='form-table'>

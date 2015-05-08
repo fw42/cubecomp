@@ -58,7 +58,7 @@ class User < ActiveRecord::Base
   end
 
   def permission?(competition)
-    permissions.where(competition: competition).exists?
+    permissions.any?{ |permission| permission.competition == competition }
   end
 
   def to_liquid

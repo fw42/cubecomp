@@ -20,6 +20,7 @@ class Admin::EmailTemplatesController < AdminController
       .group('competitions.id, competitions.name')
       .pluck('competitions.id, competitions.name, COUNT(email_templates.id)')
       .map{ |id, name, count| [ "#{name} (#{count} #{"template".pluralize(count)})", id ] }
+      .select{ |competition| current_user.policy.login?(competition) }
   end
 
   def import_templates
