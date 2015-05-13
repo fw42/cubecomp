@@ -77,6 +77,13 @@ wca_event_definitions = [
     formats: [ "Average of 5", "Best of x" ]
   },
   {
+    name_short: "Skewb",
+    name: "Skewb",
+    handle: "sk",
+    wca_handle: "skewb",
+    formats: [ "Average of 5", "Best of x" ]
+  },
+  {
     name_short: "Square-1",
     name: "Square-1",
     handle: "s1",
