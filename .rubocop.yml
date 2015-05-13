@@ -104,3 +104,6 @@ Style/RegexpLiteral:
 
 Style/SymbolLiteral:
   Enabled: false
+
+Performance/Count:
+  Enabled: false
