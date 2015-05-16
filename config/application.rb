@@ -39,5 +39,8 @@ module Cubecomp
 
     # Sends exception emails to this address in the production environment
     config.exceptions_email = ENV["CUBECOMP_EXCEPTIONS_EMAIL"]
+
+    # Browser API key for the Google Maps Embed API
+    config.google_maps_api_key = ENV['CUBECOMP_GOOGLE_MAPS_API_KEY']
   end
 end
