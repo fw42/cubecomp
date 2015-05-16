@@ -179,7 +179,10 @@
       </tr>
       <tr>
         <td><%= f.label :venue_address, 'Address of the competition venue:' %></td>
-        <td><%= f.text_area :venue_address, rows: '4' %></td>
+        <td>
+          <%= f.text_area :venue_address, rows: '4' %>
+          <%= help_tooltip 'In your theme, there is a <tt>{{&nbsp;venue_address&nbsp;}}</tt> command available that includes a Google map for this address.' %>
+        </td>
       </tr>
       <tr>
         <td><%= f.label :country, 'Country of the competition venue:' %></td>
