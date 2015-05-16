@@ -49,6 +49,10 @@ class Admin::EventsController < AdminController
     end
 
     redirect_to admin_competition_events_path(current_competition), notice: 'Events successfully imported.'
+
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to admin_competition_events_path(current_competition),
+      flash: { error: e.record.errors.full_messages.join(', ') }
   end
 
   def new

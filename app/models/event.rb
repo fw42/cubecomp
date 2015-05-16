@@ -20,7 +20,12 @@ class Event < ActiveRecord::Base
 
   validates :handle, presence: true, if: :for_registration?
   validates :handle,
-    uniqueness: { scope: :competition_id },
+    uniqueness: {
+      scope: :competition_id,
+      message: lambda do |_, e|
+        "#{e[:value]} has already been used by another event of this competition that is also for registration"
+      end
+    },
     allow_nil: true, allow_blank: true,
     if: :for_registration?
 

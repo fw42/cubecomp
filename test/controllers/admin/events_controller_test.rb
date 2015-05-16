@@ -108,6 +108,33 @@ class Admin::EventsControllerTest < ActionController::TestCase
 
     assert_events_equal from_day.reload.events, to_day.reload.events
     assert_redirected_to admin_competition_events_path(competition)
+    assert_equal nil, flash[:error]
+    assert_equal "Events successfully imported.", flash[:notice]
+  end
+
+  test '#import_day when one of the events already exist on another day' do
+    to_day = days(:german_open_day_one)
+    from_day = days(:aachen_open_day_two)
+
+    competition = to_day.competition
+
+    other_day = days(:german_open_day_two)
+    duplicate_event_attributes = from_day.events.detect(&:for_registration?).attributes.except("id", "day_id")
+    duplicate_event_attributes['competition_id'] = competition.id
+    other_day.events.create!(duplicate_event_attributes)
+
+    login_as(competition.users.first)
+
+    assert_no_difference 'competition.reload.events.count' do
+      post :import_day, competition_id: competition.id, from_day_id: from_day.id, to_day_id: to_day.id
+    end
+
+    assert_redirected_to admin_competition_events_path(competition)
+    assert_equal nil, flash[:notice]
+
+    expected_error = "Events handle 4 has already been used by another event" \
+      " of this competition that is also for registration"
+    assert_equal expected_error, flash[:error]
   end
 
   test '#import_day does not allow to overwrite another competitions day' do
