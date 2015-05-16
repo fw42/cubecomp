@@ -25,6 +25,16 @@
                 <%= competitor.nametag.html_safe %>
               </span>
             <% end %>
+
+            <span class="wca-info">
+              <% if competitor.competition_count > 0 %>
+                <%= competitor.competition_count.ordinalize %> competition,
+                <% result = competitor.best_333_result %>
+                <% if result.single? && result.average? %>
+                  <b>3x3:</b> <%= format_time competitor.best_333_result.average %> (<%= format_time competitor.best_333_result.single %>)
+                <% end %>
+              <% end %>
+            </span>
           </td>
         <% end %>
       </tr>

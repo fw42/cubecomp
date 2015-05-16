@@ -7,7 +7,16 @@ class WcaGateway
     end
   end
 
-  Competitor = Struct.new(:id, :name, :gender, :country)
+  Competitor = Struct.new(:id, :name, :gender, :country, :competition_count)
+  Records = Struct.new(:single, :average) do
+    def single?
+      single.is_a?(Fixnum)
+    end
+
+    def average?
+      average.is_a?(Fixnum)
+    end
+  end
 
   def initialize(url)
     @conn = Faraday.new(url: url) do |faraday|
@@ -32,6 +41,23 @@ class WcaGateway
     raise WcaGateway::ConnectionError.new(e)
   rescue JSON::ParserError => e
     raise WcaGateway::ConnectionError.new(e)
+  end
+
+  def find_by_id(id)
+    response = get("/competitors/#{id}")
+    c = JSON.parse(response.body)["competitor"]
+    Competitor.new(c["id"], c["name"], c["gender"], c["country"], c["competition_count"])
+  rescue Faraday::ResourceNotFound
+    nil
+  end
+
+  def find_records_for(id, event)
+    response = get("/competitors/#{id}/records")
+    c = JSON.parse(response.body)
+    single = c.try(:[], event).try(:[], "single").try(:[], "time")
+    average = c.try(:[], event).try(:[], "average").try(:[], "time")
+
+    Records.new(single, average)
   end
 
   private

@@ -28,6 +28,8 @@ class Admin::CompetitorsController < AdminController
 
   before_action :set_competitor, only: [:edit, :update, :confirm, :disable, :destroy, :mark_as_paid]
 
+  helper WcaResultsHelpers
+
   def index
     @competitors = current_competition
       .competitors
@@ -44,7 +46,9 @@ class Admin::CompetitorsController < AdminController
       .competitors
       .confirmed
       .includes(:country)
-      .order(:last_name, :first_name)
+      .order(:last_name, :first_name).map do |c|
+        NametagPresenter.new(c, DEPENDENCIES.fetch(:wca_gateway))
+      end
 
     render layout: 'admin/nametags'
   end
