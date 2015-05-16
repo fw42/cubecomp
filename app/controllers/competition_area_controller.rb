@@ -1,5 +1,6 @@
 class CompetitionAreaController < ApplicationController
   before_action :load_competition
+  before_action :redirect_to_proper_domain
   before_action :redirect_if_no_locale
   before_action :load_locale_from_params
   before_action :load_theme_file
@@ -43,6 +44,24 @@ class CompetitionAreaController < ApplicationController
     filename_with_extension = [ filename, extension ].join('.')
 
     @theme_file = theme_file_loader.find_by!(filename: filename_with_extension, locale: @locale.handle)
+  end
+
+  def redirect_to_proper_domain
+    proper_domain, proper_protocol = proper_domain_and_protocol
+    return if request.host == proper_domain && request.protocol == proper_protocol
+    redirect_to "#{proper_protocol}#{proper_domain}#{request.fullpath}"
+  end
+
+  def proper_domain_and_protocol
+    proper_domain = Cubecomp::Application.config.main_domain || request.host
+    proper_protocol = Cubecomp::Application.config.main_domain_protocol || request.protocol
+
+    if @competition.custom_domain.present?
+      proper_domain = @competition.custom_domain
+      proper_protocol = @competition.custom_domain_force_ssl ? "https://" : 'http://'
+    end
+
+    [ proper_domain, proper_protocol ]
   end
 
   def redirect_if_no_locale

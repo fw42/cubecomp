@@ -53,6 +53,7 @@ class Competition < ActiveRecord::Base
 
   auto_strip_attributes :name,
     :handle,
+    :custom_domain,
     :staff_email,
     :staff_name,
     :city_name,

@@ -30,6 +30,8 @@ module Cubecomp
     # All requests seen by this application, which are neither for the
     # main nor for the admin domain, will be redirected to the main domain
     config.main_domain = ENV["CUBECOMP_MAIN_DOMAIN"]
+    # 'http://' or 'https://', wont redirect if left empty
+    config.main_domain_protocol = ENV['CUBECOMP_MAIN_DOMAIN_PROTOCOL']
 
     config.email_address = ENV["CUBECOMP_EMAIL"] || "cubecomp@cubecomp.de"
 

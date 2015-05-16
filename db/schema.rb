@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150516173814) do
+ActiveRecord::Schema.define(version: 20150516210444) do
 
   create_table "competitions", force: :cascade do |t|
     t.string   "name",                     limit: 255,                                            null: false
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20150516173814) do
     t.decimal  "entrance_fee_competitors",               precision: 10, scale: 2, default: 0.0,   null: false
     t.decimal  "entrance_fee_guests",                    precision: 10, scale: 2, default: 0.0,   null: false
     t.string   "pricing_model",            limit: 255,                                            null: false
+    t.string   "custom_domain",            limit: 255
+    t.boolean  "custom_domain_force_ssl",  limit: 1
   end
 
   add_index "competitions", ["country_id"], name: "competitions_country_id_fk", using: :btree

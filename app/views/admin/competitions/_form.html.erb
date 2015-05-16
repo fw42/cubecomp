@@ -11,6 +11,14 @@
         <td><%= f.label :handle, 'URL handle:' %></td>
         <td><%= f.text_field :handle %></td>
       </tr>
+      <tr>
+        <td><%= f.label :custom_domain, 'Custom domain:' %></td>
+        <td>
+          <%= f.text_field :custom_domain, placeholder: Cubecomp::Application.config.main_domain %>
+          <%= f.check_box :custom_domain_force_ssl %>
+          <%= f.label :custom_domain_force_ssl, 'https', class: 'checkbox' %>
+        </td>
+      </tr>
     </table>
   <% end %>
 
