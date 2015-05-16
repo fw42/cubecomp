@@ -34,7 +34,8 @@ We can make this work. Send an email to cubecomp@cubecomp.de.
 ### Cubecomp doesn't support my country's native language
 
 I'm happy to add more languages. Send an email to cubecomp@cubecomp.de
-and we can work on a translation (or take a look at config/locales/en.yml
+and we can work on a translation (or take a look at
+[config/locales/en.yml](https://github.com/fw42/cubecomp/blob/master/config/locales/en.yml)
 and send me a translated version of that for your language).
 
 ## Screenshots
