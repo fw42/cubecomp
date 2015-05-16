@@ -16,3 +16,9 @@ german_open_day_one:
   competition: german_open
   entrance_fee_competitors: 1.20
   entrance_fee_guests: 3.40
+
+german_open_day_two:
+  date: <%= Date.today + 3.days %>
+  competition: german_open
+  entrance_fee_competitors: 1.20
+  entrance_fee_guests: 3.40
