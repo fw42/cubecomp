@@ -104,8 +104,9 @@
       <tr>
         <td><%= f.label :state, 'State:' %></td>
         <td>
-          <% disabled = @event.registrations? ? { disabled: 'not_for_registration' } : {} %>
-          <%= f.select :state, options_for_select(Event::STATES.to_a.map(&:reverse), disabled) %>
+          <% options = @event.registrations? ? { disabled: 'not_for_registration' } : {} %>
+          <% options[:selected] = @event.state %>
+          <%= f.select :state, options_for_select(Event::STATES.to_a.map(&:reverse), options) %>
           <%= help_tooltip %q{
             <p>
               Use the status <b>Not for registration</b> for events for which people should
