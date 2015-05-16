@@ -94,6 +94,8 @@ class ThemeFileRenderer
       :@news => @locale.news.order("time DESC")
     })
 
+    assigns[:venue_map] = ViewDrop.new(template: 'venue_map', controller: @controller, locals: default_locals)
+
     assign_competitors_view
     assign_registration_form_view
   end
