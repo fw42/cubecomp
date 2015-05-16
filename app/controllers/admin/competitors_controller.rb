@@ -26,7 +26,7 @@ class Admin::CompetitorsController < AdminController
     ]
   ]
 
-  before_action :set_competitor, only: [:edit, :update, :confirm, :disable, :destroy, :mark_as_paid]
+  before_action :set_competitor, only: [:edit, :update, :confirm, :cancel, :destroy, :mark_as_paid]
 
   def index
     @competitors = current_competition
@@ -136,12 +136,12 @@ class Admin::CompetitorsController < AdminController
     redirect_to admin_competition_competitors_path(current_competition), flash: notice
   end
 
-  def disable
-    if @competitor.update_attributes(state: 'disabled')
-      notice = { notice: 'Competitor was successfully disabled.' }
+  def cancel
+    if @competitor.update_attributes(state: 'cancelled')
+      notice = { notice: 'Competitor was successfully marked as cancelled.' }
     else
       Rails.logger.info("Failed to update: #{@competitor.errors.full_messages.inspect}")
-      notice = { error: 'Failed to disable competitor.' }
+      notice = { error: 'Failed to mark competitor as cancelled.' }
     end
 
     redirect_to admin_competition_competitors_path(current_competition), flash: notice

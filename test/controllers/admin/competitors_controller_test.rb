@@ -173,10 +173,10 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     assert_equal 'confirmed', @competitor.reload.state
   end
 
-  test '#disable' do
+  test '#cancel' do
     @competitor.update_attributes(state: 'new')
-    patch :disable, competition_id: @competition.id, id: @competitor.id
-    assert_equal 'disabled', @competitor.reload.state
+    patch :cancel, competition_id: @competition.id, id: @competitor.id
+    assert_equal 'cancelled', @competitor.reload.state
   end
 
   test '#mark_as_paid' do

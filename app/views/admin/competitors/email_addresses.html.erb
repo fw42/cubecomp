@@ -16,6 +16,6 @@
 <% end %>
 
 <% if @awaiting_payment.size > 0 %>
-  <h2>Unconfirmed, not disabled, and not paid yet</h2>
+  <h2>Unconfirmed, not cancelled, and not paid yet</h2>
   <p><b>BCC:</b> <%= @awaiting_payment.map(&:email).join(', ') %></p>
 <% end %>
