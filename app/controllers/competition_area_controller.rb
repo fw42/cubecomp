@@ -58,7 +58,13 @@ class CompetitionAreaController < ApplicationController
 
     if @competition.custom_domain.present?
       proper_domain = @competition.custom_domain
-      proper_protocol = @competition.custom_domain_force_ssl ? "https://" : 'http://'
+      proper_protocol = if @competition.custom_domain_force_ssl
+        'https://'
+      elsif proper_domain == request.host
+        request.protocol
+      else
+        'http://'
+      end
     end
 
     [ proper_domain, proper_protocol ]

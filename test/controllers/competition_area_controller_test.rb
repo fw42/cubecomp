@@ -123,10 +123,7 @@ class CompetitionAreaControllerTest < ActionController::TestCase
     @competition.custom_domain_force_ssl = false
     @competition.save!
 
-    get :render_theme_file,
-      competition_handle: @competition.handle,
-      locale: 'de',
-      protocol: 'http://'
+    get :render_theme_file, competition_handle: @competition.handle, locale: 'de'
 
     assert_redirected_to 'http://bla.com/ao14/de'
   end
@@ -136,12 +133,63 @@ class CompetitionAreaControllerTest < ActionController::TestCase
     @competition.custom_domain_force_ssl = false
     @competition.save!
 
-    get :render_theme_file,
-      competition_handle: @competition.handle,
-      locale: 'de',
-      protocol: 'https://'
+    use_https
+
+    get :render_theme_file, competition_handle: @competition.handle, locale: 'de'
 
     assert_redirected_to 'http://bla.com/ao14/de'
+  end
+
+  test '#render_theme_file over http to custom domain without force_ssl does not redirect' do
+    @competition.custom_domain = 'bla.com'
+    @competition.custom_domain_force_ssl = false
+    @competition.save!
+
+    @request.host = @competition.custom_domain
+
+    get :render_theme_file, competition_handle: @competition.handle, locale: 'de'
+
+    assert_response :ok
+  end
+
+  test '#render_theme_file over https to custom domain without force_ssl does not redirect' do
+    @competition.custom_domain = 'bla.com'
+    @competition.custom_domain_force_ssl = false
+    @competition.save!
+
+    @request.host = @competition.custom_domain
+
+    use_https
+
+    get :render_theme_file, competition_handle: @competition.handle, locale: 'de'
+
+    assert_response :ok
+  end
+
+  test '#render_theme_file over https to custom domain with force_ssl does not redirect' do
+    @competition.custom_domain = 'bla.com'
+    @competition.custom_domain_force_ssl = true
+    @competition.save!
+
+    @request.host = @competition.custom_domain
+
+    use_https
+
+    get :render_theme_file, competition_handle: @competition.handle, locale: 'de'
+
+    assert_response :ok
+  end
+
+  test '#render_theme_file over https to custom domain without force_ssl does redirect' do
+    @competition.custom_domain = 'bla.com'
+    @competition.custom_domain_force_ssl = true
+    @competition.save!
+
+    @request.host = @competition.custom_domain
+
+    get :render_theme_file, competition_handle: @competition.handle, locale: 'de'
+
+    assert_redirected_to 'https://bla.com/ao14/de'
   end
 
   test '#render_theme_file over http with custom domain with force_ssl redirects to https' do
@@ -149,10 +197,7 @@ class CompetitionAreaControllerTest < ActionController::TestCase
     @competition.custom_domain_force_ssl = true
     @competition.save!
 
-    get :render_theme_file,
-      competition_handle: @competition.handle,
-      locale: 'de',
-      protocol: 'http://'
+    get :render_theme_file, competition_handle: @competition.handle, locale: 'de'
 
     assert_redirected_to 'https://bla.com/ao14/de'
   end
@@ -162,10 +207,9 @@ class CompetitionAreaControllerTest < ActionController::TestCase
     @competition.custom_domain_force_ssl = true
     @competition.save!
 
-    get :render_theme_file,
-      competition_handle: @competition.handle,
-      locale: 'de',
-      protocol: 'https://'
+    use_https
+
+    get :render_theme_file, competition_handle: @competition.handle, locale: 'de'
 
     assert_redirected_to 'https://bla.com/ao14/de'
   end

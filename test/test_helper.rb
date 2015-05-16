@@ -79,6 +79,7 @@ end
 class ActionController::TestCase
   def use_https(flag = true)
     @request.env['HTTPS'] = flag ? 'on' : nil
+    @request.stubs(:protocol).returns(flag ? "https://" : "http://")
   end
 
   def login_as(user)
