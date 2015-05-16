@@ -8,6 +8,8 @@ class Admin::CompetitionsController < AdminController
   PERMITTED_PARAMS = [
     :name,
     :handle,
+    :custom_domain,
+    :custom_domain_force_ssl,
     :delegate_user_id,
     :default_locale_handle,
     :owner_user_id,
