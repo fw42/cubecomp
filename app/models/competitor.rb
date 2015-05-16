@@ -1,5 +1,5 @@
 class Competitor < ActiveRecord::Base
-  STATES = %w(new confirmed disabled)
+  STATES = %w(new confirmed cancelled)
 
   belongs_to :competition
   validates :competition, presence: true
