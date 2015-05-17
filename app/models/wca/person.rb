@@ -7,16 +7,20 @@ class Wca::Person < ActiveRecord::Base
 
   has_many :results, class_name: Wca::Result, foreign_key: "personID"
 
+  def self.query(query)
+    where("id LIKE ?", "#{query}%")
+  end
+
+  def as_json(*)
+    super(only: [:id, :name, :gender, :countryId])
+  end
+
   def first_name
     split_name.first
   end
 
   def last_name
     split_name.last
-  end
-
-  def split_name
-    name.split(" ", 2)
   end
 
   def best_single(wca_event_id)
@@ -33,5 +37,11 @@ class Wca::Person < ActiveRecord::Base
       .group('personId')
       .pluck('personId, COUNT(DISTINCT(competitionId)) AS competitions')
       .to_h
+  end
+
+  private
+
+  def split_name
+    name.split(" ", 2)
   end
 end

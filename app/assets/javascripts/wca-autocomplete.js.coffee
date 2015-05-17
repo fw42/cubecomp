@@ -32,7 +32,7 @@ $(document).ready ->
     names = object.name.split(" ")
     firstName = names[0]
     lastName = names[1]
-    country = object.country
+    country = object.countryId
     gender = object.gender
 
     $("#competitor_first_name").val(firstName)
