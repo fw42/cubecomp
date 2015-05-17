@@ -16,4 +16,22 @@ namespace :db do
 
     exec cmd
   end
+
+  desc "Dumps the schema of the WCA database"
+  task dump_wca_schema: :environment do
+    path = Rails.root.join("db", "schema.wca.rb")
+    File.open(path, 'w') do |file|
+      ActiveRecord::SchemaDumper.dump(Wca::Person.connection, file)
+    end
+  end
+
+  task :load_wca_schema do
+    config = ActiveRecord::Base.configurations
+    ActiveRecord::Base.connection.recreate_database(config['wca']['database'])
+
+    ActiveRecord::Base.establish_connection('wca')
+    ActiveRecord::Schema.verbose = false
+
+    load(Rails.root.join("db", "schema.wca.rb"))
+  end
 end

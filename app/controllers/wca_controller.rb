@@ -1,18 +1,19 @@
 class WcaController < ApplicationController
-  def autocomplete
-    query = params[:q]
+  MIN_QUERY_LENGTH = 6
 
-    unless query.is_a?(String)
+  def autocomplete
+    query = params[:q].to_s.strip
+
+    unless query =~ /\A[\d\w]+\z/
       render json: { error: 'invalid query' }
       return
     end
 
-    if query.size < WcaGateway::MIN_QUERY_LENGTH
-      render json: { error: "query needs to be at least #{WcaGateway::MIN_QUERY_LENGTH} characters" }
+    if query.size < MIN_QUERY_LENGTH
+      render json: { error: "query needs to be at least #{MIN_QUERY_LENGTH} characters" }
       return
     end
 
-    competitors = WcaGateway.new(Cubecomp::Application.config.wca_api_url).search_by_id(query)
-    render json: competitors
+    render json: Wca::Person.query(query)
   end
 end

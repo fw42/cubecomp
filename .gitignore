@@ -12,3 +12,5 @@ log
 coverage
 config/deploy/production.rb
 import_data
+*.zip
+*.sql
