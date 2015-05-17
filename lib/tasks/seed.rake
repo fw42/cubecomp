@@ -13,5 +13,9 @@ namespace :db do
     task :example_competition do
       load Rails.root.join("db/seeds/example_competition.rb")
     end
+
+    task :wca do
+      load Rails.root.join("db/seeds/wca.rb")
+    end
   end
 end
