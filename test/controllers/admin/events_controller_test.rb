@@ -40,8 +40,7 @@ class Admin::EventsControllerTest < ActionController::TestCase
     params = {
       day_id: days(:aachen_open_day_one).id,
       handle: '222',
-      name: 'Rubiks Pocket Cube',
-      name_short: '2x2x2',
+      name: '2x2 cube',
       length_in_minutes: 60,
       max_number_of_registrations: 42,
       start_time: '15:00',
@@ -66,8 +65,7 @@ class Admin::EventsControllerTest < ActionController::TestCase
     params = {
       day_id: days(:aachen_open_day_two).id,
       handle: '222',
-      name: 'Rubiks Pocket Cube',
-      name_short: '2x2x2',
+      name: '2x2 cube',
       length_in_minutes: 60,
       max_number_of_registrations: 42,
       start_time: '15:00',

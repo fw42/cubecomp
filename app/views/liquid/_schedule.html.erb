@@ -19,7 +19,7 @@
     <tr>
       <td><%= event.start_time ? event.start_time.strftime("%H:%M") : "&nbsp;".html_safe %></td>
       <td><%= event.end_time ? event.end_time.strftime("%H:%M") : "&nbsp;".html_safe %></td>
-      <td><%= event.name_short %></td>
+      <td><%= event.name %></td>
       <td><%= event.round %></td>
       <td><%= event.timelimit %></td>
       <td>

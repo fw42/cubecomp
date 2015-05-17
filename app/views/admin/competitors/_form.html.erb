@@ -149,7 +149,7 @@
             <% current_competition.events.select{ |event| event.for_registration? && event.day_id == day.id }.each do |event| %>
               <tr>
                 <td>
-                  <%= event.display_name %>
+                  <%= event.name %>
                 </td>
                 <td <% if @competitor.event_registration_status(event) == 'not_registered' %>class='highlight'<% end %>>
                   <%=
