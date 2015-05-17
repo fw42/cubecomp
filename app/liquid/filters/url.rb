@@ -11,7 +11,12 @@ module Liquid
         loader = ThemeFileLoader.new(competition.theme_files.image_files)
         theme_file = loader.find_by(filename: filename, locale: locale.handle)
         return unless theme_file
-        theme_file.image.url
+
+        if ActionController::Base.asset_host
+          URI.join(ActionController::Base.asset_host, theme_file.image.url).to_s
+        else
+          theme_file.image.url
+        end
       end
 
       def theme_file_url(theme_file_filename, options = {})

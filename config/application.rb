@@ -33,6 +33,9 @@ module Cubecomp
     # 'http://' or 'https://', wont redirect if left empty
     config.main_domain_protocol = ENV['CUBECOMP_MAIN_DOMAIN_PROTOCOL']
 
+    # This will be used as asset host if set, e.g. https://assets.cubecomp.de/
+    config.asset_host = ENV['CUBECOMP_ASSET_HOST']
+
     config.email_address = ENV["CUBECOMP_EMAIL"] || "cubecomp@cubecomp.de"
 
     config.github = "https://github.com/fw42/cubecomp"
@@ -44,5 +47,12 @@ module Cubecomp
 
     # Browser API key for the Google Maps Embed API
     config.google_maps_api_key = ENV['CUBECOMP_GOOGLE_MAPS_API_KEY']
+  end
+end
+
+Rails.application.configure do
+  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
+  if Cubecomp::Application.config.asset_host.present?
+    config.action_controller.asset_host = Cubecomp::Application.config.asset_host
   end
 end
