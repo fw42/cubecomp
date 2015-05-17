@@ -90,6 +90,8 @@ en:
     guests: "Guests"
     countries: "Countries"
     days: "Days"
+    newcomer: "Newcomer"
+    non-newcomer: "Non-newcomer"
 
   disclaimer:
     title: "Disclaimer"

@@ -80,7 +80,7 @@ $(document).ready(function() {
       },
       series: [
         {
-          name: 'Non-newcomer',
+          name: <%= raw t('stats.non-newcomer').to_json %>,
           data: [
             <% @stats.events_by_code.each do |code, stats| %>
               <%= stats[:non_newcomer] || 0 %>,
@@ -88,7 +88,7 @@ $(document).ready(function() {
           ]
         },
         {
-          name: 'Newcomer',
+          name: <%= raw t('stats.newcomer').to_json %>,
           data: [
             <% @stats.events_by_code.each do |code, stats| %>
               <%= stats[:newcomer] || 0 %>,
