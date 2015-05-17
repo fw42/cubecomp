@@ -90,6 +90,17 @@ class Admin::EventsControllerTest < ActionController::TestCase
     assert_redirected_to admin_competition_events_path(@competition)
   end
 
+  test '#destroy_day' do
+    day = @competition.events.first.day
+    count = day.events.count
+
+    assert_difference '@competition.events.count', -count do
+      delete :destroy_day, competition_id: @competition.id, day_id: day.id
+    end
+
+    assert_redirected_to admin_competition_events_path(@competition)
+  end
+
   test '#import_day_form' do
     get :import_day_form, competition_id: @competition.id
     assert_response :success

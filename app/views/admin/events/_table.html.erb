@@ -1,4 +1,13 @@
-<h2><%= I18n.l(day.date, format: :schedule) %></h2>
+<h2>
+  <%= I18n.l(day.date, format: :schedule) %>
+  <%=
+    delete_button(
+      destroy_day_admin_competition_events_path(current_competition, day.id),
+      method: :delete,
+      data: { confirm: 'Are you sure?' }
+    )
+  %>
+</h2>
 
 <table class='default-table events'>
   <thead>

@@ -69,6 +69,7 @@ Rails.application.routes.draw do
         resources :events, except: [:show] do
           collection do
             get 'print/(:day_id)', action: 'print', as: "print"
+            delete 'destroy_day/:day_id', action: 'destroy_day', as: 'destroy_day'
 
             get :import_day, action: 'import_day_form'
             post :import_day
