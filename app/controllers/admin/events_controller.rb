@@ -88,6 +88,13 @@ class Admin::EventsController < AdminController
       notice: 'Event was successfully deleted.'
   end
 
+  def destroy_day
+    @events = current_competition.events.where(day_id: params[:day_id])
+    @events.destroy_all
+    redirect_to admin_competition_events_url(current_competition),
+      notice: 'Events for the day were successfully deleted.'
+  end
+
   private
 
   def set_event
