@@ -92,6 +92,8 @@ de:
     guests: "Gäste"
     countries: "Länder"
     days: "Tage"
+    newcomer: "Neuling"
+    non-newcomer: "Nicht Neuling"
 
   misc:
     male: "männlich"

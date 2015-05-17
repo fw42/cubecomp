@@ -90,6 +90,8 @@ pt:
     guests: "Convidados"
     countries: "Países"
     days: "Dias"
+    newcomer: "Iniciante"
+    non-newcomer: "Não Iniciante"
 
   disclaimer:
     title: "Organização"
