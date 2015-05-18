@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include HasWcaId
+
   PERMISSION_LEVELS = {
     regular: 0,
     admin: 1,

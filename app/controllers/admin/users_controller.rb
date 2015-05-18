@@ -16,6 +16,7 @@ class Admin::UsersController < AdminController
     :email,
     :first_name,
     :last_name,
+    :wca,
     :old_password,
     :password,
     :password_confirmation,

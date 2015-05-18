@@ -33,6 +33,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
       email: 'bob@cubecomp.de',
       first_name: 'Bob',
       last_name: 'Bobsen',
+      wca: '2007BOB01',
       password: 'foobartest',
       password_confirmation: 'foobartest',
       permission_level: User::PERMISSION_LEVELS.values.min,
