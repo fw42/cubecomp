@@ -10,9 +10,10 @@ class ChecklistService
 
   attr_reader :competitor
 
-  def initialize(competitor)
+  def initialize(competitor, anniversaries = {})
     @competitor = competitor
     @competition = competitor.competition
+    @anniversaries = anniversaries
   end
 
   def entrance_fee
@@ -29,10 +30,16 @@ class ChecklistService
     comments += comment_comments
     comments << 'Birthday!' if birthday_on_competition?
     comments << 'Paid already' if paid?
+    comments += anniversary_comment
     comments
   end
 
   private
+
+  def anniversary_comment
+    return [] unless number = @anniversaries[@competitor.wca]
+    [ "Anniversary: #{number.ordinalize} WCA competition" ]
+  end
 
   def pricing_model
     @competition.pricing_model_class.new(@competitor)

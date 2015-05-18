@@ -13,6 +13,7 @@
   </thead>
   <tbody>
     <% @competitors.each do |competitor| %>
+      <% checklist_service = ChecklistService.new(competitor, @anniversaries) %>
       <tr>
         <td>
           <%= competitor.country.name %>
@@ -25,9 +26,9 @@
         <td><%= competitor.birthday %> (<%= competitor.age %>)</td>
         <td><%= competitor.days.sort_by(&:date).map{ |day| day.date.strftime("%a") }.join(", ") %></td>
         <td><%= competitor.event_registration_counts.join("+") %></td>
-        <td><%= competitor.checklist_service.entrance_fee %></td>
+        <td><%= checklist_service.entrance_fee %></td>
         <td class='comment'>
-          <% competitor.checklist_service.comments.each_with_index do |comment, index| %>
+          <% checklist_service.comments.each_with_index do |comment, index| %>
             <% if index > 0 %><br/><% end %>
             <%= comment %>
           <% end %>

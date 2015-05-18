@@ -39,6 +39,12 @@ class Wca::Person < ActiveRecord::Base
       .to_h
   end
 
+  def self.anniversaries(wca_ids)
+    anniversaries = number_of_competitions(wca_ids)
+    anniversaries.each{ |key, value| anniversaries[key] = value + 1 }
+    anniversaries.keep_if{ |key, value| value >= 10 && value % 5 == 0 }
+  end
+
   private
 
   def split_name

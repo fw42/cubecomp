@@ -90,6 +90,10 @@
             <%= tooltip(icon_image_tag('birthday.png'), "Birthday on #{competitor.birthday.strftime("%A")}") %>
           <% end %>
 
+          <% if competition_number = @anniversaries[competitor.wca ] %>
+            <%= tooltip(icon_image_tag('anniversary.png'), "#{competition_number.ordinalize} competition") %>
+          <% end %>
+
           <% if competitor.event_registrations.select(&:waiting).size > 0 %>
             <%=
               tooltip(

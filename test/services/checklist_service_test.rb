@@ -55,6 +55,6 @@ class ChecklistServiceTest < ActiveSupport::TestCase
   private
 
   def service
-    @competitor.checklist_service
+    ChecklistService.new(@competitor)
   end
 end
