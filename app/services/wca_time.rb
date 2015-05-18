@@ -1,9 +1,10 @@
 class WcaTime
   attr_reader :value, :event
 
-  def initialize(event, value)
-    @event = event
-    @value = value
+  def initialize(rank)
+    @event = rank.eventId
+    @value = rank.best
+    @class = rank.class
   end
 
   def to_s
@@ -11,11 +12,19 @@ class WcaTime
 
     case event
     when '333fm'
-      value
+      fm
     when '333mbf'
       mbf
     else
       regular_time
+    end
+  end
+
+  def fm
+    if @class == Wca::RanksAverage
+      "%.2f" % (value / 100.0)
+    else
+      value.to_s
     end
   end
 

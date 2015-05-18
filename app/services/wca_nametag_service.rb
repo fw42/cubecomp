@@ -16,9 +16,9 @@ class WcaNametagService
     return unless single = rubiks_cube_singles[wca_id]
     average = rubiks_cube_averages[wca_id]
 
-    single = WcaTime.new('333', single.first.best)
+    single = WcaTime.new(single)
     str = "<b>3x3:</b> #{single}"
-    str << " (#{WcaTime.new('333', average.first.best)})" if average
+    str << " (#{WcaTime.new(average)})" if average
     str
   end
 

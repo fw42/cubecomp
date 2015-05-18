@@ -84,20 +84,45 @@ class ThemeFileRenderer
   end
 
   def assign_views
-    assigns[:default_headers] = ViewDrop.new(template: 'default_headers', controller: @controller)
-
-    assigns[:stats] = ViewDrop.new(template: 'stats', controller: @controller, locals: {
-      :@stats => Highcharts.new(@competition)
-    })
-
-    assigns[:news] = ViewDrop.new(template: 'news', controller: @controller, locals: {
-      :@news => @locale.news.order("time DESC")
-    })
-
-    assigns[:venue_map] = ViewDrop.new(template: 'venue_map', controller: @controller, locals: default_locals)
-
+    assign_headers_view
+    assign_venue_map_view
+    assign_news_view
+    assign_stats_view
+    assign_comparison_view
     assign_competitors_view
     assign_registration_form_view
+  end
+
+  def assign_headers_view
+    assigns[:default_headers] = ViewDrop.new(template: 'default_headers', controller: @controller)
+  end
+
+  def assign_venue_map_view
+    assigns[:venue_map] = lambda do
+      ViewDrop.new(template: 'venue_map', controller: @controller, locals: default_locals)
+    end
+  end
+
+  def assign_news_view
+    assigns[:news] = lambda do
+      ViewDrop.new(template: 'news', controller: @controller, locals: {
+        :@news => @locale.news.order("time DESC")
+      })
+    end
+  end
+
+  def assign_stats_view
+    assigns[:stats] = lambda do
+      ViewDrop.new(template: 'stats', controller: @controller, locals: {
+        :@stats => Highcharts.new(@competition)
+      })
+    end
+  end
+
+  def assign_comparison_view
+    assigns[:comparison] = lambda do
+      ViewDrop.new(template: 'comparison', controller: @controller, locals: locals_for_comparison_view)
+    end
   end
 
   def assign_competitors_view
@@ -125,6 +150,20 @@ class ThemeFileRenderer
         })
       )
     end
+  end
+
+  def locals_for_comparison_view
+    events = @competition.events.for_competitors_table.wca
+    event = events.detect{ |e| e.wca_handle == @controller.params[:event] } || events.first
+    competitors = event.competitors.confirmed.where.not(wca: nil).includes(:country)
+
+    {
+      :@event => event,
+      :@events => events,
+      :@competitors => competitors,
+      :@singles => Wca::RanksSingle.for_event(competitors.map(&:wca), event.wca_handle),
+      :@averages => Wca::RanksAverage.for_event(competitors.map(&:wca), event.wca_handle)
+    }
   end
 
   def competitors_for_view
