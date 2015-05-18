@@ -1,11 +1,10 @@
 class Competitor < ActiveRecord::Base
+  include HasWcaId
+
   STATES = %w(new confirmed cancelled)
 
   belongs_to :competition
   validates :competition, presence: true
-
-  validates :wca, uniqueness: { scope: :competition_id }, allow_nil: true, allow_blank: true
-  validates :wca, format: { with: /\A\d{4}\w+\d\d\Z/ }, allow_nil: true, allow_blank: true
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -36,14 +35,14 @@ class Competitor < ActiveRecord::Base
   before_validation :set_default_state
   validate :validate_at_least_one_day_registration
 
-  auto_strip_attributes :first_name, :last_name, :wca, :email, :free_entrance_reason, :paid_comment, :nametag
-
-  before_validation do
-    self.wca = wca.upcase if wca
-  end
+  auto_strip_attributes :first_name, :last_name, :email, :free_entrance_reason, :paid_comment, :nametag
 
   scope :awaiting_payment, ->{ where(state: 'new', paid: false, free_entrance: false) }
   scope :confirmed, ->{ where(state: 'confirmed') }
+
+  def delegate?
+    competition.delegate && competition.delegate.wca == wca
+  end
 
   def name
     [first_name, last_name].join(' ')
