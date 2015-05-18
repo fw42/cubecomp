@@ -2,7 +2,7 @@ module HasWcaId
   extend ActiveSupport::Concern
 
   included do
-    if columns.map(&:name).include?('competition_id')
+    if self == Competitor
       validates :wca, uniqueness: { scope: :competition_id }, allow_nil: true, allow_blank: true
     else
       validates :wca, uniqueness: {}, allow_nil: true, allow_blank: true
