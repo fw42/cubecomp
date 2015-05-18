@@ -2,23 +2,19 @@ require 'forgery'
 
 EVENTS = [
   {
-    name_short: "3x3x3",
-    name: "Rubik's Cube",
+    name: "3x3x3",
     handle: "3"
   },
   {
-    name_short: "4x4x4",
-    name: "Rubik's Revenge",
+    name: "4x4x4",
     handle: "4"
   },
   {
-    name_short: "5x5x5",
-    name: "Rubik's Professor",
+    name: "5x5x5",
     handle: "5"
   },
   {
-    name_short: "3x3 bld",
-    name: "Rubik's Cube blind",
+    name: "3x3 bld",
     handle: "3b"
   }
 ]

@@ -28,13 +28,7 @@
       <tr class="<%= "not_for_registration" unless event.for_registration? %>">
         <td><%= event.start_time.strftime("%H:%M") %></td>
         <td><%= event.end_time.try!(:strftime, "%H:%M") %></td>
-        <td>
-          <%= event.name_short %>
-          <% if event.name && event.name_short != event.name %>
-            <br/>
-            <small><%= event.name %></small>
-          <% end %>
-        </td>
+        <td><%= event.name %></td>
         <td><%= event.round %></td>
         <td><%= event.timelimit %></td>
         <td>

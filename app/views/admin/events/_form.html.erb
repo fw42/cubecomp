@@ -18,7 +18,6 @@
             $("a#standard-wca-event-load-button").click(function(event) {
               index = parseInt($("select#standard-wca-events").val());
               wca_event = wca_events[index];
-              $("#event_name_short").val(wca_event["name_short"]);
               $("#event_name").val(wca_event["name"]);
               $("#event_format").val(wca_event["format"]);
               $("#event_handle").val(wca_event["handle"]);
@@ -34,11 +33,7 @@
   <%= form_section 'Name' do %>
     <table class="form-table">
       <tr>
-        <td><%= f.label :name_short, 'Short:' %></td>
-        <td><%= f.text_field :name_short %></td>
-      </tr>
-      <tr>
-        <td><%= f.label :name, 'Long:' %></td>
+        <td><%= f.label :name, 'Name:' %></td>
         <td><%= f.text_field :name %></td>
       </tr>
       <tr>

@@ -16,7 +16,7 @@ class Event < ActiveRecord::Base
 
   has_many :competitors, through: :registrations
 
-  validates :name_short, presence: true
+  validates :name, presence: true
 
   validates :handle, presence: true, if: :for_registration?
   validates :handle,
@@ -43,7 +43,7 @@ class Event < ActiveRecord::Base
   validates :state, presence: true
   validates :state, inclusion: { in: Event::STATES.keys }, allow_nil: true, allow_blank: true
 
-  auto_strip_attributes :name_short, :name, :handle, :timelimit, :format, :round, :proceed
+  auto_strip_attributes :name, :handle, :timelimit, :format, :round, :proceed
 
   scope :for_competitors_table, ->{ where.not(state: 'not_for_registration') }
 
@@ -59,10 +59,6 @@ class Event < ActiveRecord::Base
   }
 
   validate :validate_cant_be_not_for_registration_if_registrations_exist
-
-  def display_name
-    name || name_short
-  end
 
   def for_registration?
     state != 'not_for_registration'
