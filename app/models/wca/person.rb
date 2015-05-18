@@ -1,5 +1,3 @@
-#!/usr/bin/ruby
-
 class Wca::Person < ActiveRecord::Base
   establish_connection :wca
   self.table_name = "Persons"
@@ -21,14 +19,6 @@ class Wca::Person < ActiveRecord::Base
 
   def last_name
     split_name.last
-  end
-
-  def best_single(wca_event_id)
-    results.where(eventId: wca_event_id).where("best > 0").pluck("MIN(best)").first
-  end
-
-  def best_average(wca_event_id)
-    results.where(eventId: wca_event_id).where("average > 0").pluck("MIN(average)").first
   end
 
   def self.number_of_competitions(wca_ids)

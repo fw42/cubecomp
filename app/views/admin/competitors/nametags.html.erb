@@ -8,7 +8,9 @@
 
             <div class="namebox">
               <span class="name"><%= competitor.name %></span>
-              <% if competitor.staff? %>
+              <% if competitor.delegate? %>
+                <span class="staff">WCA DELEGATE</span>
+              <% elsif competitor.staff? %>
                 <span class="staff">TEAM</span>
               <% end %>
             </div>
@@ -23,6 +25,10 @@
             <% if competitor.nametag %>
               <span class="extra">
                 <%= competitor.nametag.html_safe %>
+              </span>
+            <% elsif competitor.wca %>
+              <span class="extra">
+                <%= @wca_nametags.nametag(competitor.wca).html_safe %>
               </span>
             <% end %>
           </td>

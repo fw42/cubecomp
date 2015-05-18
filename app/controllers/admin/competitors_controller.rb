@@ -48,6 +48,8 @@ class Admin::CompetitorsController < AdminController
       .includes(:country)
       .order(:last_name, :first_name)
 
+    @wca_nametags = WcaNametagService.new(@competitors)
+
     render layout: 'admin/nametags'
   end
 
