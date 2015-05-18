@@ -109,7 +109,7 @@ GEM
       tilt
     highline (1.6.21)
     i18n (0.7.0)
-    immigrant (0.3.2)
+    immigrant (0.3.3)
       activerecord (>= 3.0)
     jquery-rails (4.0.3)
       rails-dom-testing (~> 1.0)
@@ -153,7 +153,7 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
-    parser (2.2.2.2)
+    parser (2.2.2.3)
       ast (>= 1.1, < 3.0)
     powerpack (0.1.1)
     quiet_assets (1.1.0)
