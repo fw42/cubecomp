@@ -100,3 +100,6 @@ pt:
     male: 'masculino'
     female: 'feminino'
     designed_by: "Design por"
+
+  comparison:
+    title: 'Comparação'

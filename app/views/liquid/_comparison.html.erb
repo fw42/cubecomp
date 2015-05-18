@@ -1,5 +1,5 @@
 <form method="GET" action="">
-  Event:
+  <%= t('schedule.event') %>:
   <select name="event">
     <% @events.sort_by(&:wca_handle_index).each do |event| %>
       <option value="<%= event.wca_handle %>" <%= @event.wca_handle == event.wca_handle ? 'selected="selected"' : "" %>><%= event.name %></option>
@@ -13,8 +13,8 @@
 <table class="competitors">
 <tr>
  <th>#</th>
- <th>name</th>
- <th>country</th>
+ <th><%= t('activerecord.attributes.competitor.name') %></th>
+ <th><%= t('activerecord.attributes.competitor.country') %></th>
  <th>Average</th>
  <th>Single</th>
 </tr>

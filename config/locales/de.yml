@@ -99,3 +99,6 @@ de:
     male: "männlich"
     female: "weiblich"
     designed_by: "Design von"
+
+  comparison:
+    title: "Vergleich"
