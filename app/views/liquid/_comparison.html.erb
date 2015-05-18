@@ -1,0 +1,30 @@
+<form method="GET" action="">
+  <%= t('schedule.event') %>:
+  <select name="event">
+    <% @events.sort_by(&:wca_handle_index).each do |event| %>
+      <option value="<%= event.wca_handle %>" <%= @event.wca_handle == event.wca_handle ? 'selected="selected"' : "" %>><%= event.name %></option>
+    <% end %>
+  </select>
+  <input type="submit" value="OK" style="width: 30px" />
+</form>
+
+<br/>
+
+<table class="competitors">
+<tr>
+ <th>#</th>
+ <th><%= t('activerecord.attributes.competitor.name') %></th>
+ <th><%= t('activerecord.attributes.competitor.country') %></th>
+ <th>Average</th>
+ <th>Single</th>
+</tr>
+<% @competitors.select{ |competitor| @singles[competitor.wca] }.sort_by{ |competitor| [ @averages[competitor.wca] ? @averages[competitor.wca].best : Float::INFINITY, @singles[competitor.wca].best ] }.each_with_index do |competitor, index| %>
+  <tr>
+    <td><%= index + 1 %></td>
+    <td><%= link_to competitor.name, competitor.wca_url %></td>
+    <td><%= competitor.country.name %></td>
+    <td class='time'><%= @averages[competitor.wca] && WcaTime.new(@averages[competitor.wca]) %></td>
+    <td class='time'><%= @singles[competitor.wca] && WcaTime.new(@singles[competitor.wca]) %></td>
+  </tr>
+<% end %>
+</table>

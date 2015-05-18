@@ -100,3 +100,6 @@ en:
     male: 'male'
     female: 'female'
     designed_by: "Design by"
+
+  comparison:
+    title: "Comparison"

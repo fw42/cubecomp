@@ -46,6 +46,7 @@ class Event < ActiveRecord::Base
   auto_strip_attributes :name, :handle, :timelimit, :format, :round, :proceed
 
   scope :for_competitors_table, ->{ where.not(state: 'not_for_registration') }
+  scope :wca, ->{ where(handle: WCA_EVENTS.map{ |event| event[:handle] }.uniq) }
 
   scope :with_max_number_of_registrations, lambda {
     select('events.*, COUNT(DISTINCT(competitors.id)) AS number_of_confirmed_registrations')
@@ -62,6 +63,15 @@ class Event < ActiveRecord::Base
 
   def for_registration?
     state != 'not_for_registration'
+  end
+
+  def wca_handle
+    return unless wca_handle_index
+    WCA_EVENTS[wca_handle_index][:wca_handle]
+  end
+
+  def wca_handle_index
+    @wca_handle_index ||= WCA_EVENTS.find_index{ |wca_event| handle == wca_event[:handle] }
   end
 
   def registrations?
