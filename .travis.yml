@@ -9,3 +9,5 @@ script:
   - bundle exec rake test
 rvm:
   - 2.2.1
+notifications:
+  email: false
