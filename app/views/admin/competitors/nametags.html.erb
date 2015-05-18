@@ -28,7 +28,7 @@
               </span>
             <% elsif competitor.wca %>
               <span class="extra">
-                <%= @wca_nametags.nametag(competitor.wca).html_safe %>
+                <%= @wca_nametags.nametag(competitor.wca).try!(:html_safe) %>
               </span>
             <% end %>
           </td>
