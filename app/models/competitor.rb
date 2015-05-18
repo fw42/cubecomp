@@ -115,10 +115,6 @@ class Competitor < ActiveRecord::Base
     end
   end
 
-  def checklist_service
-    @checklist_service ||= ChecklistService.new(self)
-  end
-
   def to_liquid
     @liquid_drop ||= CompetitorDrop.new(self)
   end

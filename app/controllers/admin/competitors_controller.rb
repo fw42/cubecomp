@@ -37,6 +37,8 @@ class Admin::CompetitorsController < AdminController
       .includes(:event_registrations)
       .includes(:events)
       .order(created_at: :desc)
+
+    @anniversaries = Wca::Person.anniversaries(@competitors.map(&:wca))
   end
 
   def nametags
@@ -58,6 +60,8 @@ class Admin::CompetitorsController < AdminController
       .preload(event_registrations: :event)
       .includes(:country)
       .order('countries.name', :last_name, :first_name)
+
+    @anniversaries = Wca::Person.anniversaries(@competitors.map(&:wca))
 
     render layout: 'admin/checklist'
   end

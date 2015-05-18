@@ -2,7 +2,7 @@ require 'test_helper'
 
 class WcaControllerTest < ActionController::TestCase
   test "#autocomplete" do
-    get :autocomplete, format: :json, q: "2014bla"
+    get :autocomplete, format: :json, q: "2014BLABLA"
     assert_response :ok
     assert_equal "[]", response.body
   end
