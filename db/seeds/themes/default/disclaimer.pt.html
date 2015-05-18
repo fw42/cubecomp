@@ -1,0 +1,36 @@
+<h2>Organização</h2>
+
+{% if owner %}
+  Responsável pelo conteúdo deste website é
+  <blockquote>
+    <b>{{ owner.name }}</b><br/>
+    {{ owner.address | to_html }}
+  </blockquote>
+{% endif %}
+
+{% if delegate or staff.size > 0 %}
+  <h3>Equipa</h3>
+{% endif %}
+
+{% if staff.size > 0 %}
+  <h4>Organização</h4>
+  <ul>
+    {% for user in staff %}
+      <li>{{ user.name }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% if delegate %}
+  <h4>Delegado da WCA</h4>
+  <ul>
+    <li>{{ delegate.name }}</li>
+  </ul>
+{% endif %}
+
+<h3>Contacto</h3>
+
+<p>
+  Se tiver questões ou comentários, por favor contacte a equipa de organização em
+  <a href="mailto:{{ competition.staff_email }}">{{ competition.staff_email }}</a>.
+</p>
