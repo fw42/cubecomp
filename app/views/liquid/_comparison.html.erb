@@ -15,8 +15,8 @@
  <th>#</th>
  <th><%= t('activerecord.attributes.competitor.name') %></th>
  <th><%= t('activerecord.attributes.competitor.country') %></th>
- <th>Average</th>
- <th>Single</th>
+ <th><%= t('comparison.average') %></th>
+ <th><%= t('comparison.single') %></th>
 </tr>
 <% @competitors.select{ |competitor| @singles[competitor.wca] }.sort_by{ |competitor| [ @averages[competitor.wca] ? @averages[competitor.wca].best : Float::INFINITY, @singles[competitor.wca].best ] }.each_with_index do |competitor, index| %>
   <tr>

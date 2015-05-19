@@ -103,3 +103,5 @@ pt:
 
   comparison:
     title: 'Comparação'
+    single: 'Singular'
+    average: 'Média'

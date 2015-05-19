@@ -103,3 +103,5 @@ en:
 
   comparison:
     title: "Comparison"
+    single: 'Single'
+    average: 'Average'

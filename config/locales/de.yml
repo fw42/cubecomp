@@ -102,3 +102,5 @@ de:
 
   comparison:
     title: "Vergleich"
+    single: 'Einzelzeit'
+    average: 'Durchschnitt'
