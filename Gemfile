@@ -20,7 +20,7 @@ gem 'mysql2'
 gem 'auto_strip_attributes'
 gem 'marginalia'
 gem 'liquid'
-gem 'paperclip'
+gem 'paperclip', '~> 4.2.2'
 
 gem 'dotenv-rails'
 
