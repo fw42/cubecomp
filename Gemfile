@@ -20,7 +20,9 @@ gem 'mysql2'
 gem 'auto_strip_attributes'
 gem 'marginalia'
 gem 'liquid'
-gem 'paperclip', '~> 4.2.2'
+
+# Locked to 4.2.4 because of https://github.com/thoughtbot/paperclip/issues/1930
+gem 'paperclip', '~> 4.2.4'
 
 gem 'dotenv-rails'
 
