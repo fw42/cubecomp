@@ -25,6 +25,7 @@ en:
         email: 'E-mail'
         birthday: 'Birthday'
         country: 'Country'
+        citizen_of: 'Citizen of'
         male: 'Gender'
         user_comment: 'Comment'
     errors:
