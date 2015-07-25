@@ -25,6 +25,7 @@ pt:
         email: 'E-mail'
         birthday: 'Data de Nascimento'
         country: 'País'
+        citizen_of: 'Cidadão de'
         male: 'Sexo'
         user_comment: 'Comentários'
     errors:

@@ -91,7 +91,7 @@
       </td>
     </tr>
     <tr>
-      <td><%= f.label :country %></td>
+      <td><%= f.label :citizen_of %></td>
       <td>
         <%= f.select :country_id, [["", nil]] + Country.all.map{ |c| [ c.name, c.id ] }, selected: @competition.country_id %><br/>
         <%= f.check_box :local %>
