@@ -35,9 +35,6 @@
       </td>
       <td>
         <%= competitor.country.name %>
-        <% if @competition.city_name_short && competitor.local%>
-          (<%= @competition.city_name_short %>)
-        <% end %>
       </td>
 
       <% if @competition.days.size > 1 %>
