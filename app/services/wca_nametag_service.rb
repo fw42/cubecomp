@@ -5,7 +5,8 @@ class WcaNametagService
 
   def nametag(wca_id)
     number = number_of_competitions[wca_id]
-    return if number.nil? || number == 0
+    return if number.nil?
+    number += 1
     lines = []
     lines << "#{number.ordinalize} competition"
     lines << rubiks_cube_nametag_line(wca_id)
