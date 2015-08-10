@@ -62,16 +62,17 @@ module AdminHelper
   end
 
   def options_for_minutes
-    [*1..24].map do |i|
-      minutes = 5 * i
-      str = "#{minutes} minutes"
+    minutes = 5.step(175, 5).to_a + 180.step(8 * 60, 30).to_a
 
-      if minutes % 30 == 0
-        hours = minutes / 60.0
+    minutes.map do |minute|
+      str = "#{minute} minutes"
+
+      if minute % 30 == 0
+        hours = minute / 60.0
         str << ' (%.1f %s)' % [hours, 'hour'.pluralize(hours)]
       end
 
-      [str, minutes]
+      [str, minute]
     end
   end
 end
