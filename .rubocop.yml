@@ -107,3 +107,9 @@ Style/SymbolLiteral:
 
 Performance/Count:
   Enabled: false
+
+Lint/FormatParameterMismatch:
+  Enabled: false
+
+Style/ExtraSpacing:
+  Enabled: false
