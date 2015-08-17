@@ -32,7 +32,7 @@ fr:
         blank: "n'est pas indiqué"
       models:
         competitor:
-          at_least_one_day: 'Il faut sélectionner au moins un jour pour l'enregistrement'
+          at_least_one_day: "Il faut sélectionner au moins un jour pour l'enregistrement"
           attributes:
             wca_id:
               taken: "a déjà été utilisé pour l'enregistrement d'un autre participant"
@@ -61,8 +61,8 @@ fr:
     flash_success: "Enregistrement avec succès. Tu vas bientôt recevoir une validation par courriel."
     flash_closed: "L'enregistrement est actuellement impossible."
     closed: 'fermé'
-    waiting_list: 'liste d'attente'
-    submit: "Inscris-moi !"
+    waiting_list: "liste d'attente"
+    submit: "Inscris-moi!"
     register_not_coming: "Je ne viens pas"
     register_as_guest: "J'aimerais regarder (invité)"
     register_as_competitor: "J'aimerais participer"
