@@ -1,0 +1,107 @@
+fr:
+  date:
+    formats:
+      default: "%d.%m.%Y"
+      schedule: "%A, %d. %B %Y"
+      day_only: "%A"
+      news: "%d. %B %Y"
+    day_names: [Dimanche, Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi]
+    abbr_day_names: [Di, Lu, Ma, Me, Je, Ve, Sa]
+    month_names: [~, Janvier, Février, Mars, Avril, Mai, Juin, Juillet, Août, Septembre, Octobre, Novembre, Décembre]
+    abbr_month_names: [~, Jan, Fév, Mar, Avr, Mai, Jun, Jul, Aug, Sep, Oct, Nov, Déc]
+    order:
+      - day
+      - month
+      - year
+
+  activerecord:
+    attributes:
+      competitor:
+        wca: "WCA ID"
+        name: "Nom"
+        first_name: "Prénom"
+        last_name: "Nom de famille"
+        email: "Courriel"
+        birthday: "Date de naissance"
+        country: "Pays"
+        citizen_of: "Citoyen de"
+        male: "Sexe"
+        user_comment: "Commentaire"
+    errors:
+      messages:
+        blank: "n'est pas indiqué"
+      models:
+        competitor:
+          at_least_one_day: "Il faut sélectionner au moins un jour pour l'enregistrement"
+          attributes:
+            wca_id:
+              taken: "a déjà été utilisé pour l'enregistrement d'un autre participant"
+              invalid: "n'est pas valide"
+            birthday:
+              inclusion: "n'est pas complet"
+            mail:
+              invalid: "L'adresse est invalide"
+            male:
+              inclusion: "n'est pas indiquée"
+
+  information:
+    title: "Informations"
+
+  competitors:
+    title: "Participants"
+
+  news:
+    title: "Nouvelles"
+
+  registration:
+    title: "Enregistrement"
+    error_count_failed_to_save:
+      one: "Il y a eu une erreur lors de l'enregistrement"
+      other: "Il y a eu %{count} erreurs lors de l'enregistrement"
+    flash_success: "Enregistrement avec succès. Tu vas bientôt recevoir une validation par courriel."
+    flash_closed: "L'enregistrement est actuellement impossible."
+    closed: 'fermé'
+    waiting_list: "liste d'attente"
+    submit: "Inscris-moi!"
+    register_not_coming: "Je ne viens pas"
+    register_as_guest: "J'aimerais regarder (invité)"
+    register_as_competitor: "J'aimerais participer"
+    wca_id_first_time: "Si c'est ta première compétition, laisse cette case vide."
+    i_live_in: "J'habite à %{city}"
+    did_you_mean: "Tu pensais que %{suggestion}?"
+
+  schedule:
+    title: "Planning"
+    start: "Début"
+    stop: "Fin"
+    event: "Discipline"
+    stage: "Salle"
+    round: "Tour"
+    timelimit: "Limite de temps"
+    format: "Format"
+    max: "Max."
+
+  disclaimer:
+    title: "Mentions Légales"
+
+  stats:
+    title: "Statistiques"
+    events: "Disciplines"
+    registrations: "Enregistrements"
+    registrations_count: "Nombre d'enregistrements"
+    competitors: "Participants"
+    guests: "Invités"
+    countries: "Pays"
+    days: "Jours"
+    newcomer: "Novice"
+    non-newcomer: "Non-novice"
+
+  misc:
+    male: "masculin"
+    female: "féminin"
+    designed_by: "Design par"
+
+  comparison:
+    title: "Comparaison"
+    single: 'Meilleur temps'
+    average: 'Moyenne'
