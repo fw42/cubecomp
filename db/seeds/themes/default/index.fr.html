@@ -1,0 +1,53 @@
+<img src="{{ "logo.png" | image_url }}" class="logo" />
+
+{{ news }}
+
+<h2>Qu'est-ce que {{ competition.name }}?</h2>
+
+<p>
+  {{ competition.name }} est une
+  <i>compétition de <a href="http://fr.wikipedia.org/wiki/Speedcubing">Speedcubing</a></i>.
+  Ceci se rapporte à la faculté de résoudre un
+  <a href="http://de.wikipedia.org/wiki/Zauberw%C3%BCrfel">Rubik's cube 3x3x3</a>, ou un puzzle similaire, le plus rapidement possible.
+</p>
+
+<h2>Où et quand ?</h2>
+
+<p>
+  {% if days.size == 1 %}
+    <b>{{ days.first.date | translate_date: "%d. %B %Y" }}</b><br/>
+  {% else %}
+    <b>{{ days.first.date | translate_date: "%d."}}-{{ days.last.date | translate_date: "%d. %B %Y"}}</b><br/>
+  {% endif %}
+  {{ competition.venue_address | to_html }}<br/>
+  {{ competition.country }}
+</p>
+
+<h2>Qu'est-ce que ça me coûte ?</h2>
+
+<p>
+  Le prix d'entrée prévisionnel (!) sera de
+  <b>5 Euros par personne par jour</b>.
+  Ce prix compte pour tous les visiteurs (excepté la presse), n'importe que ce soient des participants, invités, parents ou autres !
+  C'est pourquoi il est important que toutes les personnes 
+  <a href="{{ "registration" | theme_file_url }}">s'enregistrent</a>, afin de faciliter la plannification de la compétition.
+  Merci
+</p>
+
+<h2>Pour les débutants...</h2>
+
+<p>
+  Tout le matériel officiel (en particulier les chronomètres Stackmat) sera à disposition avant et pendant la compétition, 
+  pour que tout le monde puisse être familier avec l'équipement lors des épreuves. Évidemment qu'il y aura assez de personnes pouvant l'expliquer sur place si nécessaire.
+  Cependant, tout le monde devrait avoir lu les
+  <a href="http://www.worldcubeassociation.org/regulations/">règles officielles de la WCA</a>. Un coup d'oeil dans le
+  <a href="http://www.cubingusa.com/ctutorial.php">tutoriel pour participants</a> (! en anglais pour l'instant !)
+  est plus que conseillé pour les novices !
+</p>
+
+<h2>Questions</h2>
+
+<p>
+  Est-ce que tu as d'autres questions ? Dans ce cas, contacte simplement l'équipe d'organisation par courriel sous l'adresse
+  <a href="mailto:{{ competition.staff_email }}">{{ competition.staff_email }}</a>.
+</p>
