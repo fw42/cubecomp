@@ -18,7 +18,7 @@
       <th>Round</th>
       <th>Time-limit</th>
       <th>Format</th>
-      <th>Registrations</th>
+      <th>Confirmed registrations</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -40,7 +40,8 @@
         </td>
         <td>
           <% if event.for_registration? %>
-            <%= event.registrations.size %> (<%= event.registrations.select(&:waiting).size %> waiting)
+            <% confirmed = event.registrations.select{ |r| r.competitor.confirmed? } %>
+            <%= confirmed.size %> (<%= confirmed.select(&:waiting).size %> waiting)
           <% end %>
         </td>
         <td>

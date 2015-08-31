@@ -18,7 +18,7 @@ class Admin::EventsController < AdminController
   ]
 
   def index
-    @events = current_competition.events.includes(:registrations)
+    @events = current_competition.events.includes(:registrations => :competitor)
     @days = current_competition.days.with_events
   end
 

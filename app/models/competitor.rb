@@ -40,6 +40,10 @@ class Competitor < ActiveRecord::Base
   scope :awaiting_payment, ->{ where(state: 'new', paid: false, free_entrance: false) }
   scope :confirmed, ->{ where(state: 'confirmed') }
 
+  def confirmed?
+    state == 'confirmed'
+  end
+
   def delegate?
     competition.delegate && competition.delegate.wca == wca
   end
