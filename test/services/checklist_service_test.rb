@@ -25,9 +25,13 @@ class ChecklistServiceTest < ActiveSupport::TestCase
     assert_match /free entrance.*nice guys/i, service.comments.join("\n")
   end
 
-  test '#comments includes newcomer note' do
+  test '#comments includes newcomer note if competitor is competing' do
     @competitor.wca = nil
+
     assert_match /newcomer.*check identification/i, service.comments.join("\n")
+
+    @competitor.event_registrations.destroy_all
+    assert_no_match /newcomer/i, service.comments.join("\n")
   end
 
   test '#comments includes paid already' do

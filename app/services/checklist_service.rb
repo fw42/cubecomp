@@ -26,7 +26,7 @@ class ChecklistService
 
   def comments
     comments = []
-    comments << 'Newcomer (Check identification!)' if wca.blank?
+    comments << 'Newcomer (Check identification!)' if wca.blank? && competitor.competing?
     comments += comment_comments
     comments << 'Birthday!' if birthday_on_competition?
     comments << 'Paid already' if paid?
