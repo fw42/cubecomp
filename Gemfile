@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'mysql2', '~> 0.3.18'
 gem 'rails'
 gem 'sass-rails'
 gem 'uglifier'
@@ -15,7 +16,6 @@ gem 'faraday'
 gem 'turbolinks'
 gem 'bcrypt'
 gem 'codemirror-rails'
-gem 'mysql2'
 
 gem 'auto_strip_attributes'
 gem 'marginalia'
