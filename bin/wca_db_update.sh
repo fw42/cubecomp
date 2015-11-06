@@ -19,7 +19,11 @@ FILENAME="WCA_export.sql"
 cd $DIR
 wget -q -c https://www.worldcubeassociation.org/results/misc/$ZIPPED_FILENAME
 unzip -q -o $ZIPPED_FILENAME
-sed -i $FILENAME -e "s/CHARSET=latin1/CHARSET=utf8/g"
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  sed -i -e "s/CHARSET=latin1/CHARSET=utf8/g" $FILENAME
+else
+  sed -i $FILENAME -e "s/CHARSET=latin1/CHARSET=utf8/g"
+fi
 
 MYSQL="mysql --default-character-set=utf8 $DB -u $USER --password=$PASS"
 
