@@ -2,7 +2,6 @@ require_relative 'deploy/cubecomp_formatter'
 
 set :application, 'cubecomp'
 set :repo_url, 'git@github.com:fw42/cubecomp.git'
-set :format, :cubecomp
 
 set :log_level, :info
 
