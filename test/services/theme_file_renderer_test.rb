@@ -28,17 +28,15 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
 
     @theme_file.content = 'hello'
 
-    expected = <<-END
-      <link rel="stylesheet" media="all" href="/assets/competition_area.css" />
-<link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico" />
-<script src="/assets/competition_area.js"></script>
+    expected = %r{<link rel="stylesheet" media="all" href="/assets/competition_area-[a-f0-9]+\.css" />
+<link rel="shortcut icon" type="image/x-icon" href="/assets/favicon-[a-f0-9]+\.ico" />
+<script src="/assets/competition_area-[a-f0-9]+\.js"></script>
 
       Aachen Open!!
       hello
-      footer
-  END
+      footer}
 
-    assert_equal expected, renderer.render
+    assert_match expected, renderer.render
   end
 
   test '#render Liquid template with competition and staff' do
