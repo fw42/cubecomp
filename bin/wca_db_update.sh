@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "$#" -ne 4 ]; then
   echo "Usage: ${0} <db> <user> <pass> <dir>"
