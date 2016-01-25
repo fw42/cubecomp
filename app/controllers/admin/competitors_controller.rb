@@ -24,7 +24,7 @@ class Admin::CompetitorsController < AdminController
       :status,
       events: [ :status ]
     ]
-  ]
+  ].freeze
 
   before_action :set_competitor, only: [:edit, :update, :confirm, :cancel, :destroy, :mark_as_paid]
 

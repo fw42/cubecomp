@@ -7,7 +7,7 @@ class Event < ActiveRecord::Base
     'open_with_waiting_list' => 'Waiting list',
     'registration_closed' => 'Closed (not open anymore)',
     'not_for_registration' => 'Not for registration'
-  }
+  }.freeze
 
   belongs_to :day
   validates :day, presence: true

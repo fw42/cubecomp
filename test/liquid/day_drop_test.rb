@@ -11,7 +11,7 @@ class DayDropTest < ActiveSupport::TestCase
     :date,
     :entrance_fee_guests,
     :entrance_fee_competitors,
-  ]
+  ].freeze
 
   DELEGATIONS.each do |method|
     test "#{method} is delegated to day" do

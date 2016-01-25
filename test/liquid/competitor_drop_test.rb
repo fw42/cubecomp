@@ -6,7 +6,7 @@ class CompetitorDropTest < ActiveSupport::TestCase
     :first_name,
     :last_name,
     :email
-  ]
+  ].freeze
 
   setup do
     @competitor = competitors(:flo_aachen_open)

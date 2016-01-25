@@ -15,7 +15,7 @@ class CompetitionArea::CompetitorsController < CompetitionAreaController
       :status,
       events: [ :status ]
     ]
-  ]
+  ].freeze
 
   skip_before_action :load_theme_file
   before_action :ensure_registration_is_open, only: [:create]
@@ -38,11 +38,12 @@ class CompetitionArea::CompetitorsController < CompetitionAreaController
 
   def return_to_path
     path = params[:return_to_path]
-    if path && path =~ /\A\//
-      path
-    else
+
+    unless path && path =~ /\A\//
       raise InvalidParametersError
     end
+
+    path
   end
 
   def render_theme_file_with_errors(competitor)

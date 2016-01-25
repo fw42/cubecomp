@@ -3,7 +3,7 @@ class Competition < ActiveRecord::Base
     'per_day' => 'Pay per day',
     'per_competition' => 'Pay per competition',
     'per_day_discounted' => 'Pay per competition if registered for all days'
-  }
+  }.freeze
 
   include EntranceFeeValidation
 

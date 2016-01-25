@@ -4,7 +4,7 @@ class Locale < ActiveRecord::Base
     'en' => 'English',
     'pt' => 'Portuguese',
     'fr' => 'French'
-  }
+  }.freeze
 
   belongs_to :competition, inverse_of: :locales
   validates :competition, presence: true

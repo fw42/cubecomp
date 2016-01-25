@@ -25,7 +25,7 @@ class Admin::UsersController < AdminController
     :address,
     :active,
     permissions_attributes: [:id, :_destroy, :competition_id]
-  ]
+  ].freeze
 
   def index
     all_users = User
@@ -82,10 +82,10 @@ class Admin::UsersController < AdminController
   private
 
   def set_user
-    if action_name == 'create'
-      @user = User.new(user_params)
+    @user = if action_name == 'create'
+      User.new(user_params)
     else
-      @user = User.find(params[:id])
+      User.find(params[:id])
     end
   end
 

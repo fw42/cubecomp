@@ -36,7 +36,7 @@ class Admin::CompetitionsController < AdminController
       :"entrance_fee_guests",
       :_destroy
     ]
-  ]
+  ].freeze
 
   def index
     @competitions = Competition

@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
     regular: 0,
     admin: 1,
     superadmin: 2
-  }
+  }.freeze
 
   has_secure_password
   validates :password, presence: { on: :create }, length: { minimum: 8 }, if: :password_digest_changed?

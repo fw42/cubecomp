@@ -5,7 +5,7 @@ class UserDropTest < ActiveSupport::TestCase
     :name,
     :email,
     :address,
-  ]
+  ].freeze
 
   setup do
     @user = users(:flo)

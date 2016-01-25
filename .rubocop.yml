@@ -1,4 +1,6 @@
 AllCops:
+  TargetRubyVersion: 2.2
+
   Exclude:
     - 'db/**/*'
     - 'script/**/*'
@@ -71,7 +73,10 @@ Style/Documentation:
 Style/ClassAndModuleChildren:
   Enabled: false
 
-Style/TrailingComma:
+Style/TrailingCommaInArguments:
+  Enabled: false
+
+Style/TrailingCommaInLiteral:
   Enabled: false
 
 Style/TrailingWhitespace:
@@ -113,3 +118,6 @@ Lint/FormatParameterMismatch:
 
 Style/ExtraSpacing:
   Enabled: false
+
+Style/MultilineMethodCallIndentation:
+  EnforcedStyle: indented

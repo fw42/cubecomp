@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class SessionsTest < ActionDispatch::IntegrationTest
-  SESSION_KEY = '_cubecomp_session'
+  SESSION_KEY = '_cubecomp_session'.freeze
 
   setup do
     https!

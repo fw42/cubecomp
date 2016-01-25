@@ -1,7 +1,7 @@
 class Competitor < ActiveRecord::Base
   include HasWcaId
 
-  STATES = %w(new confirmed cancelled)
+  STATES = %w(new confirmed cancelled).freeze
 
   belongs_to :competition
   validates :competition, presence: true

@@ -9,7 +9,7 @@ class CompetitionDropTest < ActiveSupport::TestCase
     :city_name,
     :venue_address,
     :locales
-  ]
+  ].freeze
 
   setup do
     @competition = competitions(:aachen_open)

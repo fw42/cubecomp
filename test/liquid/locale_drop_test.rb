@@ -4,7 +4,7 @@ class LocaleDropTest < ActiveSupport::TestCase
   DELEGATIONS = [
     :name,
     :handle,
-  ]
+  ].freeze
 
   setup do
     @locale = Locale.first

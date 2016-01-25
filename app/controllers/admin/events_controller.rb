@@ -15,7 +15,7 @@ class Admin::EventsController < AdminController
     :proceed,
     :max_number_of_registrations,
     :state
-  ]
+  ].freeze
 
   def index
     @events = current_competition.events.includes(:registrations => :competitor)
