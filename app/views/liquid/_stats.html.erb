@@ -33,7 +33,7 @@ $(document).ready(function() {
         name: '<%= t("stats.competitors") %>',
         data: [
           <% @stats.competing_competitors_by_date.each do |date, number| %>
-            [ Date.UTC(<%= date.year %>, <%= date.month %>, <%= date.day %>), <%= number %> ],
+            [ Date.UTC(<%= date.year %>, <%= date.month %> - 1, <%= date.day %>), <%= number %> ],
           <% end %>
         ],
       },
@@ -41,7 +41,7 @@ $(document).ready(function() {
         name: '<%= t("stats.guests") %>',
         data: [
           <% @stats.guests_by_date.each do |date, number| %>
-            [ Date.UTC(<%= date.year %>, <%= date.month %>, <%= date.day %>), <%= number %> ],
+            [ Date.UTC(<%= date.year %>, <%= date.month %> - 1, <%= date.day %>), <%= number %> ],
           <% end %>
         ]
       }
