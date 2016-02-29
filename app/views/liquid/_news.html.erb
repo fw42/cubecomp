@@ -1,4 +1,4 @@
-<% if @news.size > 0 %>
+<% unless @news.empty? %>
   <h2><%= I18n.t('news.title') %></h2>
 
   <div class='news'>

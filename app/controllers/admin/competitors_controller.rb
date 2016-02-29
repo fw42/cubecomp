@@ -74,8 +74,8 @@ class Admin::CompetitorsController < AdminController
       .confirmed
       .includes(:event_registrations)
 
-    @competitors = active.select{ |competitor| competitor.event_registrations.size > 0 }
-    @guests = active.select{ |competitor| competitor.event_registrations.size == 0 }
+    @competitors = active.reject{ |competitor| competitor.event_registrations.empty? }
+    @guests = active.select{ |competitor| competitor.event_registrations.empty? }
     @awaiting_payment = current_competition.competitors.awaiting_payment
     @locals = active.select(&:local)
   end

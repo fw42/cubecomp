@@ -94,7 +94,7 @@
             <%= tooltip(icon_image_tag('anniversary.png'), "#{competition_number.ordinalize} competition") %>
           <% end %>
 
-          <% if competitor.event_registrations.select(&:waiting).size > 0 %>
+          <% unless competitor.event_registrations.select(&:waiting).empty? %>
             <%=
               tooltip(
                 icon_image_tag('waiting.png'),

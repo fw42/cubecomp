@@ -1,21 +1,21 @@
 <% page_title 'Email addresses' %>
 
-<% if @competitors.size > 0 %>
+<% unless @competitors.empty? %>
   <h2>Confirmed competitors</h2>
   <p><b>BCC:</b> <%= @competitors.map(&:email).join(', ') %></p>
 <% end %>
 
-<% if @guests.size > 0 %>
+<% unless @guests.empty? %>
   <h2>Confirmed guests</h2>
   <p><b>BCC:</b> <%= @guests.map(&:email).join(', ') %></p>
 <% end %>
 
-<% if @locals.size > 0 %>
+<% unless @locals.empty? %>
   <h2>Confirmed locals</h2>
   <p><b>BCC:</b> <%= @locals.map(&:email).join(', ') %></p>
 <% end %>
 
-<% if @awaiting_payment.size > 0 %>
+<% unless @awaiting_payment.empty? %>
   <h2>Unconfirmed, not cancelled, and not paid yet</h2>
   <p><b>BCC:</b> <%= @awaiting_payment.map(&:email).join(', ') %></p>
 <% end %>

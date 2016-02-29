@@ -19,7 +19,7 @@ class FinancialService
   def entrance_fee(day)
     fees = competitors.map{ |competitor| @pricing_model_class.new(competitor).entrance_fee(day) }.compact
 
-    if fees.size == 0
+    if fees.empty?
       nil
     else
       fees.sum
