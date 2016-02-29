@@ -4,17 +4,17 @@
   <p><%= link_to 'New user', new_admin_user_path %></p>
 <% end %>
 
-<% if @active_users.size > 0 %>
+<% unless @active_users.empty? %>
   <h3>Active users</h3>
   <%= render 'table', users: @active_users %>
 <% end %>
 
-<% if @inactive_delegates.size > 0 %>
+<% unless @inactive_delegates.empty? %>
   <h3>Inactive delegates</h3>
   <%= render 'table', users: @inactive_delegates %>
 <% end %>
 
-<% if @inactive_others.size > 0 %>
+<% unless @inactive_others.empty? %>
   <h3>Inactive users</h3>
   <%= render 'table', users: @inactive_others %>
 <% end %>

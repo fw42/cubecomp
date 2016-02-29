@@ -11,7 +11,7 @@
     <%= render 'financial_overview' %>
   <% end %>
 
-  <% if @events_with_limits.size > 0 %>
+  <% unless @events_with_limits.empty? %>
     <%= render 'events_with_limits' %>
   <% end %>
 

@@ -75,7 +75,7 @@ class Event < ActiveRecord::Base
   end
 
   def registrations?
-    registrations.reject(&:marked_for_destruction?).size > 0
+    !registrations.reject(&:marked_for_destruction?).empty?
   end
 
   def end_time

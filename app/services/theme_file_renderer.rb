@@ -171,6 +171,6 @@ class ThemeFileRenderer
       .competitors
       .confirmed
       .includes(:country, :day_registrations, :event_registrations, :events)
-      .select{ |competitors| competitors.event_registrations.size > 0 }
+      .reject{ |competitors| competitors.event_registrations.empty? }
   end
 end

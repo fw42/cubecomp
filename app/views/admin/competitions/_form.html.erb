@@ -59,7 +59,7 @@
           <%= help_tooltip 'The delegate will have permissions to log into this competition' %>
         </td>
       </tr>
-      <% if @competition.users.size > 0 %>
+      <% unless @competition.users.empty? %>
         <tr>
           <td><label>Staff users:</label></td>
           <td>

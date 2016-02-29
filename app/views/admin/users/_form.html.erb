@@ -87,7 +87,7 @@
     <% end %>
   <% end %>
 
-  <% if @user.persisted? && @user.delegate && @delegating_competitions.size > 0 %>
+  <% if @user.persisted? && @user.delegate && !@delegating_competitions.empty? %>
     <%= form_section 'Delegacies' do %>
       <ul>
         <% @delegating_competitions.each do |competition| %>
@@ -97,7 +97,7 @@
     <% end %>
   <% end %>
 
-  <% if @user.persisted? && @owned_competitions.size > 0 %>
+  <% if @user.persisted? && !@owned_competitions.empty? %>
     <%= form_section 'Owned competitions' do %>
       <ul>
         <% @owned_competitions.each do |competition| %>

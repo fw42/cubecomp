@@ -6,7 +6,7 @@ module Admin::CompetitionsHelper
       locale.mark_for_destruction if competition.persisted? || competition.errors.any?
     end
 
-    if competition.days.size == 0
+    if competition.days.empty?
       competition.days.build(
         entrance_fee_guests: 0,
         entrance_fee_competitors: 0
