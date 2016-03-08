@@ -1,0 +1,108 @@
+it:
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      schedule: "%A, %B %d, %Y"
+      day_only: "%A"
+      news: "%B %d, %Y"
+
+    day_names: [Domenica, Lunedì, Martedì, Mercoledì, Giovedì, Venerdì, Sabato]
+    abbr_day_names: [Lun, Mar, Mer, Gio, Ven, Sab, Dom]
+    month_names: [~, Gennaio, Febbraio, Marzo, Aprile, Maggio, Giugno, Luglio, Agosto, Settembre, Ottobre, Novembre, Dicembre]
+    abbr_month_names: [~, Gen, Feb, Mar, Apr, Mag, Giu, Lug, Ago, Set, Ott, Nov, Dic]
+    order:
+      - day
+      - month
+      - year
+
+  activerecord:
+    attributes:
+      competitor:
+        wca: 'WCA ID'
+        name: 'Nome'
+        first_name: 'Nome'
+        last_name: 'Cognome'
+        email: 'E-mail'
+        birthday: 'Data di nascita'
+        country: 'Nazione'
+        citizen_of: 'Cittadinanza'
+        male: 'Sesso'
+        user_comment: 'Commenti'
+    errors:
+      messages:
+        blank: "mancante"
+      models:
+        competitor:
+          at_least_one_day: "Devi registrarti almeno per un giorno"
+          attributes:
+            wca_id:
+              taken: "è già stato utilizzato per registrare un altro concorrente"
+              invalid: "non valido"
+            birthday:
+              inclusion: "incompleta o non valida"
+            mail:
+              invalid: "non valido"
+            male:
+              inclusion: "mancante"
+
+  information:
+    title: "Informazioni"
+
+  news:
+    title: "Notizie"
+
+  competitors:
+    title: "Concorrenti"
+
+  registration:
+    title: "Registrazione"
+    error_count_failed_to_save:
+      one: "C'è stato un problema con la tua registrazione"
+      other: "Ci sono stati %{count} problemi con la tua registrazione"
+    flash_success: "Registrazione completata. A breve riceverai una e-mail di conferma."
+    flash_closed: "Al momento non è possibile registrarsi, riprova più tardi."
+    closed: "Chiusa"
+    waiting_list: "Lista d'attesa"
+    submit: "Registrami!"
+    register_not_coming: "Non verrò"
+    register_as_guest: "Sono un accompagnatore"
+    register_as_competitor: "Voglio partecipare"
+    wca_id_first_time: "Se questa è la tua prima gara, lascia vuoto questo campo."
+    i_live_in: "Vivo in %{city}"
+    did_you_mean: "Intendevi %{suggestion}?"
+
+  schedule:
+    title: "Programma"
+    start: "Inizio"
+    stop: "Fine"
+    event: "Evento"
+    stage: "Sala"
+    round: "Round"
+    timelimit: "Tempo limite"
+    format: "Formato"
+    max: "Max."
+
+  stats:
+    title: "Statistiche"
+    events: "Eventi"
+    registrations: "Registrazioni"
+    registrations_count: "Numero di registrazioni"
+    competitors: "Concorrenti"
+    guests: "Accompagnatori"
+    countries: "Paesi"
+    days: "Giorni"
+    newcomer: "Debuttanti"
+    non-newcomer: "Veterani"
+
+  disclaimer:
+    title: "Disclaimer"
+
+  misc:
+    male: "Maschio"
+    female: "Femmina"
+    designed_by: "Sviluppato da"
+
+  comparison:
+    title: "Comparazione"
+    single: "Singolo"
+    average: "Media"
