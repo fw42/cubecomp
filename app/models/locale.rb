@@ -2,8 +2,9 @@ class Locale < ActiveRecord::Base
   ALL = {
     'de' => 'German',
     'en' => 'English',
+    'fr' => 'French',
+    'it' => 'Italian',
     'pt' => 'Portuguese',
-    'fr' => 'French'
   }.freeze
 
   belongs_to :competition, inverse_of: :locales
