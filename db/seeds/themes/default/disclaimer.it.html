@@ -1,0 +1,36 @@
+<h2>Organizzazione</h2>
+
+{% if owner %}
+  Il responsabile del sito è
+  <blockquote>
+    <b>{{ owner.name }}</b><br/>
+    {{ owner.address | to_html }}
+  </blockquote>
+{% endif %}
+
+{% if delegate or staff.size > 0 %}
+  <h3>Team</h3>
+{% endif %}
+
+{% if staff.size > 0 %}
+  <h4>Organizzatori</h4>
+  <ul>
+    {% for user in staff %}
+      <li>{{ user.name }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% if delegate %}
+  <h4>Delegato WCA</h4>
+  <ul>
+    <li>{{ delegate.name }}</li>
+  </ul>
+{% endif %}
+
+<h3>Contatti</h3>
+
+<p>
+  Se hai domande o commenti, puoi inviare una e-mail a
+  <a href="mailto:{{ competition.staff_email }}">{{ competition.staff_email }}</a>.
+</p>
