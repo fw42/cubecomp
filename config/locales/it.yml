@@ -2,9 +2,9 @@ it:
   date:
     formats:
       default: "%Y-%m-%d"
-      schedule: "%A, %B %d, %Y"
+      schedule: "%A, %d %B, %Y"
       day_only: "%A"
-      news: "%B %d, %Y"
+      news: "%d %B, %Y"
 
     day_names: [Domenica, Lunedì, Martedì, Mercoledì, Giovedì, Venerdì, Sabato]
     abbr_day_names: [Lun, Mar, Mer, Gio, Ven, Sab, Dom]
@@ -25,7 +25,7 @@ it:
         email: 'E-mail'
         birthday: 'Data di nascita'
         country: 'Nazione'
-        citizen_of: 'Cittadinanza'
+        citizen_of: 'Paese'
         male: 'Sesso'
         user_comment: 'Commenti'
     errors:
@@ -52,7 +52,7 @@ it:
     title: "Notizie"
 
   competitors:
-    title: "Concorrenti"
+    title: "Partecipanti"
 
   registration:
     title: "Registrazione"
@@ -65,10 +65,10 @@ it:
     waiting_list: "Lista d'attesa"
     submit: "Registrami!"
     register_not_coming: "Non verrò"
-    register_as_guest: "Sono un accompagnatore"
+    register_as_guest: "Sono uno spettatore"
     register_as_competitor: "Voglio partecipare"
-    wca_id_first_time: "Se questa è la tua prima gara, lascia vuoto questo campo."
-    i_live_in: "Vivo in %{city}"
+    wca_id_first_time: "Se questa è la tua prima gara lascia vuoto questo campo."
+    i_live_in: "Vivo a %{city}"
     did_you_mean: "Intendevi %{suggestion}?"
 
   schedule:
@@ -95,7 +95,7 @@ it:
     non-newcomer: "Veterani"
 
   disclaimer:
-    title: "Disclaimer"
+    title: "Organizzazione"
 
   misc:
     male: "Maschio"

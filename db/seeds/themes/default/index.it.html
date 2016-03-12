@@ -1,0 +1,50 @@
+<img src="{{ "logo.png" | image_url }}" class="logo" />
+
+{{ news }}
+
+<h2>Cosa è il {{ competition.name }}?</h2>
+
+<p>
+  {{ competition.name }} è una
+  <i> competizione di <a href="https://it.wikipedia.org/wiki/Speedcubing">Speedcubing</a></i>.
+  Lo Speedcubing è l'attività che consiste nel risolvere il <a href="https://it.wikipedia.org/wiki/Cubo_di_Rubik">Cubo di Rubik</a>
+  o i puzzle ad esso relativi il più velocemente possibile.
+</p>
+
+<h2>Quando e dove?</h2>
+
+<p>
+  {% if days.size == 1 %}
+    <b>{{ days.first.date | translate_date: "%d %B %Y" }}</b><br/>
+  {% else %}
+    <b>{{ days.first.date | translate_date: "%d"}}-{{ days.last.date | translate_date: "%d %B %Y"}}</b><br/>
+  {% endif %}
+  {{ competition.venue_address | to_html }}<br/>
+  {{ competition.country }}
+</p>
+
+<h2>Quanto costa?</h2>
+
+<p>
+  Il costo d'entrata sarà probabilmente (!) <b>5 euro a persona al giorno</b>.
+  This applies to everyone (except reporters), no matter if you are a
+  competitor, guest, parent of a competitor or someone else!
+  I partecipanti sono invitati a <a href="{{ "registration" | theme_file_url }}">registrarsi</a>
+  in anticipo, in modo da semplificare l'organizzazione.
+</p>
+
+<h2>Per gli esordienti...</h2>
+
+<p>
+	Sarà possibile testare l'attrezzatura (per esempio il timer ufficiale per cronometrarsi, lo StackMat),
+	apprendere le regole e discutere i dubbi.
+	In ogni caso, i partecipanti sono tenuti a leggere e conoscere il   
+  <a href="http://www.worldcubeassociation.org/regulations/">regolamento ufficiale WCA</a>.
+</p>
+
+<h2>Domande</h2>
+
+<p>
+  Per qualsiasi dubbio puoi inviare una e-mail a
+  <a href="mailto:{{ competition.staff_email }}">{{ competition.staff_email }}</a>.
+</p>
