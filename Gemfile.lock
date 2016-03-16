@@ -132,6 +132,7 @@ GEM
       activerecord (>= 2.3)
     metaclass (0.0.4)
     mime-types (2.99.1)
+    mimemagic (0.3.0)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     mocha (1.1.0)
@@ -144,11 +145,12 @@ GEM
     newrelic_rpm (3.15.0.314)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
-    paperclip (4.2.4)
+    paperclip (4.3.6)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
       cocaine (~> 0.5.5)
       mime-types
+      mimemagic (= 0.3.0)
     parser (2.3.0.6)
       ast (~> 2.2)
     powerpack (0.1.1)
@@ -183,7 +185,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.1.0)
     raindrops (0.16.0)
-    rake (11.1.0)
+    rake (11.1.1)
     ref (2.0.0)
     rubocop (0.38.0)
       parser (>= 2.3.0.6, < 3.0)
@@ -275,7 +277,7 @@ DEPENDENCIES
   mocha
   mysql2 (~> 0.3.18)
   newrelic_rpm
-  paperclip (~> 4.2.4)
+  paperclip
   quiet_assets
   rails
   rubocop
