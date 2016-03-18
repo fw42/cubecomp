@@ -6,7 +6,7 @@ class CsvService
   def handles
     @handles ||= competition.events
       .where(state: 'open_for_registration')
-      .pluck(:handle)
+      .map{ |event| event.wca_handle || event.handle }
       .compact.sort.uniq
   end
 
