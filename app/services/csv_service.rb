@@ -30,12 +30,13 @@ class CsvService
 
   def header_to_csv(with_handles: true)
     header = [
+      'Status',
       'Name',
       'Country',
       'WCA ID',
+      'Birth Date',
       'Gender',
-      'Birthdate',
-      '', '', ''
+      ''
     ]
 
     header << handles if with_handles
@@ -43,14 +44,7 @@ class CsvService
   end
 
   def competitor_to_csv(competitor, with_handles: true)
-    data = [
-      competitor.name,
-      competitor.country.name,
-      competitor.wca,
-      competitor.male? ? 'm' : 'f',
-      competitor.birthday.strftime('%Y-%m-%d'),
-      '', '',  ''
-    ]
+    data = data_for_csv(competitor)
 
     if with_handles
       handles.each do |handle|
@@ -65,6 +59,18 @@ class CsvService
   private
 
   attr_reader :competition
+
+  def data_for_csv(competitor)
+    [
+      competitor.confirmed? ? "a" : "p",
+      competitor.name,
+      competitor.country.name,
+      competitor.wca,
+      competitor.birthday.strftime('%Y-%m-%d'),
+      competitor.male? ? 'm' : 'f',
+      ''
+    ]
+  end
 
   def all_competitors
     @all_competitors ||= competition
