@@ -83,6 +83,20 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test '#csv_download_active' do
+    @competition.competitors.each{ |competitor| competitor.update_attributes(state: 'confirmed') }
+    get :csv_download_active, competition_id: @competition.id
+    assert_response :success
+
+    expected = []
+    expected << "Status,Name,Country,WCA ID,Birth Date,Gender,,333,444,555"
+    expected << "a,Florian Weingarten,Germany,2007WEIN01,1985-12-18,m,,0,0,0"
+
+    assert_equal expected.join("\n"), response.body
+    assert_equal "text/csv", response.content_type
+    assert_equal 'attachment; filename="Aachen Open 2014.csv"', response.headers['Content-Disposition']
+  end
+
   test '#nametags' do
     get :nametags, competition_id: @competition.id
     assert_response :success
