@@ -40,6 +40,7 @@ Rails.application.routes.draw do
             get :nametags
             get :email_addresses
             get :csv
+            get :csv_download_active
           end
 
           member do

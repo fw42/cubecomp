@@ -2,6 +2,10 @@
 
 <h2>Active competitors (no waiting list registrations or guests)</h2>
 
+<p>
+<%= link_to "CSV export", action: :csv_download_active %>
+</p>
+
 <pre><%= @exporter.header_to_csv %></pre>
 
 <pre>

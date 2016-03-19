@@ -88,6 +88,17 @@ class Admin::CompetitorsController < AdminController
     @active_guests = @exporter.active_guests
   end
 
+  def csv_download_active
+    exporter = CsvService.new(current_competition)
+    active = exporter.active_competitors
+
+    rows = []
+    rows << exporter.header_to_csv
+    rows += active.map{ |competitor| exporter.competitor_to_csv(competitor) }
+
+    send_data rows.join("\n"), filename: "#{current_competition.name}.csv"
+  end
+
   def new
     @competitor = current_competition.competitors.new
   end
