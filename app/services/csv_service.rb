@@ -4,10 +4,13 @@ class CsvService
   end
 
   def handles
-    @handles ||= competition.events
-      .where(state: 'open_for_registration')
+    @handles ||= competition
+      .events
+      .for_registration
       .map{ |event| event.wca_handle || event.handle }
-      .compact.sort.uniq
+      .compact
+      .sort
+      .uniq
   end
 
   def active_competitors
