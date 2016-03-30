@@ -51,7 +51,7 @@ class CsvService
 
     if with_handles
       handles.each do |handle|
-        registered = !competitor.events.select{ |event| event.handle == handle }.empty?
+        registered = !competitor.events.select{ |event| [event.wca_handle, event.handle].include?(handle) }.empty?
         data << (registered ? '1' : '0')
       end
     end
