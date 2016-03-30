@@ -90,7 +90,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
 
     expected = []
     expected << "Status,Name,Country,WCA ID,Birth Date,Gender,,333,444,555"
-    expected << "a,Florian Weingarten,Germany,2007WEIN01,1985-12-18,m,,0,0,0"
+    expected << "a,Florian Weingarten,Germany,2007WEIN01,1985-12-18,m,,1,0,1"
 
     assert_equal expected.join("\n"), response.body
     assert_equal "text/csv", response.content_type
