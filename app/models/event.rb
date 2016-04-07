@@ -46,7 +46,7 @@ class Event < ActiveRecord::Base
   auto_strip_attributes :name, :handle, :timelimit, :format, :round, :proceed
 
   scope :for_competitors_table, ->{ where.not(state: 'not_for_registration') }
-  scope :wca, ->{ where(handle: WCA_EVENTS.map{ |event| event[:handle] }.uniq) }
+  scope :wca, ->{ where(handle: WCA_EVENTS.map{ |event| [ event[:handle], event[:wca_handle] ] }.flatten.compact.uniq) }
 
   scope :for_registration, ->{ where.not(state: 'not_for_registration') }
 
@@ -73,7 +73,11 @@ class Event < ActiveRecord::Base
   end
 
   def wca_handle_index
-    @wca_handle_index ||= WCA_EVENTS.find_index{ |wca_event| handle == wca_event[:handle] }
+    @wca_handle_index ||= begin
+      index = WCA_EVENTS.find_index{ |wca_event| handle == wca_event[:handle] }
+      index ||= WCA_EVENTS.find_index{ |wca_event| handle == wca_event[:wca_handle] }
+      index
+    end
   end
 
   def registrations?

@@ -137,4 +137,36 @@ class EventTest < ActiveSupport::TestCase
     assert events.all?{ |event| event.max_number_of_registrations >= 0 }
     assert_not_nil events.first.number_of_confirmed_registrations
   end
+
+  test "#wca_handle returns wca handle that matches the given short handle" do
+    event = Event.new
+    event.handle = '3'
+    assert_equal '333', event.wca_handle
+  end
+
+  test "#wca_handle returns wca handle if handle itself is already a wca handle" do
+    event = Event.new
+    event.handle = '333'
+    assert_equal '333', event.wca_handle
+  end
+
+  test "#wca_handle returns nil if handle is unknown" do
+    event = Event.new
+    event.handle = 'foobar'
+    assert_equal nil, event.wca_handle
+  end
+
+  test ".wca returns all events that have a valid wca handle or a handle that can be mapped to a wca handle" do
+    competition = competitions(:aachen_open)
+    events = competition.events.wca
+    assert_equal %w(333 444 555), events.map(&:wca_handle)
+
+    events.first.update_attributes(handle: "333")
+    events = competition.events.wca
+    assert_equal %w(333 444 555), events.map(&:wca_handle)
+
+    events.first.update_attributes(handle: "foobar")
+    events = competition.events.wca
+    assert_equal %w(444 555), events.map(&:wca_handle)
+  end
 end
