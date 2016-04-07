@@ -155,7 +155,12 @@ class ThemeFileRenderer
   def locals_for_comparison_view
     events = @competition.events.for_competitors_table.wca
     event = events.detect{ |e| e.wca_handle == @controller.params[:event] } || events.first
-    competitors = event.competitors.confirmed.where.not(wca: nil).includes(:country)
+
+    competitors = if event
+      event.competitors.confirmed.where.not(wca: nil).includes(:country)
+    else
+      []
+    end
 
     {
       :@event => event,
