@@ -5,6 +5,10 @@
       <option value="<%= event.wca_handle %>" <%= @event.wca_handle == event.wca_handle ? 'selected="selected"' : "" %>><%= event.name %></option>
     <% end %>
   </select>
+  <select name="sort_by">
+    <option value="average" <% if @sort_by != "single" %>selected="selected"<% end %>><%= t('comparison.average') %></option>
+    <option value="single" <% if @sort_by == "single" %>selected="selected"<% end %>><%= t('comparison.single') %></option>
+  </select>
   <input type="submit" value="OK" style="width: 30px" />
 </form>
 
@@ -18,7 +22,18 @@
  <th><%= t('comparison.average') %></th>
  <th><%= t('comparison.single') %></th>
 </tr>
-<% @competitors.select{ |competitor| @singles[competitor.wca] }.sort_by{ |competitor| [ @averages[competitor.wca] ? @averages[competitor.wca].best : Float::INFINITY, @singles[competitor.wca].best ] }.each_with_index do |competitor, index| %>
+<%
+@competitors
+  .select{ |competitor| @singles[competitor.wca] }
+  .sort_by{ |competitor|
+    if @sort_by == "single"
+      @singles[competitor.wca].best
+    else
+      [ @averages[competitor.wca] ? @averages[competitor.wca].best : Float::INFINITY, @singles[competitor.wca].best ]
+    end
+  }
+  .each_with_index do |competitor, index|
+%>
   <tr>
     <td><%= index + 1 %></td>
     <td><%= link_to competitor.name, competitor.wca_url %></td>

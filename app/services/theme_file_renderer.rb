@@ -155,19 +155,15 @@ class ThemeFileRenderer
   def locals_for_comparison_view
     events = @competition.events.for_competitors_table.wca
     event = events.detect{ |e| e.wca_handle == @controller.params[:event] } || events.first
-
-    competitors = if event
-      event.competitors.confirmed.where.not(wca: nil).includes(:country)
-    else
-      []
-    end
+    competitors = event ? event.competitors.confirmed.where.not(wca: nil).includes(:country) : []
 
     {
       :@event => event,
       :@events => events,
       :@competitors => competitors,
       :@singles => Wca::RanksSingle.for_event(competitors.map(&:wca), event.wca_handle),
-      :@averages => Wca::RanksAverage.for_event(competitors.map(&:wca), event.wca_handle)
+      :@averages => Wca::RanksAverage.for_event(competitors.map(&:wca), event.wca_handle),
+      :@sort_by => @controller.params[:sort_by]
     }
   end
 
