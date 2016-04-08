@@ -11,4 +11,9 @@ $(document).ready(function() {
 {{ "competitors.title" | translate }}
 </h2>
 
+<p>
+  <a href="{{ 'stats' | theme_file_url }}">{{ "stats.title" | translate }}</a>
+  <a href="{{ 'comparison' | theme_file_url }}">{{ "comparison.title" | translate }}</a>
+</p>
+
 {{ competitors }}
