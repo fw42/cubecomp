@@ -61,6 +61,17 @@ class Competition < ActiveRecord::Base
     :venue_address,
     :currency
 
+  def self.custom_domains
+    hash = {}
+
+    where.not(custom_domain: nil).pluck(:custom_domain, :custom_domain_force_ssl).each do |domain, ssl|
+      next if hash[domain] == 'https'
+      hash[domain] = ssl ? 'https' : 'http'
+    end
+
+    hash
+  end
+
   def default_locale
     super || locales.first
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150518180507) do
+ActiveRecord::Schema.define(version: 20160408235324) do
 
   create_table "competitions", force: :cascade do |t|
     t.string   "name",                     limit: 255,                                            null: false
@@ -22,20 +22,20 @@ ActiveRecord::Schema.define(version: 20150518180507) do
     t.string   "city_name_short",          limit: 255
     t.text     "venue_address",            limit: 65535
     t.integer  "country_id",               limit: 4,                                              null: false
-    t.boolean  "cc_staff",                 limit: 1,                              default: false
-    t.boolean  "registration_open",        limit: 1,                              default: false
+    t.boolean  "cc_staff",                                                        default: false
+    t.boolean  "registration_open",                                               default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "delegate_user_id",         limit: 4
     t.integer  "owner_user_id",            limit: 4
     t.integer  "default_locale_id",        limit: 4
     t.string   "currency",                 limit: 255
-    t.boolean  "published",                limit: 1,                              default: false
+    t.boolean  "published",                                                       default: false
     t.decimal  "entrance_fee_competitors",               precision: 10, scale: 2, default: 0.0,   null: false
     t.decimal  "entrance_fee_guests",                    precision: 10, scale: 2, default: 0.0,   null: false
     t.string   "pricing_model",            limit: 255,                                            null: false
     t.string   "custom_domain",            limit: 255
-    t.boolean  "custom_domain_force_ssl",  limit: 1
+    t.boolean  "custom_domain_force_ssl",                                         default: false
   end
 
   add_index "competitions", ["country_id"], name: "competitions_country_id_fk", using: :btree
@@ -53,19 +53,19 @@ ActiveRecord::Schema.define(version: 20150518180507) do
     t.string   "email",                   limit: 255,                   null: false
     t.date     "birthday"
     t.integer  "country_id",              limit: 4,                     null: false
-    t.boolean  "local",                   limit: 1,     default: false
-    t.boolean  "staff",                   limit: 1,     default: false
+    t.boolean  "local",                                 default: false
+    t.boolean  "staff",                                 default: false
     t.text     "user_comment",            limit: 65535
     t.text     "admin_comment",           limit: 65535
-    t.boolean  "free_entrance",           limit: 1,     default: false
+    t.boolean  "free_entrance",                         default: false
     t.text     "free_entrance_reason",    limit: 65535
     t.string   "state",                   limit: 255
-    t.boolean  "confirmation_email_sent", limit: 1,     default: false
-    t.boolean  "paid",                    limit: 1,     default: false
+    t.boolean  "confirmation_email_sent",               default: false
+    t.boolean  "paid",                                  default: false
     t.text     "paid_comment",            limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "male",                    limit: 1
+    t.boolean  "male"
     t.text     "nametag",                 limit: 65535
   end
 
@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 20150518180507) do
     t.integer  "competitor_id",  limit: 4,                 null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "waiting",        limit: 1, default: false, null: false
+    t.boolean  "waiting",                  default: false, null: false
   end
 
   add_index "event_registrations", ["competition_id"], name: "index_event_registrations_on_competition_id", using: :btree
@@ -212,11 +212,11 @@ ActiveRecord::Schema.define(version: 20150518180507) do
     t.string   "password_digest",  limit: 255
     t.string   "first_name",       limit: 255,                   null: false
     t.string   "last_name",        limit: 255,                   null: false
-    t.boolean  "delegate",         limit: 1,     default: false
+    t.boolean  "delegate",                       default: false
     t.integer  "permission_level", limit: 4,                     null: false
     t.text     "address",          limit: 65535
     t.integer  "version",          limit: 4,     default: 0,     null: false
-    t.boolean  "active",           limit: 1,     default: true,  null: false
+    t.boolean  "active",                         default: true,  null: false
     t.string   "wca",              limit: 255
   end
 

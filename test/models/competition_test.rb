@@ -214,4 +214,21 @@ class CompetitionTest < ActiveSupport::TestCase
     @competition.pricing_model = Competition::PRICING_MODELS.keys.first
     assert_valid(@competition)
   end
+
+  test ".custom_domains" do
+    @competition.custom_domain = "foobar.com"
+    @competition.save!
+    assert_equal({ "foobar.com" => 'http' }, Competition.custom_domains)
+
+    other_competition = competitions(:german_open)
+    other_competition.custom_domain = "blabla.de"
+    other_competition.custom_domain_force_ssl = true
+    other_competition.save!
+    assert_equal({ "blabla.de" => 'https', "foobar.com" => 'http' }, Competition.custom_domains)
+
+    other_competition.custom_domain = @competition.custom_domain
+    other_competition.custom_domain_force_ssl = true
+    other_competition.save!
+    assert_equal({ "foobar.com" => 'https' }, Competition.custom_domains)
+  end
 end
