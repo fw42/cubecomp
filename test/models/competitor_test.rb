@@ -244,6 +244,12 @@ class CompetitorTest < ActiveSupport::TestCase
     end
   end
 
+  test '#birthday_on?' do
+    date = @competitor.competition.days.first.date
+    @competitor.birthday = date
+    assert @competitor.birthday_on?(date)
+  end
+
   test '#birthday_on_competition?' do
     date = @competitor.competition.days.first.date
     @competitor.birthday = date
