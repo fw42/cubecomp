@@ -87,7 +87,11 @@
           <% end %>
 
           <% if competitor.birthday_on_competition? %>
-            <%= tooltip(icon_image_tag('birthday.png'), "Birthday on #{competitor.birthday.strftime("%A")}") %>
+            <%= tooltip(
+              icon_image_tag('birthday.png'),
+              "Birthday on #{competitor.birthday_on_competition.date.strftime("%A")}"
+              )
+            %>
           <% end %>
 
           <% if competition_number = @anniversaries[competitor.wca ] %>

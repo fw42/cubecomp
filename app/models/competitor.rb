@@ -102,8 +102,12 @@ class Competitor < ActiveRecord::Base
     birthday.month == date.month && birthday.day == date.day
   end
 
+  def birthday_on_competition
+    days.detect{ |day| birthday_on?(day.date) }
+  end
+
   def birthday_on_competition?
-    days.any?{ |day| birthday_on?(day.date) }
+    !!birthday_on_competition
   end
 
   def event_registration_status(event)

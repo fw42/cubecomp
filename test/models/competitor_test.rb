@@ -250,6 +250,12 @@ class CompetitorTest < ActiveSupport::TestCase
     assert @competitor.birthday_on?(date)
   end
 
+  test '#birthday_on_competition?' do
+    date = @competitor.competition.days.first.date
+    @competitor.birthday = date
+    assert true, @competitor.birthday_on_competition?
+  end
+
   test '#wca_url' do
     assert_equal "http://www.worldcubeassociation.org/results/p.php?i=#{@competitor.wca}", @competitor.wca_url
   end
