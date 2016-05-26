@@ -39,6 +39,9 @@ Lint/UnusedBlockArgument:
 Lint/EndAlignment:
   AlignWith: variable
 
+Style/DoubleNegation:
+  Enabled: false
+
 Style/SingleLineBlockParams:
   Enabled: false
 
