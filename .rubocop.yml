@@ -122,5 +122,8 @@ Lint/FormatParameterMismatch:
 Style/ExtraSpacing:
   Enabled: false
 
+Style/NumericPredicate:
+  Enabled: false
+
 Style/MultilineMethodCallIndentation:
   EnforcedStyle: indented
