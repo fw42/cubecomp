@@ -68,12 +68,12 @@ The default database is MySQL. If you want to use SQLite, please edit
 
 Generate the database:
 ```
-bundle exec rake db:setup db:seed:countries db:seed:themes
+bundle exec rake db:setup db:seed:themes
 ```
 
 Import the WCA database:
 ```
-bundle exec rake db:load_wca_schema db:seed:wca
+bundle exec rake db:load_wca_schema db:seed:wca db:seed:countries
 ```
 
 Generate an example competition and some example users:
