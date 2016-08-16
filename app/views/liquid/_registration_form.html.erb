@@ -93,7 +93,7 @@
     <tr>
       <td><%= f.label :citizen_of %></td>
       <td>
-        <%= f.select :country_id, [["", nil]] + Country.all.map{ |c| [ c.name, c.id ] }, selected: @competition.country_id %><br/>
+        <%= f.select :country_id, [["", nil]] + Country.ordered.map{ |c| [ c.name, c.id ] }, selected: @competition.country_id %><br/>
         <%= f.check_box :local %>
         <%= f.label :local, "#{t('registration.i_live_in', city: @competition.city_name)}", class: 'checkbox' %>
       </td>

@@ -38,7 +38,7 @@
       <tr>
         <td><%= f.label :country, 'Country:' %></td>
         <td>
-          <%= f.select :country_id, [["", nil]] + Country.all.map{ |c| [ c.name, c.id ] } %>
+          <%= f.select :country_id, [["", nil]] + Country.ordered.map{ |c| [ c.name, c.id ] } %>
           (
             <%= f.check_box :local %>
             <%= f.label :local, current_competition.city_name, class: 'checkbox' %>
