@@ -1,8 +1,9 @@
-filepath = File.expand_path("../countries.txt", __FILE__)
-
-File.readlines(filepath).map(&:strip).each do |country_name|
+Wca::Country.all.each do |country|
+  country_name = country.name
   Country.transaction do
-    puts "Creating country #{country_name}"
-    Country.where(name: country_name).first_or_create!
+    record = Country.where(name: country_name).first_or_initialize
+    next if record.persisted?
+    puts "Creating #{country_name}"
+    record.save!
   end
 end
