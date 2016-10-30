@@ -16,8 +16,8 @@ module Cubecomp
 
     config.i18n.default_locale = :en
 
-    config.autoload_paths << Rails.root.join('lib')
     config.autoload_paths << Rails.root.join('app')
+    config.autoload_paths << Rails.root.join('app/lib')
     config.autoload_paths << Rails.root.join('app/liquid/drops')
     config.autoload_paths << Rails.root.join('app/models/concerns')
 

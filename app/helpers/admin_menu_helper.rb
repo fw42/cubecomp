@@ -1,5 +1,3 @@
-require_relative "../../lib/menu_item"
-
 module AdminMenuHelper
   def admin_user_menu
     items = [
