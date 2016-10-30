@@ -29,11 +29,11 @@ class ApplicationController < ActionController::Base
   before_action :set_locale_from_params
 
   def render_not_found
-    render text: 'not found', status: :not_found
+    render plain: 'not found', status: :not_found
   end
 
   def render_forbidden
-    render text: 'forbidden', status: :forbidden
+    render plain: 'forbidden', status: :forbidden
   end
 
   private

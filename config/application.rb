@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails/all'
 Bundler.require(*Rails.groups)
@@ -12,6 +12,7 @@ module Cubecomp
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
+    config.active_record.time_zone_aware_types = [:datetime, :time]
 
     config.i18n.default_locale = :en
 
@@ -19,8 +20,6 @@ module Cubecomp
     config.autoload_paths << Rails.root.join('app')
     config.autoload_paths << Rails.root.join('app/liquid/drops')
     config.autoload_paths << Rails.root.join('app/models/concerns')
-
-    config.active_record.raise_in_transactional_callbacks = true
 
     # For security reasons, the admin area should be on a different
     # (sub)domain than the competition area, otherwise competition area
