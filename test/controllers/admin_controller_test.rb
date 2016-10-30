@@ -62,7 +62,7 @@ class AdminControllerTest < ActionController::TestCase
     login_as(user)
     competition = Competition.first
     UserPolicy.any_instance.expects(:login?).with(competition).at_least_once.returns(true)
-    get :index, competition_id: competition.id
+    get :index, params: { competition_id: competition.id }
     assert_redirected_to admin_competition_dashboard_index_path(competition.id)
   end
 
@@ -71,7 +71,7 @@ class AdminControllerTest < ActionController::TestCase
     login_as(user)
     competition = Competition.first
     UserPolicy.any_instance.expects(:login?).with(competition).at_least_once.returns(false)
-    get :index, competition_id: competition.id
+    get :index, params: { competition_id: competition.id }
     assert_response :forbidden
   end
 
@@ -79,7 +79,7 @@ class AdminControllerTest < ActionController::TestCase
     user = users(:admin)
     user.update_attributes(active: false)
     login_as(user)
-    get :index, competition_id: Competition.first
+    get :index, params: { competition_id: Competition.first }
     assert_redirected_to admin_login_path
   end
 
@@ -122,7 +122,7 @@ class AdminControllerTest < ActionController::TestCase
     login_as(users(:regular_user_with_no_competitions))
 
     with_csrf_protection do
-      get :edit, id: users(:regular_user_with_no_competitions).id
+      get :edit, params: { id: users(:regular_user_with_no_competitions).id }
       assert_match(/<meta name="csrf-param" content="authenticity_token" \/>/, @response.body)
       assert_match(/<meta name="csrf-token" content="[^"]+" \/>/, @response.body)
     end
@@ -134,8 +134,11 @@ class AdminControllerTest < ActionController::TestCase
 
     with_csrf_protection do
       assert_raises ActionController::InvalidAuthenticityToken do
-        post :edit, id: users(:regular_user_with_no_competitions), user: {
-          permission_level: User::PERMISSION_LEVELS.values.max
+        post :edit, params: {
+          id: users(:regular_user_with_no_competitions),
+          user: {
+            permission_level: User::PERMISSION_LEVELS.values.max
+          }
         }
       end
     end

@@ -74,7 +74,7 @@ class ThemeFileRenderer
     assigns[:locale] = @locale
     assigns[:delegate] = ->{ @competition.delegate }
     assigns[:owner] = ->{ @competition.owner }
-    assigns[:staff] = ->{ @competition.users }
+    assigns[:staff] = ->{ @competition.users.to_a }
 
     assigns[:days] = lambda do
       @competition.days.map do |day|
