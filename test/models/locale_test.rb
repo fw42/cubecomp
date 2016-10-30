@@ -66,10 +66,10 @@ class LocaleTest < ActiveSupport::TestCase
       strip_values(hash)
     end
 
-    locales.each do |locale_1|
-      locales.each do |locale_2|
-        assert_equal locale_1.values, locale_2.values,
-          "Locale #{locale_1.keys} and #{locale_2.keys} don't have the same keys"
+    locales.each do |locale1|
+      locales.each do |locale2|
+        assert_equal locale1.values, locale2.values,
+          "Locale #{locale1.keys} and #{locale2.keys} don't have the same keys"
       end
     end
   end

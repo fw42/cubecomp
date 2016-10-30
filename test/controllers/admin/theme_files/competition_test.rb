@@ -332,9 +332,11 @@ module Admin::ThemeFiles
     private
 
     def mock_login_policy(value, compare_to_competition = @competition)
-      UserPolicy.any_instance.expects(:login?).with{ |competition|
-        competition.id == compare_to_competition.id
-      }.returns(value)
+      UserPolicy
+        .any_instance
+        .expects(:login?)
+        .with{ |competition| competition.id == compare_to_competition.id }
+        .returns(value)
     end
   end
 end

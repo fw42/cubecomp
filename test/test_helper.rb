@@ -21,7 +21,7 @@ class ActiveSupport::TestCase
   def paperclip_fixtures
     from = Rails.root.join("test/fixtures/files/logo.png")
     to = Rails.root.join("tmp/cubecomp/test/uploads/theme_files/images/623/173/363/original/logo.png")
-    return if File.exists?(to)
+    return if File.exist?(to)
     FileUtils.mkdir_p(File.dirname(to))
     FileUtils.cp(from, to)
   end

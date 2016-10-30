@@ -132,7 +132,8 @@ class Admin::UsersControllerTest < ActionController::TestCase
       id: @user.id,
       user: {
         password: "new_new_new",
-        password_confirmation: "new_new_new" }
+        password_confirmation: "new_new_new"
+      }
     }
 
     refute @user.reload.authenticate('new_new_new')
