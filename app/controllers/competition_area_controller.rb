@@ -8,7 +8,7 @@ class CompetitionAreaController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def render_theme_file
-    render body: theme_file_renderer.render
+    render plain: theme_file_renderer.render
   end
 
   private
