@@ -9,7 +9,8 @@ class ViewDrop < Liquid::Drop
     @controller.render_to_string(
       partial: "liquid/#{@template}",
       locals: @locals,
-      layout: false
+      layout: false,
+      formats: [:html]
     )
   end
 end
