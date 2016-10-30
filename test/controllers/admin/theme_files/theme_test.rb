@@ -11,88 +11,77 @@ module Admin::ThemeFiles
     end
 
     test '#index' do
-      get :index, params: { theme_id: @theme.id }
+      get :index, theme_id: @theme.id
       assert_response :success
+      assert_not_nil assigns(:theme_files)
     end
 
     test '#index renders 404 with invalid theme_id' do
-      get :index, params: { theme_id: 17 }
+      get :index, theme_id: 17
       assert_response :not_found
     end
 
     test '#index requires permission' do
       UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
-      get :index, params: { theme_id: @theme.id }
+      get :index, theme_id: @theme.id
       assert_response :forbidden
     end
 
     test '#new' do
-      get :new, params: { theme_id: @theme.id }
+      get :new, theme_id: @theme.id
       assert_response :success
     end
 
     test '#new requires permission' do
       UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
-      get :new, params: { theme_id: @theme.id }
+      get :new, theme_id: @theme.id
       assert_response :forbidden
     end
 
     test '#create' do
-      theme_params = {
+      params = {
         filename: 'foobar.html',
         content: 'foobar!'
       }
 
       assert_difference('@theme.files.text_files.count') do
-        post :create, params: {
-          theme_id: @theme.id,
-          theme_file: theme_params
-        }
+        post :create, theme_id: @theme.id, theme_file: params
       end
 
       assert_redirected_to admin_theme_theme_files_path(@theme.id)
-      assert_attributes(theme_params, @theme.files.last)
+      assert_attributes(params, @theme.files.last)
     end
 
     test '#create requires permission' do
       UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
 
       assert_no_difference 'ThemeFile.count' do
-        post :create, params: {
-          theme_id: @theme.id,
-          theme_file: {
-            filename: 'foo',
-            content: 'bar'
-          }
-        }
+        post :create, theme_id: @theme.id, theme_file: { filename: 'foo', content: 'bar' }
       end
 
       assert_response :forbidden
     end
 
     test '#new_image' do
-      get :new_image, params: { theme_id: @theme.id }
+      get :new_image, theme_id: @theme.id
       assert_response :success
     end
 
     test '#new_image requires permission' do
       UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
-      get :new_image, params: { theme_id: @theme.id }
+      get :new_image, theme_id: @theme.id
       assert_response :forbidden
     end
 
     test '#create_image' do
       image = fixture_file_upload('files/logo.png', 'image/png')
-      theme_params = {
+      params = {
         filename: 'logo.png',
         image: image
       }
 
       assert_difference('@theme.files.image_files.count') do
-        post :create_image, params: {
-          theme_id: @theme.id,
-          theme_file: theme_params
-        }
+        post :create_image, theme_id: @theme.id, theme_file: params
       end
 
       assert_redirected_to admin_theme_theme_files_path(@theme)
@@ -104,39 +93,30 @@ module Admin::ThemeFiles
       image = fixture_file_upload('files/logo.png', 'image/png')
 
       assert_no_difference 'ThemeFile.count' do
-        post :create_image, params: {
-          theme_id: @theme.id,
-          theme_file: {
-            filename: 'logo.png',
-            image: image
-          }
-        }
+        post :create_image, theme_id: @theme.id, theme_file: { filename: 'logo.png', image: image }
       end
 
       assert_response :forbidden
     end
 
     test '#import_files_form' do
-      get :import_files_form, params: { theme_id: @theme.id }
+      get :import_files_form, theme_id: @theme.id
       assert_response :success
     end
 
     test '#import_files_form requires permission' do
       UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
-      get :import_files_form, params: { theme_id: @theme.id }
+      get :import_files_form, theme_id: @theme.id
       assert_response :forbidden
     end
 
     test '#import_files from theme to theme' do
       from_theme = themes(:fancy)
 
-      post :import_files, params: {
-        theme_id: @theme.id,
-        from: {
-          theme_id: from_theme.id,
-          competition_id: "does not matter, wont be used",
-          import_theme: "Import"
-        }
+      post :import_files, theme_id: @theme.id, from: {
+        theme_id: from_theme.id,
+        competition_id: "does not matter, wont be used",
+        import_theme: "Import"
       }
 
       assert_redirected_to admin_theme_theme_files_path(@theme.id)
@@ -146,13 +126,10 @@ module Admin::ThemeFiles
     test '#import_files from competition to theme' do
       from_competition = competitions(:aachen_open)
 
-      post :import_files, params: {
-        theme_id: @theme.id,
-        from: {
-          theme_id: "does not matter, wont be used",
-          competition_id: from_competition.id,
-          import_competition: "Import"
-        }
+      post :import_files, theme_id: @theme.id, from: {
+        theme_id: "does not matter, wont be used",
+        competition_id: from_competition.id,
+        import_competition: "Import"
       }
 
       assert_redirected_to admin_theme_theme_files_path(@theme.id)
@@ -165,13 +142,10 @@ module Admin::ThemeFiles
       from_theme = themes(:fancy)
 
       assert_no_difference 'ThemeFile.count' do
-        post :import_files, params: {
-          theme_id: @theme.id,
-          from: {
-            theme_id: from_theme.id,
-            competition_id: "does not matter, wont be used",
-            import_theme: "Import"
-          }
+        post :import_files, theme_id: @theme.id, from: {
+          theme_id: from_theme.id,
+          competition_id: "does not matter, wont be used",
+          import_theme: "Import"
         }
       end
 
@@ -179,61 +153,40 @@ module Admin::ThemeFiles
     end
 
     test '#edit' do
-      get :edit, params: {
-        theme_id: @theme.id,
-        id: @theme_file.id
-      }
-
+      get :edit, theme_id: @theme.id, id: @theme_file.id
       assert_response :success
     end
 
     test "#edit requires permission" do
       UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
-
-      get :edit, params: {
-        theme_id: @theme.id,
-        id: @theme_file.id
-      }
-
+      get :edit, theme_id: @theme.id, id: @theme_file.id
       assert_response :forbidden
     end
 
     test '#edit has back button to theme page' do
-      get :edit, params: {
-        theme_id: @theme.id,
-        id: @theme_file.id
-      }
-
+      get :edit, theme_id: @theme.id, id: @theme_file.id
       url = admin_theme_theme_files_path(@theme)
       assert @response.body.include?(url)
     end
 
     test '#update' do
-      theme_params = {
+      params = {
         filename: 'foobar.html',
         content: 'foobar!'
       }
 
-      patch :update, params: {
-        theme_id: @theme.id,
-        id: @theme_file.id,
-        theme_file: theme_params
-      }
+      patch :update, theme_id: @theme.id, id: @theme_file.id, theme_file: params
 
       assert_redirected_to admin_theme_theme_files_path(@theme)
-      assert_attributes(theme_params, @theme_file.reload)
+      assert_attributes(params, @theme_file.reload)
     end
 
     test "#update requires permission" do
       UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
 
-      patch :update, params: {
-        theme_id: @theme.id,
-        id: @theme_file.id,
-        theme_file: {
-          filename: 'foobar.html',
-          content: 'foobar!'
-        }
+      patch :update, theme_id: @theme.id, id: @theme_file.id, theme_file: {
+        filename: 'foobar.html',
+        content: 'foobar!'
       }
 
       assert_response :forbidden
@@ -241,10 +194,7 @@ module Admin::ThemeFiles
 
     test '#destroy' do
       assert_difference('ThemeFile.count', -1) do
-        delete :destroy, params: {
-          theme_id: @theme.id,
-          id: @theme_file.id
-        }
+        delete :destroy, theme_id: @theme.id, id: @theme_file.id
       end
 
       assert_redirected_to admin_theme_theme_files_path(@theme)
@@ -254,10 +204,7 @@ module Admin::ThemeFiles
       UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
 
       assert_no_difference 'ThemeFile.count' do
-        delete :destroy, params: {
-          theme_id: @theme.id,
-          id: @theme_file.id
-        }
+        delete :destroy, theme_id: @theme.id, id: @theme_file.id
       end
 
       assert_response :forbidden
@@ -269,11 +216,7 @@ module Admin::ThemeFiles
       theme_file.theme = @theme
       theme_file.save!
 
-      get :show_image, params: {
-        theme_id: @theme.id,
-        id: theme_file.id
-      }
-
+      get :show_image, theme_id: @theme.id, id: theme_file.id
       assert_response :ok
     end
 
@@ -284,21 +227,12 @@ module Admin::ThemeFiles
       theme_file.save!
 
       UserPolicy.any_instance.expects(:admin_user_menu?).returns(false)
-
-      get :show_image, params: {
-        theme_id: @theme.id,
-        id: theme_file.id
-      }
-
+      get :show_image, theme_id: @theme.id, id: theme_file.id
       assert_response :forbidden
     end
 
     test '#show_image on a theme file that is not an image returns 404' do
-      get :show_image, params: {
-        theme_id: @theme.id,
-        id: @theme_file.id
-      }
-
+      get :show_image, theme_id: @theme.id, id: @theme_file.id
       assert_response :not_found
     end
   end

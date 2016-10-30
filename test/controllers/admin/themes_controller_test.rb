@@ -9,6 +9,7 @@ class Admin::ThemesControllerTest < ActionController::TestCase
   test '#index' do
     get :index
     assert_response :success
+    assert_not_nil assigns(:themes)
   end
 
   test '#index without admin menu permission renders forbidden' do
@@ -29,7 +30,7 @@ class Admin::ThemesControllerTest < ActionController::TestCase
   end
 
   test '#edit' do
-    get :edit, params: { id: @theme.id }
+    get :edit, id: @theme.id
     assert_response :ok
   end
 
@@ -41,7 +42,7 @@ class Admin::ThemesControllerTest < ActionController::TestCase
 
   test '#create' do
     assert_difference('Theme.count', +1) do
-      post :create, params: { theme: { name: 'test theme' } }
+      post :create, theme: { name: 'test theme' }
     end
 
     assert_redirected_to admin_themes_path
@@ -50,36 +51,25 @@ class Admin::ThemesControllerTest < ActionController::TestCase
 
   test '#create without admin menu permission renders forbidden' do
     UserPolicy.any_instance.expects(:admin_user_menu?).at_least_once.returns(false)
-    post :create, params: { theme: { name: 'forbidden theme' } }
+    post :create, theme: { name: 'forbidden theme' }
     assert_response :forbidden
   end
 
   test '#update' do
-    patch :update, params: {
-      id: @theme.id,
-      theme: {
-        name: 'new name from update'
-      }
-    }
-
+    patch :update, id: @theme.id, theme: { name: 'new name from update' }
     assert_equal 'new name from update', @theme.reload.name
     assert_redirected_to admin_themes_path
   end
 
   test '#update without admin menu permission renders forbidden' do
     UserPolicy.any_instance.expects(:admin_user_menu?).at_least_once.returns(false)
-
-    patch :update, params: {
-      id: @theme.id,
-      theme: { name: 'forbidden' }
-    }
-
+    patch :update, id: @theme.id, theme: { name: 'forbidden' }
     assert_response :forbidden
   end
 
   test '#destroy' do
     assert_difference('Theme.count', -1) do
-      delete :destroy, params: { id: @theme.id }
+      delete :destroy, id: @theme.id
     end
 
     assert_redirected_to admin_themes_path
@@ -87,23 +77,23 @@ class Admin::ThemesControllerTest < ActionController::TestCase
 
   test '#destroy without admin menu permission renders forbidden' do
     UserPolicy.any_instance.expects(:admin_user_menu?).at_least_once.returns(false)
-    delete :destroy, params: { id: @theme.id }
+    delete :destroy, id: @theme.id
     assert_response :forbidden
   end
 
   test '#show' do
-    get :show, params: { id: @theme.id }
+    get :show, id: @theme.id
     assert_response :success
   end
 
   test '#show without admin menu permission renders forbidden' do
     UserPolicy.any_instance.expects(:admin_user_menu?).at_least_once.returns(false)
-    get :show, params: { id: @theme.id }
+    get :show, id: @theme.id
     assert_response :forbidden
   end
 
   test '#show renders 404 with invalid competition id' do
-    get :show, params: { id: 17 }
+    get :show, id: 17
     assert_response :not_found
   end
 end

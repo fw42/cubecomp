@@ -27,7 +27,7 @@ class AdminController < ApplicationController
   end
 
   def render_not_found
-    render plain: 'not found', status: :not_found
+    render text: 'not found', status: :not_found
   end
 
   def current_user

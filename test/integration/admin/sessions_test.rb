@@ -13,10 +13,7 @@ class SessionsTest < ActionDispatch::IntegrationTest
     get '/admin/login'
     assert_redirected_to 'https://www.example.com/admin/login'
 
-    post '/admin/login', params: {
-      user: { email: @user.email, password: 'test' }
-    }
-
+    post '/admin/login', user: { email: @user.email, password: 'test' }
     assert_redirected_to 'https://www.example.com/admin/login'
   end
 
@@ -82,10 +79,7 @@ class SessionsTest < ActionDispatch::IntegrationTest
     get "/admin/login"
     assert_response :success
 
-    post '/admin/login', params: {
-      user: { email: user.email, password: 'test' }
-    }
-
+    post '/admin/login', user: { email: user.email, password: 'test' }
     assert_redirected_to admin_root_path
   end
 

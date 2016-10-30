@@ -8,33 +8,36 @@ class Admin::EventsControllerTest < ActionController::TestCase
   end
 
   test '#index' do
-    get :index, params: { competition_id: @competition.id }
+    get :index, competition_id: @competition.id
     assert_response :success
+    assert_not_nil assigns(:events)
   end
 
   test '#index renders 404 with invalid competition id' do
-    get :index, params: { competition_id: 17 }
+    get :index, competition_id: 17
     assert_response :not_found
   end
 
-  test '#print without parameter' do
-    get :print, params: { competition_id: @competition.id }
+  test '#print without parameter renders first day' do
+    get :print, competition_id: @competition.id
     assert_response :ok
+    assert_equal @competition.days.first, assigns(:day)
   end
 
-  test '#print with parameter' do
+  test '#print with parameter renders that day' do
     day = @competition.days.last
-    get :print, params: { competition_id: @competition.id, day_id: day.id }
+    get :print, competition_id: @competition.id, day_id: day.id
     assert_response :ok
+    assert_equal day, assigns(:day)
   end
 
   test '#new' do
-    get :new, params: { competition_id: @competition.id }
+    get :new, competition_id: @competition.id
     assert_response :success
   end
 
   test '#create' do
-    event_params = {
+    params = {
       day_id: days(:aachen_open_day_one).id,
       handle: '222',
       name: '2x2 cube',
@@ -45,24 +48,21 @@ class Admin::EventsControllerTest < ActionController::TestCase
     }
 
     assert_difference('@competition.events.count') do
-      post :create, params: {
-        competition_id: @competition.id,
-        event: event_params
-      }
+      post :create, competition_id: @competition.id, event: params
     end
 
     assert_redirected_to admin_competition_events_path(@competition.id)
     event = @competition.events.last
-    assert_attributes(event_params.except(:start_time), event)
+    assert_attributes(params.except(:start_time), event)
   end
 
   test '#edit' do
-    get :edit, params: { competition_id: @competition.id, id: @event.id }
+    get :edit, competition_id: @competition.id, id: @event.id
     assert_response :success
   end
 
   test '#update' do
-    event_params = {
+    params = {
       day_id: days(:aachen_open_day_two).id,
       handle: '222',
       name: '2x2 cube',
@@ -72,24 +72,17 @@ class Admin::EventsControllerTest < ActionController::TestCase
       state: 'open_for_registration'
     }
 
-    patch :update, params: {
-      competition_id: @competition.id,
-      id: @event.id,
-      event: event_params
-    }
+    patch :update, competition_id: @competition.id, id: @event.id, event: params
 
     assert_redirected_to admin_competition_events_path(@competition.id)
     @event.reload
-    assert_attributes(event_params.except(:start_time), @event)
-    assert_equal Time.zone.parse(event_params[:start_time]).strftime('%H:%M'), @event.start_time.strftime('%H:%M')
+    assert_attributes(params.except(:start_time), @event)
+    assert_equal Time.zone.parse(params[:start_time]).strftime('%H:%M'), @event.start_time.strftime('%H:%M')
   end
 
   test '#destroy' do
     assert_difference('@competition.events.count', -1) do
-      delete :destroy, params: {
-        competition_id: @competition.id,
-        id: @event.id
-      }
+      delete :destroy, competition_id: @competition.id, id: @event.id
     end
 
     assert_redirected_to admin_competition_events_path(@competition)
@@ -100,17 +93,14 @@ class Admin::EventsControllerTest < ActionController::TestCase
     count = day.events.count
 
     assert_difference '@competition.events.count', -count do
-      delete :destroy_day, params: {
-        competition_id: @competition.id,
-        day_id: day.id
-      }
+      delete :destroy_day, competition_id: @competition.id, day_id: day.id
     end
 
     assert_redirected_to admin_competition_events_path(@competition)
   end
 
   test '#import_day_form' do
-    get :import_day_form, params: { competition_id: @competition.id }
+    get :import_day_form, competition_id: @competition.id
     assert_response :success
   end
 
@@ -122,11 +112,7 @@ class Admin::EventsControllerTest < ActionController::TestCase
     login_as(competition.users.first)
 
     assert_difference 'competition.reload.events.count', -to_day.events.count + from_day.events.count do
-      post :import_day, params: {
-        competition_id: competition.id,
-        from_day_id: from_day.id,
-        to_day_id: to_day.id
-      }
+      post :import_day, competition_id: competition.id, from_day_id: from_day.id, to_day_id: to_day.id
     end
 
     assert_events_equal from_day.reload.events, to_day.reload.events
@@ -149,11 +135,7 @@ class Admin::EventsControllerTest < ActionController::TestCase
     login_as(competition.users.first)
 
     assert_no_difference 'competition.reload.events.count' do
-      post :import_day, params: {
-        competition_id: competition.id,
-        from_day_id: from_day.id,
-        to_day_id: to_day.id
-      }
+      post :import_day, competition_id: competition.id, from_day_id: from_day.id, to_day_id: to_day.id
     end
 
     assert_redirected_to admin_competition_events_path(competition)
@@ -166,11 +148,10 @@ class Admin::EventsControllerTest < ActionController::TestCase
 
   test '#import_day does not allow to overwrite another competitions day' do
     assert_no_difference '@competition.reload.events.count' do
-      post :import_day, params: {
+      post :import_day,
         competition_id: @competition.id,
         from_day_id: @competition.days.first.id,
         to_day_id: days(:german_open_day_one).id
-      }
     end
 
     assert_response :not_found

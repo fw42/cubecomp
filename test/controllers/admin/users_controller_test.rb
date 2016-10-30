@@ -29,7 +29,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
   end
 
   test '#create' do
-    user_params = {
+    params = {
       email: 'bob@cubecomp.de',
       first_name: 'Bob',
       last_name: 'Bobsen',
@@ -41,24 +41,24 @@ class Admin::UsersControllerTest < ActionController::TestCase
     }
 
     assert_difference('User.count') do
-      post :create, params: { user: user_params }
+      post :create, user: params
     end
 
     assert_redirected_to admin_users_path
     user = User.find_by(email: 'bob@cubecomp.de')
-    assert_attributes(user_params.except(:password, :password_confirmation), user)
-    assert user.authenticate(user_params[:password])
+    assert_attributes(params.except(:password, :password_confirmation), user)
+    assert user.authenticate(params[:password])
   end
 
   test '#create without admin menu permission renders forbidden' do
     UserPolicy.any_instance.expects(:admin_user_menu?).at_least_once.returns(false)
-    post :create, params: { user: { first_name: 'Bob' } }
+    post :create, user: { first_name: 'Bob' }
     assert_response :forbidden
   end
 
   test '#create without create_user? permission renders forbidden' do
     UserPolicy.any_instance.expects(:create_user?).at_least_once.returns(false)
-    post :create, params: { user: { first_name: 'Bob' } }
+    post :create, user: { first_name: 'Bob' }
     assert_response :forbidden
   end
 
@@ -69,7 +69,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
       .returns(false)
 
     assert_no_difference('User.count') do
-      post :create, params: { user: { permission_level: 1 } }
+      post :create, user: { permission_level: 1 }
     end
 
     assert_response :forbidden
@@ -81,30 +81,30 @@ class Admin::UsersControllerTest < ActionController::TestCase
       .returns(false)
 
     assert_no_difference('User.count') do
-      post :create, params: { user: { delegate: true } }
+      post :create, user: { delegate: true }
     end
 
     assert_response :forbidden
   end
 
   test '#edit' do
-    get :edit, params: { id: @user.id }
+    get :edit, id: @user.id
     assert_response :success
   end
 
   test '#edit with UserPolicy#edit_user? false renders forbidden' do
     UserPolicy.any_instance.expects(:edit_user?).with{ |user| user.id == @user.id }.at_least_once.returns(false)
-    get :edit, params: { id: @user.id }
+    get :edit, id: @user.id
     assert_response :forbidden
   end
 
   test '#edit renders 404 with invalid competition id' do
-    get :edit, params: { id: 17 }
+    get :edit, id: 17
     assert_response :not_found
   end
 
   test '#update' do
-    user_params = {
+    params = {
       email: 'bob@cubecomp.de',
       first_name: 'Bob',
       last_name: 'Bobsen',
@@ -114,12 +114,13 @@ class Admin::UsersControllerTest < ActionController::TestCase
       delegate: true
     }
 
-    patch :update, params: { id: @user.id, user: user_params }
+    patch :update, id: @user.id, user: params
 
+    assert assigns(:user)
     assert_redirected_to admin_users_path
     user = User.find_by(email: 'bob@cubecomp.de')
-    assert_attributes(user_params.except(:password, :password_confirmation), user)
-    assert user.authenticate(user_params[:password])
+    assert_attributes(params.except(:password, :password_confirmation), user)
+    assert user.authenticate(params[:password])
   end
 
   test '#update own password without old password fails' do
@@ -128,36 +129,21 @@ class Admin::UsersControllerTest < ActionController::TestCase
     @user.password = @user.password_confirmation = 'old_old_old'
     @user.save!
 
-    patch :update, params: {
-      id: @user.id,
-      user: {
-        password: "new_new_new",
-        password_confirmation: "new_new_new"
-      }
-    }
-
+    patch :update, id: @user.id, user: { password: "new_new_new", password_confirmation: "new_new_new" }
     refute @user.reload.authenticate('new_new_new')
 
-    patch :update, params: {
-      id: @user.id,
-      user: {
-        old_password: "wrong_wrong_wrong",
-        password: "new_new_new",
-        password_confirmation: "new_new_new"
-      }
+    patch :update, id: @user.id, user: {
+      old_password: "wrong_wrong_wrong",
+      password: "new_new_new",
+      password_confirmation: "new_new_new"
     }
-
     refute @user.reload.authenticate('new_new_new')
 
-    patch :update, params: {
-      id: @user.id,
-      user: {
-        old_password: "old_old_old",
-        password: "new_new_new",
-        password_confirmation: "new_new_new"
-      }
+    patch :update, id: @user.id, user: {
+      old_password: "old_old_old",
+      password: "new_new_new",
+      password_confirmation: "new_new_new"
     }
-
     assert @user.reload.authenticate('new_new_new')
   end
 
@@ -167,17 +153,13 @@ class Admin::UsersControllerTest < ActionController::TestCase
       .at_least_once
       .returns(false)
 
-    patch :update, params: {
-      id: @user.id,
-      user: { permission_level: 1 }
-    }
-
+    patch :update, id: @user.id, user: { permission_level: 1 }
     assert_response :forbidden
   end
 
   test '#update with UserPolicy#edit_user? false renders forbidden' do
     UserPolicy.any_instance.expects(:edit_user?).with{ |user| user.id == @user.id }.at_least_once.returns(false)
-    patch :update, params: { id: @user.id, user: {} }
+    patch :update, id: @user.id, user: {}
     assert_response :forbidden
   end
 
@@ -187,41 +169,33 @@ class Admin::UsersControllerTest < ActionController::TestCase
       .at_least_once
       .returns(false)
 
-    patch :update, params: { id: @user.id, user: { delegate: true } }
+    patch :update, id: @user.id, user: { delegate: true }
     assert_response :forbidden
     assert_equal false, @user.reload.delegate
   end
 
   test '#update active with permission' do
     UserPolicy.any_instance.expects(:disable_user?).returns(true)
-    patch :update, params: { id: @user.id, user: { active: false } }
+    patch :update, id: @user.id, user: { active: false }
     assert_equal false, @user.reload.active
   end
 
   test '#update active without permission' do
     UserPolicy.any_instance.expects(:disable_user?).returns(false)
-    patch :update, params: { id: @user.id, user: { active: false } }
+    patch :update, id: @user.id, user: { active: false }
     assert_response :forbidden
     assert_equal true, @user.reload.active
   end
 
   test "#update when passwords don't match fails" do
-    patch :update, params: {
-      id: @user.id,
-      user: { password: 'foofoofoo', password_confirmation: 'barbarbar' }
-    }
-
+    patch :update, id: @user.id, user: { password: 'foofoofoo', password_confirmation: 'barbarbar' }
     assert_response 200
-    assert_match /doesn&#39;t match Password/, response.body
+    assert_equal ["doesn't match Password"], assigns(:user).errors[:password_confirmation]
     refute @user.reload.authenticate(:foo)
   end
 
   test '#update with blank password fields doesnt change password' do
-    patch :update, params: {
-      id: @user.id,
-      user: { password: '', password_confirmation: '' }
-    }
-
+    patch :update, id: @user.id, user: { password: '', password_confirmation: '' }
     @user.reload
     assert @user.authenticate('test')
   end
@@ -232,18 +206,15 @@ class Admin::UsersControllerTest < ActionController::TestCase
     @user.permissions.each(&:destroy!)
     @user.permissions.create!(competition_id: competition1.id)
 
-    patch :update, params: {
-      id: @user.id,
-      user: {
-        permissions_attributes: {
-          "0" => {
-            "competition_id" => competition1.id,
-            "_destroy" => "0"
-          },
-          "1" => {
-            "competition_id" => competition2.id,
-            "_destroy" => "1"
-          }
+    patch :update, id: @user.id, user: {
+      permissions_attributes: {
+        "0" => {
+          "competition_id" => competition1.id,
+          "_destroy" => "0"
+        },
+        "1" => {
+          "competition_id" => competition2.id,
+          "_destroy" => "1"
         }
       }
     }
@@ -261,38 +232,30 @@ class Admin::UsersControllerTest < ActionController::TestCase
       .at_least_once
       .returns(false)
 
-    post :create, params: {
-      id: @user.id,
-      user: {
-        permissions_attributes: {
-          "0" => {
-            "competition_id" => competition.id,
-            "_destroy" => "0"
-          }
+    post :create, id: @user.id, user: {
+      permissions_attributes: {
+        "0" => {
+          "competition_id" => competition.id,
+          "_destroy" => "0"
         }
       }
     }
-
     assert_response :forbidden
 
-    patch :update, params: {
-      id: @user.id,
-      user: {
-        permissions_attributes: {
-          "0" => {
-            "competition_id" => competition.id,
-            "_destroy" => "0"
-          }
+    patch :update, id: @user.id, user: {
+      permissions_attributes: {
+        "0" => {
+          "competition_id" => competition.id,
+          "_destroy" => "0"
         }
       }
     }
-
     assert_response :forbidden
   end
 
   test '#destroy' do
     assert_difference('User.count', -1) do
-      delete :destroy, params: { id: @user.id }
+      delete :destroy, id: @user.id
     end
 
     assert_redirected_to admin_users_path
@@ -300,14 +263,14 @@ class Admin::UsersControllerTest < ActionController::TestCase
 
   test '#destroy without admin menu permission renders forbidden' do
     UserPolicy.any_instance.expects(:admin_user_menu?).at_least_once.returns(false)
-    delete :destroy, params: { id: @user.id }
+    delete :destroy, id: @user.id
     assert_response :forbidden
   end
 
   test '#destroy with UserPolicy#destroy_user? false renders forbidden' do
     UserPolicy.any_instance.expects(:destroy_user?).with{ |user| user.id == @user.id }.returns(false)
     assert_no_difference('User.count') do
-      delete :destroy, params: { id: @user.id }
+      delete :destroy, id: @user.id
     end
     assert_response :forbidden
   end

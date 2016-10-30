@@ -1,8 +1,8 @@
 # http://iada.nl/blog/article/rails-tip-display-association-validation-errors-fields
 
 # Make sure errors on associations are also set on the _id and _ids fields
-module ErrorsForAssociationsPatch
-  def error_message
+module ActionView::Helpers::ActiveModelInstanceTag
+  def error_message_with_associations
     if @method_name.end_with?('_ids')
       # Check for a has_(and_belongs_to_)many association (these always use the _ids postfix field).
       association = object.class.reflect_on_association(@method_name.chomp('_ids').pluralize.to_sym)
@@ -14,11 +14,11 @@ module ErrorsForAssociationsPatch
     end
 
     if association.present?
-      object.errors[association.name] + super
+      object.errors[association.name] + error_message_without_associations
     else
-      super
+      error_message_without_associations
     end
   end
-end
 
-ActionView::Helpers::ActiveModelInstanceTag.prepend(ErrorsForAssociationsPatch)
+  alias_method_chain :error_message, :associations
+end

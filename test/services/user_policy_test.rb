@@ -114,13 +114,13 @@ class UserPolicyTest < ActiveSupport::TestCase
   end
 
   def assert_true_iff_permission_level_higher(method_name, *args)
-    User::PERMISSION_LEVELS.values.each do |level1|
-      user1 = User.new(permission_level: level1)
-      User::PERMISSION_LEVELS.values.each do |level2|
-        user2 = User.new(permission_level: level2)
+    User::PERMISSION_LEVELS.values.each do |level_1|
+      user_1 = User.new(permission_level: level_1)
+      User::PERMISSION_LEVELS.values.each do |level_2|
+        user_2 = User.new(permission_level: level_2)
 
-        allowed = user1.policy.public_send(method_name, user2, *args)
-        if level1 > level2
+        allowed = user_1.policy.public_send(method_name, user_2, *args)
+        if level_1 > level_2
           assert allowed
         else
           assert !allowed

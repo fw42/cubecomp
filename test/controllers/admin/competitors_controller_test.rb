@@ -66,24 +66,26 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
   end
 
   test '#index' do
-    get :index, params: { competition_id: @competition.id }
+    get :index, competition_id: @competition.id
     assert_response :success
+    assert_not_nil assigns(:competitors)
   end
 
   test '#checklist' do
-    get :checklist, params: { competition_id: @competition.id }
+    get :checklist, competition_id: @competition.id
     assert_response :success
+    assert_not_nil assigns(:competitors)
   end
 
   test '#csv' do
     @competition.competitors.each{ |competitor| competitor.update_attributes(state: 'confirmed') }
-    get :csv, params: { competition_id: @competition.id }
+    get :csv, competition_id: @competition.id
     assert_response :success
   end
 
   test '#csv_download_active' do
     @competition.competitors.each{ |competitor| competitor.update_attributes(state: 'confirmed') }
-    get :csv_download_active, params: { competition_id: @competition.id }
+    get :csv_download_active, competition_id: @competition.id
     assert_response :success
 
     expected = []
@@ -96,34 +98,35 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
   end
 
   test '#nametags' do
-    get :nametags, params: { competition_id: @competition.id }
+    get :nametags, competition_id: @competition.id
     assert_response :success
+    assert_not_nil assigns(:competitors)
   end
 
   test '#email_addresses' do
-    get :email_addresses, params: { competition_id: @competition.id }
+    get :email_addresses, competition_id: @competition.id
     assert_response :success
   end
 
   test '#index renders 404 with invalid competition id' do
-    get :index, params: { competition_id: 17 }
+    get :index, competition_id: 17
     assert_response :not_found
   end
 
   test '#index without login permission renders 401' do
     mock_login_not_allowed(@competition)
-    get :index, params: { competition_id: @competition.id }
+    get :index, competition_id: @competition.id
     assert_response :forbidden
   end
 
   test '#new' do
-    get :new, params: { competition_id: @competition.id }
+    get :new, competition_id: @competition.id
     assert_response :success
   end
 
   test '#new without login permission renders 401' do
     mock_login_not_allowed(@competition)
-    get :new, params: { competition_id: @competition.id }
+    get :new, competition_id: @competition.id
     assert_response :forbidden
   end
 
@@ -131,10 +134,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     assert_difference '@competition.competitors.count', +1 do
       assert_difference '@competition.event_registrations.count', +1 do
         assert_difference '@competition.day_registrations.count', +1 do
-          post :create, params: {
-            competition_id: @competition.id,
-            competitor: @new_competitor_params
-          }
+          post :create, competition_id: @competition.id, competitor: @new_competitor_params
         end
       end
     end
@@ -153,41 +153,25 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     mock_login_not_allowed(@competition)
 
     assert_no_difference 'Competitor.count' do
-      post :create, params: {
-        competition_id: @competition.id,
-        competitor: @new_competitor_params
-      }
+      post :create, competition_id: @competition.id, competitor: @new_competitor_params
     end
 
     assert_response :forbidden
   end
 
   test '#edit' do
-    get :edit, params: {
-      competition_id: @competition.id,
-      id: @competitor.id
-    }
-
+    get :edit, competition_id: @competition.id, id: @competitor.id
     assert_response :success
   end
 
   test '#edit without login permission renders 401' do
     mock_login_not_allowed(@competition)
-
-    get :edit, params: {
-      competition_id: @competition.id,
-      id: @competitor.id
-    }
-
+    get :edit, competition_id: @competition.id, id: @competitor.id
     assert_response :forbidden
   end
 
   test '#update' do
-    patch :update, params: {
-      competition_id: @competition.id,
-      id: @competitor.id,
-      competitor: @update_params
-    }
+    patch :update, competition_id: @competition.id, id: @competitor.id, competitor: @update_params
 
     assert_redirected_to admin_competition_competitors_path(@competition.id)
     @competitor.reload
@@ -199,46 +183,25 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
 
   test '#confirm' do
     @competitor.update_attributes(state: 'new')
-
-    patch :confirm, params: {
-      competition_id: @competition.id,
-      id: @competitor.id
-    }
-
+    patch :confirm, competition_id: @competition.id, id: @competitor.id
     assert_equal 'confirmed', @competitor.reload.state
   end
 
   test '#cancel' do
     @competitor.update_attributes(state: 'new')
-
-    patch :cancel, params: {
-      competition_id: @competition.id,
-      id: @competitor.id
-    }
-
+    patch :cancel, competition_id: @competition.id, id: @competitor.id
     assert_equal 'cancelled', @competitor.reload.state
   end
 
   test '#mark_as_paid' do
     @competitor.update_attributes(paid: false)
-
-    patch :mark_as_paid, params: {
-      competition_id: @competition.id,
-      id: @competitor.id
-    }
-
+    patch :mark_as_paid, competition_id: @competition.id, id: @competitor.id
     assert_equal true, @competitor.reload.paid
   end
 
   test '#update without login permission renders 401' do
     mock_login_not_allowed(@competition)
-
-    patch :update, params: {
-      competition_id: @competition.id,
-      id: @competitor.id,
-      competitor: @update_params
-    }
-
+    patch :update, competition_id: @competition.id, id: @competitor.id, competitor: @update_params
     assert_response :forbidden
   end
 
@@ -248,17 +211,13 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
 
     assert_difference 'competitor.day_registrations.count', +1 do
       assert_no_difference 'EventRegistration.count' do
-        patch :update, params: {
-          competition_id: @competition.id,
-          id: competitor.id,
-          competitor: {
-            days: {
-              event.day_id.to_s => {
-                status: 'guest',
-                events: {
-                  event.id.to_s => {
-                    status: 'not_registered'
-                  }
+        patch :update, competition_id: @competition.id, id: competitor.id, competitor: {
+          days: {
+            event.day_id.to_s => {
+              status: 'guest',
+              events: {
+                event.id.to_s => {
+                  status: 'not_registered'
                 }
               }
             }
@@ -276,17 +235,13 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
 
     assert_difference 'competitor.day_registrations.count', +1 do
       assert_difference 'competitor.event_registrations.count', +1 do
-        patch :update, params: {
-          competition_id: @competition.id,
-          id: competitor.id,
-          competitor: {
-            days: {
-              event.day_id.to_s => {
-                status: 'registered',
-                events: {
-                  event.id.to_s => {
-                    status: 'registered'
-                  }
+        patch :update, competition_id: @competition.id, id: competitor.id, competitor: {
+          days: {
+            event.day_id.to_s => {
+              status: 'registered',
+              events: {
+                event.id.to_s => {
+                  status: 'registered'
                 }
               }
             }
@@ -306,17 +261,13 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
 
     assert_difference 'competitor.day_registrations.count', -1 do
       assert_no_difference 'competitor.event_registrations.count' do
-        patch :update, params: {
-          competition_id: @competition.id,
-          id: competitor.id,
-          competitor: {
-            days: {
-              day.id.to_s => {
-                status: 'not_registered',
-                events: {
-                  event.id.to_s => {
-                    status: 'not_registered'
-                  }
+        patch :update, competition_id: @competition.id, id: competitor.id, competitor: {
+          days: {
+            day.id.to_s => {
+              status: 'not_registered',
+              events: {
+                event.id.to_s => {
+                  status: 'not_registered'
                 }
               }
             }
@@ -335,17 +286,13 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
 
     assert_no_difference 'competitor.day_registrations.count' do
       assert_difference 'competitor.event_registrations.count', +1 do
-        patch :update, params: {
-          competition_id: @competition.id,
-          id: competitor.id,
-          competitor: {
-            days: {
-              day.id.to_s => {
-                status: 'registered',
-                events: {
-                  event.id.to_s => {
-                    status: 'registered'
-                  }
+        patch :update, competition_id: @competition.id, id: competitor.id, competitor: {
+          days: {
+            day.id.to_s => {
+              status: 'registered',
+              events: {
+                event.id.to_s => {
+                  status: 'registered'
                 }
               }
             }
@@ -374,15 +321,11 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
 
     assert_difference '@competitor.day_registrations.count', -1 do
       assert_difference '@competitor.event_registrations.count', -1 * events.keys.size do
-        patch :update, params: {
-          competition_id: @competition.id,
-          id: @competitor.id,
-          competitor: {
-            days: {
-              day.id.to_s => {
-                status: 'not_registered',
-                events: events
-              }
+        patch :update, competition_id: @competition.id, id: @competitor.id, competitor: {
+          days: {
+            day.id.to_s => {
+              status: 'not_registered',
+              events: events
             }
           }
         }
@@ -405,15 +348,11 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
 
     assert_no_difference '@competitor.day_registrations.count' do
       assert_difference '@competitor.event_registrations.count', -1 * events.keys.size do
-        patch :update, params: {
-          competition_id: @competition.id,
-          id: @competitor.id,
-          competitor: {
-            days: {
-              day.id.to_s => {
-                status: 'guest',
-                events: events
-              }
+        patch :update, competition_id: @competition.id, id: @competitor.id, competitor: {
+          days: {
+            day.id.to_s => {
+              status: 'guest',
+              events: events
             }
           }
         }
@@ -430,17 +369,13 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
 
     assert_no_difference 'competitor.day_registrations.count' do
       assert_difference 'competitor.event_registrations.count', +1 do
-        patch :update, params: {
-          competition_id: @competition.id,
-          id: competitor.id,
-          competitor: {
-            days: {
-              day.id.to_s => {
-                status: 'registered',
-                events: {
-                  event.id.to_s => {
-                    status: 'waiting'
-                  }
+        patch :update, competition_id: @competition.id, id: competitor.id, competitor: {
+          days: {
+            day.id.to_s => {
+              status: 'registered',
+              events: {
+                event.id.to_s => {
+                  status: 'waiting'
                 }
               }
             }
@@ -464,15 +399,11 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
 
     assert_no_difference '@competitor.day_registrations.count' do
       assert_difference '@competitor.event_registrations.count', -1 * events.keys.size do
-        patch :update, params: {
-          competition_id: @competition.id,
-          id: @competitor.id,
-          competitor: {
-            days: {
-              day.id.to_s => {
-                status: 'registered',
-                events: events
-              }
+        patch :update, competition_id: @competition.id, id: @competitor.id, competitor: {
+          days: {
+            day.id.to_s => {
+              status: 'registered',
+              events: events
             }
           }
         }
@@ -484,10 +415,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
 
   test '#destroy' do
     assert_difference '@competition.competitors.count', -1 do
-      delete :destroy, params: {
-        competition_id: @competition.id,
-        id: @competitor.id
-      }
+      delete :destroy, competition_id: @competition.id, id: @competitor.id
     end
 
     assert_redirected_to admin_competition_competitors_path(@competition.id)
@@ -497,10 +425,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     mock_login_not_allowed(@competition)
 
     assert_no_difference 'Competitor.count' do
-      delete :destroy, params: {
-        competition_id: @competition.id,
-        id: @competitor.id
-      }
+      delete :destroy, competition_id: @competition.id, id: @competitor.id
     end
 
     assert_response :forbidden

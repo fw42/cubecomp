@@ -29,7 +29,7 @@ namespace :db do
     config = ActiveRecord::Base.configurations
     ActiveRecord::Base.connection.recreate_database(config['wca']['database'])
 
-    ActiveRecord::Base.establish_connection(config['wca'])
+    ActiveRecord::Base.establish_connection('wca')
     ActiveRecord::Schema.verbose = false
 
     load(Rails.root.join("db", "schema.wca.rb"))

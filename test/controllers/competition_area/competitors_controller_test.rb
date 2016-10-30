@@ -39,13 +39,12 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
     assert_difference '@competition.competitors.count', +1 do
       assert_difference '@competition.event_registrations.count', +1 do
         assert_difference '@competition.day_registrations.count', +2 do
-          post :create, params: {
+          post :create,
             competition_handle: @competition.handle,
             theme_file: "foobar.html",
             return_to_path: '/foo/',
             competitor: @new_competitor_params,
             locale: @locale.handle
-          }
         end
       end
     end
@@ -64,13 +63,12 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
     @competition.update_attributes(registration_open: false)
 
     assert_no_difference '@competition.competitors.count' do
-      post :create, params: {
+      post :create,
         competition_handle: @competition.handle,
         theme_file: "foobar.html",
         return_to_path: '/foo/',
         competitor: @new_competitor_params,
         locale: @locale.handle
-      }
     end
 
     assert_response :forbidden
@@ -81,13 +79,12 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
 
     Timecop.freeze(last_day + 1.day) do
       assert_no_difference '@competition.competitors.count' do
-        post :create, params: {
+        post :create,
           competition_handle: @competition.handle,
           theme_file: "foobar.html",
           return_to_path: '/foo/',
           competitor: @new_competitor_params,
           locale: @locale.handle
-        }
       end
     end
 
@@ -99,12 +96,11 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
 
     assert_no_difference 'Competitor.count' do
       assert_raises(ActionController::UnpermittedParameters) do
-        post :create, params: {
+        post :create,
           competition_handle: @competition.handle,
           theme_file: "foobar.html",
           competitor: @new_competitor_params,
           locale: @locale.handle
-        }
       end
     end
   end
@@ -114,13 +110,11 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
     @competition.theme_files.create(filename: 'foobar.html', content: "foobar \n {{ registration_form }}")
 
     post :create,
-      params: {
-        competition_handle: @competition.handle,
-        theme_file: "foobar.html",
-        return_to_path: '/foo/',
-        competitor: @new_competitor_params,
-        locale: @locale.handle
-      }
+      competition_handle: @competition.handle,
+      theme_file: "foobar.html",
+      return_to_path: '/foo/',
+      competitor: @new_competitor_params,
+      locale: @locale.handle
 
     assert_response :ok
     assert_match /#{Regexp.escape('<div class="field_with_errors">')}/, response.body
@@ -141,11 +135,10 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
     }
 
     assert_no_difference 'Competitor.count' do
-      post :create, params: {
+      post :create,
         competition_handle: @competition.handle,
         competitor: @new_competitor_params,
         locale: @locale.handle
-      }
 
       assert_response :forbidden
     end
@@ -156,11 +149,10 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
     event.update_attributes(state: 'registration_closed')
 
     assert_no_difference 'Competitor.count' do
-      post :create, params: {
+      post :create,
         competition_handle: @competition.handle,
         competitor: @new_competitor_params,
         locale: @locale.handle
-      }
 
       assert_response :forbidden
     end
@@ -171,11 +163,10 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
     event.update_attributes(state: 'open_with_waiting_list')
 
     assert_no_difference 'Competitor.count' do
-      post :create, params: {
+      post :create,
         competition_handle: @competition.handle,
         competitor: @new_competitor_params,
         locale: @locale.handle
-      }
 
       assert_response :forbidden
     end
@@ -188,12 +179,11 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
 
     assert_difference '@competition.competitors.count', +1 do
       assert_difference '@competition.event_registrations.count', +1 do
-        post :create, params: {
+        post :create,
           competition_handle: @competition.handle,
           competitor: @new_competitor_params,
           return_to_path: '/foo/',
           locale: @locale.handle
-        }
       end
     end
 
