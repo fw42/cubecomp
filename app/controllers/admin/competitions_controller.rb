@@ -1,7 +1,7 @@
 class Admin::CompetitionsController < AdminController
   before_action :set_competition, only: [:edit, :update, :destroy]
 
-  skip_before_filter :ensure_current_competition
+  skip_before_action :ensure_current_competition
   before_action :ensure_user_can_create_competitions, only: [:index, :new, :create]
   before_action :ensure_user_can_destroy_competition, only: [:index, :destroy]
 

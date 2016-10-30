@@ -8,23 +8,22 @@ class Admin::NewsControllerTest < ActionController::TestCase
   end
 
   test '#index' do
-    get :index, competition_id: @competition.id
+    get :index, params: { competition_id: @competition.id }
     assert_response :success
-    assert_not_nil assigns(:news)
   end
 
   test '#index renders 404 with invalid competition id' do
-    get :index, competition_id: 17
+    get :index, params: { competition_id: 17 }
     assert_response :not_found
   end
 
   test '#new' do
-    get :new, competition_id: @competition.id
+    get :new, params: { competition_id: @competition.id }
     assert_response :success
   end
 
   test '#create' do
-    params = {
+    news_params = {
       locale_id: @competition.locales.first.id,
       text: 'hello',
       'time(1i)' => '2014',
@@ -35,7 +34,10 @@ class Admin::NewsControllerTest < ActionController::TestCase
     }
 
     assert_difference('@competition.news.count') do
-      post :create, competition_id: @competition.id, news: params
+      post :create, params: {
+        competition_id: @competition.id,
+        news: news_params
+      }
     end
 
     assert_redirected_to admin_competition_news_index_path(@competition)
@@ -45,12 +47,16 @@ class Admin::NewsControllerTest < ActionController::TestCase
   end
 
   test '#edit' do
-    get :edit, competition_id: @competition.id, id: @news.id
+    get :edit, params: {
+      competition_id: @competition.id,
+      id: @news.id
+    }
+
     assert_response :success
   end
 
   test '#update' do
-    params = {
+    news_params = {
       locale_id: @competition.locales.first.id,
       text: 'hello',
       'time(1i)' => '2014',
@@ -60,7 +66,11 @@ class Admin::NewsControllerTest < ActionController::TestCase
       'time(5i)' => '30'
     }
 
-    patch :update, competition_id: @competition.id, id: @news.id, news: params
+    patch :update, params: {
+      competition_id: @competition.id,
+      id: @news.id,
+      news: news_params
+    }
 
     assert_redirected_to admin_competition_news_index_path(@competition)
     news = @competition.news.last
@@ -70,7 +80,10 @@ class Admin::NewsControllerTest < ActionController::TestCase
 
   test '#destroy' do
     assert_difference('@competition.news.count', -1) do
-      delete :destroy, competition_id: @competition.id, id: @news.id
+      delete :destroy, params: {
+        competition_id: @competition.id,
+        id: @news.id
+      }
     end
 
     assert_redirected_to admin_competition_news_index_path(@competition)

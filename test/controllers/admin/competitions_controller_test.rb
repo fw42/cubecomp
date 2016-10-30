@@ -54,7 +54,6 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
   test '#index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:competitions)
   end
 
   test '#index without permission renders forbidden' do
@@ -79,7 +78,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
       assert_difference 'Day.count' do
         assert_difference 'Locale.count' do
           assert_difference 'Permission.count' do
-            post :create, competition: @new_competition_params
+            post :create, params: { competition: @new_competition_params }
           end
         end
       end
@@ -104,37 +103,37 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     mock_create_competitions_not_allowed
 
     assert_no_difference 'Competition.count' do
-      post :create, competition: @new_competition_params
+      post :create, params: { competition: @new_competition_params }
     end
 
     assert_response :forbidden
   end
 
   test '#edit' do
-    get :edit, id: @competition.id
+    get :edit, params: { id: @competition.id }
     assert_response :success
   end
 
   test '#edit renders 404 with invalid competition id' do
-    get :edit, id: 17
+    get :edit, params: { id: 17 }
     assert_response :not_found
   end
 
   test '#edit without login permission renders forbidden' do
     mock_login_not_allowed(@competition)
-    get :edit, id: @competition.id
+    get :edit, params: { id: @competition.id }
     assert_response :forbidden
   end
 
   test '#update' do
-    patch :update, id: @competition.id, competition: @update_params
+    patch :update, params: { id: @competition.id, competition: @update_params }
     assert_redirected_to edit_admin_competition_path(@competition)
     assert_attributes(@update_params, @competition.reload)
   end
 
   test '#update without permission renders forbidden' do
     mock_login_not_allowed(@competition)
-    patch :update, id: @competition.id, competition: @update_params
+    patch :update, params: { id: @competition.id, competition: @update_params }
     assert_response :forbidden
   end
 
@@ -142,7 +141,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     @competition.locales.where(handle: 'de').each(&:destroy!)
     @competition.reload
 
-    params = {
+    competition_params = {
       locales_attributes: {
         '0' => {
           handle: 'de',
@@ -153,7 +152,10 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
 
     assert_difference 'Locale.count', +1 do
       assert_difference '@competition.reload.locales.count', +1 do
-        patch :update, id: @competition.id, competition: params
+        patch :update, params: {
+          id: @competition.id,
+          competition: competition_params
+        }
       end
     end
 
@@ -163,7 +165,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
   test '#update nested attributes for removing a locale' do
     locale = @competition.locales.first
 
-    params = {
+    competition_params = {
       locales_attributes: {
         '0' => {
           id: locale.id,
@@ -175,7 +177,10 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
 
     assert_difference 'Locale.count', -1 do
       assert_difference '@competition.reload.locales.count', -1 do
-        patch :update, id: @competition.id, competition: params
+        patch :update, params: {
+          id: @competition.id,
+          competition: competition_params
+        }
       end
     end
 
@@ -184,14 +189,21 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
 
   test '#update to change the default locale' do
     @competition.update_attributes(default_locale: locales(:aachen_open_german))
-    patch :update, id: @competition.id, competition: { default_locale_handle: locales(:aachen_open_english).handle }
+
+    patch :update, params: {
+      id: @competition.id,
+      competition: {
+        default_locale_handle: locales(:aachen_open_english).handle
+      }
+    }
+
     assert_equal 'en', @competition.reload.default_locale.handle
   end
 
   test '#update nested attributes for removing default locale sets remaining locale as default' do
     locale = @competition.default_locale
 
-    params = {
+    competition_params = {
       locales_attributes: {
         '0' => {
           id: locale.id,
@@ -203,7 +215,10 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
 
     assert_difference 'Locale.count', -1 do
       assert_difference '@competition.reload.locales.count', -1 do
-        patch :update, id: @competition.id, competition: params
+        patch :update, params: {
+          id: @competition.id,
+          competition: competition_params
+        }
       end
     end
 
@@ -212,11 +227,14 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
   end
 
   test '#update nested attributes for adding a day' do
-    params = { days_attributes: @days_attributes }
+    competition_params = { days_attributes: @days_attributes }
 
     assert_difference 'Day.count', +1 do
       assert_difference '@competition.reload.days.count', +1 do
-        patch :update, id: @competition.id, competition: params
+        patch :update, params: {
+          id: @competition.id,
+          competition: competition_params
+        }
       end
     end
 
@@ -229,7 +247,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
   test '#update nested attributes for removing a day' do
     day = @competition.days.first
 
-    params = {
+    competition_params = {
       days_attributes: {
         '0' => {
           'date(2i)' => '1',
@@ -243,7 +261,10 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
 
     assert_difference 'Day.count', -1 do
       assert_difference '@competition.reload.days.count', -1 do
-        patch :update, id: @competition.id, competition: params
+        patch :update, params: {
+          id: @competition.id,
+          competition: competition_params
+        }
       end
     end
 
@@ -253,7 +274,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
   test '#update nested attributes for changing a day' do
     day = @competition.days.first
 
-    params = {
+    competition_params = {
       days_attributes: {
         '0' => {
           'id' => day.id,
@@ -267,7 +288,10 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
     }
 
     assert_no_difference 'Day.count' do
-      patch :update, id: @competition.id, competition: params
+      patch :update, params: {
+        id: @competition.id,
+        competition: competition_params
+      }
     end
 
     day.reload
@@ -278,7 +302,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
 
   test '#destroy' do
     assert_difference 'Competition.count', -1 do
-      delete :destroy, id: @competition.id
+      delete :destroy, params: { id: @competition.id }
     end
 
     assert_redirected_to admin_competitions_path
@@ -287,7 +311,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
   test '#destroy without permission renders forbidden' do
     mock_destroy_competition_not_allowed(@competition)
     assert_no_difference 'Competition.count' do
-      delete :destroy, id: @competition.id
+      delete :destroy, params: { id: @competition.id }
     end
     assert_response :forbidden
   end
