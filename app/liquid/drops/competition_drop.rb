@@ -15,4 +15,8 @@ class CompetitionDrop < Liquid::Drop
   def country
     @competition.country.name
   end
+
+  def locales
+    @competition.locales.to_a
+  end
 end
