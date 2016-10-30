@@ -9,8 +9,11 @@ class ErrorsForAssociationsTest < ActionController::TestCase
   end
 
   test 'error on association is also set on the _id field' do
-    post :create, competition_id: @competition.id, competitor: {
-      first_name: 'Bob'
+    post :create, params: {
+      competition_id: @competition.id,
+      competitor: {
+        first_name: 'Bob'
+      }
     }
 
     label_error = '<div class="field_with_errors"><label for="competitor_country">Country:</label></div>'

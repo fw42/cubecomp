@@ -11,63 +11,77 @@ module Admin::ThemeFiles
     end
 
     test '#index' do
-      get :index, competition_id: @competition.id
+      get :index, params: { competition_id: @competition.id }
       assert_response :success
-      assert_not_nil assigns(:theme_files)
     end
 
     test '#index renders 404 with invalid competition_id' do
-      get :index, competition_id: 17
+      get :index, params: { competition_id: 17 }
       assert_response :not_found
     end
 
     test '#index requires permission' do
-      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
-      get :index, competition_id: @competition.id
+      mock_login_policy(false)
+      get :index, params: { competition_id: @competition.id }
       assert_response :forbidden
     end
 
     test '#new' do
-      get :new, competition_id: @competition.id
+      get :new, params: { competition_id: @competition.id }
       assert_response :success
     end
 
     test '#new requires permission' do
-      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
-      get :new, competition_id: @competition.id
+      mock_login_policy(false)
+
+      get :new, params: { competition_id: @competition.id }
+
       assert_response :forbidden
     end
 
     test '#create' do
-      params = {
+      theme_params = {
         filename: 'foobar.html',
         content: 'foobar!'
       }
 
       assert_difference('@competition.theme_files.text_files.count') do
-        post :create, competition_id: @competition.id, theme_file: params
+        post :create, params: {
+          competition_id: @competition.id,
+          theme_file: theme_params
+        }
       end
 
       assert_redirected_to admin_competition_theme_files_path(@competition)
-      assert_attributes(params, @competition.theme_files.last)
+      assert_attributes(theme_params, @competition.theme_files.last)
     end
 
     test '#create requires permission' do
-      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+      mock_login_policy(false)
+
       assert_no_difference 'ThemeFile.count' do
-        post :create, competition_id: @competition.id, theme_file: { filename: 'foo', content: 'bar' }
+        post :create, params: {
+          competition_id: @competition.id,
+          theme_file: {
+            filename: 'foo',
+            content: 'bar'
+          }
+        }
       end
+
       assert_response :forbidden
     end
 
     test '#new_image' do
-      get :new_image, competition_id: @competition.id
+      get :new_image, params: { competition_id: @competition.id }
       assert_response :success
     end
 
     test '#new_image requires permission' do
-      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
-      get :new_image, competition_id: @competition.id
+      mock_login_policy(false)
+
+      get :new_image, params: { competition_id: @competition.id }
+
       assert_response :forbidden
     end
 
@@ -76,26 +90,33 @@ module Admin::ThemeFiles
 
       image = fixture_file_upload('files/logo.png', 'image/png')
 
-      params = {
+      theme_params = {
         filename: 'logo.png',
         image: image
       }
 
       assert_difference('@competition.theme_files.image_files.count') do
-        post :create_image, competition_id: @competition.id, theme_file: params
+        post :create_image, params: {
+          competition_id: @competition.id,
+          theme_file: theme_params
+        }
       end
 
       assert_redirected_to admin_competition_theme_files_path(@competition)
     end
 
     test '#create_image requires permission' do
-      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+      mock_login_policy(false)
+
       image = fixture_file_upload('files/logo.png', 'image/png')
 
       assert_no_difference 'ThemeFile.count' do
-        post :create_image, competition_id: @competition.id, theme_file: {
-          filename: 'logo.png',
-          image: image
+        post :create_image, params: {
+          competition_id: @competition.id,
+          theme_file: {
+            filename: 'logo.png',
+            image: image
+          }
         }
       end
 
@@ -103,23 +124,27 @@ module Admin::ThemeFiles
     end
 
     test '#import_files_form' do
-      get :import_files_form, competition_id: @competition.id
+      get :import_files_form, params: { competition_id: @competition.id }
       assert_response :success
     end
 
     test '#import_files_form requires permission' do
-      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
-      get :import_files_form, competition_id: @competition.id
+      mock_login_policy(false)
+
+      get :import_files_form, params: { competition_id: @competition.id }
       assert_response :forbidden
     end
 
     test '#import_files from theme to competition' do
       from_theme = themes(:fancy)
 
-      post :import_files, competition_id: @competition.id, from: {
-        theme_id: from_theme.id,
-        competition_id: "does not matter, wont be used",
-        import_theme: "Import"
+      post :import_files, params: {
+        competition_id: @competition.id,
+        from: {
+          theme_id: from_theme.id,
+          competition_id: "does not matter, wont be used",
+          import_theme: "Import"
+        }
       }
 
       assert_redirected_to admin_competition_theme_files_path(@competition)
@@ -131,10 +156,13 @@ module Admin::ThemeFiles
       login_as(to_competition.users.first)
       from_competition = competitions(:aachen_open)
 
-      post :import_files, competition_id: to_competition.id, from: {
-        theme_id: "does not matter, wont be used",
-        competition_id: from_competition.id,
-        import_competition: "Import"
+      post :import_files, params: {
+        competition_id: to_competition.id,
+        from: {
+          theme_id: "does not matter, wont be used",
+          competition_id: from_competition.id,
+          import_competition: "Import"
+        }
       }
 
       assert_redirected_to admin_competition_theme_files_path(to_competition)
@@ -142,14 +170,18 @@ module Admin::ThemeFiles
     end
 
     test '#import_files requires permission' do
-      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+      mock_login_policy(false)
+
       from_theme = themes(:fancy)
 
       assert_no_difference 'ThemeFile.count' do
-        post :import_files, competition_id: @competition.id, from: {
-          theme_id: from_theme.id,
-          competition_id: "does not matter, wont be used",
-          import_theme: "Import"
+        post :import_files, params: {
+          competition_id: @competition.id,
+          from: {
+            theme_id: from_theme.id,
+            competition_id: "does not matter, wont be used",
+            import_theme: "Import"
+          }
         }
       end
 
@@ -160,16 +192,17 @@ module Admin::ThemeFiles
       to_competition = competitions(:german_open)
       from_competition = competitions(:aachen_open)
 
-      UserPolicy.any_instance.expects(:login?)
-        .with{ |competition| competition.id == to_competition.id }.returns(true)
-      UserPolicy.any_instance.expects(:login?)
-        .with{ |competition| competition.id == from_competition.id }.returns(false)
+      mock_login_policy(true, to_competition)
+      mock_login_policy(false, from_competition)
 
       assert_no_difference 'ThemeFile.count' do
-        post :import_files, competition_id: to_competition.id, from: {
-          theme_id: "does not matter, wont be used",
-          competition_id: from_competition.id,
-          import_competition: "Import"
+        post :import_files, params: {
+          competition_id: to_competition.id,
+          from: {
+            theme_id: "does not matter, wont be used",
+            competition_id: from_competition.id,
+            import_competition: "Import"
+          }
         }
       end
 
@@ -177,59 +210,87 @@ module Admin::ThemeFiles
     end
 
     test '#edit' do
-      get :edit, competition_id: @competition.id, id: @theme_file.id
+      get :edit, params: {
+        competition_id: @competition.id,
+        id: @theme_file.id
+      }
+
       assert_response :success
     end
 
     test "#edit requires permission" do
-      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
-      get :edit, competition_id: @competition.id, id: @theme_file.id
+      mock_login_policy(false)
+
+      get :edit, params: {
+        competition_id: @competition.id,
+        id: @theme_file.id
+      }
+
       assert_response :forbidden
     end
 
     test '#edit has back button to competition' do
-      get :edit, competition_id: @competition.id, id: @theme_file.id
+      get :edit, params: {
+        competition_id: @competition.id,
+        id: @theme_file.id
+      }
+
       url = admin_competition_theme_files_path(@competition, @theme_file)
       assert @response.body.include?(url)
     end
 
     test '#update' do
-      params = {
+      theme_params = {
         filename: 'foobar.html',
         content: 'foobar!'
       }
 
-      patch :update, competition_id: @competition.id, id: @theme_file.id, theme_file: params
+      patch :update, params: {
+        competition_id: @competition.id,
+        id: @theme_file.id,
+        theme_file: theme_params
+      }
 
       assert_redirected_to admin_competition_theme_files_path(@competition)
-      assert_attributes(params, @theme_file.reload)
+      assert_attributes(theme_params, @theme_file.reload)
     end
 
     test "#update requires permission" do
-      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+      mock_login_policy(false)
 
-      params = {
+      theme_params = {
         filename: 'foobar.html',
         content: 'foobar!'
       }
 
-      patch :update, competition_id: @competition.id, id: @theme_file.id, theme_file: params
+      patch :update, params: {
+        competition_id: @competition.id,
+        id: @theme_file.id,
+        theme_file: theme_params
+      }
+
       assert_response :forbidden
     end
 
     test '#destroy' do
       assert_difference('ThemeFile.count', -1) do
-        delete :destroy, competition_id: @competition.id, id: @theme_file.id
+        delete :destroy, params: {
+          competition_id: @competition.id,
+          id: @theme_file.id
+        }
       end
 
       assert_redirected_to admin_competition_theme_files_path(@competition)
     end
 
     test "#destroy requires permission" do
-      UserPolicy.any_instance.expects(:login?).with{ |competition| competition.id == @competition.id }.returns(false)
+      mock_login_policy(false)
 
       assert_no_difference 'ThemeFile.count' do
-        delete :destroy, competition_id: @competition.id, id: @theme_file.id
+        delete :destroy, params: {
+          competition_id: @competition.id,
+          id: @theme_file.id
+        }
       end
 
       assert_response :forbidden
@@ -237,21 +298,45 @@ module Admin::ThemeFiles
 
     test '#show_image' do
       theme_file = theme_files(:aachen_open_logo)
-      get :show_image, competition_id: theme_file.competition.id, id: theme_file.id
+
+      get :show_image, params: {
+        competition_id: theme_file.competition.id,
+        id: theme_file.id
+      }
+
       assert_response :ok
     end
 
     test "#show_image requires permission" do
       theme_file = theme_files(:aachen_open_logo)
-      competition = theme_file.competition
-      UserPolicy.any_instance.expects(:login?).with{ |c| c.id == competition.id }.returns(false)
-      get :show_image, competition_id: competition.id, id: theme_file.id
+      @competition = theme_file.competition
+      mock_login_policy(false)
+
+      get :show_image, params: {
+        competition_id: @competition.id,
+        id: theme_file.id
+      }
+
       assert_response :forbidden
     end
 
     test '#show_image on a theme file that is not an image returns 404' do
-      get :show_image, competition_id: @competition.id, id: @theme_file.id
+      get :show_image, params: {
+        competition_id: @competition.id,
+        id: @theme_file.id
+      }
+
       assert_response :not_found
+    end
+
+    private
+
+    def mock_login_policy(value, compare_to_competition = @competition)
+      UserPolicy
+        .any_instance
+        .expects(:login?)
+        .with{ |competition| competition.id == compare_to_competition.id }
+        .returns(value)
     end
   end
 end

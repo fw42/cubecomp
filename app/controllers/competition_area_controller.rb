@@ -5,10 +5,10 @@ class CompetitionAreaController < ApplicationController
   before_action :load_locale_from_params
   before_action :load_theme_file
   before_action :load_layout_theme_file
-  skip_before_filter :verify_authenticity_token
+  skip_before_action :verify_authenticity_token
 
   def render_theme_file
-    render text: theme_file_renderer.render
+    render plain: theme_file_renderer.render
   end
 
   private

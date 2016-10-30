@@ -12,25 +12,28 @@ class Admin::CompetitorEmailControllerTest < ActionController::TestCase
   end
 
   test '#new' do
-    get :new, competition_id: @competition.id, id: @competitor.id
+    get :new, params: { competition_id: @competition.id, id: @competitor.id }
     assert_response :success
-    assert_not_nil assigns(:competitor)
-    assert_not_nil assigns(:email)
   end
 
   test '#new for locals' do
     @competitor.update_attributes(local: true)
-    get :new, competition_id: @competition.id, id: @competitor.id
+    get :new, params: { competition_id: @competition.id, id: @competitor.id }
     assert_response :success
   end
 
   test '#create sends an email' do
-    params = {
+    email_params = {
       "subject" => "[Aachen Open 2014] Welcome!",
       "content" => "Hello!"
     }
 
-    post :create, competition_id: @competition.id, id: @competitor.id, competitor_email: params
+    post :create, params: {
+      competition_id: @competition.id,
+      id: @competitor.id,
+      competitor_email: email_params
+    }
+
     assert_redirected_to admin_competition_competitors_path(@competition)
 
     emails = ActionMailer::Base.deliveries
@@ -39,18 +42,23 @@ class Admin::CompetitorEmailControllerTest < ActionController::TestCase
     assert_equal [@competitor.email], email.to
     assert_equal [Cubecomp::Application.config.email_address], email.from
     assert_equal [@competition.staff_email], email.reply_to
-    assert_equal params['subject'], email.subject
-    assert_equal params['content'], email.body.to_s
+    assert_equal email_params['subject'], email.subject
+    assert_equal email_params['content'], email.body.to_s
   end
 
   test '#create sends an email and cc the orga team' do
-    params = {
+    email_params = {
       "subject" => "[Aachen Open 2014] Welcome!",
       "content" => "Hello!"
     }
 
     @competition.update_attributes(cc_staff: true)
-    post :create, competition_id: @competition.id, id: @competitor.id, competitor_email: params
+
+    post :create, params: {
+      competition_id: @competition.id,
+      id: @competitor.id,
+      competitor_email: email_params
+    }
 
     emails = ActionMailer::Base.deliveries
     assert_equal 1, emails.size
@@ -59,13 +67,20 @@ class Admin::CompetitorEmailControllerTest < ActionController::TestCase
   end
 
   test '#create with activate confirms the competitor and sets confirmation_email_sent to true' do
-    params = {
+    email_params = {
       "subject" => "[Aachen Open 2014] Welcome!",
       "content" => "Hello!"
     }
 
     @competitor.update_attributes(state: 'new', confirmation_email_sent: false)
-    post :create, competition_id: @competition.id, id: @competitor.id, competitor_email: params, activate: 'activate'
+
+    post :create, params: {
+      competition_id: @competition.id,
+      id: @competitor.id,
+      competitor_email: email_params,
+      activate: 'activate'
+    }
+
     assert_redirected_to admin_competition_competitors_path(@competition)
     @competitor.reload
     assert_equal 'confirmed', @competitor.state
@@ -77,9 +92,11 @@ class Admin::CompetitorEmailControllerTest < ActionController::TestCase
 
     get :render_template,
       format: :json,
-      competition_id: @competition.id,
-      id: @competitor.id,
-      email_template_id: template.id
+      params: {
+        competition_id: @competition.id,
+        id: @competitor.id,
+        email_template_id: template.id
+      }
 
     response = JSON.parse(@response.body)
     assert_equal({

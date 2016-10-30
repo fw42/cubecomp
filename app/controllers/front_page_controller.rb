@@ -1,5 +1,5 @@
 class FrontPageController < ApplicationController
-  before_filter :redirect_to_proper_domain_and_protocol
+  before_action :redirect_to_proper_domain_and_protocol
 
   def index
     competitions = competitions_for_domain
