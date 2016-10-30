@@ -16,6 +16,16 @@ end
 class ActiveSupport::TestCase
   fixtures :all
 
+  setup :paperclip_fixtures
+
+  def paperclip_fixtures
+    from = Rails.root.join("test/fixtures/files/logo.png")
+    to = Rails.root.join("tmp/cubecomp/test/uploads/theme_files/images/623/173/363/original/logo.png")
+    return if File.exists?(to)
+    FileUtils.mkdir_p(File.dirname(to))
+    FileUtils.cp(from, to)
+  end
+
   def assert_not_valid(object, attribute)
     refute object.valid?, "record shouldn't be valid"
     assert_not_equal [], object.errors[attribute], 'record should have errors'
