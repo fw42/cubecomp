@@ -24,7 +24,7 @@ Metrics/ClassLength:
 Metrics/BlockLength:
   Exclude:
     - 'test/**/*'
-    - 'app/lib/tasks/*.rake'
+    - 'lib/tasks/*.rake'
 
 Metrics/AbcSize:
   Max: 23
