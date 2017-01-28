@@ -1,7 +1,8 @@
 #!/bin/sh
 # http://www.gotealeaf.com/blog/setting-up-your-production-server-with-nginx-and-unicorn
 
-APP_ROOT="$HOME/app/current"
+DIR="$(dirname "$0")"
+APP_ROOT="$DIR/.."
 RAILS_ENV=production
 PID=$APP_ROOT/tmp/unicorn.pid
 DESC="Cubecomp unicorn webserver ($RAILS_ENV)"

@@ -10,7 +10,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "RBENV_RUBY_VERSION=#{fetch(:rbenv_ruby)} #{current_path}/bin/unicorn-init.sh upgrade"
+      execute "RBENV_RUBY_VERSION=#{fetch(:rbenv_ruby)} #{current_path}/scripts/unicorn-init.sh upgrade"
     end
   end
 

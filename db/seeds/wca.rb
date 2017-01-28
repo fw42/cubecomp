@@ -11,6 +11,6 @@ password = config['password'] || ""
 dir = Rails.root.join("tmp", "wca").to_s
 Dir.mkdir(dir) unless File.exist?(dir)
 
-script = Rails.root.join("bin", "wca_db_update.sh").to_s
+script = Rails.root.join("scripts", "wca_db_update.sh").to_s
 
 system(script, database, username, password, dir)
