@@ -126,7 +126,7 @@ class EventTest < ActiveSupport::TestCase
 
   test 'end_time if length_in_minutes is nil' do
     @event.length_in_minutes = nil
-    assert_equal nil, @event.end_time
+    assert_nil @event.end_time
   end
 
   test '.with_max_number_of_registrations' do
@@ -153,7 +153,7 @@ class EventTest < ActiveSupport::TestCase
   test "#wca_handle returns nil if handle is unknown" do
     event = Event.new
     event.handle = 'foobar'
-    assert_equal nil, event.wca_handle
+    assert_nil event.wca_handle
   end
 
   test ".wca returns all events that have a valid wca handle or a handle that can be mapped to a wca handle" do

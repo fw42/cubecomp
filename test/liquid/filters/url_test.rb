@@ -21,7 +21,7 @@ class Liquid::Filters::UrlTest < ActiveSupport::TestCase
   end
 
   test '#image_tag for filename that does not exist returns nil' do
-    assert_equal nil, @filters.image_tag('does_not_exist.png')
+    assert_nil @filters.image_tag('does_not_exist.png')
   end
 
   test '#image_url' do
@@ -36,7 +36,7 @@ class Liquid::Filters::UrlTest < ActiveSupport::TestCase
   end
 
   test '#image_url returns nil if locale doesnt exist, even if non-localized filename exists' do
-    assert_equal nil, @filters.image_url('logo.en.png')
+    assert_nil @filters.image_url('logo.en.png')
   end
 
   test '#image_url prefers localized filename over exact filename' do
@@ -48,7 +48,7 @@ class Liquid::Filters::UrlTest < ActiveSupport::TestCase
   end
 
   test '#image_url for filename that does not exist returns nil' do
-    assert_equal nil, @filters.image_url('does_not_exist.png')
+    assert_nil @filters.image_url('does_not_exist.png')
   end
 
   test '#theme_file_url strips index.html' do

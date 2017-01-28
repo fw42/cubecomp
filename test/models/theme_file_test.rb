@@ -95,6 +95,6 @@ class ThemeFileTest < ActiveSupport::TestCase
     assert_equal 'css', ThemeFile.new(filename: 'foobar.css').extension
     assert_equal 'html', ThemeFile.new(filename: 'foobar.en.html').extension
     assert_equal 'css', ThemeFile.new(filename: 'foobar.en.css').extension
-    assert_equal nil, ThemeFile.new(filename: 'foobar').extension
+    assert_nil ThemeFile.new(filename: 'foobar').extension
   end
 end

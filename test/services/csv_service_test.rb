@@ -30,7 +30,7 @@ class CsvServiceTest < ActiveSupport::TestCase
     event.handle = '3x'
     event.save!
 
-    assert_equal nil, event.wca_handle
+    assert_nil event.wca_handle
 
     expected = "a,Florian Weingarten,Germany,2007WEIN01,1985-12-18,m,,1,0,1"
     assert_equal expected, service.competitor_to_csv(competitor)

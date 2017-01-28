@@ -131,7 +131,7 @@ class Admin::EventsControllerTest < ActionController::TestCase
 
     assert_events_equal from_day.reload.events, to_day.reload.events
     assert_redirected_to admin_competition_events_path(competition)
-    assert_equal nil, flash[:error]
+    assert_nil flash[:error]
     assert_equal "Events successfully imported.", flash[:notice]
   end
 
@@ -157,7 +157,7 @@ class Admin::EventsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to admin_competition_events_path(competition)
-    assert_equal nil, flash[:notice]
+    assert_nil flash[:notice]
 
     expected_error = "Events handle 4 has already been used by another event" \
       " of this competition that is also for registration"
