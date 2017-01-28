@@ -1,4 +1,5 @@
-#!/bin/sh
-export RBENV_RUBY_VERSION=2.3.1
+#!/bin/bash
 DIR="$(dirname "$0")"
-$DIR/unicorn-init.sh start > /dev/null
+source "$DIR/rails_env.sh"
+
+scripts/unicorn-init.sh start > /dev/null
