@@ -48,8 +48,8 @@ class CompetitionArea::CompetitorsController < CompetitionAreaController
 
   def render_theme_file_with_errors(competitor)
     load_theme_file
-    theme_file_renderer.default_locals[:@competitor] = competitor
-    theme_file_renderer.default_locals[:@return_to_path] = return_to_path
+    theme_file_renderer.default_locals[:competitor] = competitor
+    theme_file_renderer.default_locals[:return_to_path] = return_to_path
     render_theme_file
   end
 

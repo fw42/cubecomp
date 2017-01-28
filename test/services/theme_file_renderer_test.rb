@@ -162,7 +162,7 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
     r = renderer
     r.assigns[:thing] = error_drop.new
     @theme_file.content = '{{ thing.error }}'
-    assert_equal 'Liquid error: StandardError', r.render
+    assert_equal 'Liquid error: internal', r.render
   end
 
   test '#render uses locale' do
