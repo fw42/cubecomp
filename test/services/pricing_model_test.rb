@@ -45,7 +45,7 @@ class PricingModelTest < ActiveSupport::TestCase
 
   test "per_day_discounted #entrance_fee returns nil if coming on both days" do
     @competitor = competitors(:aachen_open_both_days_guest)
-    assert_equal nil, pricing('per_day_discounted').entrance_fee(@competitor.competition.days.first)
+    assert_nil pricing('per_day_discounted').entrance_fee(@competitor.competition.days.first)
   end
 
   test "per_day_discounted #entrance_fee_total returns sum of fees for days if not coming on all days" do
@@ -59,7 +59,7 @@ class PricingModelTest < ActiveSupport::TestCase
   end
 
   test "per_competition #entrance_fee returns nil" do
-    assert_equal nil, pricing('per_competition').entrance_fee(@competition.days.first)
+    assert_nil pricing('per_competition').entrance_fee(@competition.days.first)
   end
 
   test "per_competition total returns competitors fee if competing >= 1 day, even if guest on other day" do

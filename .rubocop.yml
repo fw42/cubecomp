@@ -42,7 +42,7 @@ Lint/UnusedBlockArgument:
   Enabled: false
 
 Lint/EndAlignment:
-  AlignWith: variable
+  EnforcedStyleAlignWith: variable
 
 Style/DoubleNegation:
   Enabled: false
@@ -132,3 +132,13 @@ Style/NumericPredicate:
 
 Style/MultilineMethodCallIndentation:
   EnforcedStyle: indented
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Security/YAMLLoad:
+  Exclude:
+    - 'test/**/*'
+
+Style/EmptyMethod:
+  Enabled: false

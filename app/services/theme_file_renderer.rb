@@ -29,8 +29,8 @@ class ThemeFileRenderer
 
   def default_locals
     @default_locals ||= {
-      :@theme_file => @theme_file,
-      :@competition => @competition
+      :theme_file => @theme_file,
+      :competition => @competition
     }
   end
 
@@ -62,7 +62,12 @@ class ThemeFileRenderer
     parsed_template.registers[:file_system] = self
     parsed_template.registers[:competition] = @competition
     parsed_template.registers[:locale] = @locale
-    parsed_template.render(assigns.stringify_keys)
+
+    if ENV['RAISE_LIQUID_ERRORS']
+      parsed_template.render!(assigns.stringify_keys)
+    else
+      parsed_template.render(assigns.stringify_keys)
+    end
   end
 
   def assign_strings
@@ -106,7 +111,7 @@ class ThemeFileRenderer
   def assign_news_view
     assigns[:news] = lambda do
       ViewDrop.new(template: 'news', controller: @controller, locals: {
-        :@news => @locale.news.order("time DESC")
+        :news => @locale.news.order("time DESC")
       })
     end
   end
@@ -114,7 +119,7 @@ class ThemeFileRenderer
   def assign_stats_view
     assigns[:stats] = lambda do
       ViewDrop.new(template: 'stats', controller: @controller, locals: {
-        :@stats => Highcharts.new(@competition)
+        :stats => Highcharts.new(@competition)
       })
     end
   end
@@ -131,8 +136,8 @@ class ThemeFileRenderer
         template: 'competitors',
         controller: @controller,
         locals: default_locals.reverse_merge({
-          :@competitors => competitors_for_view,
-          :@events => @competition.events.for_competitors_table.order(:handle)
+          :competitors => competitors_for_view,
+          :events => @competition.events.for_competitors_table.order(:handle)
         })
       )
     end
@@ -144,9 +149,9 @@ class ThemeFileRenderer
         template: 'registration_form',
         controller: @controller,
         locals: default_locals.reverse_merge({
-          :@competitor => @competition.competitors.new,
-          :@days => @competition.days.with_events.preload(:events),
-          :@return_to_path => @controller.request.fullpath
+          :competitor => @competition.competitors.new,
+          :days => @competition.days.with_events.preload(:events),
+          :return_to_path => @controller.request.fullpath
         })
       )
     end
@@ -158,12 +163,12 @@ class ThemeFileRenderer
     competitors = event ? event.competitors.confirmed.where.not(wca: nil).includes(:country) : []
 
     {
-      :@event => event,
-      :@events => events,
-      :@competitors => competitors,
-      :@singles => Wca::RanksSingle.for_event(competitors.map(&:wca), event.wca_handle),
-      :@averages => Wca::RanksAverage.for_event(competitors.map(&:wca), event.wca_handle),
-      :@sort_by => @controller.params[:sort_by]
+      :event => event,
+      :events => events,
+      :competitors => competitors,
+      :singles => Wca::RanksSingle.for_event(competitors.map(&:wca), event.wca_handle),
+      :averages => Wca::RanksAverage.for_event(competitors.map(&:wca), event.wca_handle),
+      :sort_by => @controller.params[:sort_by]
     }
   end
 

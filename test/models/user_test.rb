@@ -98,7 +98,7 @@ class UserTest < ActiveSupport::TestCase
     user.delegate = false
     user.save!
 
-    assert_equal nil, competition.reload.delegate_user_id
+    assert_nil competition.reload.delegate_user_id
   end
 
   test 'user version is incremented when password or email is changed' do

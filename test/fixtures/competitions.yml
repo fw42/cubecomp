@@ -2,7 +2,9 @@ aachen_open:
   name: Aachen Open 2014
   handle: ao14
   staff_email: cube@hackvalue.de
+  staff_name: Aachen Open team
   city_name: Aachen
+  venue_address: Aachen 123, Germany
   country: germany
   default_locale: aachen_open_german
   registration_open: true

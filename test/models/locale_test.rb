@@ -52,7 +52,7 @@ class LocaleTest < ActiveSupport::TestCase
     competition.save!
 
     @locale.destroy!
-    assert_equal nil, competition.reload.default_locale_id
+    assert_nil competition.reload.default_locale_id
   end
 
   test 'locales are a subset of available I18n locales' do
