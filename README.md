@@ -46,7 +46,7 @@ and send me a translated version of that for your language).
 
 ### Requirements
 
-* Ruby 2.0 or higher
+* Ruby 2.2 or higher
 * MySQL or SQLite
 * gem and bundler
 
