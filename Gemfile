@@ -8,7 +8,7 @@ gem 'coffee-rails'
 
 # Make sure that sb-admin-2 and jquery-nested-attributes still
 # work before version-bumping jQuery
-gem 'jquery-rails', '~> 4.1.1'
+gem 'jquery-rails', '~> 4.2.2'
 gem 'jquery-turbolinks'
 
 gem 'faraday'
@@ -32,7 +32,6 @@ group :test do
 end
 
 group :development do
-  # gem 'quiet_assets'
   gem 'letter_opener'
 end
 
@@ -49,10 +48,10 @@ group :development, :test do
 end
 
 group :deploy do
-  gem 'capistrano', '~> 3.4.0'
-  gem 'capistrano-rails', '~> 1.1.2'
-  gem 'capistrano-bundler', '~> 1.1.4'
-  gem 'capistrano-rbenv', '~> 2.0.3'
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rbenv'
 end
 
 group :production do
