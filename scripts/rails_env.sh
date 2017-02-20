@@ -5,6 +5,8 @@ export RBENV_RUBY_VERSION=2.4.0
 export RBENV_ROOT="$HOME/.rbenv"
 export PATH="$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH"
 
+RUBYOPT="$RUBYOPT -W0"
+
 rbenv rehash
 rbenv local $RBENV_RUBY_VERSION
 
