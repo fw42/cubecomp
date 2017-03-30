@@ -142,3 +142,12 @@ Security/YAMLLoad:
 
 Style/EmptyMethod:
   Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Style/EmptyLinesAroundExceptionHandlingKeywords:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false

@@ -14,14 +14,14 @@ class CsvService
   end
 
   def active_competitors
-    all_competitors.select do |competitor|
-      !competitor.event_registrations.reject(&:waiting).empty?
+    all_competitors.reject do |competitor|
+      competitor.event_registrations.reject(&:waiting).empty?
     end
   end
 
   def active_and_waiting
-    all_competitors.select do |competitor|
-      !competitor.event_registrations.empty?
+    all_competitors.reject do |competitor|
+      competitor.event_registrations.empty?
     end
   end
 
