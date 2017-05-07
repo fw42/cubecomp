@@ -1,3 +1,5 @@
+require 'resolv'
+
 class EmailDnsValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     return unless record.changes.key?(attribute)
