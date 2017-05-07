@@ -62,12 +62,16 @@
   <% end %>
 
   <%= form_section 'Other' do %>
-    <%= f.label :created_at, 'Registered on:' %>
-    <%= @competitor.created_at %>
+    <p>
+      <%= f.label :created_at, 'Registered on:' %>
+      <%= @competitor.created_at %>
+    </p>
 
     <% if @competitor.remote_ip.present? %>
-      <%= f.label :remote_ip, 'Registered from IP address:' %>
-      <%= @competitor.remote_ip %>
+      <p>
+        <%= f.label :remote_ip, 'Registered from IP address:' %>
+        <%= @competitor.remote_ip %>
+      </p>
     <% end %>
   <% end %>
 
