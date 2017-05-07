@@ -55,7 +55,7 @@ group :deploy do
 end
 
 group :production do
-  gem 'unicorn'
+  gem 'unicorn', '5.2.0'
   gem 'therubyracer'
   gem 'exception_notification'
 end
