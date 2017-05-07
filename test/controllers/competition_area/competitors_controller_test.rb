@@ -58,6 +58,7 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
     assert_equal @new_competitor_params[:"birthday(1i)"].to_i, bob.birthday.year
     assert_equal @new_competitor_params[:"birthday(2i)"].to_i, bob.birthday.month
     assert_equal @new_competitor_params[:"birthday(3i)"].to_i, bob.birthday.day
+    assert_equal "0.0.0.0", bob.remote_ip
   end
 
   test "#create renders forbidden if competition registration is closed" do

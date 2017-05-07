@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,216 +10,204 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816231341) do
+ActiveRecord::Schema.define(version: 20170507160112) do
 
-  create_table "competitions", force: :cascade do |t|
-    t.string   "name",                     limit: 255,                                            null: false
-    t.string   "handle",                   limit: 255,                                            null: false
-    t.string   "staff_email",              limit: 255,                                            null: false
-    t.string   "staff_name",               limit: 255
-    t.string   "city_name",                limit: 255,                                            null: false
-    t.string   "city_name_short",          limit: 255
-    t.text     "venue_address",            limit: 65535
-    t.integer  "country_id",               limit: 4,                                              null: false
-    t.boolean  "cc_staff",                                                        default: false
-    t.boolean  "registration_open",                                               default: false
+  create_table "competitions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.string "name", null: false
+    t.string "handle", null: false
+    t.string "staff_email", null: false
+    t.string "staff_name"
+    t.string "city_name", null: false
+    t.string "city_name_short"
+    t.text "venue_address"
+    t.integer "country_id", null: false
+    t.boolean "cc_staff", default: false
+    t.boolean "registration_open", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "delegate_user_id",         limit: 4
-    t.integer  "owner_user_id",            limit: 4
-    t.integer  "default_locale_id",        limit: 4
-    t.string   "currency",                 limit: 255
-    t.boolean  "published",                                                       default: false
-    t.decimal  "entrance_fee_competitors",               precision: 10, scale: 2, default: 0.0,   null: false
-    t.decimal  "entrance_fee_guests",                    precision: 10, scale: 2, default: 0.0,   null: false
-    t.string   "pricing_model",            limit: 255,                                            null: false
-    t.string   "custom_domain",            limit: 255
-    t.boolean  "custom_domain_force_ssl",                                         default: false
+    t.integer "delegate_user_id"
+    t.integer "owner_user_id"
+    t.integer "default_locale_id"
+    t.string "currency"
+    t.boolean "published", default: false
+    t.decimal "entrance_fee_competitors", precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal "entrance_fee_guests", precision: 10, scale: 2, default: "0.0", null: false
+    t.string "pricing_model", null: false
+    t.string "custom_domain"
+    t.boolean "custom_domain_force_ssl", default: false
+    t.index ["country_id"], name: "competitions_country_id_fk"
+    t.index ["default_locale_id"], name: "index_competitions_on_default_locale_id", unique: true
+    t.index ["delegate_user_id"], name: "competitions_delegate_user_id_fk"
+    t.index ["handle"], name: "index_competitions_on_handle", unique: true
+    t.index ["name"], name: "index_competitions_on_name", unique: true
+    t.index ["owner_user_id"], name: "competitions_owner_user_id_fk"
   end
 
-  add_index "competitions", ["country_id"], name: "competitions_country_id_fk", using: :btree
-  add_index "competitions", ["default_locale_id"], name: "index_competitions_on_default_locale_id", unique: true, using: :btree
-  add_index "competitions", ["delegate_user_id"], name: "competitions_delegate_user_id_fk", using: :btree
-  add_index "competitions", ["handle"], name: "index_competitions_on_handle", unique: true, using: :btree
-  add_index "competitions", ["name"], name: "index_competitions_on_name", unique: true, using: :btree
-  add_index "competitions", ["owner_user_id"], name: "competitions_owner_user_id_fk", using: :btree
-
-  create_table "competitors", force: :cascade do |t|
-    t.integer  "competition_id",          limit: 4,                     null: false
-    t.string   "first_name",              limit: 255,                   null: false
-    t.string   "last_name",               limit: 255,                   null: false
-    t.string   "wca",                     limit: 255
-    t.string   "email",                   limit: 255,                   null: false
-    t.date     "birthday"
-    t.integer  "country_id",              limit: 4,                     null: false
-    t.boolean  "local",                                 default: false
-    t.boolean  "staff",                                 default: false
-    t.text     "user_comment",            limit: 65535
-    t.text     "admin_comment",           limit: 65535
-    t.boolean  "free_entrance",                         default: false
-    t.text     "free_entrance_reason",    limit: 65535
-    t.string   "state",                   limit: 255
-    t.boolean  "confirmation_email_sent",               default: false
-    t.boolean  "paid",                                  default: false
-    t.text     "paid_comment",            limit: 65535
+  create_table "competitors", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer "competition_id", null: false
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "wca"
+    t.string "email", null: false
+    t.date "birthday"
+    t.integer "country_id", null: false
+    t.boolean "local", default: false
+    t.boolean "staff", default: false
+    t.text "user_comment"
+    t.text "admin_comment"
+    t.boolean "free_entrance", default: false
+    t.text "free_entrance_reason"
+    t.string "state"
+    t.boolean "confirmation_email_sent", default: false
+    t.boolean "paid", default: false
+    t.text "paid_comment"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "male"
-    t.text     "nametag",                 limit: 65535
+    t.boolean "male"
+    t.text "nametag"
+    t.string "remote_ip"
+    t.index ["competition_id"], name: "index_competitors_on_competition_id"
+    t.index ["country_id"], name: "competitors_country_id_fk"
+    t.index ["remote_ip", "competition_id"], name: "index_competitors_on_remote_ip_and_competition_id"
+    t.index ["wca", "competition_id"], name: "index_competitors_on_wca_and_competition_id", unique: true
   end
 
-  add_index "competitors", ["competition_id"], name: "index_competitors_on_competition_id", using: :btree
-  add_index "competitors", ["country_id"], name: "competitors_country_id_fk", using: :btree
-  add_index "competitors", ["wca", "competition_id"], name: "index_competitors_on_wca_and_competition_id", unique: true, using: :btree
-
-  create_table "countries", force: :cascade do |t|
-    t.string   "name",       limit: 255, null: false
+  create_table "countries", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.string "name", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["name"], name: "index_countries_on_name", unique: true
   end
 
-  add_index "countries", ["name"], name: "index_countries_on_name", unique: true, using: :btree
-
-  create_table "day_registrations", force: :cascade do |t|
-    t.integer  "competition_id", limit: 4, null: false
-    t.integer  "competitor_id",  limit: 4, null: false
-    t.integer  "day_id",         limit: 4, null: false
+  create_table "day_registrations", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer "competition_id", null: false
+    t.integer "competitor_id", null: false
+    t.integer "day_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["competition_id"], name: "day_registrations_competition_id_fk"
+    t.index ["competitor_id", "day_id"], name: "index_day_registrations_on_competitor_id_and_day_id", unique: true
+    t.index ["day_id"], name: "day_registrations_day_id_fk"
   end
 
-  add_index "day_registrations", ["competition_id"], name: "day_registrations_competition_id_fk", using: :btree
-  add_index "day_registrations", ["competitor_id", "day_id"], name: "index_day_registrations_on_competitor_id_and_day_id", unique: true, using: :btree
-  add_index "day_registrations", ["day_id"], name: "day_registrations_day_id_fk", using: :btree
-
-  create_table "days", force: :cascade do |t|
-    t.integer  "competition_id",           limit: 4,                          null: false
-    t.date     "date",                                                        null: false
+  create_table "days", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer "competition_id", null: false
+    t.date "date", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "entrance_fee_competitors",           precision: 10, scale: 2, null: false
-    t.decimal  "entrance_fee_guests",                precision: 10, scale: 2, null: false
+    t.decimal "entrance_fee_competitors", precision: 10, scale: 2, null: false
+    t.decimal "entrance_fee_guests", precision: 10, scale: 2, null: false
+    t.index ["competition_id"], name: "index_days_on_competition_id"
+    t.index ["date", "competition_id"], name: "index_days_on_date_and_competition_id", unique: true
   end
 
-  add_index "days", ["competition_id"], name: "index_days_on_competition_id", using: :btree
-  add_index "days", ["date", "competition_id"], name: "index_days_on_date_and_competition_id", unique: true, using: :btree
-
-  create_table "email_templates", force: :cascade do |t|
-    t.integer  "competition_id", limit: 4,     null: false
-    t.string   "name",           limit: 255,   null: false
-    t.text     "content",        limit: 65535, null: false
+  create_table "email_templates", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer "competition_id", null: false
+    t.string "name", null: false
+    t.text "content", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "subject",        limit: 255
+    t.string "subject"
+    t.index ["competition_id", "name"], name: "index_email_templates_on_competition_id_and_name", unique: true
   end
 
-  add_index "email_templates", ["competition_id", "name"], name: "index_email_templates_on_competition_id_and_name", unique: true, using: :btree
-
-  create_table "event_registrations", force: :cascade do |t|
-    t.integer  "competition_id", limit: 4,                 null: false
-    t.integer  "event_id",       limit: 4,                 null: false
-    t.integer  "competitor_id",  limit: 4,                 null: false
+  create_table "event_registrations", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer "competition_id", null: false
+    t.integer "event_id", null: false
+    t.integer "competitor_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "waiting",                  default: false, null: false
+    t.boolean "waiting", default: false, null: false
+    t.index ["competition_id"], name: "index_event_registrations_on_competition_id"
+    t.index ["competitor_id", "event_id"], name: "index_event_registrations_on_competitor_id_and_event_id", unique: true
+    t.index ["event_id"], name: "event_registrations_event_id_fk"
   end
 
-  add_index "event_registrations", ["competition_id"], name: "index_event_registrations_on_competition_id", using: :btree
-  add_index "event_registrations", ["competitor_id", "event_id"], name: "index_event_registrations_on_competitor_id_and_event_id", unique: true, using: :btree
-  add_index "event_registrations", ["event_id"], name: "event_registrations_event_id_fk", using: :btree
-
-  create_table "events", force: :cascade do |t|
-    t.integer  "competition_id",              limit: 4,   null: false
-    t.integer  "day_id",                      limit: 4,   null: false
-    t.string   "name",                        limit: 255, null: false
-    t.string   "handle",                      limit: 255
-    t.string   "state",                       limit: 255, null: false
-    t.integer  "max_number_of_registrations", limit: 4
-    t.time     "start_time",                              null: false
-    t.integer  "length_in_minutes",           limit: 4
-    t.string   "timelimit",                   limit: 255
-    t.string   "format",                      limit: 255
-    t.string   "round",                       limit: 255
-    t.string   "proceed",                     limit: 255
+  create_table "events", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer "competition_id", null: false
+    t.integer "day_id", null: false
+    t.string "name", null: false
+    t.string "handle"
+    t.string "state", null: false
+    t.integer "max_number_of_registrations"
+    t.time "start_time", null: false
+    t.integer "length_in_minutes"
+    t.string "timelimit"
+    t.string "format"
+    t.string "round"
+    t.string "proceed"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["competition_id"], name: "index_events_on_competition_id"
+    t.index ["day_id"], name: "events_day_id_fk"
   end
 
-  add_index "events", ["competition_id"], name: "index_events_on_competition_id", using: :btree
-  add_index "events", ["day_id"], name: "events_day_id_fk", using: :btree
-
-  create_table "locales", force: :cascade do |t|
-    t.string   "handle",         limit: 255, null: false
+  create_table "locales", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.string "handle", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "competition_id", limit: 4,   null: false
+    t.integer "competition_id", null: false
+    t.index ["competition_id"], name: "index_locales_on_competition_id"
+    t.index ["handle", "competition_id"], name: "index_locales_on_handle_and_competition_id", unique: true
   end
 
-  add_index "locales", ["competition_id"], name: "index_locales_on_competition_id", using: :btree
-  add_index "locales", ["handle", "competition_id"], name: "index_locales_on_handle_and_competition_id", unique: true, using: :btree
-
-  create_table "news", force: :cascade do |t|
-    t.integer  "competition_id", limit: 4,     null: false
-    t.datetime "time",                         null: false
-    t.text     "text",           limit: 65535, null: false
+  create_table "news", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer "competition_id", null: false
+    t.datetime "time", null: false
+    t.text "text", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "locale_id",      limit: 4,     null: false
+    t.integer "locale_id", null: false
+    t.index ["competition_id"], name: "index_news_on_competition_id"
+    t.index ["locale_id"], name: "news_locale_id_fk"
   end
 
-  add_index "news", ["competition_id"], name: "index_news_on_competition_id", using: :btree
-  add_index "news", ["locale_id"], name: "news_locale_id_fk", using: :btree
-
-  create_table "permissions", force: :cascade do |t|
-    t.integer  "competition_id", limit: 4, null: false
-    t.integer  "user_id",        limit: 4, null: false
+  create_table "permissions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer "competition_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["competition_id", "user_id"], name: "index_permissions_on_competition_id_and_user_id"
+    t.index ["user_id", "competition_id"], name: "index_permissions_on_user_id_and_competition_id", unique: true
   end
 
-  add_index "permissions", ["competition_id", "user_id"], name: "index_permissions_on_competition_id_and_user_id", using: :btree
-  add_index "permissions", ["user_id", "competition_id"], name: "index_permissions_on_user_id_and_competition_id", unique: true, using: :btree
-
-  create_table "theme_files", force: :cascade do |t|
-    t.integer  "competition_id",     limit: 4
+  create_table "theme_files", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.integer "competition_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "content",            limit: 65535
-    t.string   "filename",           limit: 255,   null: false
-    t.string   "image_content_type", limit: 255
-    t.integer  "image_file_size",    limit: 4
+    t.text "content"
+    t.string "filename", null: false
+    t.string "image_content_type"
+    t.integer "image_file_size"
     t.datetime "image_updated_at"
-    t.integer  "theme_id",           limit: 4
+    t.integer "theme_id"
+    t.index ["competition_id"], name: "theme_files_competition_id_fk"
+    t.index ["filename", "competition_id"], name: "index_theme_files_on_filename_and_competition_id", unique: true
+    t.index ["theme_id", "filename"], name: "index_theme_files_on_theme_id_and_filename", unique: true
   end
 
-  add_index "theme_files", ["competition_id"], name: "theme_files_competition_id_fk", using: :btree
-  add_index "theme_files", ["filename", "competition_id"], name: "index_theme_files_on_filename_and_competition_id", unique: true, using: :btree
-  add_index "theme_files", ["theme_id", "filename"], name: "index_theme_files_on_theme_id_and_filename", unique: true, using: :btree
-
-  create_table "themes", force: :cascade do |t|
-    t.string   "name",       limit: 255, null: false
+  create_table "themes", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.string "name", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["name"], name: "index_themes_on_name", unique: true
   end
 
-  add_index "themes", ["name"], name: "index_themes_on_name", unique: true, using: :btree
-
-  create_table "users", force: :cascade do |t|
-    t.string   "email",            limit: 255
+  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.string "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "password_digest",  limit: 255
-    t.string   "first_name",       limit: 255,                   null: false
-    t.string   "last_name",        limit: 255,                   null: false
-    t.boolean  "delegate",                       default: false
-    t.integer  "permission_level", limit: 4,                     null: false
-    t.text     "address",          limit: 65535
-    t.integer  "version",          limit: 4,     default: 0,     null: false
-    t.boolean  "active",                         default: true,  null: false
-    t.string   "wca",              limit: 255
+    t.string "password_digest"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.boolean "delegate", default: false
+    t.integer "permission_level", null: false
+    t.text "address"
+    t.integer "version", default: 0, null: false
+    t.boolean "active", default: true, null: false
+    t.string "wca"
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
   add_foreign_key "competitions", "countries", name: "competitions_country_id_fk"
   add_foreign_key "competitions", "locales", column: "default_locale_id", name: "competitions_default_locale_id_fk"
