@@ -9,7 +9,7 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
       wca: "2015BOB01",
       first_name: "Bob",
       last_name: "Bobsen",
-      email: "bob@bobsen.com",
+      email: "bob@cubecomp.de",
       :"birthday(2i)" => "2",
       :"birthday(3i)" => "2",
       :"birthday(1i)" => "1997",
@@ -194,11 +194,12 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
           return_to_path: '/foo/',
           locale: @locale.handle
         }
+
+        assert_response :redirect
+        assert_redirected_to '/foo/'
       end
     end
 
-    assert_response :redirect
-    assert_redirected_to '/foo/'
     assert_equal true, @competition.competitors.last.event_registrations.first.waiting
   end
 end

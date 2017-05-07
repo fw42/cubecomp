@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
   private
 
   def nullify_competition_delegate_user_ids
-    return unless changed_attributes[:delegate] && !delegate
+    return unless saved_change_to_delegate? && !delegate
     delegating_competitions.each do |competition|
       competition.update_attributes(delegate_user_id: nil)
     end
