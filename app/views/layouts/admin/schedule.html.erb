@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title><%= day.date.strftime("%A") %> - <%= current_competition.name %></title>
+    <title><%= @day.date.strftime("%A") %> - <%= current_competition.name %></title>
     <%= stylesheet_link_tag 'admin/schedule', media: 'all' %>
   </head>
 

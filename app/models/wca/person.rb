@@ -3,7 +3,7 @@ class Wca::Person < ActiveRecord::Base
   self.table_name = "Persons"
   self.primary_key = "id"
 
-  has_many :results, class_name: Wca::Result, foreign_key: "personID"
+  has_many :results, class_name: 'Wca::Result', foreign_key: "personID"
 
   def self.query(query)
     where("id LIKE ?", "#{query}%")
