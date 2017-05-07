@@ -24,6 +24,7 @@ class CompetitionArea::CompetitorsController < CompetitionAreaController
   def create
     competitor = @competition.competitors.new
     competitor.attributes = competitor_params.except(:days)
+    competitor.remote_ip = request.remote_ip
 
     RegistrationService.new(competitor).apply_registration_params(competitor_params[:days])
 

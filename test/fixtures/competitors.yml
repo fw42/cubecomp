@@ -8,6 +8,7 @@ flo_aachen_open:
   country: germany
   male: true
   state: confirmed
+  remote_ip: 123.123.123.123
 
 aachen_open_day_one_guest:
   competition: aachen_open
@@ -17,6 +18,7 @@ aachen_open_day_one_guest:
   birthday: 2000-01-01
   country: germany
   male: true
+  remote_ip: 1.2.3.4
 
 aachen_open_both_days_guest:
   competition: aachen_open

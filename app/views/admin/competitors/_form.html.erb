@@ -64,6 +64,11 @@
   <%= form_section 'Other' do %>
     <%= f.label :created_at, 'Registered on:' %>
     <%= @competitor.created_at %>
+
+    <% if @competitor.remote_ip.present? %>
+      <%= f.label :remote_ip, 'Registered from IP address:' %>
+      <%= @competitor.remote_ip %>
+    <% end %>
   <% end %>
 
   <%= form_section 'Options' do %>
