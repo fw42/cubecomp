@@ -65,10 +65,10 @@ Style/BracesAroundHashParameters:
 Style/NumericLiterals:
   Enabled: false
 
-Style/SpaceInsideBrackets:
+Layout/SpaceInsideBrackets:
   Enabled: false
 
-Style/SpaceBeforeBlockBraces:
+Layout/SpaceBeforeBlockBraces:
   Enabled: false
 
 Style/AccessorMethodName:
@@ -87,20 +87,20 @@ Style/TrailingCommaInArguments:
 Style/TrailingCommaInLiteral:
   Enabled: false
 
-Style/TrailingWhitespace:
+Layout/TrailingWhitespace:
   Exclude:
     - 'test/services/email_template_renderer_test.rb'
 
-Style/IndentHash:
+Layout/IndentHash:
   EnforcedStyle: consistent
 
 Style/FormatString:
   Enabled: false
 
-Style/AlignParameters:
+Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
-Style/MultilineOperationIndentation:
+Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 
 Style/IfUnlessModifier:
@@ -124,13 +124,13 @@ Performance/Count:
 Lint/FormatParameterMismatch:
   Enabled: false
 
-Style/ExtraSpacing:
+Layout/ExtraSpacing:
   Enabled: false
 
 Style/NumericPredicate:
   Enabled: false
 
-Style/MultilineMethodCallIndentation:
+Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
 Bundler/OrderedGems:
@@ -146,8 +146,11 @@ Style/EmptyMethod:
 Lint/AmbiguousBlockAssociation:
   Enabled: false
 
-Style/EmptyLinesAroundExceptionHandlingKeywords:
+Layout/EmptyLinesAroundExceptionHandlingKeywords:
   Enabled: false
 
 Style/SymbolArray:
+  Enabled: false
+
+Style/MultipleComparison:
   Enabled: false
