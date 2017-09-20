@@ -31,7 +31,7 @@ $(document).ready ->
   auto.bind "typeahead:selected", (event, object) ->
     names = object.name.split(" ")
     firstName = names[0]
-    lastName = names[1]
+    lastName = names.slice(1, names.length).join(" ")
     country = object.countryId
     gender = object.gender
 
