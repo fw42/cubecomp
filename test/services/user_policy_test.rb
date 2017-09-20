@@ -47,16 +47,16 @@ class UserPolicyTest < ActiveSupport::TestCase
 
   test 'change_permission_level_to? is false if user is self' do
     [ @regular, @admin, @superadmin ].each do |user|
-      User::PERMISSION_LEVELS.values.each do |level|
+      User::PERMISSION_LEVELS.each_value do |level|
         refute user.policy.change_permission_level_to?(user, level)
       end
     end
   end
 
   test "change_permission_level_to? is true iff level is lower than current user's level" do
-    User::PERMISSION_LEVELS.values.each do |level1|
+    User::PERMISSION_LEVELS.each_value do |level1|
       user1 = User.new(permission_level: level1)
-      User::PERMISSION_LEVELS.values.each do |level2|
+      User::PERMISSION_LEVELS.each_value do |level2|
         user2 = User.new
         assert_equal(level2 < level1, user1.policy.change_permission_level_to?(user2, level2))
       end
@@ -65,7 +65,7 @@ class UserPolicyTest < ActiveSupport::TestCase
 
   test "user can't change their own permission level, not even lower it" do
     [ @regular, @admin, @superadmin ].each do |user|
-      User::PERMISSION_LEVELS.values.each do |level|
+      User::PERMISSION_LEVELS.each_value do |level|
         assert_equal false, user.policy.change_permission_level_to?(user, level)
       end
     end
@@ -114,9 +114,9 @@ class UserPolicyTest < ActiveSupport::TestCase
   end
 
   def assert_true_iff_permission_level_higher(method_name, *args)
-    User::PERMISSION_LEVELS.values.each do |level1|
+    User::PERMISSION_LEVELS.each_value do |level1|
       user1 = User.new(permission_level: level1)
-      User::PERMISSION_LEVELS.values.each do |level2|
+      User::PERMISSION_LEVELS.each_value do |level2|
         user2 = User.new(permission_level: level2)
 
         allowed = user1.policy.public_send(method_name, user2, *args)

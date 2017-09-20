@@ -154,3 +154,6 @@ Style/SymbolArray:
 
 Style/MultipleComparison:
   Enabled: false
+
+Performance/HashEachMethods:
+  Enabled: false
