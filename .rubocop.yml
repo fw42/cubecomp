@@ -65,15 +65,15 @@ Style/BracesAroundHashParameters:
 Style/NumericLiterals:
   Enabled: false
 
-Layout/SpaceInsideBrackets:
-  Enabled: false
-
 Layout/SpaceBeforeBlockBraces:
   Enabled: false
 
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Exclude:
     - 'app/controllers/**/*'
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: false
 
 Style/Documentation:
   Enabled: false
@@ -157,3 +157,9 @@ Style/MultipleComparison:
 
 Performance/HashEachMethods:
   Enabled: false
+
+Layout/EmptyLinesAroundArguments:
+  Enabled: false
+
+Style/FormatStringToken:
+  EnforcedStyle: unannotated

@@ -78,7 +78,7 @@ class LocaleTest < ActiveSupport::TestCase
 
   def strip_values(hash)
     if hash.is_a?(Hash)
-      Hash[hash.map{ |k, v| [ k, strip_values(v) ] }]
+      Hash[hash.map{ |k, v| [k, strip_values(v)] }]
     elsif hash.is_a?(Array)
       hash.map{ |value| strip_values(value) }
     end
