@@ -41,5 +41,6 @@ $(document).ready ->
       $(this).html().toLowerCase() == country.toLowerCase()
     ).attr("selected", "selected")
     switch gender
-      when "m" then $("#competitor_male_true").attr("checked", "checked")
-      when "f" then $("#competitor_male_false").attr("checked", "checked")
+      when "m" then $("#competitor_gender").val("male")
+      when "f" then $("#competitor_gender").val("female")
+      when "o" then $("#competitor_gender").val("other")

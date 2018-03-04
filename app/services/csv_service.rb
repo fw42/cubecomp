@@ -70,7 +70,7 @@ class CsvService
       competitor.country.name,
       competitor.wca,
       competitor.birthday.strftime('%Y-%m-%d'),
-      competitor.male? ? 'm' : 'f',
+      competitor.gender && competitor.gender.first,
       ''
     ]
   end

@@ -46,13 +46,8 @@
         </td>
       </tr>
       <tr>
-        <td><%= f.label :male, 'Gender:' %></td>
-        <td>
-          <%= f.radio_button :male, true %>
-          <%= f.label :male, 'male', value: true, class: 'checkbox' %>
-          <%= f.radio_button :male, false %>
-          <%= f.label :male, 'female', value: false, class: 'checkbox' %>
-        </td>
+        <td><%= f.label :gender, 'Gender:' %></td>
+        <td><%= f.select :gender, Competitor::GENDERS %></td>
       </tr>
       <tr>
         <td><%= f.label :nametag, 'Nametag:' %></td>

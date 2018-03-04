@@ -16,7 +16,7 @@ class Admin::CompetitorsController < AdminController
     :free_entrance_reason,
     :paid,
     :paid_comment,
-    :male,
+    :gender,
     :state,
     :nametag,
     :confirmation_email_sent,

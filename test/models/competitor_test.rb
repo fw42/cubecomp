@@ -132,19 +132,35 @@ class CompetitorTest < ActiveSupport::TestCase
     end
   end
 
-  test 'male is unspecified by default on new instances' do
+  test 'gender is unspecified by default on new instances' do
     competitor = Competitor.new
-    assert_nil competitor.male
+    assert_nil competitor.gender
   end
 
-  test 'validates that male boolean is specified and not nil' do
-    @competitor.male = nil
-    assert_not_valid(@competitor, :male)
+  test 'validates that gender is specified and not nil' do
+    @competitor.gender = nil
+    refute @competitor.male?
+    refute @competitor.female?
+    assert_not_valid(@competitor, :gender)
 
-    @competitor.male = true
+    @competitor.gender = 'dog'
+    refute @competitor.male?
+    refute @competitor.female?
+    assert_not_valid(@competitor, :gender)
+
+    @competitor.gender = 'male'
+    assert @competitor.male?
+    refute @competitor.female?
     assert_valid(@competitor)
 
-    @competitor.male = 'true'
+    @competitor.gender = 'female'
+    refute @competitor.male?
+    assert @competitor.female?
+    assert_valid(@competitor)
+
+    @competitor.gender = 'other'
+    refute @competitor.male?
+    refute @competitor.female?
     assert_valid(@competitor)
   end
 

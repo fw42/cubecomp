@@ -25,7 +25,7 @@ fr:
         birthday: "Date de naissance"
         country: "Pays"
         citizen_of: "Citoyen de"
-        male: "Sexe"
+        gender: "Sexe"
         user_comment: "Commentaire"
     errors:
       messages:
@@ -41,7 +41,7 @@ fr:
               inclusion: "n'est pas complet"
             mail:
               invalid: "L'adresse est invalide"
-            male:
+            gender:
               inclusion: "n'est pas indiquée"
 
   information:
@@ -96,9 +96,12 @@ fr:
     newcomer: "Novice"
     non-newcomer: "Non-novice"
 
+  genders:
+    male: "Homme"
+    female: "Femme"
+    other: "Autre"
+
   misc:
-    male: "masculin"
-    female: "féminin"
     designed_by: "Design par"
 
   comparison:

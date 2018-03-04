@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170709195655) do
+ActiveRecord::Schema.define(version: 20180304135200) do
 
   create_table "competitions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "name", null: false
@@ -63,9 +63,9 @@ ActiveRecord::Schema.define(version: 20170709195655) do
     t.text "paid_comment"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean "male"
     t.text "nametag"
     t.string "remote_ip"
+    t.string "gender", null: false
     t.index ["competition_id"], name: "index_competitors_on_competition_id"
     t.index ["country_id"], name: "competitors_country_id_fk"
     t.index ["remote_ip", "competition_id"], name: "index_competitors_on_remote_ip_and_competition_id"

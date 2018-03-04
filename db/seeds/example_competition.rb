@@ -60,7 +60,7 @@ def create_competitor(competition)
     birthday: Date.today - 10.years - rand(50*365).days,
     state: Competitor::STATES.sample,
     country: Country.all.to_a.sample,
-    male: rand(2) == 0,
+    gender: Competitor::GENDERS.sample,
     staff: rand < 0.1,
     local: rand < 0.2,
     paid: rand < 0.2

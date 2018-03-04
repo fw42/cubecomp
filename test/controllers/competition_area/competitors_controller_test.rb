@@ -15,7 +15,7 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
       :"birthday(1i)" => "1997",
       country_id: countries(:germany).id,
       local: true,
-      male: true,
+      gender: 'male',
       user_comment: "awesomesauce",
       days: {
         days(:aachen_open_day_one).id.to_s => {
