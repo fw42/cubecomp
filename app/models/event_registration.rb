@@ -17,7 +17,7 @@ class EventRegistration < ActiveRecord::Base
   scope :waiting, ->{ where(waiting: true) }
 
   def to_liquid
-    @liquid_drop ||= EventRegistrationDrop.new(self)
+    @to_liquid ||= EventRegistrationDrop.new(self)
   end
 
   private

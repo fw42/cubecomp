@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
   end
 
   def to_liquid
-    @liquid_drop ||= UserDrop.new(self)
+    @to_liquid ||= UserDrop.new(self)
   end
 
   def session_data

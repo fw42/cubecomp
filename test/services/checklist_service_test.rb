@@ -53,7 +53,7 @@ class ChecklistServiceTest < ActiveSupport::TestCase
     assert_equal competition.days.to_a.sum(&:entrance_fee_guests), service.entrance_fee
 
     competition.pricing_model = 'per_competition'
-    assert_equal BigDecimal.new(100), service.entrance_fee
+    assert_equal BigDecimal(100), service.entrance_fee
   end
 
   private

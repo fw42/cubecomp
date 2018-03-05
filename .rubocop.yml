@@ -41,7 +41,7 @@ Lint/AssignmentInCondition:
 Lint/UnusedBlockArgument:
   Enabled: false
 
-Lint/EndAlignment:
+Layout/EndAlignment:
   EnforcedStyleAlignWith: variable
 
 Style/DoubleNegation:
@@ -84,7 +84,10 @@ Style/ClassAndModuleChildren:
 Style/TrailingCommaInArguments:
   Enabled: false
 
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
   Enabled: false
 
 Layout/TrailingWhitespace:
@@ -153,9 +156,6 @@ Style/SymbolArray:
   Enabled: false
 
 Style/MultipleComparison:
-  Enabled: false
-
-Performance/HashEachMethods:
   Enabled: false
 
 Layout/EmptyLinesAroundArguments:

@@ -89,7 +89,7 @@ class Competition < ActiveRecord::Base
   end
 
   def to_liquid
-    @liquid_drop ||= CompetitionDrop.new(self)
+    @to_liquid ||= CompetitionDrop.new(self)
   end
 
   def potential_owners

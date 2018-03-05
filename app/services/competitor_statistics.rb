@@ -1,23 +1,23 @@
 class CompetitorStatistics
-  def initialize(competition, n = 10)
+  def initialize(competition, count = 10)
     @competition = competition
-    @n = n
+    @count = count
   end
 
   def oldest
-    competing_competitors.sort_by(&:age).reverse.slice(0, @n)
+    competing_competitors.sort_by(&:age).reverse.slice(0, @count)
   end
 
   def youngest
-    competing_competitors.sort_by(&:age).slice(0, @n)
+    competing_competitors.sort_by(&:age).slice(0, @count)
   end
 
   def events
-    competing_competitors.sort_by{ |c| c.event_registrations.size }.reverse.slice(0, @n)
+    competing_competitors.sort_by{ |c| c.event_registrations.size }.reverse.slice(0, @count)
   end
 
   def countries
-    competing_competitors.group_by(&:country).to_a.sort_by{ |_, cs| -cs.size }.slice(0, @n)
+    competing_competitors.group_by(&:country).to_a.sort_by{ |_, cs| -cs.size }.slice(0, @count)
   end
 
   def average_age

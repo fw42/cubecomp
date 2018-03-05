@@ -132,7 +132,7 @@ class Competitor < ActiveRecord::Base
   end
 
   def to_liquid
-    @liquid_drop ||= CompetitorDrop.new(self)
+    @to_liquid ||= CompetitorDrop.new(self)
   end
 
   def wca_url

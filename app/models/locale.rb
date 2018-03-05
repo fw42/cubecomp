@@ -27,6 +27,6 @@ class Locale < ActiveRecord::Base
   end
 
   def to_liquid
-    @liquid_drop ||= LocaleDrop.new(self)
+    @to_liquid ||= LocaleDrop.new(self)
   end
 end

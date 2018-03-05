@@ -23,7 +23,7 @@ class CompetitionAreaController < ApplicationController
   def theme_file_renderer
     return unless @theme_file
 
-    @renderer ||= ThemeFileRenderer.new(
+    @theme_file_renderer ||= ThemeFileRenderer.new(
       layout_theme_file: @layout_theme_file,
       theme_file: @theme_file,
       locale: @locale,
