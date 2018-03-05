@@ -4,7 +4,7 @@ class WcaController < ApplicationController
   def autocomplete
     query = params[:q].to_s.strip
 
-    unless query =~ /\A[\d\w]+\z/
+    unless query.match?(/\A[\d\w]+\z/)
       render json: { error: 'invalid query' }
       return
     end

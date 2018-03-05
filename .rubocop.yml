@@ -1,11 +1,14 @@
 AllCops:
-  TargetRubyVersion: 2.2
+  TargetRubyVersion: 2.4
 
   Exclude:
     - 'db/**/*'
     - 'script/**/*'
     - 'config/**/*'
     - 'bin/**/*'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
 
 Metrics/LineLength:
   Max: 120
