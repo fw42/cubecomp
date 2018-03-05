@@ -6,7 +6,7 @@ flo_aachen_open:
   email: flo@hackvalue.de
   birthday: 1985-12-18
   country: germany
-  male: true
+  gender: male
   state: confirmed
   remote_ip: 123.123.123.123
 
@@ -17,7 +17,7 @@ aachen_open_day_one_guest:
   email: bob@bobsen.com
   birthday: 2000-01-01
   country: germany
-  male: true
+  gender: male
   remote_ip: 1.2.3.4
 
 aachen_open_both_days_guest:
@@ -27,7 +27,7 @@ aachen_open_both_days_guest:
   email: alfred@bobsen.com
   birthday: 2001-02-03
   country: germany
-  male: true
+  gender: male
 
 basti_aachen_open:
   competition: aachen_open
@@ -37,7 +37,7 @@ basti_aachen_open:
   email: basti@basti.com
   birthday: 1980-01-01
   country: germany
-  male: true
+  gender: male
 
 basti_german_open:
   competition: german_open
@@ -47,4 +47,4 @@ basti_german_open:
   email: basti@basti.com
   birthday: 1980-01-01
   country: germany
-  male: true
+  gender: male

@@ -26,7 +26,7 @@ en:
         birthday: 'Birthday'
         country: 'Country'
         citizen_of: 'Citizen of'
-        male: 'Gender'
+        gender: 'Gender'
         user_comment: 'Comment'
     errors:
       messages:
@@ -42,7 +42,7 @@ en:
               inclusion: "is incomplete or invalid"
             mail:
               invalid: "is not valid"
-            male:
+            gender:
               inclusion: "is missing"
 
   information:
@@ -97,9 +97,12 @@ en:
   disclaimer:
     title: "Disclaimer"
 
+  genders:
+    male: 'Male'
+    female: 'Female'
+    other: 'Other'
+
   misc:
-    male: 'male'
-    female: 'female'
     designed_by: "Design by"
 
   comparison:

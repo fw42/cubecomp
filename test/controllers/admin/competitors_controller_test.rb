@@ -18,7 +18,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
 
       country_id: countries(:germany).id,
       local: true,
-      male: true,
+      gender: 'male',
       nametag: 'bob!',
 
       staff: true,

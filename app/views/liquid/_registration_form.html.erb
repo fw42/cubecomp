@@ -99,13 +99,8 @@
       </td>
     </tr>
     <tr>
-      <td><%= f.label :male %></td>
-      <td>
-        <%= f.radio_button :male, true %>
-        <%= f.label :male, t("misc.male"), value: true, class: 'checkbox' %>
-        <%= f.radio_button :male, false %>
-        <%= f.label :male, t("misc.female"), value: false, class: 'checkbox' %>
-      </td>
+      <td><%= f.label :gender %></td>
+      <td><%= f.select :gender, Competitor::GENDERS.map{ |gender| [ t("genders.#{gender}"), gender ] } %></td>
     </tr>
     <tr>
       <td><%= f.label :user_comment %></td>

@@ -66,7 +66,7 @@
         <td>
           <% if competitor.male? %>
             <%= icon_image_tag('male.png') %>
-          <% else %>
+          <% elsif competitor.female? %>
             <%= icon_image_tag('female.png') %>
           <% end %>
 

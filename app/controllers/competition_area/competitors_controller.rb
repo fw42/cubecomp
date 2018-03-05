@@ -10,7 +10,7 @@ class CompetitionArea::CompetitorsController < CompetitionAreaController
     :country_id,
     :local,
     :user_comment,
-    :male,
+    :gender,
     days: [
       :status,
       events: [ :status ]

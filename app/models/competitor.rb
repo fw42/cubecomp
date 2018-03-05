@@ -2,6 +2,7 @@ class Competitor < ActiveRecord::Base
   include HasWcaId
 
   STATES = %w[new confirmed cancelled].freeze
+  GENDERS = %w[male female other].freeze
 
   belongs_to :competition
   validates :competition, presence: true
@@ -21,7 +22,7 @@ class Competitor < ActiveRecord::Base
   validates :state, presence: true
   validates :state, inclusion: { in: STATES }, allow_nil: true, allow_blank: true
 
-  validates :male, inclusion: { in: [ true, false ] }, allow_nil: false, allow_blank: false
+  validates :gender, inclusion: { in: GENDERS }, allow_nil: false, allow_blank: false
 
   belongs_to :country
   validates :country, presence: true
@@ -39,6 +40,14 @@ class Competitor < ActiveRecord::Base
 
   scope :awaiting_payment, ->{ where(state: 'new', paid: false, free_entrance: false) }
   scope :confirmed, ->{ where(state: 'confirmed') }
+
+  def male?
+    gender == 'male'
+  end
+
+  def female?
+    gender == 'female'
+  end
 
   def confirmed?
     state == 'confirmed'

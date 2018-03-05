@@ -26,7 +26,7 @@ it:
         birthday: 'Data di nascita'
         country: 'Nazione'
         citizen_of: 'Paese'
-        male: 'Sesso'
+        gender: 'Sesso'
         user_comment: 'Commenti'
     errors:
       messages:
@@ -42,7 +42,7 @@ it:
               inclusion: "incompleta o non valida"
             mail:
               invalid: "non valido"
-            male:
+            gender:
               inclusion: "mancante"
 
   information:
@@ -97,9 +97,12 @@ it:
   disclaimer:
     title: "Organizzazione"
 
-  misc:
+  genders:
     male: "Maschio"
     female: "Femmina"
+    other: "Altro"
+
+  misc:
     designed_by: "Sviluppato da"
 
   comparison:
