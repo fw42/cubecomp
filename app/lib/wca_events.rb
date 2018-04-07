@@ -1,48 +1,48 @@
 wca_event_definitions = [
   {
-    name: "Rubik's Cube",
+    name: "3x3x3 Cube",
     handle: "3",
     wca_handle: "333",
     formats: [ "Average of 5", "Best of x" ]
   },
   {
-    name: "4x4 Cube",
+    name: "4x4x4 Cube",
     handle: "4",
     wca_handle: "444",
     formats: [ "Average of 5", "Best of x" ]
   },
   {
-    name: "5x5 Cube",
+    name: "5x5x5 Cube",
     handle: "5",
     wca_handle: "555",
     formats: [ "Average of 5", "Best of x" ]
   },
   {
-    name: "2x2 Cube",
+    name: "2x2x2 Cube",
     handle: "2",
     wca_handle: "222",
     formats: [ "Average of 5", "Best of x" ]
   },
   {
-    name: "3x3 blindfolded",
+    name: "3x3x3 Blindfolded",
     handle: "3b",
     wca_handle: "333bf",
     formats: [ "Best of x" ]
   },
   {
-    name: "3x3 one-handed",
+    name: "3x3x3 One-Handed",
     handle: "oh",
     wca_handle: "333oh",
     formats: [ "Average of 5", "Best of x" ]
   },
   {
-    name: "3x3 fewest moves",
+    name: "3x3 Fewest Moves",
     handle: "fm",
     wca_handle: "333fm",
     formats: [ "Best of x" ]
   },
   {
-    name: "3x3 with feet",
+    name: "3x3x3 With Feet",
     handle: "ft",
     wca_handle: "333ft",
     formats: [ "Best of x", "Mean of 3" ]
@@ -66,7 +66,7 @@ wca_event_definitions = [
     formats: [ "Average of 5", "Best of x" ]
   },
   {
-    name: "Rubik's Clock",
+    name: "Clock",
     handle: "cl",
     wca_handle: "clock",
     formats: [ "Average of 5", "Best of x" ]
@@ -90,19 +90,19 @@ wca_event_definitions = [
     formats: [ "Mean of 3", "Best of x" ]
   },
   {
-    name: "4x4 blindfolded",
+    name: "4x4 Blindfolded",
     handle: "4b",
     wca_handle: "444bf",
     formats: [ "Best of x" ]
   },
   {
-    name: "5x5 blindfolded",
+    name: "5x5 Blindfolded",
     handle: "5b",
     wca_handle: "555bf",
     formats: [ "Best of x" ]
   },
   {
-    name: "3x3 multi blind",
+    name: "3x3 Multi-Blind",
     handle: "mbf",
     wca_handle: "333mbf",
     formats: [ "Best of x" ]
