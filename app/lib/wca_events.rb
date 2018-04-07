@@ -36,7 +36,7 @@ wca_event_definitions = [
     formats: [ "Average of 5", "Best of x" ]
   },
   {
-    name: "3x3 Fewest Moves",
+    name: "3x3x3 Fewest Moves",
     handle: "fm",
     wca_handle: "333fm",
     formats: [ "Best of x" ]
@@ -78,31 +78,31 @@ wca_event_definitions = [
     formats: [ "Average of 5", "Best of x" ]
   },
   {
-    name: "6x6 Cube",
+    name: "6x6x6 Cube",
     handle: "6",
     wca_handle: "666",
     formats: [ "Mean of 3", "Best of x" ]
   },
   {
-    name: "7x7 Cube",
+    name: "7x7x7 Cube",
     handle: "7",
     wca_handle: "777",
     formats: [ "Mean of 3", "Best of x" ]
   },
   {
-    name: "4x4 Blindfolded",
+    name: "4x4x4 Blindfolded",
     handle: "4b",
     wca_handle: "444bf",
     formats: [ "Best of x" ]
   },
   {
-    name: "5x5 Blindfolded",
+    name: "5x5x5 Blindfolded",
     handle: "5b",
     wca_handle: "555bf",
     formats: [ "Best of x" ]
   },
   {
-    name: "3x3 Multi-Blind",
+    name: "3x3x3 Multi-Blind",
     handle: "mbf",
     wca_handle: "333mbf",
     formats: [ "Best of x" ]
