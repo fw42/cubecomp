@@ -110,6 +110,6 @@ class Admin::EventsController < AdminController
       .where.not('competitions.id' => current_competition.id)
       .group('competitions.name, days.date')
       .order('competitions.name, days.date')
-      .pluck('competitions.name, days.id, days.date, COUNT(events.id)')
+      .pluck(Arel.sql('competitions.name, days.id, days.date, COUNT(events.id)'))
   end
 end

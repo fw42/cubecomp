@@ -25,7 +25,7 @@ class Wca::Person < ActiveRecord::Base
     Wca::Result
       .where(personId: wca_ids)
       .group('personId')
-      .pluck('personId, COUNT(DISTINCT(competitionId)) AS competitions')
+      .pluck(Arel.sql('personId, COUNT(DISTINCT(competitionId)) AS competitions'))
       .to_h
   end
 

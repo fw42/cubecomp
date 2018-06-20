@@ -1,5 +1,6 @@
 # https://github.com/rails/rails/pull/27429
 
+require 'active_model/type'
 require 'active_model/type/decimal'
 
 module DecimalCastRescueRuby24

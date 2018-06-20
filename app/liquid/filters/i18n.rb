@@ -10,11 +10,7 @@ module Liquid
       def translate(input, force_locale = nil)
         options = {}
 
-        options[:locale] = if force_locale
-          force_locale
-        else
-          default_locale
-        end
+        options[:locale] = force_locale || default_locale
 
         ::I18n.t(input, options)
       end

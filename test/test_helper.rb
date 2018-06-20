@@ -2,7 +2,7 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
 require 'minitest/pride'
-require 'mocha/mini_test'
+require 'mocha/minitest'
 require 'webmock/minitest'
 
 def with_csrf_protection

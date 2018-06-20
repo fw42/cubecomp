@@ -24,7 +24,7 @@ class ThemeFileLoader
       "filename = \"#{ThemeFile.connection.quote_string(file)}\" DESC"
     end
 
-    @relation.where(filename: filenames).order(order_query_segments.join(', '))
+    @relation.where(filename: filenames).order(Arel.sql(order_query_segments.join(', ')))
   end
 
   def split(filename)
