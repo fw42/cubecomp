@@ -164,5 +164,8 @@ Style/MultipleComparison:
 Layout/EmptyLinesAroundArguments:
   Enabled: false
 
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
 Style/FormatStringToken:
   EnforcedStyle: unannotated
