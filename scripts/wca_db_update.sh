@@ -34,3 +34,5 @@ echo "CREATE INDEX results_person_country_id ON Results (personCountryId);" | $M
 echo "CREATE INDEX results_event_id ON Results (eventId);" | $MYSQL
 echo "CREATE INDEX ranks_single_event_id_person_id ON RanksSingle (eventId, personId);" | $MYSQL
 echo "CREATE INDEX ranks_average_event_id_person_id ON RanksAverage (eventId, personId);" | $MYSQL
+
+rm -f $FILENAME
