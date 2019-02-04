@@ -13,7 +13,7 @@ DIR=$4
 set -e
 
 URL="https://www.worldcubeassociation.org/results/misc/export.html"
-ZIPPED_FILENAME=$(curl -s $URL | grep -E "WCA_export[0-9_]+\.sql.zip" -o | head -n1)
+ZIPPED_FILENAME=$(curl -s $URL | grep -E "WCA_export[0-9a-zA-Z_]+\.sql.zip" -o | head -n1)
 FILENAME="WCA_export.sql"
 
 cd $DIR
