@@ -10,7 +10,7 @@ TODO.*
 /public/assets
 log
 coverage
-config/deploy/production.rb
+config/deploy/production.rb*
 import_data
 *.zip
 *.sql
