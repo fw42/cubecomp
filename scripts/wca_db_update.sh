@@ -25,7 +25,7 @@ else
   sed -i $FILENAME -e "s/CHARSET=latin1/CHARSET=utf8/g"
 fi
 
-MYSQL_PWD=$PASS
+export MYSQL_PWD=$PASS
 MYSQL="mysql --default-character-set=utf8 $DB -u $USER"
 
 $MYSQL < $FILENAME
