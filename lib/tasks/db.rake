@@ -11,8 +11,10 @@ namespace :db do
 
     cmd = "" \
       "mkdir -p #{dir} &&" \
-      "mysqldump --host=\"#{host}\" --user=\"#{user}\" --password=\"#{password}\" #{db}" \
+      "mysqldump --host=\"#{host}\" --user=\"#{user}\" #{db}" \
       "| gzip > #{dir}/#{filename}"
+
+    ENV['MYSQL_PWD'] = password
 
     exec cmd
   end

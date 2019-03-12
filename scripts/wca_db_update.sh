@@ -25,7 +25,8 @@ else
   sed -i $FILENAME -e "s/CHARSET=latin1/CHARSET=utf8/g"
 fi
 
-MYSQL="mysql --default-character-set=utf8 $DB -u $USER --password=$PASS"
+MYSQL_PWD=$PASS
+MYSQL="mysql --default-character-set=utf8 $DB -u $USER"
 
 $MYSQL < $FILENAME
 echo "CREATE INDEX persons_person_id ON Persons (id);" | $MYSQL
@@ -35,4 +36,5 @@ echo "CREATE INDEX results_event_id ON Results (eventId);" | $MYSQL
 echo "CREATE INDEX ranks_single_event_id_person_id ON RanksSingle (eventId, personId);" | $MYSQL
 echo "CREATE INDEX ranks_average_event_id_person_id ON RanksAverage (eventId, personId);" | $MYSQL
 
+rm -f $ZIPPED_FILENAME
 rm -f $FILENAME
