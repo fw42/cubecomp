@@ -97,13 +97,16 @@ Layout/TrailingWhitespace:
   Exclude:
     - 'test/services/email_template_renderer_test.rb'
 
-Layout/IndentHash:
+Layout/IndentFirstHashElement:
   EnforcedStyle: consistent
 
 Style/FormatString:
   Enabled: false
 
 Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/AlignArguments:
   EnforcedStyle: with_fixed_indentation
 
 Layout/MultilineOperationIndentation:
@@ -122,9 +125,6 @@ Style/RegexpLiteral:
   Enabled: false
 
 Style/SymbolLiteral:
-  Enabled: false
-
-Performance/Count:
   Enabled: false
 
 Lint/FormatParameterMismatch:
