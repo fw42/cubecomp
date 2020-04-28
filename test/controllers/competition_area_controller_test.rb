@@ -96,9 +96,9 @@ class CompetitionAreaControllerTest < ActionController::TestCase
 
   test '#render_theme_file renders html files in layout' do
     layout = theme_files(:aachen_open_layout)
-    layout.update_attributes(content: "FOOBAR {{ content_for_layout }} TEST")
+    layout.update(content: "FOOBAR {{ content_for_layout }} TEST")
     theme_file = theme_files(:aachen_open_index)
-    theme_file.update_attributes(content: 'BLABLA')
+    theme_file.update(content: 'BLABLA')
 
     get :render_theme_file, params: {
       competition_handle: @competition.handle,
@@ -111,7 +111,7 @@ class CompetitionAreaControllerTest < ActionController::TestCase
 
   test '#render_theme_file renders css files without layout' do
     layout = theme_files(:aachen_open_layout)
-    layout.update_attributes(content: "FOOBAR {{ content_for_layout }} TEST")
+    layout.update(content: "FOOBAR {{ content_for_layout }} TEST")
 
     get :render_theme_file, params: {
       competition_handle: @competition.handle,

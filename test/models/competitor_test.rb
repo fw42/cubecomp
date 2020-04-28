@@ -218,7 +218,7 @@ class CompetitorTest < ActiveSupport::TestCase
     )
     assert_equal 'registered', @competitor.event_registration_status(event)
 
-    registration.update_attributes(waiting: true)
+    registration.update(waiting: true)
     assert_equal 'waiting', @competitor.event_registration_status(event)
 
     other_event = events(:aachen_open_rubiks_professor)

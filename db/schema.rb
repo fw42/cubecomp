@@ -2,17 +2,17 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180304135200) do
+ActiveRecord::Schema.define(version: 2020_04_28_100743) do
 
-  create_table "competitions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "competitions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "handle", null: false
     t.string "staff_email", null: false
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20180304135200) do
     t.index ["owner_user_id"], name: "competitions_owner_user_id_fk"
   end
 
-  create_table "competitors", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "competitors", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "competition_id", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
@@ -72,14 +72,14 @@ ActiveRecord::Schema.define(version: 20180304135200) do
     t.index ["wca", "competition_id"], name: "index_competitors_on_wca_and_competition_id", unique: true
   end
 
-  create_table "countries", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "countries", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["name"], name: "index_countries_on_name", unique: true
   end
 
-  create_table "day_registrations", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "day_registrations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "competition_id", null: false
     t.integer "competitor_id", null: false
     t.integer "day_id", null: false
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20180304135200) do
     t.index ["day_id"], name: "day_registrations_day_id_fk"
   end
 
-  create_table "days", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "days", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "competition_id", null: false
     t.date "date", null: false
     t.datetime "created_at"
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20180304135200) do
     t.index ["date", "competition_id"], name: "index_days_on_date_and_competition_id", unique: true
   end
 
-  create_table "email_templates", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "email_templates", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "competition_id", null: false
     t.string "name", null: false
     t.text "content", null: false
@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(version: 20180304135200) do
     t.index ["competition_id", "name"], name: "index_email_templates_on_competition_id_and_name", unique: true
   end
 
-  create_table "event_registrations", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "event_registrations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "competition_id", null: false
     t.integer "event_id", null: false
     t.integer "competitor_id", null: false
@@ -123,7 +123,7 @@ ActiveRecord::Schema.define(version: 20180304135200) do
     t.index ["event_id"], name: "event_registrations_event_id_fk"
   end
 
-  create_table "events", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "events", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "competition_id", null: false
     t.integer "day_id", null: false
     t.string "name", null: false
@@ -142,7 +142,7 @@ ActiveRecord::Schema.define(version: 20180304135200) do
     t.index ["day_id"], name: "events_day_id_fk"
   end
 
-  create_table "locales", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "locales", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "handle", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -151,7 +151,7 @@ ActiveRecord::Schema.define(version: 20180304135200) do
     t.index ["handle", "competition_id"], name: "index_locales_on_handle_and_competition_id", unique: true
   end
 
-  create_table "news", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "news", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "competition_id", null: false
     t.datetime "time", null: false
     t.text "text", null: false
@@ -162,7 +162,7 @@ ActiveRecord::Schema.define(version: 20180304135200) do
     t.index ["locale_id"], name: "news_locale_id_fk"
   end
 
-  create_table "permissions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "permissions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "competition_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at"
@@ -171,7 +171,7 @@ ActiveRecord::Schema.define(version: 20180304135200) do
     t.index ["user_id", "competition_id"], name: "index_permissions_on_user_id_and_competition_id", unique: true
   end
 
-  create_table "theme_files", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "theme_files", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "competition_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -186,14 +186,14 @@ ActiveRecord::Schema.define(version: 20180304135200) do
     t.index ["theme_id", "filename"], name: "index_theme_files_on_theme_id_and_filename", unique: true
   end
 
-  create_table "themes", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "themes", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["name"], name: "index_themes_on_name", unique: true
   end
 
-  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "email"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -1,6 +1,6 @@
 class Theme < ActiveRecord::Base
   validates :name, presence: true
-  validates :name, uniqueness: true, allow_nil: true, allow_blank: true
+  validates :name, uniqueness: { case_sensitive: true }, allow_nil: true, allow_blank: true
 
   auto_strip_attributes :name
 

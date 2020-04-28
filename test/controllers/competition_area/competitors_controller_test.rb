@@ -62,7 +62,7 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
   end
 
   test "#create renders forbidden if competition registration is closed" do
-    @competition.update_attributes(registration_open: false)
+    @competition.update(registration_open: false)
 
     assert_no_difference '@competition.competitors.count' do
       post :create, params: {
@@ -154,7 +154,7 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
 
   test '#create does not allow you to register for events for which registration is already closed' do
     event = events(:aachen_open_rubiks_revenge_day_two)
-    event.update_attributes(state: 'registration_closed')
+    event.update(state: 'registration_closed')
 
     assert_no_difference 'Competitor.count' do
       post :create, params: {
@@ -169,7 +169,7 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
 
   test '#create does not allow you to register (without status "waiting") for waiting list events' do
     event = events(:aachen_open_rubiks_revenge_day_two)
-    event.update_attributes(state: 'open_with_waiting_list')
+    event.update(state: 'open_with_waiting_list')
 
     assert_no_difference 'Competitor.count' do
       post :create, params: {
@@ -184,7 +184,7 @@ class CompetitionArea::CompetitorsControllerTest < ActionController::TestCase
 
   test '#create puts competitor on waiting list when registering for a waiting list event' do
     event = events(:aachen_open_rubiks_revenge_day_two)
-    event.update_attributes(state: 'open_with_waiting_list')
+    event.update(state: 'open_with_waiting_list')
     @new_competitor_params[:days][event.day.id.to_s][:events][event.id.to_s][:status] = 'waiting'
 
     assert_difference '@competition.competitors.count', +1 do

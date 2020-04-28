@@ -17,7 +17,7 @@ class Admin::CompetitorEmailControllerTest < ActionController::TestCase
   end
 
   test '#new for locals' do
-    @competitor.update_attributes(local: true)
+    @competitor.update(local: true)
     get :new, params: { competition_id: @competition.id, id: @competitor.id }
     assert_response :success
   end
@@ -52,7 +52,7 @@ class Admin::CompetitorEmailControllerTest < ActionController::TestCase
       "content" => "Hello!"
     }
 
-    @competition.update_attributes(cc_staff: true)
+    @competition.update(cc_staff: true)
 
     post :create, params: {
       competition_id: @competition.id,
@@ -72,7 +72,7 @@ class Admin::CompetitorEmailControllerTest < ActionController::TestCase
       "content" => "Hello!"
     }
 
-    @competitor.update_attributes(state: 'new', confirmation_email_sent: false)
+    @competitor.update(state: 'new', confirmation_email_sent: false)
 
     post :create, params: {
       competition_id: @competition.id,

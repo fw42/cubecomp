@@ -161,11 +161,11 @@ class EventTest < ActiveSupport::TestCase
     events = competition.events.wca
     assert_equal %w[333 444 555], events.map(&:wca_handle)
 
-    events.first.update_attributes(handle: "333")
+    events.first.update(handle: "333")
     events = competition.events.wca
     assert_equal %w[333 444 555], events.map(&:wca_handle)
 
-    events.first.update_attributes(handle: "foobar")
+    events.first.update(handle: "foobar")
     events = competition.events.wca
     assert_equal %w[444 555], events.map(&:wca_handle)
   end

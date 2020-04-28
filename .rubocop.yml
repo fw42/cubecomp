@@ -10,7 +10,7 @@ AllCops:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
   Enabled: true
 
@@ -62,9 +62,6 @@ Style/SignalException:
 Style/StringLiterals:
   Enabled: false
 
-Style/BracesAroundHashParameters:
-  Enabled: false
-
 Style/NumericLiterals:
   Enabled: false
 
@@ -97,16 +94,16 @@ Layout/TrailingWhitespace:
   Exclude:
     - 'test/services/email_template_renderer_test.rb'
 
-Layout/IndentFirstHashElement:
+Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 
 Style/FormatString:
   Enabled: false
 
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
-Layout/AlignArguments:
+Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
 
 Layout/MultilineOperationIndentation:
@@ -169,3 +166,25 @@ Layout/EmptyLineAfterGuardClause:
 
 Style/FormatStringToken:
   EnforcedStyle: unannotated
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: false
+
+Lint/RaiseException:
+  Enabled: false
+
+Lint/StructNewOverride:
+  Enabled: false
+
+Style/ExponentialNotation:
+  Enabled: false
+
+Style/HashEachMethods:
+  Enabled: false
+
+Style/HashTransformKeys:
+  Enabled: false
+
+Style/HashTransformValues:
+  Enabled: false
+

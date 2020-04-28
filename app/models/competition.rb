@@ -8,10 +8,10 @@ class Competition < ActiveRecord::Base
   include EntranceFeeValidation
 
   validates :name, presence: true
-  validates :name, uniqueness: true, allow_nil: true, allow_blank: true
+  validates :name, uniqueness: { case_sensitive: true }, allow_nil: true, allow_blank: true
 
   validates :handle, presence: true
-  validates :handle, uniqueness: true, allow_nil: true, allow_blank: true
+  validates :handle, uniqueness: { case_sensitive: true }, allow_nil: true, allow_blank: true
 
   validates :staff_email, presence: true
   validates :staff_email, email: true, allow_nil: true, allow_blank: true

@@ -5,7 +5,7 @@ class Day < ActiveRecord::Base
   validates :competition, presence: true
 
   validates :date, presence: true
-  validates :date, uniqueness: { scope: :competition_id }, allow_nil: true
+  validates :date, uniqueness: { scope: :competition_id, case_sensitive: true }, allow_nil: true
 
   has_many :events, dependent: :destroy, autosave: true
   has_many :registrations, class_name: 'DayRegistration', dependent: :destroy

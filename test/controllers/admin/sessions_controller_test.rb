@@ -57,7 +57,7 @@ class Admin::SessionsControllerTest < ActionController::TestCase
 
   test '#create with valid credentials doesnt log user in if the account is inactive' do
     user = users(:regular_user_with_no_competitions)
-    user.update_attributes(active: false)
+    user.update(active: false)
 
     post :create, params: {
       user: {
