@@ -188,7 +188,7 @@ class Admin::CompetitionsControllerTest < ActionController::TestCase
   end
 
   test '#update to change the default locale' do
-    @competition.update_attributes(default_locale: locales(:aachen_open_german))
+    @competition.update(default_locale: locales(:aachen_open_german))
 
     patch :update, params: {
       id: @competition.id,

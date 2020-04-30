@@ -77,7 +77,7 @@ class AdminControllerTest < ActionController::TestCase
 
   test '#index redirects back to login if user is inactive' do
     user = users(:admin)
-    user.update_attributes(active: false)
+    user.update(active: false)
     login_as(user)
     get :index, params: { competition_id: Competition.first }
     assert_redirected_to admin_login_path

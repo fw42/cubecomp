@@ -7,12 +7,12 @@ class ThemeFile < ActiveRecord::Base
 
   validates :filename, presence: true
   validates :filename,
-    uniqueness: { scope: :competition_id },
+    uniqueness: { scope: :competition_id, case_sensitive: true },
     allow_nil: true,
     allow_blank: true,
     unless: ->{ competition_id.nil? }
   validates :filename,
-    uniqueness: { scope: :theme_id },
+    uniqueness: { scope: :theme_id, case_sensitive: true },
     allow_nil: true,
     allow_blank: true,
     unless: ->{ theme_id.nil? }

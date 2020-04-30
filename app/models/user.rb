@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true, if: :active?
   validates :email, email: true, allow_nil: true, allow_blank: true
-  validates :email, uniqueness: true, allow_nil: true, allow_blank: true
+  validates :email, uniqueness: { case_sensitive: true }, allow_nil: true, allow_blank: true
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
   def nullify_competition_delegate_user_ids
     return unless saved_change_to_delegate? && !delegate
     delegating_competitions.each do |competition|
-      competition.update_attributes(delegate_user_id: nil)
+      competition.update(delegate_user_id: nil)
     end
   end
 

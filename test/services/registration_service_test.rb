@@ -69,7 +69,7 @@ class RegistrationServiceTest < ActiveSupport::TestCase
 
   test '#register_for_event that is already closed requires admin flag' do
     event = @competition.events.first
-    event.update_attributes(state: 'registration_closed')
+    event.update(state: 'registration_closed')
 
     assert_no_difference '@competitor.event_registrations.size' do
       assert_raises RegistrationService::PermissionError do
@@ -86,7 +86,7 @@ class RegistrationServiceTest < ActiveSupport::TestCase
 
   test '#register_for_event that is on waiting requires admin flag' do
     event = @competition.events.first
-    event.update_attributes(state: 'open_with_waiting_list')
+    event.update(state: 'open_with_waiting_list')
 
     assert_no_difference '@competitor.event_registrations.size' do
       assert_raises RegistrationService::PermissionError do

@@ -7,7 +7,7 @@ class EventRegistration < ActiveRecord::Base
 
   belongs_to :competitor
   validates :competitor, presence: true
-  validates :competitor_id, uniqueness: { scope: :event_id }, allow_nil: true
+  validates :competitor_id, uniqueness: { scope: :event_id, case_sensitive: true }, allow_nil: true
 
   validate :validate_competitor_registered_for_event_day
   validate :validate_event_for_registration

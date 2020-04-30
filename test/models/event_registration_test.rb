@@ -48,7 +48,7 @@ class EventRegistrationTest < ActiveSupport::TestCase
   end
 
   test 'validates that event is not not_for_registration' do
-    @registration.event.update_attributes(state: 'not_for_registration')
+    @registration.event.update(state: 'not_for_registration')
     assert_not_valid(@registration, :event)
     assert_not_valid(@registration.event, :state)
   end

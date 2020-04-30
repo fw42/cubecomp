@@ -14,12 +14,12 @@ class FrontPageControllerTest < ActionController::TestCase
   test "#index shows competition iff it's published" do
     regexp = /#{Regexp.escape(@competition.name)}/
 
-    @competition.update_attributes(published: true)
+    @competition.update(published: true)
     get :index
     assert_response :ok
     assert_match regexp, response.body
 
-    @competition.update_attributes(published: false)
+    @competition.update(published: false)
     get :index
     assert_response :ok
     assert_no_match regexp, response.body

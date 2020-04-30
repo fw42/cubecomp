@@ -76,13 +76,13 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
   end
 
   test '#csv' do
-    @competition.competitors.each{ |competitor| competitor.update_attributes(state: 'confirmed') }
+    @competition.competitors.each{ |competitor| competitor.update(state: 'confirmed') }
     get :csv, params: { competition_id: @competition.id }
     assert_response :success
   end
 
   test '#csv_download_active' do
-    @competition.competitors.each{ |competitor| competitor.update_attributes(state: 'confirmed') }
+    @competition.competitors.each{ |competitor| competitor.update(state: 'confirmed') }
     get :csv_download_active, params: { competition_id: @competition.id }
     assert_response :success
 
@@ -91,8 +91,9 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
     expected << "a,Florian Weingarten,Germany,2007WEIN01,1985-12-18,m,,1,0,1"
 
     assert_equal expected.join("\n"), response.body
-    assert_equal "text/csv", response.content_type
-    assert_equal 'attachment; filename="Aachen Open 2014.csv"', response.headers['Content-Disposition']
+    assert_equal "text/csv", response.media_type
+    assert_equal "attachment; filename=\"Aachen Open 2014.csv\"; filename*=UTF-8''Aachen%20Open%202014.csv",
+      response.headers['Content-Disposition']
   end
 
   test '#nametags' do
@@ -198,7 +199,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
   end
 
   test '#confirm' do
-    @competitor.update_attributes(state: 'new')
+    @competitor.update(state: 'new')
 
     patch :confirm, params: {
       competition_id: @competition.id,
@@ -209,7 +210,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
   end
 
   test '#cancel' do
-    @competitor.update_attributes(state: 'new')
+    @competitor.update(state: 'new')
 
     patch :cancel, params: {
       competition_id: @competition.id,
@@ -220,7 +221,7 @@ class Admin::CompetitorsControllerTest < ActionController::TestCase
   end
 
   test '#mark_as_paid' do
-    @competitor.update_attributes(paid: false)
+    @competitor.update(paid: false)
 
     patch :mark_as_paid, params: {
       competition_id: @competition.id,

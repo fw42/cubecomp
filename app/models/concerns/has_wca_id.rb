@@ -3,9 +3,12 @@ module HasWcaId
 
   included do
     if self == Competitor
-      validates :wca, uniqueness: { scope: :competition_id }, allow_nil: true, allow_blank: true
+      validates :wca,
+        uniqueness: { scope: :competition_id, case_sensitive: true },
+        allow_nil: true,
+        allow_blank: true
     else
-      validates :wca, uniqueness: {}, allow_nil: true, allow_blank: true
+      validates :wca, uniqueness: { case_sensitive: true }, allow_nil: true, allow_blank: true
     end
 
     validates :wca, format: { with: /\A\d{4}\w+\d\d\Z/ }, allow_nil: true, allow_blank: true

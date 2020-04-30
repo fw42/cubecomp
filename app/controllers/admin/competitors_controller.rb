@@ -132,7 +132,7 @@ class Admin::CompetitorsController < AdminController
   end
 
   def confirm
-    if @competitor.update_attributes(state: 'confirmed')
+    if @competitor.update(state: 'confirmed')
       notice = { notice: 'Competitor was successfully confirmed.' }
     else
       Rails.logger.info("Failed to update: #{@competitor.errors.full_messages.inspect}")
@@ -143,7 +143,7 @@ class Admin::CompetitorsController < AdminController
   end
 
   def mark_as_paid
-    if @competitor.update_attributes(paid: true)
+    if @competitor.update(paid: true)
       notice = { notice: 'Competitor was successfully marked as paid.' }
     else
       Rails.logger.info("Failed to update: #{@competitor.errors.full_messages.inspect}")
@@ -154,7 +154,7 @@ class Admin::CompetitorsController < AdminController
   end
 
   def cancel
-    if @competitor.update_attributes(state: 'cancelled')
+    if @competitor.update(state: 'cancelled')
       notice = { notice: 'Competitor was successfully marked as cancelled.' }
     else
       Rails.logger.info("Failed to update: #{@competitor.errors.full_messages.inspect}")

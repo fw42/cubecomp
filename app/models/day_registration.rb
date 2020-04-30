@@ -7,7 +7,7 @@ class DayRegistration < ActiveRecord::Base
 
   belongs_to :competitor
   validates :competitor, presence: true
-  validates :competitor_id, uniqueness: { scope: :day_id }, allow_nil: true, allow_blank: true
+  validates :competitor_id, uniqueness: { scope: :day_id, case_sensitive: true }, allow_nil: true, allow_blank: true
 
   validate :validate_competition_ids_match
 

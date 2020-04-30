@@ -6,7 +6,7 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
     @theme_file = @competition.theme_files.new(filename: 'foobar')
     @layout_theme_file = @competition.theme_files.new(filename: 'layout.html', content: '{{ content_for_layout }}')
 
-    @competition.update_attributes(
+    @competition.update(
       owner: users(:flo),
       delegate: users(:delegate)
     )
