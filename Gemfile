@@ -1,10 +1,14 @@
 source 'https://rubygems.org'
 
 gem 'mysql2'
-gem 'rails', '~> 6.0.4.8'
+gem 'rails', '~> 6.0.5.1'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
+
+# security fixes
+gem 'tzinfo', '~> 1.2.10'
+gem 'rails-html-sanitizer', '~> 1.4.3'
 
 # Make sure that sb-admin-2 and jquery-nested-attributes still
 # work before version-bumping jQuery
