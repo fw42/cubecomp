@@ -1,5 +1,6 @@
 set :application, 'cubecomp'
-set :repo_url, 'git@github.com:fw42/cubecomp.git'
+# set :repo_url, 'git@github.com:fw42/cubecomp.git'
+set :repo_url, 'https://github.com/fw42/cubecomp.git'
 
 set :log_level, :info
 
