@@ -8,7 +8,7 @@ gem 'coffee-rails'
 
 # security fixes
 gem 'tzinfo', '~> 1.2.10'
-gem 'rails-html-sanitizer', '~> 1.4.3'
+gem 'rails-html-sanitizer', '~> 1.4.4'
 gem 'nokogiri', '~> 1.13.10'
 
 # Make sure that sb-admin-2 and jquery-nested-attributes still
