@@ -5,7 +5,7 @@ class EmailDnsValidator < ActiveModel::EachValidator
     return unless record.changes.key?(attribute)
     return unless value =~ EmailValidator::REGEXP
     return if mx_record?(value.split("@").last)
-    record.errors[attribute] << (options[:message] || 'is not a valid email address')
+    record.errors.add(attribute, options[:message] || 'is not a valid email address')
   end
 
   private

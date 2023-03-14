@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-  force_ssl unless Rails.env.development?
+  # force_ssl unless Rails.env.development?
   layout 'admin'
   helper AdminMenuHelper
   before_action :ensure_authenticated
