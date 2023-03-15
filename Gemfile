@@ -14,6 +14,13 @@ gem 'rails-html-sanitizer', '>= 1.4.4'
 gem 'jquery-rails', '>= 4.4.0'
 gem 'jquery-turbolinks'
 
+# suppress annoying warnings
+# https://github.com/ruby/net-imap/issues/16#issuecomment-1321228565
+gem 'net-http'
+gem 'net-smtp'
+gem 'net-imap'
+gem 'uri'
+
 gem 'faraday'
 
 gem 'turbolinks'
