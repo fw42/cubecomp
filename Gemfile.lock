@@ -285,7 +285,7 @@ GEM
     unicorn (5.2.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    uri (0.12.0)
+    uri (0.12.1)
     webmock (3.18.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
