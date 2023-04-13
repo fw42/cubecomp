@@ -135,11 +135,17 @@ GEM
       turbolinks
     json (2.6.3)
     kgio (2.11.4)
+    kt-paperclip (6.4.2)
+      activemodel (>= 4.2.0)
+      activesupport (>= 4.2.0)
+      mime-types
+      mimemagic (~> 0.3.0)
+      terrapin (~> 0.6.0)
     launchy (2.5.2)
       addressable (~> 2.8)
     letter_opener (1.8.1)
       launchy (>= 2.2, < 3)
-    libv8 (3.16.14.19)
+    libv8-node (16.10.0.0)
     liquid (5.3.0)
     loofah (2.19.1)
       crass (~> 1.0.2)
@@ -162,6 +168,8 @@ GEM
       rake
     mini_mime (1.1.2)
     mini_portile2 (2.8.1)
+    mini_racer (0.6.3)
+      libv8-node (~> 16.10.0.0)
     minitest (5.18.0)
     mocha (2.0.2)
       ruby2_keywords (>= 0.0.5)
@@ -181,15 +189,9 @@ GEM
       net-protocol
     net-ssh (7.1.0)
     nio4r (2.5.8)
-    nokogiri (1.13.10)
+    nokogiri (1.14.3)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
-    paperclip (6.1.0)
-      activemodel (>= 4.2.0)
-      activesupport (>= 4.2.0)
-      mime-types
-      mimemagic (~> 0.3.0)
-      terrapin (~> 0.6.0)
     parallel (1.22.1)
     parser (3.2.1.1)
       ast (~> 2.4.1)
@@ -227,7 +229,6 @@ GEM
     rainbow (3.1.1)
     raindrops (0.20.1)
     rake (13.0.6)
-    ref (2.0.0)
     regexp_parser (2.7.0)
     rexml (3.2.5)
     rubocop (1.48.1)
@@ -267,9 +268,6 @@ GEM
       net-ssh (>= 2.8.0)
     terrapin (0.6.0)
       climate_control (>= 0.0.3, < 1.0)
-    therubyracer (0.12.3)
-      libv8 (~> 3.16.14.15)
-      ref
     thor (1.2.1)
     tilt (2.1.0)
     timecop (0.9.6)
@@ -282,7 +280,7 @@ GEM
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (2.4.2)
-    unicorn (5.2.0)
+    unicorn (6.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
     uri (0.12.1)
@@ -321,27 +319,27 @@ DEPENDENCIES
   immigrant
   jquery-rails (>= 4.4.0)
   jquery-turbolinks
+  kt-paperclip (~> 6.4, >= 6.4.1)
   letter_opener
   liquid
   marginalia
+  mini_racer
   mocha
   mysql2
   net-http
   net-imap
   net-smtp
-  paperclip
   rails (~> 6.1.7.1)
   rails-html-sanitizer (>= 1.4.4)
   rubocop
   sass-rails
   spring
-  therubyracer
   timecop
   turbolinks
   uglifier
-  unicorn (= 5.2.0)
+  unicorn
   uri
   webmock
 
 BUNDLED WITH
-   1.17.2
+   2.4.12

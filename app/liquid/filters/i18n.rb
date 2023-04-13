@@ -4,7 +4,7 @@ module Liquid
       def translate_date(date, format = nil)
         options = { locale: default_locale }
         options[:format] = format if format
-        ::I18n.l(date, options)
+        ::I18n.l(date, **options)
       end
 
       def translate(input, force_locale = nil)
@@ -12,7 +12,7 @@ module Liquid
 
         options[:locale] = force_locale || default_locale
 
-        ::I18n.t(input, options)
+        ::I18n.t(input, **options)
       end
 
       private
