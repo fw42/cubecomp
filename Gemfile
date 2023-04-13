@@ -31,7 +31,7 @@ gem 'auto_strip_attributes'
 gem 'marginalia'
 gem 'liquid'
 
-gem 'paperclip'
+gem "kt-paperclip", "~> 6.4", ">= 6.4.1"
 
 gem 'dotenv-rails'
 
@@ -69,7 +69,7 @@ group :deploy do
 end
 
 group :production do
-  gem 'unicorn', '5.2.0'
-  gem 'therubyracer'
+  gem 'unicorn'
+  gem 'mini_racer'
   gem 'exception_notification'
 end

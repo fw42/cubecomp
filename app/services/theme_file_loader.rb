@@ -3,12 +3,12 @@ class ThemeFileLoader
     @relation = relation
   end
 
-  def find_by(*args)
-    where(*args).first
+  def find_by(**args)
+    where(**args).first
   end
 
-  def find_by!(*args)
-    where(*args).first!
+  def find_by!(**args)
+    where(**args).first!
   end
 
   private
