@@ -283,7 +283,7 @@ GEM
     unicorn (6.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    uri (0.12.1)
+    uri (0.12.2)
     webmock (3.18.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
@@ -338,7 +338,7 @@ DEPENDENCIES
   turbolinks
   uglifier
   unicorn
-  uri
+  uri (>= 0.12.2)
   webmock
 
 BUNDLED WITH

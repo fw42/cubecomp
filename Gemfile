@@ -19,7 +19,7 @@ gem 'jquery-turbolinks'
 gem 'net-http'
 gem 'net-smtp'
 gem 'net-imap'
-gem 'uri'
+gem "uri", ">= 0.12.2"
 
 gem 'faraday'
 
