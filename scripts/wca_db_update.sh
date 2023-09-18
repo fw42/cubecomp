@@ -12,12 +12,12 @@ DIR=$4
 
 set -e
 
-URL="https://www.worldcubeassociation.org/results/misc/export.html"
+URL="https://www.worldcubeassociation.org/export/results"
 ZIPPED_FILENAME=$(curl -s $URL | grep -E "WCA_export[0-9a-zA-Z_]+\.sql.zip" -o | head -n1)
 FILENAME="WCA_export.sql"
 
 cd $DIR
-wget -q -c https://www.worldcubeassociation.org/results/misc/$ZIPPED_FILENAME
+wget -c "https://www.worldcubeassociation.org/export/results/$ZIPPED_FILENAME"
 unzip -q -o $ZIPPED_FILENAME
 if [[ "$(uname -s)" == "Darwin" ]]; then
   sed -i -e "s/CHARSET=latin1/CHARSET=utf8/g" $FILENAME
