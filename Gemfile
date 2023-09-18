@@ -44,6 +44,7 @@ end
 
 group :development do
   gem 'letter_opener'
+  gem 'webrick'
 end
 
 group :development, :test do
