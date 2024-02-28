@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'mysql2'
-gem 'rails', '~> 6.1.7.5'
+gem 'rails', '~> 6.1.7.7'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
@@ -31,7 +31,7 @@ gem 'auto_strip_attributes'
 gem 'marginalia'
 gem 'liquid'
 
-gem "nokogiri", ">= 1.15.4"
+gem "nokogiri", ">= 1.16.2"
 gem "kt-paperclip", "~> 6.4", ">= 6.4.1"
 
 gem 'dotenv-rails'
