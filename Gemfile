@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'mysql2'
-gem 'rails', '~> 6.1.7.7'
+gem 'rails', '~> 6.1.7.8'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
