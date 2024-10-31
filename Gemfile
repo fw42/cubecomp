@@ -1,13 +1,16 @@
 source 'https://rubygems.org'
 
 gem 'mysql2'
-gem 'rails', '~> 6.1.7.8'
+gem 'rails', '~> 6.1.7.9'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
 gem 'execjs', '= 2.7.0'
 
 gem 'rails-html-sanitizer', '>= 1.4.4'
+
+gem 'rexml', '~> 3.3.2'
+
 
 # Make sure that sb-admin-2 and jquery-nested-attributes still
 # work before version-bumping jQuery
@@ -44,7 +47,7 @@ end
 
 group :development do
   gem 'letter_opener'
-  gem 'webrick'
+  gem 'webrick', '~> 1.8.2'
 end
 
 group :development, :test do
