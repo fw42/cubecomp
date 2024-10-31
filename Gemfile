@@ -9,8 +9,6 @@ gem 'execjs', '= 2.7.0'
 
 gem 'rails-html-sanitizer', '>= 1.4.4'
 
-gem 'rexml', '~> 3.3.2'
-
 
 # Make sure that sb-admin-2 and jquery-nested-attributes still
 # work before version-bumping jQuery
