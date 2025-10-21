@@ -19,8 +19,8 @@ gem 'jquery-turbolinks'
 # https://github.com/ruby/net-imap/issues/16#issuecomment-1321228565
 gem 'net-http'
 gem 'net-smtp'
-gem 'net-imap'
-gem "uri", ">= 0.12.2"
+gem 'net-imap', '>= 0.3.8'
+gem "uri", ">= 0.12.4"
 
 gem 'faraday'
 
@@ -32,7 +32,7 @@ gem 'auto_strip_attributes'
 gem 'marginalia'
 gem 'liquid'
 
-gem "nokogiri", ">= 1.16.2"
+gem "nokogiri", ">= 1.18.3"
 gem "kt-paperclip", "~> 6.4", ">= 6.4.1"
 
 gem 'dotenv-rails'
