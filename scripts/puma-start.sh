@@ -2,4 +2,4 @@
 DIR="$(dirname "$0")"
 source "$DIR/rails_env.sh"
 
-scripts/unicorn-init.sh start > /dev/null
+scripts/puma-init.sh start > /dev/null

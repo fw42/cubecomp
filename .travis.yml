@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-  - 3.2.2
+  - 3.4.12
 
 before_script:
   - mkdir -p tmp/cubecomp/test/uploads/original

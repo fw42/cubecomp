@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'mysql2'
+gem 'puma'
 gem 'rails', '~> 8.1.4', '>= 8.1.4.1'
 gem 'sass-rails'
 gem 'uglifier'
@@ -44,7 +45,6 @@ end
 
 group :development do
   gem 'letter_opener'
-  gem 'webrick', '~> 1.9'
 end
 
 group :development, :test do
@@ -71,7 +71,6 @@ group :deploy do
 end
 
 group :production do
-  gem 'unicorn'
   gem 'mini_racer'
   gem 'exception_notification'
 end
