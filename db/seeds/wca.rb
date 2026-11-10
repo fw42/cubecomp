@@ -1,8 +1,10 @@
-config = ActiveRecord::Base.configurations['wca']
+db_config = ActiveRecord::Base.configurations.configs_for(env_name: 'wca').first
 
-if config.nil?
+if db_config.nil?
   raise "Missing wca entry in config/database.yml"
 end
+
+config = db_config.configuration_hash
 
 database = config[:database] or raise "Missing 'database' entry in wca database config"
 username = config[:username] or raise "Missing 'username' entry in wca database config"

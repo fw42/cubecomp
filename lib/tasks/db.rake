@@ -1,10 +1,11 @@
 namespace :db do
   desc "Dumps the database to db/backup/"
   task dump: :environment do
-    host = ActiveRecord::Base.connection_config[:host]
-    db = ActiveRecord::Base.connection_config[:database]
-    user = ActiveRecord::Base.connection_config[:username]
-    password = ActiveRecord::Base.connection_config[:password]
+    config = ActiveRecord::Base.connection_db_config.configuration_hash
+    host = config[:host]
+    db = config[:database]
+    user = config[:username]
+    password = config[:password]
 
     filename = Time.now.strftime("%Y-%m-%d-%H-%M-%S") + ".sql.gz"
     dir = Rails.root.join("db/backup")
@@ -23,15 +24,15 @@ namespace :db do
   task dump_wca_schema: :environment do
     path = Rails.root.join("db", "schema.wca.rb")
     File.open(path, 'w') do |file|
-      ActiveRecord::SchemaDumper.dump(Wca::Person.connection, file)
+      ActiveRecord::SchemaDumper.dump(Wca::Person.connection_pool, file)
     end
   end
 
   task :load_wca_schema do
-    config = ActiveRecord::Base.configurations
-    ActiveRecord::Base.connection.recreate_database(config['wca'][:database])
+    config = ActiveRecord::Base.configurations.configs_for(env_name: 'wca').first
+    ActiveRecord::Base.with_connection { |connection| connection.recreate_database(config.database) }
 
-    ActiveRecord::Base.establish_connection(config['wca'])
+    ActiveRecord::Base.establish_connection(config)
     ActiveRecord::Schema.verbose = false
 
     load(Rails.root.join("db", "schema.wca.rb"))
