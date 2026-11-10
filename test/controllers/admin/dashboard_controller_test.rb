@@ -94,6 +94,8 @@ class Admin::DashboardControllerTest < ActionController::TestCase
 
     UserPolicy.any_instance.expects(:admin_user_menu?).at_least_once.returns(true)
     @competition.permissions.each(&:destroy!)
+    # Admins can log in to every competition, even without a permission
+    UserPolicy.any_instance.stubs(:login?).returns(true)
     get :index, params: { competition_id: @competition.id }
     assert_match regexp, response.body
 

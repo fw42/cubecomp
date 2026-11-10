@@ -1,6 +1,6 @@
 module Admin::CompetitorsHelper
   def events_by_day_list(competitor)
-    str = ''
+    str = +''
     by_day = competitor.event_registrations_by_day(true)
     by_day.each_key do |day|
       next if by_day[day].empty?

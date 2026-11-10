@@ -114,7 +114,7 @@
 
   <%= form_section 'Events' do %>
     <% current_competition.days.each do |day| %>
-      <b><%= day.date.to_s(:long) %></b>
+      <b><%= day.date.to_fs(:long) %></b>
       <p>
         <%=
           radio_button "#{f.object_name}[days][#{day.id}]", :status, 'not_registered',

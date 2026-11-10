@@ -14,3 +14,6 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym 'RESTful'
 # end
+
+# app/lib/wca_events.rb defines the WCA_EVENTS constant
+Rails.autoloaders.main.inflector.inflect('wca_events' => 'WCA_EVENTS')

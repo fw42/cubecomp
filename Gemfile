@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
 gem 'mysql2'
-gem 'rails', '~> 6.1.7.9'
+gem 'rails', '~> 8.1.4', '>= 8.1.4.1'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
-gem 'execjs', '= 2.7.0'
+gem 'execjs'
 
 gem 'rails-html-sanitizer', '>= 1.4.4'
 
@@ -29,11 +29,10 @@ gem 'bcrypt'
 gem 'codemirror-rails'
 
 gem 'auto_strip_attributes'
-gem 'marginalia'
 gem 'liquid'
 
 gem "nokogiri", ">= 1.18.3"
-gem "kt-paperclip", "~> 6.4", ">= 6.4.1"
+gem "kt-paperclip", "~> 8.0"
 
 gem 'dotenv-rails'
 
@@ -45,7 +44,7 @@ end
 
 group :development do
   gem 'letter_opener'
-  gem 'webrick', '~> 1.8.2'
+  gem 'webrick', '~> 1.9'
 end
 
 group :development, :test do

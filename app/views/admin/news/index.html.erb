@@ -15,7 +15,7 @@
   <tbody>
     <% @news.each do |news| %>
       <tr>
-        <td><%= news.time.to_s(:short) %></td>
+        <td><%= news.time.to_fs(:short) %></td>
         <td><%= news.locale.name %></td>
         <td><%= truncate(news.text, length: 50, separator: ' ') %></td>
         <td class='actions'>
