@@ -11,14 +11,12 @@ set :linked_dirs, %w{log public/system tmp db/backup public/assets}
 set :bundle_version, 4
 
 namespace :deploy do
-  # Full stop/start rather than a hot `upgrade` (USR2): a re-exec'd unicorn
-  # master inherits the old process environment, so it keeps running the
-  # previous Ruby version after an rbenv_ruby change. Costs a few seconds
-  # of downtime.
+  # Full stop/start of puma (a few seconds of downtime), so that changes
+  # to rbenv_ruby or the bundle always take effect
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "RBENV_RUBY_VERSION=#{fetch(:rbenv_ruby)} #{current_path}/scripts/unicorn-init.sh restart"
+      execute "RBENV_RUBY_VERSION=#{fetch(:rbenv_ruby)} #{current_path}/scripts/puma-init.sh restart"
     end
   end
 
