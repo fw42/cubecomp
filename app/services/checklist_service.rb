@@ -53,7 +53,7 @@ class ChecklistService
   end
 
   def free_entrance_comment
-    line = 'Free entrance'
+    line = +'Free entrance'
     line << " (#{free_entrance_reason})" if free_entrance_reason.present?
     line
   end

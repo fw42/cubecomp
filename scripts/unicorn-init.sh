@@ -66,9 +66,25 @@ case $action in
     ;;
 
   # Graceful shutdown and then start.
+  # Also starts the process if it wasn't running. Waits up to $TIMEOUT seconds
+  # for the old master to exit, and exits non-zero if the restart fails.
   restart)
-    sig QUIT && echo "Restarting $DESC" && sleep 2 && eval $CMD && exit 0
+    if sig 0 2>/dev/null; then
+      sig QUIT && echo "Stopping $DESC"
+      n=$TIMEOUT
+      while sig 0 2>/dev/null && [ $n -gt 0 ]; do
+        sleep 1
+        n=$((n - 1))
+      done
+      if sig 0 2>/dev/null; then
+        echo >&2 "$DESC did not stop within ${TIMEOUT}s"
+        exit 1
+      fi
+    fi
+    echo "Starting $DESC"
+    eval $CMD && exit 0
     echo >&2 "Couldn't restart."
+    exit 1
     ;;
 
   # Reloads config file (unicorn.rb) and gracefully restarts all workers. This

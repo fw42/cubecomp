@@ -1,6 +1,15 @@
 require_relative 'boot'
 
-require 'rails/all'
+require 'rails'
+# Active Storage, Action Text, Action Mailbox and Action Cable are not used
+require 'active_model/railtie'
+require 'active_job/railtie'
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+require 'action_view/railtie'
+require 'sprockets/railtie'
+require 'rails/test_unit/railtie'
 Bundler.require(*Rails.groups)
 
 module Cubecomp
@@ -16,10 +25,13 @@ module Cubecomp
 
     config.i18n.default_locale = :en
 
-    config.autoload_paths << Rails.root.join('app')
-    config.autoload_paths << Rails.root.join('app/lib')
-    config.autoload_paths << Rails.root.join('app/liquid/drops')
-    config.autoload_paths << Rails.root.join('app/models/concerns')
+    # Annotate SQL queries with the controller/action that issued them
+    # (formerly done by the marginalia gem)
+    config.active_record.query_log_tags_enabled = true
+    config.active_record.query_log_tags_format = :legacy
+    config.active_record.query_log_tags = [ :application, :controller, :action, :job ]
+
+    config.eager_load_paths << Rails.root.join('app/liquid/drops')
 
     # For security reasons, the admin area should be on a different
     # (sub)domain than the competition area, otherwise competition area

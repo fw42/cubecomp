@@ -28,8 +28,8 @@ class ThemeFileRendererTest < ActiveSupport::TestCase
 
     @theme_file.content = 'hello'
 
-    expected = %r{<link rel="stylesheet" media="all" href="/assets/competition_area-[a-f0-9]+\.css" />
-<link rel="shortcut icon" type="image/x-icon" href="/assets/favicon-[a-f0-9]+\.ico" />
+    expected = %r{<link rel="stylesheet" href="/assets/competition_area-[a-f0-9]+\.css" media="all" />
+<link rel="icon" type="image/x-icon" href="/assets/favicon-[a-f0-9]+\.ico" />
 <script src="/assets/competition_area-[a-f0-9]+\.js"></script>
 
       Aachen Open!!

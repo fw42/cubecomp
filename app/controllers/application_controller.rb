@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     render_forbidden
   end
 
-  before_action :set_locale_from_params
+  around_action :switch_locale_from_params
 
   def render_not_found
     render plain: 'not found', status: :not_found
@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def set_locale_from_params
-    I18n.locale = params[:locale] || I18n.default_locale
+  def switch_locale_from_params(&action)
+    I18n.with_locale(params[:locale] || I18n.default_locale, &action)
   end
 end
