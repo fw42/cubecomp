@@ -1,7 +1,7 @@
 #!/bin/sh
 # Starts/stops the Cubecomp puma webserver in production.
 #
-#   RBENV_RUBY_VERSION=3.4.12 scripts/puma-init.sh <start|stop|restart|status>
+#   RBENV_RUBY_VERSION=3.4.13 scripts/puma-init.sh <start|stop|restart|status>
 #
 # Settings (workers, bind address, pid file, log) are in config/puma.rb.
 # Exits non-zero if the requested action failed.
